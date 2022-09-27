@@ -20,6 +20,12 @@ typedef struct s_list
 typedef struct s_data
 {
    t_list   *cmd_line;
+   pid_t    pid;
+   int      in;
+   int      out;
+   char     *cmd1;
+   char     **cmd_args;
+   char     **cmd_paths;
 }               t_data;
 // typedef struct s_syntax
 // {
