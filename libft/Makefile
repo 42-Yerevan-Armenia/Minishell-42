@@ -1,3 +1,5 @@
+BLUE	= \033[0;36m
+
 NAME = libft.a
 
 CC	=	cc
@@ -12,16 +14,20 @@ RM = rm -f
 
 AR = ar rcs
 
+.c.o:
+	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+	@echo "$(BLUE)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
 	
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re:	fclean all
 
