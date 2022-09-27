@@ -1,0 +1,8 @@
+tester
+libfttester
+.DS_Store
+testerfinal
+a.out
+*.o
+*.a
+.vscode
