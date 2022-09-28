@@ -1,5 +1,18 @@
 #include "../includes/minishell.h"
 
+
+t_list *create_list(void)
+{
+    t_list  *list;
+
+    list = malloc(sizeof(t_list));
+    if (list == NULL)
+        exit (1);
+    list->head = NULL;
+    list->tail = NULL;
+    list->node = NULL;
+    return (list);
+}
 void add_node(t_list *list, char *cmd)
 {
     t_node  *new_node;
@@ -22,17 +35,4 @@ void add_node(t_list *list, char *cmd)
             tmp = tmp->next;
        tmp->next = new_node;
     }
-}
-
-t_list *create_list(void)
-{
-    t_list  *list;
-
-    list = malloc(sizeof(t_list));
-    if (list == NULL)
-        exit (1);
-    list->head = NULL;
-    list->tail = NULL;
-    list->node = NULL;
-    return (list);
 }
