@@ -21,8 +21,6 @@ typedef struct s_data
 {
    t_list   *cmd_line;
    pid_t    pid;
-   int      in;
-   int      out;
    char     *cmd1;
    char     **cmd_args;
    char     **cmd_paths;
