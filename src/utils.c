@@ -18,6 +18,7 @@ void add_node(t_list *list, char *cmd, char *options)
     t_node  *tmp;
 
     new_node = malloc(sizeof(t_node));
+    new_node->cmd = malloc(sizeof(char *) * 2);
     if (new_node == NULL)
         exit (1);
     new_node->cmd[0] = cmd;
@@ -48,13 +49,4 @@ void print_list(t_node *head)
         head = head->next;
     }
     
-}
-
-int main()
-{
-    t_list *list;
-
-    list = create_list();
-    add_node(list, "ls", "-la");
-    print_list(list->head);
 }
