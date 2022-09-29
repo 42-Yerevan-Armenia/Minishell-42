@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:33:40 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/09/28 10:04:45 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:24:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,31 @@ void    cmd_child(t_data *data, char **av)
     printf("------\n");
 }
 
-int main(int ac, char **av)
-{
-    t_data data;
+// int main(int ac, char **av)
+// {
+//     t_data data;
 
-    data.cmd_line = create_list();
-    add_node(data.cmd_line, "ls -la");
-    while (data.cmd_line->head)
-    {
-        data.cmd_paths = ft_split(find_path(av), ':');
-        // data.pid = fork();
-        if (data.pid < 0)
-            printf("❌ Error");
+//     data.cmd_line = create_list();
+//     add_node(data.cmd_line, "ls -la");
+//     while (data.cmd_line->head)
+//     {
+//         data.cmd_paths = ft_split(find_path(av), ':');
+//         // data.pid = fork();
+//         if (data.pid < 0)
+//             printf("❌ Error");
 
-        if (data.pid == 0)
-        {
-            cmd_child(&data, av);
-            exit(0);
-        }
-        printf("|||\n");
-        data.cmd_line->head = data.cmd_line->head->next;
+//         if (data.pid == 0)
+//         {
+//             cmd_child(&data, av);
+//             exit(0);
+//         }
+//         printf("|||\n");
+//         data.cmd_line->head = data.cmd_line->head->next;
 
-    }
-    printf("%s\n", data.cmd_line->head->cmd);
-    // dis_prompt();
-    // readline("minishell");
-}
+//     }
+//     printf("%s\n", data.cmd_line->head->cmd);
+//     // dis_prompt();
+//     // readline("minishell");
+// }
 
 
