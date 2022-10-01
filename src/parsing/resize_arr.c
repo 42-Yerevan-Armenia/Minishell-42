@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   resize_arr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:45:45 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/01 19:48:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/minishell.h"
 
-#include "../libft/libft.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include "structs.h"
+char	**resize_arr(char **arr, int *l_arr)
+{
+	char	**tmp;
+	int i;
 
-void    dis_prompt();
-void    add_node(t_list *list, char *cmd, char *options);
-t_list *create_list(void);
-int     split_quotes(t_parse *parser);
-char	**resize_arr(char **arr, int *l_arr);
-
-#endif
-
+	i = -1;
+	*l_arr *= 2;
+	tmp = malloc(sizeof(char *) * (*l_arr + 1));
+	if (!tmp && printf("Can't allocate memory."))
+		exit (1);
+	while (arr[++i])
+		tmp[i] = ft_strdup(arr[i]);
+	tmp[i] = NULL;
+	i = 0;
+	while (arr && arr[i])
+		free(arr[i++]);
+	free(arr);
+	return (tmp);
+}

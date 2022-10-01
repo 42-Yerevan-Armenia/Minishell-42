@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:47:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/03/26 20:48:23 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/01 21:20:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char	*ft_substr(char const *src, unsigned int start, size_t len)
 	int		i;
 	size_t	s_len;
 
+	if (!src)
+		return (0);
 	s_len = ft_strlen(src + start);
 	if (start >= (unsigned int)ft_strlen(src))
 	{

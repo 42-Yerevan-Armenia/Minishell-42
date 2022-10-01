@@ -1,4 +1,5 @@
 .DS_Store
+*.cpp
 
 ## Mlx related
 Makefile.gen
