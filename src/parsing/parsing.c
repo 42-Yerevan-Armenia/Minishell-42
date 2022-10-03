@@ -6,24 +6,26 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 21:05:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/02 16:19:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 //  "<<hd'" kddd" dj $'* ><kkk -ld sdf"  rt' pwd"$ho'M
 
 int split_pipe(t_parse *parser)
 {
 	char	**tmp;
+	int		l_arr;
 	int		t;
 	int		i;
 	int		j;
 	int		k;
 
 	tmp = parser->spl_qutoes;
-	parser->spl_pipe = malloc(sizeof(char *) * 15);
+	l_arr = 2;
+	parser->spl_pipe = malloc(sizeof(char *) * (l_arr + 1));
 	i = -1;
 	j = -1;
 	k = 0;

@@ -11,7 +11,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 
-CFLAGS = -g -ggdb3
+CFLAGS = -g -ggdb3 -I./includes
 
 SRCS = $(wildcard ./src/*/*.c)
 
