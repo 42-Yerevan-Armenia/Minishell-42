@@ -6,13 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/02 16:19:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:22:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//  "<<hd'" kddd" dj $'* ><kkk -ld sdf"  rt' pwd"$ho'M
+//  "<<hd'" kddd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 
 int split_pipe(t_parse *parser)
 {
@@ -27,22 +27,22 @@ int split_pipe(t_parse *parser)
 	l_arr = 2;
 	parser->spl_pipe = malloc(sizeof(char *) * (l_arr + 1));
 	i = -1;
-	j = -1;
+	j = 0;
 	k = 0;
 	while (tmp[++i])
 	{
-		t = ++j;
-		while (tmp[i][j])
+		while (tmp[i] && (tmp[i][0] == '\'' || tmp[i][0] == '"'))
+			parser->spl_pipe[k++] = ft_strdup(tmp[i++]);
+		while (tmp[i] && tmp[i][j])
 		{
-			if (tmp[i][0] == '\'' || tmp[i][0] == '"')
-			{
-				parser->spl_pipe[k++] = ft_strdup(tmp[i]);
-				break ;
-			}
-			while (tmp[i][j] != '|')
+			t = j;
+			while (tmp[i][j] && tmp[i][j] != '|')
 				j++;
-			parser->spl_pipe[k++] = ft_substr(tmp[i], t, j - t + 1);
+			parser->spl_pipe[k] = ft_substr(tmp[i], t, j - t + 1);
+			printf("spl_pipe[k++] = %s\n", parser->spl_pipe[k++]);
+			j++;
 		}
+		j = 0;
 	}
 	parser->spl_pipe[k] = NULL;
 	return (0);
@@ -51,7 +51,7 @@ int split_pipe(t_parse *parser)
 int parsing(t_parse *parser)
 {
 	split_quotes(parser);
-	// split_pipe(parser);
+	split_pipe(parser);
 	return (0);
 }
 
@@ -71,6 +71,12 @@ int main(int ac, char **av)
 		while (parser.spl_qutoes[i])
 		{
 			printf("%s\n", parser.spl_qutoes[i++]);
+		}
+		printf("=-----------------\n");
+		i = 0;
+		while (parser.spl_pipe[i])
+		{
+			printf("%s\n", parser.spl_pipe[i++]);
 		}
 	}
 }
