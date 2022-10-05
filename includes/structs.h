@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-
+# define IS_QUOTE(x) (x == '"' || x == '\'')
 
 typedef struct s_node
 {
@@ -25,6 +25,7 @@ typedef struct s_data
    char     **cmd_args;
    char     **cmd_paths;
 }               t_data;
+
 // typedef struct s_syntax
 // {
    
