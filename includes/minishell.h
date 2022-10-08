@@ -13,12 +13,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../libft/libft.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdio.h>
-#include <sys/stat.h>
-#include "structs.h"
+# include "../libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdio.h>
+# include <sys/stat.h>
+# include "structs.h"
 
 void    dis_prompt();
 void    add_node(t_list *list, char *cmd);
