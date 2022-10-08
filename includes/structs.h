@@ -3,6 +3,8 @@
 
 # define IS_QUOTE(x) (x == '"' || x == '\'')
 
+char					**g_env;
+
 typedef struct s_node
 {
     char*           cmd;
