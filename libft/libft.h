@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:04 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:00:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/08 20:12:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ long long	ft_atoi(const char *nptr);
 void		*ft_calloc(size_t nmemb, size_t size);
 char		*ft_strdup(const char *src);
 char		*ft_substr(char const *src, unsigned int start, size_t len);
-char		*ft_strjoin(char const *s1, char const *s2);
+char        *ft_strjoin(char *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);

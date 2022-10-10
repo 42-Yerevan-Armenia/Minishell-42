@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-//  "<<hd'" kddd" dj $'* ><kkk -ld sdf"  rt' pwd"$ho'M
+//  "<<hd'" kddd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 
 int	split_quotes(t_parse *parser)
 {
@@ -33,7 +33,7 @@ int	split_quotes(t_parse *parser)
 			if (l_arr == k)
 				parser->spl_qutoes = resize_arr(parser->spl_qutoes, &l_arr);
 			parser->spl_qutoes[k] = ft_substr(tmp, t, i - t);
-			parser->spl_qutoes[k] = ft_strtrim(parser->spl_qutoes[k], " ");
+			// parser->spl_qutoes[k] = ft_strtrim(parser->spl_qutoes[k], " ");
 			k++;
 		}
 		if (tmp[i] && (tmp[i] == '\'' || tmp[i] == '"'))

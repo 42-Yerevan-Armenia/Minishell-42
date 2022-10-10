@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
- #define METACHAR "|&;()<> \n\t"
+ #define METACHARS "|&;()<> \n\t"
 
 
 
@@ -36,6 +36,7 @@ typedef struct s_parse
 {
 	char		**spl_qutoes;
 	char		**spl_pipe;
+	char		**join_pipe;
 	t_data		*data;
 	char		*rd_ln;
 }               t_parse;

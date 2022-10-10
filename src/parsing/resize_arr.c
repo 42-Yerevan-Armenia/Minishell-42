@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/03 17:49:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/09 10:27:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,21 @@ char	**resize_arr(char **arr, int *l_arr)
 		exit (1);
 	while (arr[++i])
 		tmp[i] = ft_strdup(arr[i]);
-	tmp[i] = NULL;
+	while (i < (*l_arr / 2))
+	{
+		tmp[i++] = NULL;
+	}
 	i = 0;
 	while (arr && arr[i])
 		free(arr[i++]);
 	free(arr);
+	i = 0;
+	// printf("||||||||||||||||\\\n");
+	// while (tmp[i])
+	// {
+	// 	printf("%s\n", tmp[i++]);
+	// }
+	// printf("=-----------------\n");
+	// printf("tmp[0] = %s\n", tmp[0]);
 	return (tmp);
 }
