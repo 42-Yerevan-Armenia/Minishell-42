@@ -22,7 +22,7 @@ char    *get_cmd(char **paths, char *cmd)
         tmp = ft_strjoin(*paths, "/");
         command = ft_strjoin(tmp, cmd);
         free(tmp);
-        if (access(command, F_OK) == 0)
+        if (access(command, F_OK & X_OK) == 0)
             return (command);
         free(command);
         paths++;
@@ -30,88 +30,54 @@ char    *get_cmd(char **paths, char *cmd)
     return (NULL);
 }
 
+void	ft_close(int fd)
+{
+	if (fd > 0)
+		close(fd);
+}
+
 void find_path(t_data data, char **av)
 {
-    while (ft_strncmp("PATH", *av, 4))
-        *av += 1;
-    *av += 5;
+    *av = getenv("PATH");
+
+    int pipefd[2];
+
     while (data.cmd_line->head)
     {
         data.cmd_paths = ft_split(*av, ':');
+        open((char *)0, O_RDONLY);
+	    open((char *)1, O_RDWR);
+        pipe(pipefd);
         data.pid = fork();
         if (data.pid < 0)
             printf("❌ Error");
         if (data.pid == 0)
         {
+            ft_close(pipefd[1]);
+            dup2(pipefd[0], 0);
             data.cmd_args = ft_split(data.cmd_line->head->cmd, ' ');
             data.cmd1 = get_cmd(data.cmd_paths, data.cmd_args[0]);
-            if (!data.cmd1)
-            {
-                int i = 0;
-                while (data.cmd_args[i])
-                    free(data.cmd_args[i++]);
-                free(data.cmd_args);
-                free(data.cmd1);
-            }
             execve(data.cmd1, data.cmd_args, av);
             exit(0);
         }
         else
-            waitpid(data.pid, NULL, 0);
+        {
+            ft_close(pipefd[0]);
+            dup2(pipefd[1], 1);
+        }
         data.cmd_line->head = data.cmd_line->head->next;
     }
-}
-
-int		env_len(char **env)
-{
-	int		i;
-	int		count;
-
-	i = -1;
-	count = 0;
-	while (env[++i])
-		count++;
-	return (count);
-}
-
-void			init_env(char **env)
-{
-	int		i;
-
-	g_env = (char **)ft_malloc(sizeof(char *) * (env_len(env) + 1));
-	i = -1;
-	while (env[++i])
-	{
-		if (!(g_env[i] = ft_strdup(env[i])))
-			exit(1) ;
-	}
-}
-
-void	get_input(char **input)
-{
-	*input = ft_strnew(1);
 }
 
 int main(int ac, char **av, char **env)
 {
     t_data data;
-	char *input;
-	char **cmd;
 	
-	init_env(env);
-	while (1)
-	{
-	    data.cmd_line = create_list();
-		get_input(&input);
-		cmd = ft_split(*av, ';');
-    	add_node(data.cmd_line, "echo Hello");
-    	//add_node(data.cmd_line, "|");
-    	//add_node(data.cmd_line, "wc Makefile");
-    	find_path(data, av);
-    	echo_builtin(cmd);
-    	//printf("%d\n", __LINE__);
-	}
+    data.cmd_line = create_list();
+    add_node(data.cmd_line, "echo Hello");
+    //add_node(data.cmd_line, "|");
+   	add_node(data.cmd_line, "ls | cat Makefile");
+   	find_path(data, av);
+   	//printf("%d\n", __LINE__);
 	return (0);
 }
-
-

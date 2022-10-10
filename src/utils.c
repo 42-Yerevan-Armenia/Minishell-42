@@ -28,7 +28,7 @@ void add_node(t_list *list, char *cmd)
         list->head = new_node;
         list->tail = new_node;
     }
-    else 
+    else
     {
         tmp = list->head;
         while (tmp->next)
