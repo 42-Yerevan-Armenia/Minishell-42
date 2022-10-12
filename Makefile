@@ -14,6 +14,7 @@ CC = cc
 CFLAGS = -g -ggdb3 -I./includes
 
 SRCS = $(wildcard ./src/*/*.c)
+SRCS += $(wildcard ./src/*.c)
 
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 

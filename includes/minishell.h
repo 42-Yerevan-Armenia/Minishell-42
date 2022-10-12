@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/11 11:46:40 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:04:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ int     split_pipe(t_parse *parser);
 int     pipe_join(t_parse *parser);
 
 // helper func
-t_list *create_list(void);
-void    add_node(t_list *list, char *cmd, char *options);
+t_list  *create_list(void);
+t_node  *add_node(t_list *list, char *cmd, char *options);
 int     fill_null(char **ptr, int len);
 char	**resize_arr(char **arr, int *l_arr);
 char	*ft_strchrs(const char *s, const char *set);
+t_elem  *count_elem(char *str);
+
 
 #endif
 

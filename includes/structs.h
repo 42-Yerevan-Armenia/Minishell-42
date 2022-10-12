@@ -4,19 +4,29 @@
  #define METACHARS "|&;()<> \n\t"
  #define HANDLE	"<>"
  #define SPACES " \n\t"
+ #define APPEND_FILES 1
+ #define IN_FILES 2
+ #define OUT_FILES 3
+ #define HEARDOC 4
+
 
 
 
 typedef struct s_node
 {
-	char			**cmd;
-	char			*dlm;
 	int				is_args;
 	int				fd_in;
 	int				fd_out;
+	int				output_mode;
+	char			**cmd;
+	char			*dlm;
+	char			**in_files;
+	char			**out_files;
+	char			**out_append_files;
+	char			**heardocs;
+	char			*error_message;
 	struct s_node	*next;
 	struct s_node	*prev;
-
 }               t_node;
 
 typedef struct s_list
@@ -30,9 +40,6 @@ typedef struct s_data
 {
 	int			in;
 	int			out;
-	char		**in_files;
-	char		**out_files;
-	char		**heardocs;;
 	pid_t		pid;
 	char		*cmd1;
 	char		**cmd_args;
@@ -53,4 +60,16 @@ typedef struct s_parse
 // {
 	
 // }               t_syntax;
+
+
+
+typedef struct s_elem
+{
+	int	out_file;
+	int	in_file;
+	int	heardoc;
+	int	out_append_files;
+}               t_elem;
+
+
 #endif
