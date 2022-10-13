@@ -25,11 +25,12 @@ t_node *add_node(t_list *list, char *cmd, char *options)
     new_node->cmd[1] = options;
     new_node->fd_in = -1;
     new_node->fd_out = -1;
-    new_node->heardocs = NULL;
+    new_node->heredoc = NULL;
     new_node->in_files = NULL;
     new_node->out_files = NULL;
     new_node->out_append_files = NULL;
     new_node->output_mode = 0;
+    new_node->input_mode = 0;
     // new_node-> = 0;
     new_node->next = NULL;
     new_node->prev = NULL;

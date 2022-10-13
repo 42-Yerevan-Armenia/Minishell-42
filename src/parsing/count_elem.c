@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:41:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/12 21:18:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:55:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ t_elem	*count_elem(char *str)
 
 	i = 0;
 	res = malloc(sizeof(t_elem));
-	res->heardoc = 1;
+	res->heredoc = 1;
 	res->out_append_files = 1;
 	res->out_file = 1;
 	res->in_file = 1;
 	while (str[i])
 	{
-		if (str[i] == '<' && str[i] == '<' && ++i && ++i)
-			res->heardoc++;
-		if (str[i] == '>' && str[i] == '>' && ++i && ++i)
+		if (str[i] == '<' && str[i + 1] == '<' && ++i && ++i)
+			res->heredoc++;
+		if (str[i] == '>' && str[i + 1] == '>' && ++i && ++i)
 			res->out_append_files++;
-		if (str[i] == '<' && ++i && printf("es em\n"))
+		if (str[i] == '<' && ++i)
 			res->in_file++;
-		if (str[i] == '>' && ++i && printf("es em\n"))
+		if (str[i] == '>' && ++i)
 			res->out_file++;
-		else
+		if (str[i])
 			i++;
 	}
-	printf("iii = %d\n", i);
+	// printf("iii = %d\n", i);
 	return (res);
 }

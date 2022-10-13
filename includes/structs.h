@@ -7,7 +7,8 @@
  #define APPEND_FILES 1
  #define IN_FILES 2
  #define OUT_FILES 3
- #define HEARDOC 4
+ #define HEREDOC 4
+ #define COMAND 5
 
 
 
@@ -18,12 +19,13 @@ typedef struct s_node
 	int				fd_in;
 	int				fd_out;
 	int				output_mode;
+	int				input_mode;
 	char			**cmd;
 	char			*dlm;
-	char			**in_files;
 	char			**out_files;
+	char			**in_files;
 	char			**out_append_files;
-	char			**heardocs;
+	char			**heredoc;
 	char			*error_message;
 	struct s_node	*next;
 	struct s_node	*prev;
@@ -67,7 +69,7 @@ typedef struct s_elem
 {
 	int	out_file;
 	int	in_file;
-	int	heardoc;
+	int	heredoc;
 	int	out_append_files;
 }               t_elem;
 
