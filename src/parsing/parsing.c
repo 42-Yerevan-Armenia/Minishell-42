@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/13 20:11:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/13 21:04:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, j, *i - j);
-	else if (c == APPEND_FILES)
-		node->out_append_files[a++] = ft_substr(tmp, j, *i - j);
-	else if (c == OUT_FILES)
+	// else if (c == APPEND_FILES)
+	// 	node->out_files[m++] = ft_substr(tmp, j, *i - j);
+	else if (c == OUT_FILES || c == APPEND_FILES)
 		node->out_files[m++] = ft_substr(tmp, j, *i - j);
 	else if (c == IN_FILES)
 		node->in_files[k++] = ft_substr(tmp, j, *i - j);
-	else if (c == COMAND && printf("%c\n", tmp[j]) && printf(" i = %d\n", *i) && printf("n_cmd = %d\n", n_cmd))
+	else if (c == COMAND)
 		node->cmd[n_cmd++] = ft_substr(tmp, j, *i - j);
 	if (c == APPEND_FILES || c == OUT_FILES)
 		node->output_mode = c;
@@ -75,15 +75,15 @@ int	find_exe(t_parse *parser)
 	node = add_node(parser->data->cmd_line, NULL, NULL);
 	quantity = count_elem(parser->rd_ln);
 	node->in_files = malloc(sizeof(char *) * quantity->in_file);
-	node->out_files = malloc(sizeof(char *) * quantity->out_file);
+	node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
 	node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
-	node->out_append_files = malloc(sizeof(char *) * quantity->heredoc);
+	// node->out_append_files = malloc(sizeof(char *) * quantity->heredoc);
 	node->cmd = malloc(sizeof(char *) * 100);
 	fill_null(&node->cmd, 100);
 	fill_null(&node->in_files, quantity->in_file);
 	fill_null(&node->out_files, quantity->out_file);
 	fill_null(&node->heredoc, quantity->heredoc);
-	fill_null(&node->out_append_files, quantity->out_append_files);
+	// fill_null(&node->out_append_files, quantity->out_append_files);
 	tmp = parser->rd_ln;
 	while (tmp[i])
 	{
@@ -95,12 +95,11 @@ int	find_exe(t_parse *parser)
 			get_files(tmp, node, &i, IN_FILES);
 		else if (tmp[i] == '>' && ++i)
 			get_files(tmp, node, &i, OUT_FILES);
-		else if (!ft_strchr(METACHARS, tmp[i]) && printf("%d\n", i))
+		else if (!ft_strchr(METACHARS, tmp[i]))
 			get_files(tmp, node, &i, COMAND);
 		if (tmp[i] && !ft_strchr(HANDLE, tmp[i]))
 			i++;
 	}
-	// get_files(tmp, node, &i, -1);
 	return (0);
 }
 
