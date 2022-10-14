@@ -17,6 +17,7 @@ typedef struct s_node
 	int				fd_out;
 	int				output_mode;
 	int				input_mode;
+	int				flag_new_pipe;
 	pid_t			pid;
 	char			**cmd;
 	char			*dlm;

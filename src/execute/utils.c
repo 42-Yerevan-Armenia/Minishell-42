@@ -20,11 +20,12 @@ t_node *add_node(t_list *list, char *cmd, char *options)
     t_node  *tmp;
 
     new_node = malloc(sizeof(t_node));
-    new_node->cmd = malloc(sizeof(char *) * 2);
+    // new_node->cmd = malloc(sizeof(char *) * 2);
     if (new_node == NULL)
         exit (1);
-    new_node->cmd[0] = cmd;
-    new_node->cmd[1] = options;
+    // new_node->cmd[0] = cmd;
+    // new_node->cmd[1] = options;
+    new_node->flag_new_pipe = 0;
     new_node->fd_in = 0;
     new_node->fd_out = 1;
     new_node->heredoc = NULL;
