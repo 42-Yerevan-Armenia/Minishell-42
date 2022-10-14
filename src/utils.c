@@ -13,7 +13,7 @@ t_list *create_list(void)
     list->node = NULL;
     return (list);
 }
-void add_node(t_list *list, char *cmd)
+void add_node_1(t_list *list, char *cmd)
 {
     t_node  *new_node;
     t_node  *tmp;
