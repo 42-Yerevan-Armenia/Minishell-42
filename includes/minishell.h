@@ -22,7 +22,7 @@
 # include "structs.h"
 
 
-void    add_node(t_list *list, char *cmd);
+void    add_node_1(t_list *list, char *cmd);
 
 void    dis_prompt();
 int     split_quotes(t_parse *parser);
