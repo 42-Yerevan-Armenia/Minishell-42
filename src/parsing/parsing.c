@@ -46,8 +46,6 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, j, *i - j);
-	// else if (c == APPEND_FILES)
-	// 	node->out_files[m++] = ft_substr(tmp, j, *i - j);
 	else if (c == OUT_FILES || c == APPEND_FILES)
 		node->out_files[m++] = ft_substr(tmp, j, *i - j);
 	else if (c == IN_FILES)
@@ -90,37 +88,28 @@ int	find_exe(t_parse *parser)
 	t_node	*node;
 	t_elem	*quantity;
 	int		flag;
-	char	*tmp;
+	char	**tmp;
 	int		j;
 	int		k;
 
 	i = 0;
-	node = add_node(parser->data->cmd_line, NULL, NULL);
-	quantity = count_elem(parser->rd_ln);
-	node->in_files = malloc(sizeof(char *) * quantity->in_file);
-	node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
-	node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
-	node->cmd = malloc(sizeof(char *) * 100);
-	fill_null(&node->cmd, 100);
-	fill_null(&node->in_files, quantity->in_file);
-	fill_null(&node->out_files, quantity->out_file);
-	fill_null(&node->heredoc, quantity->heredoc);
-	tmp = parser->rd_ln;
+	tmp = parser->join_pipe;
+	// printf("%s\n", tmp[]);
 	while (tmp[i])
 	{
-		if (tmp[i] == '<' && tmp[i + 1] == '<' && ++i && ++i)
-			get_files(tmp, node, &i, HEREDOC);
-		else if (tmp[i] == '>' && tmp[i + 1] == '>' && ++i && ++i)
-			get_files(tmp, node, &i, APPEND_FILES);
-		else if (tmp[i] == '<' && ++i)
-			get_files(tmp, node, &i, IN_FILES);
-		else if (tmp[i] == '>' && ++i)
-			get_files(tmp, node, &i, OUT_FILES);
-		else if (!ft_strchr(METACHARS, tmp[i]))
-			get_files(tmp, node, &i, COMAND);
-		if (tmp[i] && !ft_strchr(HANDLE, tmp[i]))
-			i++;
+		node = add_node(parser->data->cmd_line, NULL, NULL);
+		quantity = count_elem(tmp[i]);
+		node->in_files = malloc(sizeof(char *) * quantity->in_file);
+		node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
+		node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
+		node->cmd = malloc(sizeof(char *) * 100);
+		fill_null(&node->cmd, 100);
+		fill_null(&node->in_files, quantity->in_file);
+		fill_null(&node->out_files, quantity->out_file);
+		fill_null(&node->heredoc, quantity->heredoc);
+		fill_node(node, tmp[i++]);
 	}
+	
 	return (0);
 }
 
@@ -143,9 +132,9 @@ int	free_list(t_node *head)
 int parsing(t_parse *parser)
 {
 	int	i;
-	// split_quotes(parser);
-	// split_pipe(parser);
-	// pipe_join(parser);
+	split_quotes(parser);
+	split_pipe(parser);
+	pipe_join(parser);
 	find_exe(parser);
 	t_node *tmp = parser->data->cmd_line->head;
 	// if (parser->data->error_message)
@@ -167,7 +156,7 @@ int	init(t_parse *parser, t_data *data)
 	return (0);
 }
 
-int main1(int ac, char **av)
+int main(int ac, char **av)
 {
 	t_parse parser;
 	t_data	data;
