@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:41:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:48:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	**resize_arr(char **arr, int *l_arr)
 {
-	printf("resize_arr\n");
 	char	**tmp;
 	int i;
 
@@ -35,14 +34,5 @@ char	**resize_arr(char **arr, int *l_arr)
 		free(arr[i++]);
 	free(arr);
 	i = 0;
-	// printf("||||||||||||||||\\\n");
-	// while (tmp[i])
-	// {
-	// 	printf("%s\n", tmp[i++]);
-	// }
-	// printf("=-----------------\n");
-	// printf("tmp[0] = %s\n", tmp[0]);
-	printf("resize_arr\n");
-
 	return (tmp);
 }

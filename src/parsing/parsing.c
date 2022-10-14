@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:35:37 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:48:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 		node->output_mode = c;
 	else if (c == IN_FILES || c == HEREDOC)
 		node->input_mode = c;
-	// printf("k = %d, m = %d h = %d n_cmd = %d\n", k, m, h, n_cmd);
 	return (0);
 }
 
@@ -111,7 +110,6 @@ int	find_exe(t_parse *parser)
 	tmp = parser->join_pipe;
 	while (tmp[i])
 	{
-		printf("barev\n");
 		node = add_node(parser->data->cmd_line, NULL, NULL);
 		quantity = count_elem(tmp[i]);
 		node->in_files = malloc(sizeof(char *) * quantity->in_file);
@@ -148,9 +146,7 @@ int	free_list(t_node *head)
 int parsing(t_parse *parser)
 {
 	int	i;
-	printf("barev\n");
 	split_quotes(parser);
-
 	split_pipe(parser);
 	pipe_join(parser);
 	find_exe(parser);
