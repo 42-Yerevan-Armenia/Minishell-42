@@ -167,7 +167,7 @@ int	init(t_parse *parser, t_data *data)
 	return (0);
 }
 
-int main(int ac, char **av)
+int main1(int ac, char **av)
 {
 	t_parse parser;
 	t_data	data;
@@ -188,6 +188,7 @@ int main(int ac, char **av)
 	// printf("%d, %p\n", *a, a);
 	// (*a)++;
 	// printf("%d, %p\n", *a, a);
+	return (0);
 }
 
 
