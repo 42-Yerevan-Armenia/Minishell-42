@@ -48,8 +48,14 @@ void pipex(t_data data)
 void find_path(t_data data, t_parse parser)
 {
     t_node  *node;
+    //int pipefds[2];
 
     *node->cmd = getenv("PATH");
+   /* if(pipe(pipefds) == -1)
+	{
+    	perror("pipe");
+    	exit(EXIT_FAILURE);
+  	}*/
     while (data.cmd_line->head)
     {
         data.cmd_paths = ft_split(*node->cmd, ':');
@@ -58,12 +64,20 @@ void find_path(t_data data, t_parse parser)
             printf("❌ Error\n");
         if (node->pid == 0)
         {
+        	//close(pipefds[0]);
             data.cmd_args = ft_split(*data.cmd_line->head->cmd, ' ');
             data.cmd1 = get_cmd(data.cmd_paths, data.cmd_args[0]);
-            pipex(data);
+            //pipex(data);
             execve(data.cmd1, data.cmd_args, node->cmd);
             exit(0);
         }
+     /*   if (node->pid > 0)
+        {
+        	wait(NULL);
+        	close(pipefds[1]);
+        	//read(pipefds[0], );
+        	//close(pipefds[0]);
+        }*/
         //else
         	//wait(&)
         data.cmd_line->head = data.cmd_line->head->next;
