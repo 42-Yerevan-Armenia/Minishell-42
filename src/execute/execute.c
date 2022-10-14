@@ -17,17 +17,42 @@ char    *get_cmd(char **paths, char *cmd)
     return (NULL);
 }
 
+void pipex(t_data data)
+{
+	int fd;
+
+	if (data.in != NULL)
+	{
+		fd = open(data.in, O_RDONLY);
+		if (fd == -1)
+			exit(1);
+		else
+		{
+			dup2(fd, 0);
+			close(fd);
+		}
+	}
+	if (data.out != NULL)
+	{
+		fd = open(data.out, O_CREAT);
+		if (fd == -1)
+			exit(1);
+		else
+		{
+			dup2(fd, 0);
+			close(fd);
+		}
+	}
+}
+
 void find_path(t_data data, t_parse parser)
 {
     t_node  *node;
-    int		pids;
-    int		fd;
 
     *node->cmd = getenv("PATH");
     while (data.cmd_line->head)
     {
         data.cmd_paths = ft_split(*node->cmd, ':');
-        //pipe(pipefd);
         node->pid = fork();
         if (node->pid < 0)
             printf("❌ Error\n");
@@ -35,9 +60,12 @@ void find_path(t_data data, t_parse parser)
         {
             data.cmd_args = ft_split(*data.cmd_line->head->cmd, ' ');
             data.cmd1 = get_cmd(data.cmd_paths, data.cmd_args[0]);
+            pipex(data);
             execve(data.cmd1, data.cmd_args, node->cmd);
             exit(0);
         }
+        //else
+        	//wait(&)
         data.cmd_line->head = data.cmd_line->head->next;
     }
 }
@@ -49,8 +77,6 @@ int main(int ac, char **av)
 
 	if (ac == 1)
 	{
-		//signal(SIGINT, signal_callback_handler);
-		//signal(SIGQUIT, signal_callback_handler);
 		init(&parser, &data);
 		data.error_message = NULL;
 		parser.rd_ln = readline("minishell> ");
