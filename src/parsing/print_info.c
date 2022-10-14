@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+#include "minishell.h"
+
 void print_info(t_parse *parser)
 {
 	int	i;
