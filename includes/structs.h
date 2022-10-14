@@ -10,9 +10,6 @@
  #define HEREDOC 4
  #define COMAND 5
 
-
-
-
 typedef struct s_node
 {
 	int				is_args;
@@ -39,6 +36,8 @@ typedef struct s_list
 
 typedef struct s_data
 {
+	char		*cmd1;
+	char		**cmd_args;
 	char		**cmd_paths;
 	char		*error_message;
 	t_list		*cmd_line;
