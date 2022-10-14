@@ -1,5 +1,4 @@
-#include "../includes/minishell.h"
-
+#include "minishell.h"
 
 t_list *create_list(void)
 {
@@ -13,7 +12,11 @@ t_list *create_list(void)
     // list->node = NULL;
     return (list);
 }
+<<<<<<< HEAD
 t_node *add_node(t_list *list, char *cmd, char *options)
+=======
+void add_node_1(t_list *list, char *cmd)
+>>>>>>> master
 {
     t_node  *new_node;
     t_node  *tmp;
@@ -39,7 +42,7 @@ t_node *add_node(t_list *list, char *cmd, char *options)
         list->head = new_node;
         list->tail = new_node;
     }
-    else 
+    else
     {
         tmp = list->head;
         while (tmp->next)
@@ -47,6 +50,7 @@ t_node *add_node(t_list *list, char *cmd, char *options)
        new_node->prev = tmp;
        tmp->next = new_node;
     }
+<<<<<<< HEAD
     return (new_node);
 }
 
@@ -60,3 +64,6 @@ void print_list(t_node *head)
     }
     
 }
+=======
+}
+>>>>>>> master
