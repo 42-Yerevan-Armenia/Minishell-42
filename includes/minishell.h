@@ -17,7 +17,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include "structs.h"
+
+void find_path(t_data data, t_parse parser);
+int parsing(t_parse *parser);
+int	init(t_parse *parser, t_data *data);
 
 void    dis_prompt();
 int     split_quotes(t_parse *parser);
@@ -37,4 +43,3 @@ int     free_parse(t_parse *parser);
 
 
 #endif
-

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:19:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:07:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void print_info(t_parse *parser)
 	while (tmp)
 	{
 		// t_node *tmp = parser->data->cmd_line->head;
-
+/*
 		printf("\n----------------------------------\n");
 		printf("IN_FILES \n");
 		while (tmp->in_files && tmp->in_files[i])
@@ -49,6 +49,7 @@ void print_info(t_parse *parser)
 		// {
 		// 	printf("%s\n", tmp->out_append_files[i++]);
 		// }
+*/
 		i = 0;
 		printf("\n----------------------------------\n");
 		printf("CMD \n");
@@ -57,10 +58,10 @@ void print_info(t_parse *parser)
 			printf("%s, ", tmp->cmd[i++]);
 		}
 		printf("\n----------------------------------\n");
-		printf("OUTPUT_MODE = %d\n", tmp->output_mode);
-		printf("\n----------------------------------\n");
-		printf("INPUT_MODE = %d\n", tmp->input_mode);
-		printf("\n*********************************\n\n\n\n\n\n\n\n");
+		// printf("OUTPUT_MODE = %d\n", tmp->output_mode);
+		// printf("\n----------------------------------\n");
+		// printf("INPUT_MODE = %d\n", tmp->input_mode);
+		printf("\n*********************************\n\n");
 		tmp = tmp->next;
 	}
 }
