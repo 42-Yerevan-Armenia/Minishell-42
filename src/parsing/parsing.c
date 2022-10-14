@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 11:41:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:35:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,30 @@
 
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
-//  cat <<b <a<g>t<g>r >>p -l -a "barev  "
+//  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
+
+void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4)
+{
+	if (ptr1)
+		*ptr1 = 0;
+	if (ptr2)
+		*ptr2 = 0;
+	if (ptr3)
+		*ptr3 = 0;
+	if (ptr4)
+		*ptr4 = 0;
+}
 
 int	get_files(char *tmp, t_node *node, int *i, int c)
 {
-	static	int	k = 0;
-	static	int	m = 0;
-	static	int	h = 0;
-	static	int	a = 0;
-	static	int	n_cmd = 0;
+	static	int	k;
+	static	int	m;
+	static	int	h;
+	static	int	n_cmd;
 	int			j;
 
+	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
+		init_zero(&k, &m, &h, &n_cmd);
 	while (ft_strchr(SPACES, tmp[*i]))
 		*i+= 1;
 	// if (ft_strchr(METACHARS, tmp[*i]))
@@ -56,6 +69,7 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 		node->output_mode = c;
 	else if (c == IN_FILES || c == HEREDOC)
 		node->input_mode = c;
+	// printf("k = %d, m = %d h = %d n_cmd = %d\n", k, m, h, n_cmd);
 	return (0);
 }
 
@@ -64,6 +78,7 @@ int	fill_node(t_node *node, char *cmd_ln)
 	int	i;
 
 	i = 0;
+	node->flag_new_pipe = 0;
 	while (cmd_ln[i])
 	{
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
@@ -94,9 +109,9 @@ int	find_exe(t_parse *parser)
 
 	i = 0;
 	tmp = parser->join_pipe;
-	// printf("%s\n", tmp[]);
 	while (tmp[i])
 	{
+		printf("barev\n");
 		node = add_node(parser->data->cmd_line, NULL, NULL);
 		quantity = count_elem(tmp[i]);
 		node->in_files = malloc(sizeof(char *) * quantity->in_file);
@@ -105,9 +120,10 @@ int	find_exe(t_parse *parser)
 		node->cmd = malloc(sizeof(char *) * 100);
 		fill_null(&node->cmd, 100);
 		fill_null(&node->in_files, quantity->in_file);
-		fill_null(&node->out_files, quantity->out_file);
+		fill_null(&node->out_files, quantity->out_file + quantity->out_append_files);
 		fill_null(&node->heredoc, quantity->heredoc);
-		fill_node(node, tmp[i++]);
+		fill_node(node, tmp[i]);
+		i++;
 	}
 	
 	return (0);
@@ -132,13 +148,14 @@ int	free_list(t_node *head)
 int parsing(t_parse *parser)
 {
 	int	i;
+	printf("barev\n");
 	split_quotes(parser);
+
 	split_pipe(parser);
 	pipe_join(parser);
 	find_exe(parser);
-	t_node *tmp = parser->data->cmd_line->head;
-	// if (parser->data->error_message)
-	// 	printf("%s", parser->data->error_message);
+	if (parser->data->error_message)
+		printf("%s", parser->data->error_message);
 	print_info(parser);
 	free_parse(parser);
 	return (0);
@@ -160,11 +177,13 @@ int main(int ac, char **av)
 {
 	t_parse parser;
 	t_data	data;
+	int i = 0;
 
 	if (ac == 1)
 	{
 		init(&parser, &data);
 		data.error_message = NULL;
+		
 		// while (1)
 		// {
 			parser.rd_ln = readline("minishell> ");

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:41:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/13 19:55:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:09:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ t_elem	*count_elem(char *str)
 	while (str[i])
 	{
 		if (str[i] == '<' && str[i + 1] == '<' && ++i && ++i)
-			res->heredoc++;
+			(res->heredoc)++;
 		if (str[i] == '>' && str[i + 1] == '>' && ++i && ++i)
-			res->out_append_files++;
+			(res->out_append_files)++;
 		if (str[i] == '<' && ++i)
-			res->in_file++;
+			(res->in_file)++;
 		if (str[i] == '>' && ++i)
-			res->out_file++;
-		if (str[i])
+			(res->out_file)++;
+		if (str[i] && !ft_strchr(HANDLE, str[i]))
 			i++;
 	}
-	// printf("iii = %d\n", i);
 	return (res);
 }

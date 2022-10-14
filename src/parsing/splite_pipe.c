@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 17:55:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/09 10:38:25 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:47:06 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,20 @@ int split_pipe(t_parse *parser)
 	tmp = parser->spl_qutoes;
 	l_arr = 2;
 	parser->spl_pipe = malloc(sizeof(char *) * (l_arr + 1));
+	if (parser->spl_pipe == NULL)
+		return (0);
+	fill_null(&parser->spl_pipe, l_arr + 1);
 	parser->spl_pipe[l_arr] = NULL;
-	i = -1;
+	i = 0;
 	j = 0;
 	k = 0;
-	while (tmp[++i])
+	while (tmp[i])
 	{
 		while ((tmp[i] && (tmp[i][0] == '\'' || tmp[i][0] == '"')))
 		{
 			if (l_arr == k)
 					parser->spl_pipe = resize_arr(parser->spl_pipe, &l_arr);
-			parser->spl_pipe[k] = ft_strdup(tmp[i++]);
-			k++;
+			parser->spl_pipe[k++] = ft_strdup(tmp[i++]);
 		}
 		while (tmp[i] && tmp[i][j])
 		{
@@ -48,28 +50,26 @@ int split_pipe(t_parse *parser)
 			{
 				if (l_arr == k)
 					parser->spl_pipe = resize_arr(parser->spl_pipe, &l_arr);
-				parser->spl_pipe[k] = ft_strdup("|");
-				k++;
+				parser->spl_pipe[k++] = ft_strdup("|");
 			}
 			else
 			{
 				if (l_arr == k)
 					parser->spl_pipe = resize_arr(parser->spl_pipe, &l_arr);
-				parser->spl_pipe[k] = ft_substr(tmp[i], t, j - t);
-				k++;
+				parser->spl_pipe[k++] = ft_substr(tmp[i], t, j - t);
 				if (tmp[i][j] == '|')
 				{
 					if (l_arr == k)
 						parser->spl_pipe = resize_arr(parser->spl_pipe, &l_arr);
-					parser->spl_pipe[k] = ft_strdup("|");
-					k++;
+					parser->spl_pipe[k++] = ft_strdup("|");
 				}
 			}
 			if (tmp[i][j] != '\0')
 				j++;
 		}
 		j = 0;
+		if (tmp[i])
+			i++;
 	}
-	parser->spl_pipe[k] = NULL;
 	return (0);
 }

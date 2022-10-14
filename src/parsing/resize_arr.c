@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/09 10:27:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:41:22 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 char	**resize_arr(char **arr, int *l_arr)
 {
+	printf("resize_arr\n");
 	char	**tmp;
 	int i;
 
 	i = -1;
 	*l_arr *= 2;
 	tmp = malloc(sizeof(char *) * (*l_arr + 1));
-	tmp[*l_arr] = NULL;
 	if (!tmp && printf("Can't allocate memory."))
 		exit (1);
+	fill_null(&tmp, *l_arr + 1);
 	while (arr[++i])
 		tmp[i] = ft_strdup(arr[i]);
 	while (i < (*l_arr / 2))
@@ -41,5 +42,7 @@ char	**resize_arr(char **arr, int *l_arr)
 	// }
 	// printf("=-----------------\n");
 	// printf("tmp[0] = %s\n", tmp[0]);
+	printf("resize_arr\n");
+
 	return (tmp);
 }
