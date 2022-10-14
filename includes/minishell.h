@@ -21,9 +21,23 @@
 # include <sys/stat.h>
 # include "structs.h"
 
-void    dis_prompt();
+
 void    add_node(t_list *list, char *cmd);
-t_list *create_list(void);
+
+void    dis_prompt();
+int     split_quotes(t_parse *parser);
+int     split_pipe(t_parse *parser);
+int     pipe_join(t_parse *parser);
+
+// helper func
+t_list  *create_list(void);
+int     fill_null(char ***ptr, int len);
+char	**resize_arr(char **arr, int *l_arr);
+char	*ft_strchrs(const char *s, const char *set);
+t_elem  *count_elem(char *str);
+void	print_info(t_parse *parser);
+int     free_double(char ***ptr);
+int     free_parse(t_parse *parser);
 
 #endif
 
