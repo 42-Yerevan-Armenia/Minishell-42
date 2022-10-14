@@ -20,11 +20,11 @@ typedef struct s_node
 	int				fd_out;
 	int				output_mode;
 	int				input_mode;
+	pid_t			pid;
 	char			**cmd;
 	char			*dlm;
 	char			**out_files;
 	char			**in_files;
-	char			**out_append_files;
 	char			**heredoc;
 	char			*error_message;
 	struct s_node	*next;
@@ -35,16 +35,10 @@ typedef struct s_list
 {
 	t_node   *head;
 	t_node   *tail;
-	// t_node   *node;
 }               t_list;
 
 typedef struct s_data
 {
-	int			in;
-	int			out;
-	pid_t		pid;
-	char		*cmd1;
-	char		**cmd_args;
 	char		**cmd_paths;
 	char		*error_message;
 	t_list		*cmd_line;

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/13 19:59:56 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:53:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	**resize_arr(char **arr, int *l_arr);
 char	*ft_strchrs(const char *s, const char *set);
 t_elem  *count_elem(char *str);
 void	print_info(t_parse *parser);
+int     free_double(char ***ptr);
+int     free_parse(t_parse *parser);
 
 
 #endif

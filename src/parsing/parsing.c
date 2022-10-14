@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/13 21:04:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:59:05 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
-//  cat <<b <a<g>t<g>r >>p -l -a barev
+//  cat <<b <a<g>t<g>r >>p -l -a "barev  "
 
 int	get_files(char *tmp, t_node *node, int *i, int c)
 {
@@ -61,6 +61,29 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 	return (0);
 }
 
+int	fill_node(t_node *node, char *cmd_ln)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_ln[i])
+	{
+		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
+			get_files(cmd_ln, node, &i, HEREDOC);
+		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
+			get_files(cmd_ln, node, &i, APPEND_FILES);
+		else if (cmd_ln[i] == '<' && ++i)
+			get_files(cmd_ln, node, &i, IN_FILES);
+		else if (cmd_ln[i] == '>' && ++i)
+			get_files(cmd_ln, node, &i, OUT_FILES);
+		else if (!ft_strchr(METACHARS, cmd_ln[i]))
+			get_files(cmd_ln, node, &i, COMAND);
+		if (cmd_ln[i] && !ft_strchr(HANDLE, cmd_ln[i]))
+			i++;
+	}
+	return (0);
+}
+
 int	find_exe(t_parse *parser)
 {
 	int		i;
@@ -77,13 +100,11 @@ int	find_exe(t_parse *parser)
 	node->in_files = malloc(sizeof(char *) * quantity->in_file);
 	node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
 	node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
-	// node->out_append_files = malloc(sizeof(char *) * quantity->heredoc);
 	node->cmd = malloc(sizeof(char *) * 100);
 	fill_null(&node->cmd, 100);
 	fill_null(&node->in_files, quantity->in_file);
 	fill_null(&node->out_files, quantity->out_file);
 	fill_null(&node->heredoc, quantity->heredoc);
-	// fill_null(&node->out_append_files, quantity->out_append_files);
 	tmp = parser->rd_ln;
 	while (tmp[i])
 	{
@@ -103,7 +124,19 @@ int	find_exe(t_parse *parser)
 	return (0);
 }
 
-
+int	free_list(t_node *head)
+{
+	while (head)
+	{
+		free_double(&head->cmd);
+		free_double(&head->out_files);
+		free_double(&head->in_files);
+		free_double(&head->heredoc);
+		head = head->next;
+		free(head->prev);
+	}
+	return (0);
+}
 
 
 
@@ -111,18 +144,25 @@ int parsing(t_parse *parser)
 {
 	int	i;
 	// split_quotes(parser);
-
+	// split_pipe(parser);
+	// pipe_join(parser);
 	find_exe(parser);
 	t_node *tmp = parser->data->cmd_line->head;
 	// if (parser->data->error_message)
 	// 	printf("%s", parser->data->error_message);
 	print_info(parser);
+	free_parse(parser);
 	return (0);
 }
 
 int	init(t_parse *parser, t_data *data)
 {
 	parser->data = data;
+	parser->spl_qutoes = NULL;
+	parser->spl_pipe = NULL;
+	parser->join_pipe = NULL;
+	parser->rd_ln = NULL;
+	// data->cmd_line = NULL;
 	parser->data->cmd_line = create_list();
 	return (0);
 }
@@ -141,8 +181,6 @@ int main(int ac, char **av)
 			parser.rd_ln = readline("minishell> ");
 			parsing(&parser);
 		// }
-		
-		
 	}
 	// int	i = 0;
 	// int	*a = &i;
