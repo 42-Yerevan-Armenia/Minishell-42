@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   fill_null.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/11 11:46:08 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/13 19:50:49 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	fill_null(char ***ptr, int len)
 {
-	size_t	i;
-	size_t	length;
+	int	i;
 
-	length = 0;
-	while (src && src[length])
-		length++;
 	i = 0;
-	if (src && size != 0)
+	while (i < len)
 	{
-		while (src[i] != '\0' && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		(*ptr)[i++] = NULL;
+	}
+	return (0);
 }

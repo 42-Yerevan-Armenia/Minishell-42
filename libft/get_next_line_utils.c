@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:47:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/03/26 20:48:23 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:26:23 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,25 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char const *s2)
-{
-	char	*ptr;
-	char	*ptr1;
-	char	*arr_to_free;
+// char	*ft_strjoin(char *s1, char const *s2)
+// {
+// 	char	*ptr;
+// 	char	*ptr1;
+// 	char	*arr_to_free;
 
-	arr_to_free = s1;
-	ptr = (char *) malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
-	if (ptr == 0)
-		return (0);
-	ptr1 = ptr;
-	while (s1 && *s1 != '\0')
-		*ptr++ = *s1++;
-	while (s2 && *s2 != '\0')
-		*ptr++ = *s2++;
-	*ptr = '\0';
-	free_arr(arr_to_free);
-	return (ptr1);
-}
+// 	arr_to_free = s1;
+// 	ptr = (char *) malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
+// 	if (ptr == 0)
+// 		return (0);
+// 	ptr1 = ptr;
+// 	while (s1 && *s1 != '\0')
+// 		*ptr++ = *s1++;
+// 	while (s2 && *s2 != '\0')
+// 		*ptr++ = *s2++;
+// 	*ptr = '\0';
+// 	free_arr(arr_to_free);
+// 	return (ptr1);
+// }
 
 char	*ft_strdup(char *src, char *str_for_free)
 {
@@ -82,6 +82,8 @@ char	*ft_substr(char const *src, unsigned int start, size_t len)
 	int		i;
 	size_t	s_len;
 
+	if (!src)
+		return (0);
 	s_len = ft_strlen(src + start);
 	if (start >= (unsigned int)ft_strlen(src))
 	{
