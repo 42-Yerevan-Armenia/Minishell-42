@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:19:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:55:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void print_info(t_parse *parser)
 		printf("CMD \n");
 		while (tmp->cmd && tmp->cmd[i])
 		{
-			printf("%s, ", tmp->cmd[i++]);
+			printf("%s ", tmp->cmd[i++]);
 		}
 		printf("\n----------------------------------\n");
 		printf("OUTPUT_MODE = %d\n", tmp->output_mode);

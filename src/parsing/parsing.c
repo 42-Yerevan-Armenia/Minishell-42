@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:48:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:04:16 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	find_exe(t_parse *parser)
 	int		i;
 	t_node	*node;
 	t_elem	*quantity;
-	int		flag;
 	char	**tmp;
 	int		j;
 	int		k;
@@ -123,7 +122,6 @@ int	find_exe(t_parse *parser)
 		fill_node(node, tmp[i]);
 		i++;
 	}
-	
 	return (0);
 }
 
