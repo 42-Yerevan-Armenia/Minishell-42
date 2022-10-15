@@ -9,7 +9,7 @@ char    *get_cmd(char   **paths, char *cmd)
     {
         tmp = ft_strjoin(*paths, "/");
         command = ft_strjoin(tmp, cmd);
-        free(tmp);
+        //free(tmp);
         if (access(command, F_OK) == 0)
             return (command);
         free(command);
@@ -32,6 +32,7 @@ void    find_path(t_data *data)
             printf("❌ Error");
         if (tmp->pid == 0)
         {
+        	data->path = get_cmd(data->cmd_paths, *tmp->cmd);
             execve(data->path, tmp->cmd, &tmp->cmd[0]);
             // exit(0);
         }
