@@ -69,12 +69,6 @@ typedef struct s_parse
 	t_data		*data;
 	char		*rd_ln;
 }               t_parse;
-// typedef struct s_syntax
-// {
-	
-// }               t_syntax;
-
-
 
 typedef struct s_elem
 {

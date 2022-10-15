@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_quote.c                                      :+:      :+:    :+:   */
+/*   free_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 21:20:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:16:50 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/15 18:27:02 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/15 18:27:14 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quote(t_parse *parser)
+int	free_envp(t_list_envp **list)
 {
-	int	i;
-	char	*tmp;
-	char	c;
-
-	i = 0;
-	tmp = parser->rd_ln;
-	while (tmp[i])
+	while ((*list)->head)
 	{
-		if (tmp[i] == '\'' || tmp[i] == '"')
+		free((t_envp *)(*list)->head->key);
+		free((t_envp *)(*list)->head->val);
+		if (((t_envp *)(*list)->head)->next == NULL)
 		{
-			c = tmp[i++];
-			if (tmp[i] == '\0')
-				return (1);
-			while (tmp[i] && tmp[i] != c)
-				i++;
-			printf("%c, %c\n", tmp[i], c);
-			if (tmp[i] != c)
-				return (1);
+			free(((*list)->head));
+			(*list)->head = NULL;
+			break;
 		}
-		i++;
+		(*list)->head = ((t_envp *)(*list)->head)->next;
+		if (((*list)->head))
+			free(((t_envp *)(*list)->head)->prev);
 	}
 	return (0);
 }

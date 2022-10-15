@@ -58,3 +58,14 @@ void print_list(t_spl_pipe *head)
     }
     
 }
+
+
+int	print_env(t_envp *head)
+{
+	while (head)
+	{
+		printf("%s=%s\n", head->key, head->val);
+		head = head->next;
+	}
+	return (0);
+}

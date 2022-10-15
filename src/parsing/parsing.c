@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 17:43:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:54:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
-
-void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4)
-{
-	if (ptr1)
-		*ptr1 = 0;
-	if (ptr2)
-		*ptr2 = 0;
-	if (ptr3)
-		*ptr3 = 0;
-	if (ptr4)
-		*ptr4 = 0;
-}
 
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
@@ -158,63 +146,26 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-t_list_envp *create_list_envp(void)
-{
-	t_list_envp *list;
+// int	rep_vars(t_parse *parser)
+// {
+// 	int	i;
+// 	char	*tmp;
 	
-    list = malloc(sizeof(t_list_envp));
-    if (list == NULL)
-        exit (1);
-    list->head = NULL;
-    list->tail = NULL;
-    return (list);
-}
-
-t_envp	*get_env(t_list_envp *env_list, char **envp)
-{
-	t_envp	*env;
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	if (envp[i])
-	{
-		env = malloc(sizeof(t_envp));
-		if (!env && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
-			exit (1);
-			tmp = ft_split(envp[i++], ' ');
-		env->key = tmp[0];
-		env->val = tmp[1];
-		env->is_export = 0;
-		env->next = NULL;
-		env->prev = NULL;
-		env_list->head = env;
-	}
-	while (envp[i])
-	{
-		env->next = malloc(sizeof(t_envp));
-		if (!env->next && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
-			exit (1);
-		env = env->next;
-		tmp = ft_split(envp[i++], '=');
-		env->key = tmp[0];
-		env->val = tmp[1];
-		env->is_export = 0;
-		env->next = NULL;
-		env->prev = NULL;
-	}
-	return (env_list->head);
-}
-
-int	print_env(t_envp *head)
-{
-	while (head)
-	{
-		printf("%s=%s\n", head->key, head->val);
-		head = head->next;
-	}
-	return (0);
-}
+// 	if (!parser->join_pipe)
+// 		return (1);
+// 	i = 0;
+// 	tmp = parser->join_pipe;
+// 	while (tmp[i])
+// 	{
+// 		while (tmp[i])
+// 		{
+// 			/* code */
+// 		}
+		
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int main(int ac, char **av, char **envp)
 {
@@ -223,17 +174,12 @@ int main(int ac, char **av, char **envp)
 	int i = 0;
 	int j = 0;
 
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i++]);
-	// }
-	
 	i = 0;
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
 		data.error_message = NULL;
-		print_env(data.env->head);
+		// print_env(data.env->head);
 		while (1)
 		{
 			parser.rd_ln = readline("minishell> ");
@@ -242,12 +188,11 @@ int main(int ac, char **av, char **envp)
 				parsing(&parser);
 				free_spl_pipe(&data.cmd_line);
 			}
+			free(parser.rd_ln);
 		}
+		free_envp(&data.env);
 	}
 }
-
-
-
 
 
 
