@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 17:37:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:54:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int     free_parse(t_parse *parser);
 t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2);
 int     free_spl_pipe(t_list_spl_pipe **list);
 t_list_envp *create_list_envp(void);
+void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
+int	free_envp(t_list_envp **list);
 
 
 #endif
