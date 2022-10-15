@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 10:42:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 10:43:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:26:23 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ int	free_double(char ***ptr)
 	int	i;
 
 	i = 0;
-	while (*ptr && (*ptr)[i])
-		free((*ptr)[i++]);
-	if ((*ptr))
-		free((*ptr));
+	while ((*ptr) && ((*ptr))[i])
+	{
+		free(((*ptr))[i]);
+		((*ptr))[i++] = NULL;
+	}
+	if (((*ptr)))
+		free(((*ptr)));
+	((*ptr)) = NULL;
 	return (0);
 }

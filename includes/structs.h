@@ -13,7 +13,7 @@
 
 
 
-typedef struct s_node
+typedef struct s_spl_pipe
 {
 	int				is_args;
 	int				fd_in;
@@ -28,21 +28,37 @@ typedef struct s_node
 	char			**in_files;
 	char			**heredoc;
 	char			*error_message;
-	struct s_node	*next;
-	struct s_node	*prev;
-}               t_node;
+	struct s_spl_pipe	*next;
+	struct s_spl_pipe	*prev;
+}               t_spl_pipe;
 
-typedef struct s_list
+typedef struct s_list_spl_pipe
 {
-	t_node   *head;
-	t_node   *tail;
-}               t_list;
+	t_spl_pipe   *head;
+	t_spl_pipe   *tail;
+}               t_list_spl_pipe;
+
+typedef struct s_envp
+{
+	int		is_export;
+	char	*key;
+	char	*val;
+	struct s_envp	*next;
+	struct s_envp	*prev;
+}               t_envp;
+
+typedef struct s_list_envp
+{
+	t_envp   *head;
+	t_envp   *tail;
+}               t_list_envp;
 
 typedef struct s_data
 {
-	char		**cmd_paths;
-	char		*error_message;
-	t_list		*cmd_line;
+	char			**cmd_paths;
+	char			*error_message;
+	t_list_spl_pipe	*cmd_line;
+	t_list_envp		*env;
 }               t_data;
 
 typedef struct s_parse

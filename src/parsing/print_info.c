@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:55:37 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:00:32 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 void print_info(t_parse *parser)
 {
 	int	i;
-	t_node *tmp = parser->data->cmd_line->head;
+	t_spl_pipe *tmp = parser->data->cmd_line->head;
 
 	i = 0;
 	while (tmp)
 	{
-		// t_node *tmp = parser->data->cmd_line->head;
-
 		printf("\n----------------------------------\n");
 		printf("IN_FILES \n");
+		// printf("%p\n", tmp);
+		// printf("%p\n", tmp->in_files);
+		i = 0;
 		while (tmp->in_files && tmp->in_files[i])
 		{
 			printf("%s, ", tmp->in_files[i++]);
