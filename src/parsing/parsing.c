@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 14:04:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:43:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4)
 		*ptr4 = 0;
 }
 
-int	get_files(char *tmp, t_node *node, int *i, int c)
+int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
 	static	int	k;
 	static	int	m;
@@ -72,7 +72,7 @@ int	get_files(char *tmp, t_node *node, int *i, int c)
 	return (0);
 }
 
-int	fill_node(t_node *node, char *cmd_ln)
+int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 {
 	int	i;
 
@@ -99,7 +99,7 @@ int	fill_node(t_node *node, char *cmd_ln)
 int	find_exe(t_parse *parser)
 {
 	int		i;
-	t_node	*node;
+	t_spl_pipe	*node;
 	t_elem	*quantity;
 	char	**tmp;
 	int		j;
@@ -109,8 +109,9 @@ int	find_exe(t_parse *parser)
 	tmp = parser->join_pipe;
 	while (tmp[i])
 	{
-		node = add_node(parser->data->cmd_line, NULL, NULL);
+		node = add_pipe(parser->data->cmd_line, new_spl_pipe(NULL, NULL));
 		quantity = count_elem(tmp[i]);
+		// printf("quantity->in_file = %d\n, quantity->out_file = %d\n, quantity->out_append_files = %d\n, quantity->heredoc %d\n", quantity->in_file, quantity->out_file, quantity->out_append_files, quantity->heredoc);
 		node->in_files = malloc(sizeof(char *) * quantity->in_file);
 		node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
 		node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
@@ -119,27 +120,13 @@ int	find_exe(t_parse *parser)
 		fill_null(&node->in_files, quantity->in_file);
 		fill_null(&node->out_files, quantity->out_file + quantity->out_append_files);
 		fill_null(&node->heredoc, quantity->heredoc);
-		fill_node(node, tmp[i]);
+		fill_spl_pipe(node, tmp[i]);
+		free(quantity);
 		i++;
 	}
+	
 	return (0);
 }
-
-int	free_list(t_node *head)
-{
-	while (head)
-	{
-		free_double(&head->cmd);
-		free_double(&head->out_files);
-		free_double(&head->in_files);
-		free_double(&head->heredoc);
-		head = head->next;
-		free(head->prev);
-	}
-	return (0);
-}
-
-
 
 int parsing(t_parse *parser)
 {
@@ -155,7 +142,9 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-int	init(t_parse *parser, t_data *data)
+t_envp	*get_env(t_list_envp *env_list, char **envp);
+
+int	init(t_parse *parser, t_data *data, char **envp)
 {
 	parser->data = data;
 	parser->spl_qutoes = NULL;
@@ -163,33 +152,98 @@ int	init(t_parse *parser, t_data *data)
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
 	// data->cmd_line = NULL;
-	parser->data->cmd_line = create_list();
+	parser->data->cmd_line = create_list_pipe();
+	data->env = create_list_envp();
+	get_env(data->env, envp);
 	return (0);
 }
 
-int main(int ac, char **av)
+t_list_envp *create_list_envp(void)
+{
+	t_list_envp *list;
+	
+    list = malloc(sizeof(t_list_envp));
+    if (list == NULL)
+        exit (1);
+    list->head = NULL;
+    list->tail = NULL;
+    return (list);
+}
+
+t_envp	*get_env(t_list_envp *env_list, char **envp)
+{
+	t_envp	*env;
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	if (envp[i])
+	{
+		env = malloc(sizeof(t_envp));
+		if (!env && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
+			exit (1);
+			tmp = ft_split(envp[i++], ' ');
+		env->key = tmp[0];
+		env->val = tmp[1];
+		env->is_export = 0;
+		env->next = NULL;
+		env->prev = NULL;
+		env_list->head = env;
+	}
+	while (envp[i])
+	{
+		env->next = malloc(sizeof(t_envp));
+		if (!env->next && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
+			exit (1);
+		env = env->next;
+		tmp = ft_split(envp[i++], '=');
+		env->key = tmp[0];
+		env->val = tmp[1];
+		env->is_export = 0;
+		env->next = NULL;
+		env->prev = NULL;
+	}
+	return (env_list->head);
+}
+
+int	print_env(t_envp *head)
+{
+	while (head)
+	{
+		printf("%s=%s\n", head->key, head->val);
+		head = head->next;
+	}
+	return (0);
+}
+
+int main(int ac, char **av, char **envp)
 {
 	t_parse parser;
 	t_data	data;
 	int i = 0;
+	int j = 0;
 
+	// while (envp[i])
+	// {
+	// 	printf("%s\n", envp[i++]);
+	// }
+	
+	i = 0;
 	if (ac == 1)
 	{
-		init(&parser, &data);
+		init(&parser, &data, envp);
 		data.error_message = NULL;
-		
-		// while (1)
-		// {
+		print_env(data.env->head);
+		while (1)
+		{
 			parser.rd_ln = readline("minishell> ");
-			parsing(&parser);
-		// }
+			if (parser.rd_ln[0])
+			{
+				parsing(&parser);
+				free_spl_pipe(&data.cmd_line);
+			}
+		}
 	}
-	// int	i = 0;
-	// int	*a = &i;
-
-	// printf("%d, %p\n", *a, a);
-	// (*a)++;
-	// printf("%d, %p\n", *a, a);
 }
 
 
