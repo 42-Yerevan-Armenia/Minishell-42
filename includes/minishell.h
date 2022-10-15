@@ -23,6 +23,10 @@ void    dis_prompt();
 int     split_quotes(t_parse *parser);
 int     split_pipe(t_parse *parser);
 int     pipe_join(t_parse *parser);
+void    find_path(t_data *data);
+int parsing(t_parse *parser);
+int	init(t_parse *parser, t_data *data, char **envp);
+
 
 // helper func
 t_list_spl_pipe *create_list_pipe(void);
