@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:28:09 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:11:07 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_envp	*get_env(t_list_envp *env_list, char **envp)
 		env = malloc(sizeof(t_envp));
 		if (!env && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
 			exit (1);
-			tmp = ft_split(envp[i++], ' ');
+			tmp = ft_split(envp[i++], '=');
 		env->key = tmp[0];
 		env->val = tmp[1];
 		env->is_export = 0;
