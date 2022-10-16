@@ -55,6 +55,7 @@ typedef struct s_list_envp
 
 typedef struct s_data
 {
+	char			*path;
 	char			**cmd_paths;
 	char			*error_message;
 	t_list_spl_pipe	*cmd_line;
