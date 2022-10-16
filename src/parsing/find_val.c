@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   find_val.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:25:57 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/16 13:42:51 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/16 17:45:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*find_val(t_envp *head, char *key)
 {
-	if (n == 0)
-		return (0);
-	while (s2 && s1 && *s1 && --n)
+	while (key && head)
 	{
-		if (*s1 != *s2)
-		{
-			break ;
-		}
-		s1++;
-		s2++;
+		// printf("head->key = %s\n", head->key);
+		// printf("key = %s\n", key);
+		if (!ft_strncmp(head->key, key, ft_strlen(head->key)))
+			return (head->val);
+		head = head->next;
 	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+
+	return (NULL);
 }

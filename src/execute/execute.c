@@ -40,35 +40,35 @@ void    find_path(t_data *data)
     }
 }
 
-int main(int ac, char **av, char **envp)
-{
-	t_parse parser;
-	t_data	data;
-	int i = 0;
-	int j = 0;
+// int main(int ac, char **av, char **envp)
+// {
+// 	t_parse parser;
+// 	t_data	data;
+// 	int i = 0;
+// 	int j = 0;
 
-	i = 0;
-	if (ac == 1)
-	{
-		init(&parser, &data, envp);
-		data.error_message = NULL;
-		// print_env(data.env->head);
-		while (1)
-		{
-			parser.rd_ln = readline("minishell> ");
-				// printf("barev\n");
+// 	i = 0;
+// 	if (ac == 1)
+// 	{
+// 		init(&parser, &data, envp);
+// 		data.error_message = NULL;
+// 		// print_env(data.env->head);
+// 		while (1)
+// 		{
+// 			parser.rd_ln = readline("minishell> ");
+// 				// printf("barev\n");
 
-			if (parser.rd_ln[0])
-			{
-				// printf("barev\n");
-				parsing(&parser);
+// 			if (parser.rd_ln[0])
+// 			{
+// 				// printf("barev\n");
+// 				parsing(&parser);
 
-				// printf("❌ Error");
-				find_path(&data);
-				free_spl_pipe(&data.cmd_line);
-			}
-			free(parser.rd_ln);
-		}
-		free_envp(&data.env);
-	}
-}
+// 				// printf("❌ Error");
+// 				find_path(&data);
+// 				free_spl_pipe(&data.cmd_line);
+// 			}
+// 			free(parser.rd_ln);
+// 		}
+// 		free_envp(&data.env);
+// 	}
+// }

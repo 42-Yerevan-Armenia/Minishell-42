@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:54:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:43:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	j = *i;
 	if ((tmp[j] == '\'' || tmp[j] == '"') && ++(*i))
 	{
-		while (tmp[*i] && ((tmp[*i] != '\'' && tmp[*i] != '"')))
+		j = *i;
+		while (tmp[*i] && tmp[*i] != tmp[j - 1])
 			*i += 1;
-		(*i)++;
 	}
 	else
 		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])))
@@ -116,20 +116,6 @@ int	find_exe(t_parse *parser)
 	return (0);
 }
 
-int parsing(t_parse *parser)
-{
-	int	i;
-	split_quotes(parser);
-	split_pipe(parser);
-	pipe_join(parser);
-	find_exe(parser);
-	if (parser->data->error_message)
-		printf("%s", parser->data->error_message);
-	print_info(parser);
-	free_parse(parser);
-	return (0);
-}
-
 t_envp	*get_env(t_list_envp *env_list, char **envp);
 
 int	init(t_parse *parser, t_data *data, char **envp)
@@ -146,53 +132,130 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-// int	rep_vars(t_parse *parser)
-// {
-// 	int	i;
-// 	char	*tmp;
+char	*ft_replace(t_parse	*parser, char *src, int *i, int *j, char *k_ptr)
+{
+	char	*dest;
+	int		k;
+	char	*res;
+	char	*value;
 	
-// 	if (!parser->join_pipe)
-// 		return (1);
-// 	i = 0;
-// 	tmp = parser->join_pipe;
-// 	while (tmp[i])
-// 	{
-// 		while (tmp[i])
-// 		{
-// 			/* code */
-// 		}
-		
-// 		i++;
-// 	}
-// 	return (0);
-// }
+		// printf("j = %d\n", *j);
+	value = find_val(parser->data->env->head, parser->key);
+	res = malloc(sizeof(char) * (ft_strlen(src)
+		- ft_strlen(k_ptr) + ft_strlen(value)) + 1);
+	if (!res)
+		return (NULL);
+		// printf("key = %s\n", parser->key);
+		// printf("s2 = %s\n", value);
+	dest = res;
+	k = 0;
+	*j = 0;
+	while (src[*j])
+	{
+		if (&src[*j] == k_ptr && ++(*j))
+		{
+			while (value && value[k])
+				*dest++ = value[k++];
+			*j += ft_strlen(parser->key);
+		}
+		if (src[*j])
+			*dest++ = src[(*j)++];
+	}
+	*j = -1;
+	// *i += 1;
+	// *j += (ft_strlen(value) - ft_strlen(parser->key) - 1);
+	// (*j) += ft_strlen(s2);
+	*dest = '\0';
+	printf("res = %s\n", res);
+	return (res);
+}
+// "$HOME $PWD" "$HOME"
 
-// int main(int ac, char **av, char **envp)
-// {
-// 	t_parse parser;
-// 	t_data	data;
-// 	int i = 0;
-// 	int j = 0;
+int	rep_vars(t_parse *parser)
+{
+	int	i;
+	int	j;
+	char	**tmp;
+	char	*key;
+	char	*ptr_var;
+	
+	if (!parser->spl_qutoes)
+		return (1);
+	i = 0;
+	j = 0;
+	ptr_var = NULL;
+	tmp = parser->spl_qutoes;
+	while (tmp[i])
+	{
+		if (tmp[i][0] != '\'')
+		{
+			while (tmp[i][j])
+			{
+				printf("tmp[i] = %s\n", tmp[i]);
+				parser->key = find_var(tmp[i], &ptr_var, j);
+				// printf("jjjjjj = %d\n", j);
+				// printf("%s\n", k_ptr);
+				if (parser->key)
+					tmp[i] = ft_replace(parser, tmp[i], &i, &j, ptr_var);
+				// printf("%s\n", tmp[i]);
+				// printf("j = %d\n", j);
+				free(key);
+				// if (tmp[i][j])
+					j++;
+			}
+		}
+		i++;
+	}
+	return (0);
+}
 
-// 	i = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		// print_env(data.env->head);
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("minishell> ");
-// 			if (parser.rd_ln[0])
-// 			{
-// 				parsing(&parser);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free(parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// }
+int parsing(t_parse *parser)
+{
+	int	i = 0;
+	split_quotes(parser);
+	split_pipe(parser);
+	pipe_join(parser);
+	rep_vars(parser);
+	while (parser->spl_qutoes[i])
+	{
+		printf("%s\n", parser->spl_qutoes[i]);
+		i++;
+	}
+	// find_exe(parser);
+	// if (parser->data->error_message)
+	// 	printf("%s", parser->data->error_message);
+	// print_info(parser);
+	// free_parse(parser);
+	return (0);
+}
+
+
+int main(int ac, char **av, char **envp)
+{
+	t_parse parser;
+	t_data	data;
+	int i = 0;
+	int j = 0;
+
+	i = 0;
+	if (ac == 1)
+	{
+		init(&parser, &data, envp);
+		data.error_message = NULL;
+		// print_env(data.env->head);
+		while (1)
+		{
+			parser.rd_ln = readline("🔻minishell> ");
+			if (parser.rd_ln[0])
+			{
+				parsing(&parser);
+				free_spl_pipe(&data.cmd_line);
+			}
+			free(parser.rd_ln);
+		}
+		free_envp(&data.env);
+	}
+}
 
 
 

@@ -3,7 +3,7 @@
 
  #define METACHARS "|&;()<> \n\t"
  #define HANDLE	"<>"
- #define SPACES " \n\t"
+ #define SPACES " \n\t\v\f\r"
  #define APPEND_FILES 1
  #define IN_FILES 2
  #define OUT_FILES 3
@@ -64,6 +64,8 @@ typedef struct s_data
 
 typedef struct s_parse
 {
+	char		*key;
+	char		*val;
 	char		**spl_qutoes;
 	char		**spl_pipe;
 	char		**join_pipe;

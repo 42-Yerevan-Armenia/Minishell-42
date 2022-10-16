@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:54:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:09:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int     pipe_join(t_parse *parser);
 void    find_path(t_data *data);
 int parsing(t_parse *parser);
 int	init(t_parse *parser, t_data *data, char **envp);
+char	*find_val(t_envp *head, char *key);
+char	*find_var(char *src, char **ptr, int j);
 
 
 // helper func
@@ -44,6 +46,7 @@ int     free_spl_pipe(t_list_spl_pipe **list);
 t_list_envp *create_list_envp(void);
 void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int	free_envp(t_list_envp **list);
+int	print_env(t_envp *head);
 
 
 #endif
