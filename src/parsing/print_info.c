@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/16 09:46:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:21:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void print_info(t_parse *parser)
 	while (tmp)
 	{
 		printf("\n----------------------------------\n");
+		i = 0;
+		printf("**CMD - ");
+		while (tmp->cmd && tmp->cmd[i])
+		{
+			printf("🛑 %s ", tmp->cmd[i++]);
+		}
 		printf("**IN_FILES - ");
-		// printf("%p\n", tmp);
-		// printf("%p\n", tmp->in_files);
 		i = 0;
 		while (tmp->in_files && tmp->in_files[i])
 		{
@@ -48,12 +52,6 @@ void print_info(t_parse *parser)
 		// {
 		// 	printf("%s\n", tmp->out_append_files[i++]);
 		// }
-		i = 0;
-		printf("**CMD - ");
-		while (tmp->cmd && tmp->cmd[i])
-		{
-			printf("🛑 %s ", tmp->cmd[i++]);
-		}
 		printf("OUTPUT_MODE = %d, ", tmp->output_mode);
 		printf("INPUT_MODE = %d", tmp->input_mode);
 		printf("\n\n*********************************\n");

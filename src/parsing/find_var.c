@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/16 19:10:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:08:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char	*find_var(char *src, char **ptr, int j)
 	{
 		if (src[j] == '$')
 		{
-			*ptr = &src[(j)++];
-			while (src[j] && (!ft_strchr(METACHARS, src[j] && (src[j] != '\'' && src[j] != '"')))
+			*ptr = &src[j++];
+			while (src[j] && (!ft_strchr(METACHARS, src[j] && (src[j] != '$' && src[j] != '\'' && src[j] != '"')))
 			 && !ft_strchr(SPACES, src[j]) && ++(j))
 				len++;
 			res = malloc(sizeof(char) * len + 1);
@@ -38,7 +38,7 @@ char	*find_var(char *src, char **ptr, int j)
 				res[i++] = src[(j) - len--];
 			break;
 		}
-		(j)++;
+		j++;
 	}
 	if (res)
 		res[i] = '\0';

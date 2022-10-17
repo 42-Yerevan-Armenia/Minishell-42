@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:04 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/16 18:33:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:34:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include "minishell.h"
 # include <unistd.h>
 # include <stdio.h>
 

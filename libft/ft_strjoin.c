@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:22:45 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/14 21:13:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/17 20:52:00 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@
 // 	*ptr = '\0';
 // 	return (ptr1);
 // }
-int	free_arr(char *str)
-{
-	if (str != NULL)
-	{
-		free(str);
-		str = NULL;
-	}
-	return (1);
-}
 
 char	*ft_strjoin(char *s1, char const *s2)
 {
@@ -56,6 +47,6 @@ char	*ft_strjoin(char *s1, char const *s2)
 	while (s2 && *s2 != '\0')
 		*ptr++ = *s2++;
 	*ptr = '\0';
-	free_arr(arr_to_free);
+	free_arr(&arr_to_free);
 	return (ptr1);
 }

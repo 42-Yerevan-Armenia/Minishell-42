@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:31:34 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/04/17 15:34:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:24:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**ft_split(char const *s, char c)
 	i[0] = 0;
 	i[1] = 0;
 	i[2] = 0;
-	splited = malloc(8 * counting_word(s, c) + 1);
+	splited = malloc(sizeof(char *) * (counting_word(s, c) + 1));
 	if (!splited)
 		return (0);
 	while (s[i[0]] != '\0')
