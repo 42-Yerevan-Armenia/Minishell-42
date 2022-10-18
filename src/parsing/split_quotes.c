@@ -17,7 +17,7 @@ int	split_quotes(t_parse *parser)
 	l_arr = 2;
 	i = 0;
 	parser->spl_qutoes = malloc(sizeof(char *) * (l_arr + 1));
-	if (!parser->spl_qutoes && printf("Can't allocate memory."))
+	if (!parser->spl_qutoes && !ft_perror("minishell"))
 		exit (1);
 	fill_null(&parser->spl_qutoes, l_arr + 1);
 	parser->spl_qutoes[l_arr] = NULL;

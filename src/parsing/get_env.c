@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 11:25:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:31:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_envp	*get_env(t_list_envp *env_list, char **envp)
 	if (envp[i])
 	{
 		env = malloc(sizeof(t_envp));
-		if (!env && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
+		if (!env && !ft_perror("minishell"))
 			exit (1);
 		tmp = ft_split(envp[i++], '=');
 		env->key = ft_strdup(tmp[0]);
@@ -36,7 +36,7 @@ t_envp	*get_env(t_list_envp *env_list, char **envp)
 	while (envp[i])
 	{
 		env->next = malloc(sizeof(t_envp));
-		if (!env->next && write(2, "Can't allocate memory.", ft_strlen("Can't allocate memory.")))
+		if (!env->next && !ft_perror("minishell"))
 			exit (1);
 		env = env->next;
 		tmp = ft_split(envp[i++], '=');
