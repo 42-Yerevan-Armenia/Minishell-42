@@ -21,6 +21,7 @@ typedef struct s_spl_pipe
 	int				output_mode;
 	int				input_mode;
 	int				flag_new_pipe;
+	char			*hdoc_input;;
 	pid_t			pid;
 	char			**cmd;
 	char			*dlm;
