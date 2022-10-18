@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+// #include "../includes/minishell.h"
 
 /* One way to create a pipeline of N processes */
 //#include <assert.h>

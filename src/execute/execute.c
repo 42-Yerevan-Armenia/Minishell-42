@@ -147,6 +147,7 @@ void    find_path(t_data *data)
     data->exit_status = WEXITSTATUS(res);
 }
 
+<<<<<<< HEAD
 static void exec_arguments(int ac, char **av)
 {
     /* Split the command line into sequences of arguments */
@@ -214,3 +215,37 @@ int main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
+=======
+// int main(int ac, char **av, char **envp)
+// {
+// 	t_parse parser;
+// 	t_data	data;
+// 	int i = 0;
+// 	int j = 0;
+
+// 	i = 0;
+// 	if (ac == 1)
+// 	{
+// 		init(&parser, &data, envp);
+// 		data.error_message = NULL;
+// 		// print_env(data.env->head);
+// 		while (1)
+// 		{
+// 			parser.rd_ln = readline("minishell> ");
+// 				// printf("barev\n");
+
+// 			if (parser.rd_ln[0])
+// 			{
+// 				// printf("barev\n");
+// 				parsing(&parser);
+
+// 				// printf("❌ Error");
+// 				find_path(&data);
+// 				free_spl_pipe(&data.cmd_line);
+// 			}
+// 			free(parser.rd_ln);
+// 		}
+// 		free_envp(&data.env);
+// 	}
+// }
+>>>>>>> 45560c9e29e48ca906f2de6df0eab1315e70b2d8
