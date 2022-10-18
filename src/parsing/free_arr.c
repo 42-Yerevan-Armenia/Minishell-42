@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   free_arr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:25:57 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/16 13:42:51 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/17 10:29:44 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/18 19:25:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+// #include <stdlib.h>
+// #include <stdio.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	free_arr(char **arr)
 {
-	if (n == 0)
-		return (0);
-	while (s2 && s1 && *s1 && --n)
+	if (*arr)
 	{
-		if (*s1 != *s2)
-		{
-			break ;
-		}
-		s1++;
-		s2++;
+		free(*arr);
+		*arr = NULL;
 	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	return (0);
 }
+
+// int main()
+// {
+// 	char *ptr;
+
+// 	// ptr = malloc(1);
+// 	ptr = NULL;
+
+// 	ptr = malloc(1);
+// 	printf("ptr = %p\n", ptr);
+// 	free_arr(&ptr);
+// 	// ptr = NULL;
+// 	printf("ptr = %p\n", ptr);
+// 	free_arr(&ptr);
+// 	// free_arr(ptr);
+// }

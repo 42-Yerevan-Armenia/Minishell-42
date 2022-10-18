@@ -11,7 +11,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 
-CFLAGS = -g -ggdb3 -I./includes #-fsanitize=address
+CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address
 
 SRCS = $(wildcard ./src/*/*.c)
 SRCS += $(wildcard ./src/*.c)

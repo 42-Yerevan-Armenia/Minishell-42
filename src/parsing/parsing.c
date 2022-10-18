@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:54:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:00:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
+// "$HOME $PWD" "$HOME"
 
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
@@ -36,9 +37,9 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	j = *i;
 	if ((tmp[j] == '\'' || tmp[j] == '"') && ++(*i))
 	{
-		while (tmp[*i] && ((tmp[*i] != '\'' && tmp[*i] != '"')))
+		j = *i;
+		while (tmp[*i] && tmp[*i] != tmp[j - 1])
 			*i += 1;
-		(*i)++;
 	}
 	else
 		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])))
@@ -116,22 +117,6 @@ int	find_exe(t_parse *parser)
 	return (0);
 }
 
-int parsing(t_parse *parser)
-{
-	int	i;
-	split_quotes(parser);
-	split_pipe(parser);
-	pipe_join(parser);
-	find_exe(parser);
-	if (parser->data->error_message)
-		printf("%s", parser->data->error_message);
-	print_info(parser);
-	free_parse(parser);
-	return (0);
-}
-
-t_envp	*get_env(t_list_envp *env_list, char **envp);
-
 int	init(t_parse *parser, t_data *data, char **envp)
 {
 	parser->data = data;
@@ -146,54 +131,83 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-// int	rep_vars(t_parse *parser)
-// {
-// 	int	i;
-// 	char	*tmp;
+int parsing(t_parse *parser)
+{
+	int	i = 0;
+	split_quotes(parser);
+	rep_vars(parser);
+	split_pipe(parser);
+	pipe_join(parser);
+	// while (parser->spl_qutoes[i])
+	// {
+	// 	printf("%s\n", parser->spl_qutoes[i]);
+	// 	i++;
+	// }
+	find_exe(parser);
+	if (parser->data->error_message)
+		printf("%s", parser->data->error_message);
+	print_info(parser);
+	free_parse(parser);
+	return (0);
+}
+
+char *ft_heredoc(t_parse *parser, char *dlmtr)
+{
+	char	*res;
+	char	*ptr;
+	int		i;
 	
-// 	if (!parser->join_pipe)
-// 		return (1);
-// 	i = 0;
-// 	tmp = parser->join_pipe;
-// 	while (tmp[i])
-// 	{
-// 		while (tmp[i])
-// 		{
-// 			/* code */
-// 		}
-		
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	res = NULL;
+	i = 0;
+	while (parser->data->cmd_line->head->heredoc[i])
+	{	
+		free_arr(&parser->data->cmd_line->head->hdoc_input);
+		while (1)
+		{
+			free_arr(&parser->rd_ln);
+			parser->rd_ln = readline(">>");
+			if (!ft_strcmp(parser->rd_ln, dlmtr))
+				break;
+			res = ft_strjoin(res, parser->rd_ln);
+		}
+		i++;
+		free_arr(&parser->rd_ln);
+	}
+	free_arr(&parser->rd_ln);
+	return (res);
+}
 
-// int main(int ac, char **av, char **envp)
-// {
-// 	t_parse parser;
-// 	t_data	data;
-// 	int i = 0;
-// 	int j = 0;
+int main(int ac, char **av, char **envp)
+{
+	t_parse parser;
+	t_data	data;
+	int i = 0;
+	int j = 0;
 
-// 	i = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		// print_env(data.env->head);
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("minishell> ");
-// 			if (parser.rd_ln[0])
-// 			{
-// 				parsing(&parser);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free(parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// }
-
+	i = 0;
+	if (ac == 1)
+	{
+		init(&parser, &data, envp);
+		data.error_message = NULL;
+		// print_env(data.env->head);
+		while (1)
+		{
+			parser.rd_ln = readline("🔻minishell> ");
+			if (parser.rd_ln[0])
+			{
+				add_history(parser.rd_ln);
+				parsing(&parser);
+				// if (parser.data->cmd_line->head->heredoc[0])
+					parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
+				// i = 0;
+				free_spl_pipe(&data.cmd_line);
+				// printf(" 1 = %p\n", parser.data->cmd_line->head->hdoc_input);
+			}
+			free_arr(&parser.rd_ln);
+		}
+		free_envp(&data.env);
+	}
+}
 
 
 // int	check_syntax(t_parse *parser)

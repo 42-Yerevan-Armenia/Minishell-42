@@ -3,7 +3,7 @@
 
  #define METACHARS "|&;()<> \n\t"
  #define HANDLE	"<>"
- #define SPACES " \n\t"
+ #define SPACES " \n\t\v\f\r"
  #define APPEND_FILES 1
  #define IN_FILES 2
  #define OUT_FILES 3
@@ -21,6 +21,7 @@ typedef struct s_spl_pipe
 	int				output_mode;
 	int				input_mode;
 	int				flag_new_pipe;
+	char			*hdoc_input;;
 	pid_t			pid;
 	char			**cmd;
 	char			*dlm;
@@ -58,12 +59,15 @@ typedef struct s_data
 	char			*path;
 	char			**cmd_paths;
 	char			*error_message;
+	char			*hostory;
 	t_list_spl_pipe	*cmd_line;
 	t_list_envp		*env;
 }               t_data;
 
 typedef struct s_parse
 {
+	char		*key;
+	char		*val;
 	char		**spl_qutoes;
 	char		**spl_pipe;
 	char		**join_pipe;
