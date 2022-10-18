@@ -16,8 +16,9 @@
 #include "../libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdio.h>
 #include "structs.h"
+
+void pipex(t_data *data);
 
 void    dis_prompt();
 int     split_quotes(t_parse *parser);
