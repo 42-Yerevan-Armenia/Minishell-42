@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 21:00:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:00:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
+// "$HOME $PWD" "$HOME"
 
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
@@ -116,8 +117,6 @@ int	find_exe(t_parse *parser)
 	return (0);
 }
 
-// t_envp	*get_env(t_list_envp *env_list, char **envp);
-
 int	init(t_parse *parser, t_data *data, char **envp)
 {
 	parser->data = data;
@@ -131,11 +130,6 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	get_env(data->env, envp);
 	return (0);
 }
-
-
-// "$HOME $PWD" "$HOME"
-
-
 
 int parsing(t_parse *parser)
 {
@@ -157,6 +151,31 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
+char *ft_heredoc(t_parse *parser, char *dlmtr)
+{
+	char	*res;
+	char	*ptr;
+	int		i;
+	
+	res = NULL;
+	i = 0;
+	while (parser->data->cmd_line->head->heredoc[i])
+	{	
+		free_arr(&parser->data->cmd_line->head->hdoc_input);
+		while (1)
+		{
+			free_arr(&parser->rd_ln);
+			parser->rd_ln = readline(">>");
+			if (!ft_strcmp(parser->rd_ln, dlmtr))
+				break;
+			res = ft_strjoin(res, parser->rd_ln);
+		}
+		i++;
+		free_arr(&parser->rd_ln);
+	}
+	free_arr(&parser->rd_ln);
+	return (res);
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -178,14 +197,17 @@ int main(int ac, char **av, char **envp)
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
+				// if (parser.data->cmd_line->head->heredoc[0])
+					parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
+				// i = 0;
 				free_spl_pipe(&data.cmd_line);
+				// printf(" 1 = %p\n", parser.data->cmd_line->head->hdoc_input);
 			}
-			free(parser.rd_ln);
+			free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);
 	}
 }
-
 
 
 // int	check_syntax(t_parse *parser)
