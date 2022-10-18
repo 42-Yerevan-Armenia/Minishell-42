@@ -18,7 +18,8 @@
 #include <readline/history.h>
 #include "structs.h"
 
-void pipex(t_data *data);
+int pipex(int ac, char **av);
+char *ft_heredoc(t_parse *parser, char *dlmtr);
 
 void    dis_prompt();
 int     split_quotes(t_parse *parser);

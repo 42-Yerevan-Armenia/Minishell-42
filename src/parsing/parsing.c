@@ -127,6 +127,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	// data->cmd_line = NULL;
 	parser->data->cmd_line = create_list_pipe();
 	data->env = create_list_envp();
+	data->exit_status = 0;
 	get_env(data->env, envp);
 	return (0);
 }
