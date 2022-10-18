@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 21:01:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:57:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "structs.h"
+#include <fcntl.h>
+#include <errno.h>
+#include <string.h>
 
 void pipex(t_data *data);
 
@@ -27,11 +30,12 @@ int     pipe_join(t_parse *parser);
 void    find_path(t_data *data);
 int     parsing(t_parse *parser);
 int	    init(t_parse *parser, t_data *data, char **envp);
-char	*find_val(t_envp *head, char *key);
+char	*get_val(t_envp *head, char *key);
 char	*find_var(char *src, char **ptr, int j);
 char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr);
 int	    rep_vars(t_parse *parser);
 t_envp	*get_env(t_list_envp *env_list, char **envp);
+char	*ft_heredoc(t_parse *parser, char *dlmtr);
 
 
 // helper func
@@ -52,6 +56,8 @@ void			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int				free_envp(t_list_envp **list);
 int				print_env(t_envp *head);
 int				free_arr(char **arr);
+int             ft_perror(char *str);
+
 
 
 #endif

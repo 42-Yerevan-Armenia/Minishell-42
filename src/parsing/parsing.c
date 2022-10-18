@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 20:00:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:56:17 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	find_exe(t_parse *parser)
 		node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
 		node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
 		node->cmd = malloc(sizeof(char *) * 100);
+		if ((!node->in_files || !node->out_files || !node->heredoc || !node->cmd) && !ft_perror("minishell"))
 		fill_null(&node->cmd, 100);
 		fill_null(&node->in_files, quantity->in_file);
 		fill_null(&node->out_files, quantity->out_file + quantity->out_append_files);
@@ -151,32 +152,30 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-char *ft_heredoc(t_parse *parser, char *dlmtr)
+int	echo(t_data *data, char *arg)
 {
-	char	*res;
-	char	*ptr;
-	int		i;
-	
-	res = NULL;
-	i = 0;
-	while (parser->data->cmd_line->head->heredoc[i])
-	{	
-		free_arr(&parser->data->cmd_line->head->hdoc_input);
-		while (1)
-		{
-			free_arr(&parser->rd_ln);
-			parser->rd_ln = readline(">>");
-			if (!ft_strcmp(parser->rd_ln, dlmtr))
-				break;
-			res = ft_strjoin(res, parser->rd_ln);
-		}
-		i++;
-		free_arr(&parser->rd_ln);
-	}
-	free_arr(&parser->rd_ln);
-	return (res);
+	int	flag;
+
+	if (!arg)
+		return (1);
+	if (arg[0] == '-' && arg[1] == 'n')
+		flag = 2;
+	printf("%s", arg + flag);
+	if (flag == 0)
+		write(1, "\n", 1);
+	return (0);
 }
 
+// int main()
+// {
+// 	int fd;
+
+// 	// fd = open("barev", O_RDONLY);
+// 	// printf("%s\n", strerror(errno));
+// 	// char *str = strerror(errno);
+// 	// perror("minishell");
+// 	echo(NULL, "-n barev");
+// }
 int main(int ac, char **av, char **envp)
 {
 	t_parse parser;
@@ -193,21 +192,21 @@ int main(int ac, char **av, char **envp)
 		while (1)
 		{
 			parser.rd_ln = readline("🔻minishell> ");
+			if (!parser.rd_ln && !ft_perror("minishell"))
+				exit (1);
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
-				// if (parser.data->cmd_line->head->heredoc[0])
 					parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
-				// i = 0;
 				free_spl_pipe(&data.cmd_line);
-				// printf(" 1 = %p\n", parser.data->cmd_line->head->hdoc_input);
 			}
 			free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);
 	}
 }
+
 
 
 // int	check_syntax(t_parse *parser)

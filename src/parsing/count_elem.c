@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:41:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 21:04:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:30:49 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_elem	*count_elem(char *str)
 
 	i = 0;
 	res = malloc(sizeof(t_elem));
+	if (!res && !ft_perror("minishell"))
 	res->heredoc = 1;
 	res->out_append_files = 1;
 	res->out_file = 1;

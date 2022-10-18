@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 19:24:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:33:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**resize_arr(char **arr, int *l_arr)
 	i = -1;
 	*l_arr *= 2;
 	tmp = malloc(sizeof(char *) * (*l_arr + 1));
-	if (!tmp && printf("Can't allocate memory."))
+	if (!tmp && !ft_perror("minishell"))
 		exit (1);
 	fill_null(&tmp, *l_arr + 1);
 	while (arr[++i])
