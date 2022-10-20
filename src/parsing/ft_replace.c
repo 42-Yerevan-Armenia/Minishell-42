@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:31:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/20 19:44:22 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr)
 			// printf("*j = %d\n", *j);
 			while (value && value[k])
 				*dest++ = value[k++];
-			*j += ft_strlen(parser->key);
-			// printf("ft_strlen(parser->key) = %d\n", ft_strlen(parser->key));
+			place_to_cont = *j + ft_strlen(value) - 1;
+			*j = (*j + ft_strlen(parser->key));
 			// printf("*j = %d\n", *j);
+			// printf("ft_strlen(parser->key) = %d\n", ft_strlen(parser->key));
 			// printf("dest = %s\n", dest - k);
-			place_to_cont = *j;
 		}
 		if (src[*j]/* && printf("%c %d\n", src[*j], src[*j])*/)
 			*dest++ = src[(*j)++];
@@ -53,6 +53,6 @@ char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr)
 	*dest = '\0';
 	free_arr(&src);
 	free_arr(&parser->key);
-	// printf("res = %s\n", res);
+	printf("res = %s\n", res);
 	return (res);
 }
