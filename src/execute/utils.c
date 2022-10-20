@@ -24,6 +24,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     new_pipe->fd_in = 0;
     new_pipe->fd_out = 1;
     new_pipe->hdoc_input = NULL;
+    new_pipe->cmd = NULL;
     new_pipe->heredoc = NULL;
     new_pipe->in_files = NULL;
     new_pipe->out_files = NULL;
@@ -44,6 +45,7 @@ t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
     else 
     {
         list->tail->next = new_pipe;
+        new_pipe->prev = list->tail;
         list->tail =  list->tail->next;
     }
     return (new_pipe);
@@ -61,12 +63,22 @@ void print_list(t_spl_pipe *head)
 }
 
 
-int	print_env(t_envp *head)
+int	print_env(t_env *head)
 {
 	while (head)
 	{
 		printf("%s=%s\n", head->key, head->val);
 		head = head->next;
+	}
+	return (0);
+}
+
+int	print_exp(t_env *head)
+{
+	while (head)
+	{
+		printf("%s=%s\n", head->key, head->val);
+		head = head->next_exp;
 	}
 	return (0);
 }
