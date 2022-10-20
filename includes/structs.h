@@ -16,6 +16,7 @@
 typedef struct s_spl_pipe
 {
 	int				is_args;
+	int 			fd[2];
 	int				fd_in;
 	int				fd_out;
 	int				output_mode;
