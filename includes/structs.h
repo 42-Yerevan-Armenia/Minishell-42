@@ -39,20 +39,25 @@ typedef struct s_list_spl_pipe
 	t_spl_pipe   *tail;
 }               t_list_spl_pipe;
 
-typedef struct s_envp
+typedef struct s_env
 {
 	int		is_export;
 	char	*key;
 	char	*val;
-	struct s_envp	*next;
-	struct s_envp	*prev;
-}               t_envp;
+	struct s_env	*next;
+	struct s_env	*prev;
+	struct s_env	*next_exp;
+	struct s_env	*prev_exp;
+}               t_env;
 
-typedef struct s_list_envp
+typedef struct s_list_env
 {
-	t_envp   *head;
-	t_envp   *tail;
-}               t_list_envp;
+	size_t	l_size;
+	t_env	*head;
+	t_env   *tail;
+	t_env	*head_exp;
+	t_env   *tail_exp;
+}               t_list_env;
 
 typedef struct s_data
 {
@@ -62,7 +67,7 @@ typedef struct s_data
 	char			*error_message;
 	char			*hostory;
 	t_list_spl_pipe	*cmd_line;
-	t_list_envp		*env;
+	t_list_env		*env;
 }               t_data;
 
 typedef struct s_parse
