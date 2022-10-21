@@ -126,11 +126,12 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
-	// data->cmd_line = NULL;
-	parser->data->cmd_line = create_list_pipe();
+	data->cmd_line = create_list_pipe();
 	data->env = create_list_env();
+	data->env_exp = create_list_env();
 	data->exit_status = 0;
-	get_env(data->env, envp);
+	get_env(&data->env, envp, ENV);
+	get_env(&data->env_exp, envp, EXPORT);
 	return (0);
 }
 
@@ -193,37 +194,38 @@ size_t	arr_double_len(char	**arr)
 // 		// echo(NULL, av);
 // 	}
 // }
-// int main(int ac, char **av, char **envp)
-// {
-// 	t_parse parser;
-// 	t_data	data;
-// 	int i = 0;
-// 	int j = 0;
+int main(int ac, char **av, char **envp)
+{
+	t_parse parser;
+	t_data	data;
+	int i = 0;
+	int j = 0;
 
-// 	i = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		// print_env(data.env->head);
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("🔻minishell> ");
-// 			if (!parser.rd_ln && !ft_perror("minishell"))
-// 				exit (1);
-// 			if (parser.rd_ln[0])
-// 			{
-// 				add_history(parser.rd_ln);
-// 				parsing(&parser);
-// 				// find_path(&data);
-// 					// parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free_arr(&parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// }
+	i = 0;
+	if (ac == 1)
+	{
+		init(&parser, &data, envp);
+		data.error_message = NULL;
+		// print_env(data.env->head);
+		// print_env(data.env_exp->head);
+		while (1)
+		{
+			parser.rd_ln = readline("🔻minishell> ");
+			if (!parser.rd_ln && !ft_perror("minishell"))
+				exit (1);
+			if (parser.rd_ln[0])
+			{
+				add_history(parser.rd_ln);
+				parsing(&parser);
+				// find_path(&data);
+					// parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
+				free_spl_pipe(&data.cmd_line);
+			}
+			free_arr(&parser.rd_ln);
+		}
+		free_envp(&data.env);
+	}
+}
 
 
 

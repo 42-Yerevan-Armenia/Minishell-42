@@ -72,16 +72,15 @@ int	print_env(t_env *head)
 	}
 	return (0);
 }
-
-int	print_exp(t_env *head)
-{
-	while (head)
-	{
-		printf("%s=%s\n", head->key, head->val);
-		head = head->next_exp;
-	}
-	return (0);
-}
+// int	print_env_rev(t_env *tail)
+// {
+// 	while (tail)
+// 	{
+// 		printf("%s=%s\n", tail->key, tail->val);
+// 		tail = tail->prev;
+// 	}
+// 	return (0);
+// }
 
 int ft_perror(char *str)
 {

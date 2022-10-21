@@ -12,36 +12,19 @@
 
 #include "minishell.h"
 
-t_env	*get_env(t_list_env *env_list, char **envp)
+t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
 {
 	t_env	*env;
 	char	**tmp;
 	int		i;
 
 	i = 0;
-	if (envp[i])
-	{
-		env = malloc(sizeof(t_env));
-		if (!env && !ft_perror("minishell"))
-			exit (1);
-		env_list->head = env;
-	}
 	while (envp[i])
 	{
 		tmp = ft_split(envp[i++], '=');
-		env->key = ft_strdup(tmp[0]);
-		env->val = ft_strdup(tmp[1]);
-		env->is_export = 0;
-		env->next = NULL;
-		env->prev = NULL;
+		env = new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1]), is_export);
+		set_env(env_list, env);
 		free_double(&tmp);
-		if (envp[i])
-		{
-			env->next = malloc(sizeof(t_env));
-			if (!env->next && !ft_perror("minishell"))
-				exit (1);
-			env = env->next;
-		}
 	}
-	return (env_list->head);
+	return ((*env_list)->head);
 }

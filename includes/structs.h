@@ -9,6 +9,8 @@
  #define OUT_FILES 3
  #define HEREDOC 4
  #define COMAND 5
+ #define EXPORT 1
+ #define ENV 0
 
 
 
@@ -46,8 +48,8 @@ typedef struct s_env
 	char	*val;
 	struct s_env	*next;
 	struct s_env	*prev;
-	struct s_env	*next_exp;
-	struct s_env	*prev_exp;
+	// struct s_env	*next_exp;
+	// struct s_env	*prev_exp;
 }               t_env;
 
 typedef struct s_list_env
@@ -55,8 +57,8 @@ typedef struct s_list_env
 	size_t	l_size;
 	t_env	*head;
 	t_env   *tail;
-	t_env	*head_exp;
-	t_env   *tail_exp;
+	// t_env	*head_exp;
+	// t_env   *tail_exp;
 }               t_list_env;
 
 typedef struct s_data
@@ -68,6 +70,7 @@ typedef struct s_data
 	char			*hostory;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;
+	t_list_env		*env_exp;
 }               t_data;
 
 typedef struct s_parse
