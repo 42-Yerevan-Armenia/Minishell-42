@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   init_zero.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/15 18:29:14 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/15 18:29:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+void	init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4)
 {
-	size_t	i;
-	size_t	length;
-
-	length = 0;
-	while (src && src[length])
-		length++;
-	i = 0;
-	if (src && size != 0)
-	{
-		while (src[i] != '\0' && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}	
-	return (length);
+	if (ptr1)
+		*ptr1 = 0;
+	if (ptr2)
+		*ptr2 = 0;
+	if (ptr3)
+		*ptr3 = 0;
+	if (ptr4)
+		*ptr4 = 0;
 }

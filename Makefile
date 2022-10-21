@@ -11,9 +11,10 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 
-CFLAGS = -g -ggdb3
+CFLAGS = -I./includes -g -ggdb3  -fsanitize=address
 
-SRCS = $(wildcard ./src/*.c)
+SRCS = $(wildcard ./src/*/*.c)
+SRCS += $(wildcard ./src/*.c)
 
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 

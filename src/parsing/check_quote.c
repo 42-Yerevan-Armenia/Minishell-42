@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   check_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/10 21:20:05 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/15 18:16:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	check_quote(t_parse *parser)
 {
-	size_t	i;
-	size_t	length;
+	int	i;
+	char	*tmp;
+	char	c;
 
-	length = 0;
-	while (src && src[length])
-		length++;
 	i = 0;
-	if (src && size != 0)
+	tmp = parser->rd_ln;
+	while (tmp[i])
 	{
-		while (src[i] != '\0' && i < (size - 1))
+		if (tmp[i] == '\'' || tmp[i] == '"')
 		{
-			dest[i] = src[i];
-			i++;
+			c = tmp[i++];
+			if (tmp[i] == '\0')
+				return (1);
+			while (tmp[i] && tmp[i] != c)
+				i++;
+			printf("%c, %c\n", tmp[i], c);
+			if (tmp[i] != c)
+				return (1);
 		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		i++;
+	}
+	return (0);
 }

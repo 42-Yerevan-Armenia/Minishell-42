@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   find_val.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/19 10:50:22 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+char	*get_val(t_env *head, char *key)
 {
-	size_t	i;
-	size_t	length;
-
-	length = 0;
-	while (src && src[length])
-		length++;
-	i = 0;
-	if (src && size != 0)
+	while (key && head)
 	{
-		while (src[i] != '\0' && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		// printf("head->key = %s\n", head->key);
+		// printf("key = %s\n", key);
+		if (!ft_strncmp(head->key, key, ft_strlen(key)))
+			return (head->val);
+		head = head->next;
+	}
+
+	return (NULL);
 }

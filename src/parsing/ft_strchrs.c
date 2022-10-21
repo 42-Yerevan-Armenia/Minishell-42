@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strchrs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/11 11:47:10 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/11 11:47:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+char	*ft_strchrs(const char *s, const char *set)
 {
-	size_t	i;
-	size_t	length;
+	int	i;
+	int	j;
 
-	length = 0;
-	while (src && src[length])
-		length++;
 	i = 0;
-	if (src && size != 0)
+	j = 0;
+	if (!s || !set)
+		return (NULL);
+	while (s[i])
 	{
-		while (src[i] != '\0' && i < (size - 1))
+		while (set[j])
 		{
-			dest[i] = src[i];
-			i++;
+			if (s[i] == set[j])
+				return ((char *)&s[i]);
+			j++;
 		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		j = 0;
+		i++;
+	}
+	return (NULL);
 }

@@ -1,4 +1,7 @@
+minishell
 .DS_Store
+*.cpp
+*.sh
 
 ## Mlx related
 Makefile.gen

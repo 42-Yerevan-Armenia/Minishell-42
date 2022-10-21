@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/19 10:21:20 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/19 10:21:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	echo(t_data *data, char **args)
 {
-	size_t	i;
-	size_t	length;
+	int	flag;
+	int	i;
 
-	length = 0;
-	while (src && src[length])
-		length++;
-	i = 0;
-	if (src && size != 0)
+	i  = 1;
+	flag  = 0;
+	if (!args || !*args)
+		return (1);
+	while (!ft_strcmp(args[i], "-n") && ++i)
+		flag = 1;
+	while (args[i])
 	{
-		while (src[i] != '\0' && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		write(1, args[i], ft_strlen(args[i]));
+		i++;
+		if (args[i])
+			write(1, " ", 1);
+	}
+	if (flag == 0)
+		write(1, "\n", 1);
+	return (0);
 }

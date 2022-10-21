@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   free_envp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/15 18:27:02 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/19 10:50:22 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	free_envp(t_list_env **list)
 {
-	size_t	i;
-	size_t	length;
-
-	length = 0;
-	while (src && src[length])
-		length++;
-	i = 0;
-	if (src && size != 0)
+	while ((*list)->head)
 	{
-		while (src[i] != '\0' && i < (size - 1))
+		free((t_env *)(*list)->head->key);
+		free((t_env *)(*list)->head->val);
+		if (((t_env *)(*list)->head)->next == NULL)
 		{
-			dest[i] = src[i];
-			i++;
+			free(((*list)->head));
+			(*list)->head = NULL;
+			break;
 		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		(*list)->head = ((t_env *)(*list)->head)->next;
+		if (((*list)->head))
+			free(((t_env *)(*list)->head)->prev);
+	}
+	return (0);
 }

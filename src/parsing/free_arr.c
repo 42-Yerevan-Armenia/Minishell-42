@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   free_arr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 19:24:43 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/01 19:07:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/17 10:29:44 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/18 19:25:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+// #include <stdlib.h>
+// #include <stdio.h>
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	free_arr(char **arr)
 {
-	size_t	i;
-	size_t	length;
-
-	length = 0;
-	while (src && src[length])
-		length++;
-	i = 0;
-	if (src && size != 0)
+	if (*arr)
 	{
-		while (src[i] != '\0' && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}	
-	return (length);
+		free(*arr);
+		*arr = NULL;
+	}
+	return (0);
 }
+
+// int main()
+// {
+// 	char *ptr;
+
+// 	// ptr = malloc(1);
+// 	ptr = NULL;
+
+// 	ptr = malloc(1);
+// 	printf("ptr = %p\n", ptr);
+// 	free_arr(&ptr);
+// 	// ptr = NULL;
+// 	printf("ptr = %p\n", ptr);
+// 	free_arr(&ptr);
+// 	// free_arr(ptr);
+// }

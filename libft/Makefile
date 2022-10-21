@@ -4,7 +4,7 @@ NAME = libft.a
 
 CC	=	cc
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -I../includes #-g -Wall -Wextra -Werror
 
 SRCS = $(wildcard *.c)
 
