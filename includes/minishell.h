@@ -61,6 +61,8 @@ void			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int				free_envp(t_list_env **list);
 int				free_arr(char **arr);
 int             ft_perror(char *str);
+int				count_quotes(char *arr);
+int 			clean_quotes(char ***arr);
 
 // env api
 t_list_env 	    *create_list_env(void);

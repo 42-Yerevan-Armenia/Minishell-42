@@ -3,6 +3,7 @@
 
  #define METACHARS "|&;()<> \n\t"
  #define HANDLE	"<>"
+ #define QUOTES	"\"'"
  #define SPACES " \n\t\v\f\r"
  #define APPEND_FILES 1
  #define IN_FILES 2
