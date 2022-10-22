@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   get_infile_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/22 18:49:55 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/22 17:33:28 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/22 20:14:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
+int get_infile_fd(t_parse *parser)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
+	int i;
+	t_spl_pipe *tmp;
 
 	i = 0;
-	while (envp[i])
+	tmp = parser->data->cmd_line->head;
+	while (tmp->in_files[i])
 	{
-		tmp = ft_split(envp[i++], '=');
-		env = new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1]), is_export);
-		set_env(env_list, env);
-		free_double(&tmp);
+		if (i != 0)
+			if (close(tmp->fd_in) == -1 && ft_perror("minishell"))
+				return (1);
+		tmp->fd_in = open(tmp->in_files[i], O_RDONLY);
+		if (tmp->fd_in == -1 && ft_perror("minishell"))
+			return (1);
+		i++;
 	}
-	return ((*env_list)->head);
+	return (0);
 }

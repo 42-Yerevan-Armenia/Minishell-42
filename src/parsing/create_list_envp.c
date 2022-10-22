@@ -154,6 +154,21 @@ int	del_env_node(t_list_env **env, char *key)
 	if ((*env)->l_size == 1 && !set_null(env) && !del_one(del))
 		return (0);
 	del_env_node_helper(env, tmp, del);
+	return (0);
+}
+
+char *get_env_val(t_list_env *env, char *key)
+{
+	t_env	*tmp;
+
+	tmp = env->head;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (tmp->val);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 // int main(int ac, char **av)
@@ -186,6 +201,9 @@ int	del_env_node(t_list_env **env, char *key)
 // 		del_env_node(&env, "vahan1");
 // 		print_env(env->head);
 // 		print_env(env_exp->head);
+// 		while (1)
+// 		{
+// 		}
 // 	}
 // }
 

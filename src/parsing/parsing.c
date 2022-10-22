@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/20 19:46:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/22 21:09:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	// 	return (1);
 	// }
 	j = *i;
-	if ((tmp[j] == '\'' || tmp[j] == '"') && ++(*i))
-	{
-		j = *i;
-		while (tmp[*i] && tmp[*i] != tmp[j - 1])
-			*i += 1;
-	}
-	else
+	// if ((tmp[j] == '\'' || tmp[j] == '"') && ++(*i))
+	// {
+	// 	j = *i;
+	// 	while (tmp[*i] && tmp[*i] != tmp[j - 1])
+	// 		*i += 1;
+	// }
+	// else
 		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])))
 			*i += 1;
 		// printf("j = %d,i = %d\n", j, *i);
 		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, j, *i - j);
-	else if (c == OUT_FILES || c == APPEND_FILES)
+	else if (c == O_TRUNC || c == O_APPEND)
 		node->out_files[m++] = ft_substr(tmp, j, *i - j);
 	else if (c == IN_FILES)
 		node->in_files[k++] = ft_substr(tmp, j, *i - j);
 	else if (c == COMAND)
 		node->cmd[n_cmd++] = ft_substr(tmp, j, *i - j);
-	if (c == APPEND_FILES || c == OUT_FILES)
+	if (c == O_APPEND || c == O_TRUNC)
 		node->output_mode = c;
 	else if (c == IN_FILES || c == HEREDOC)
 		node->input_mode = c;
@@ -72,11 +72,11 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
 			get_files(cmd_ln, node, &i, HEREDOC);
 		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
-			get_files(cmd_ln, node, &i, APPEND_FILES);
+			get_files(cmd_ln, node, &i, O_APPEND);
 		else if (cmd_ln[i] == '<' && ++i)
 			get_files(cmd_ln, node, &i, IN_FILES);
 		else if (cmd_ln[i] == '>' && ++i)
-			get_files(cmd_ln, node, &i, OUT_FILES);
+			get_files(cmd_ln, node, &i, O_TRUNC);
 		else if (!ft_strchr(METACHARS, cmd_ln[i]))
 			get_files(cmd_ln, node, &i, COMAND);
 		if (cmd_ln[i] && !ft_strchr(HANDLE, cmd_ln[i]))
@@ -135,6 +135,48 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
+// int ft_clean_all_qutoes(t_spl_pipe *head)
+// {
+// 	while (head)
+// 	{
+// 		clean_quotes(&head->cmd);
+// 		printf("%s\n", head->cmd[0]);
+// 		clean_quotes(&head->heredoc);
+// 		clean_quotes(&head->in_files);
+// 		clean_quotes(&head->out_files);
+// 		head = head->next;
+// 	}
+// 	return (0);
+// }
+
+int	is_single_qutoe(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] &&  ft_strchr(SPACES, str[i]))
+		i++;
+	if (str[i] == '\'')
+		return (HDOC_MODE);
+	return (0);
+}
+
+int	find_hdoc_mode(char *str)
+{
+	int i;
+	char	*tmp;
+
+	i = 0;
+	tmp = str;
+	while (tmp[i])
+	{
+		if (tmp[i] == '<' && tmp[i + 1] == '<' && is_single_qutoe(str + i + 2))
+			return (HDOC_MODE);
+		i++;
+	}
+	return (0);
+}
+
 int parsing(t_parse *parser)
 {
 	int	i = 0;
@@ -142,13 +184,18 @@ int parsing(t_parse *parser)
 	rep_vars(parser);
 	split_pipe(parser);
 	pipe_join(parser);
-	printf("count = %d\n", clean_quotes(&parser->join_pipe));
-	// while (parser->spl_qutoes[i])
+	// find_hdoc_mode(parser);
+	clean_quotes(&parser->join_pipe);
+	// while (parser->spl_pipe[i])
 	// {
-	// 	printf("%s\n", parser->spl_qutoes[i]);
+	// 	printf("%s\n", parser->spl_pipe[i]);
 	// 	i++;
 	// }
+	// clean_quotes(&parser->data->cmd_line->head->heredoc);
 	find_exe(parser);
+	// ft_clean_all_qutoes(parser->data->cmd_line->head);
+	// create_rd_files(parser);
+	// get_infile_fd(parser);
 	if (parser->data->error_message)
 		printf("%s", parser->data->error_message);
 	print_info(parser);
@@ -156,93 +203,16 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-size_t	arr_double_len(char	**arr)
-{
-	size_t	i;
-
-	i = 0;
-	while (arr && arr[i])
-		i++;
-	return (i);
-}
-
-int	count_quotes(char *arr)
-{
-	int i;
-	int count;
-
-	if (arr == NULL)
-		return (0);
-	i = 0;
-	count = 0;
-	while (arr[i])
-	{
-		if (ft_strchr(QUOTES, arr[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-int	clean_quotes(char ***arr)
-{
-	int i;
-	char **res = *arr;
-	int j;
-	int k;
-	char *tmp;
-
-	if (arr == NULL)
-		return (0);
-	i = 0;
-	while (res[i])
-	{
-		j = 0;
-		k = 0;
-		tmp = malloc(ft_strlen(res[i]) - count_quotes(res[i]) + 1);
-		while (res[i][j])
-		{
-			if (!ft_strchr(QUOTES, res[i][j]))
-				tmp[k++] = res[i][j];
-			j++;
-		}
-		tmp[k] = '\0';
-		free_arr(&res[i]);
-		res[i] = tmp;
-		i++;
-	}
-	return (0);
-}
-
-// int	export(t_data *data, char **args)
+// size_t	arr_double_len(char	**arr)
 // {
-// 	int	i;
+// 	size_t	i;
 
 // 	i = 0;
-// 	if (arr_double_len(args) == 1)
-// 		return (1);
-// 	while (args[i])
-// 	{
-// 		/* code */
-// 	}
-	
-// 	return (0);
+// 	while (arr && arr[i])
+// 		i++;
+// 	return (i);
 // }
 
-
-// int main(int ac, char **av)
-// {
-// 	int fd;
-// 		// fd = open("barev", O_RDONLY);
-// 		// printf("%s\n", strerror(errno));
-// 		// char *str = strerror(errno);
-// 		// perror("minishell");
-// 	if (ac != 1)
-// 	{
-// 		export(NULL, av);
-// 		// echo(NULL, av);
-// 	}
-// }
 int main(int ac, char **av, char **envp)
 {
 	t_parse parser;
@@ -266,8 +236,8 @@ int main(int ac, char **av, char **envp)
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
+				// printf("%s", ft_heredoc(&parser, data.cmd_line->head->heredoc[0]));
 				// find_path(&data);
-					// parser.data->cmd_line->head->hdoc_input = ft_heredoc(&parser, parser.data->cmd_line->head->heredoc[i]);
 				free_spl_pipe(&data.cmd_line);
 			}
 			free_arr(&parser.rd_ln);
@@ -275,30 +245,3 @@ int main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
-
-
-
-// int	check_syntax(t_parse *parser)
-// {
-// 	char	*tmp;
-// 	int		i;
-
-// 	tmp = parser->rd_ln;
-// 	i = 0;
-// 	while (tmp[i])
-// 	{
-// 		if (tmp[i] == '|')
-// 		{
-// 			if (tmp[i + 1] == '|' || tmp[i + 1] == '\0')
-// 				return (1);
-// 			while (tmp[i])
-// 			{
-				
-// 				i++;
-// 			}
-			
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }

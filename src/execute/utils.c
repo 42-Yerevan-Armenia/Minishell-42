@@ -7,6 +7,7 @@ t_list_spl_pipe *create_list_pipe(void)
     list = malloc(sizeof(t_list_spl_pipe));
     if (list == NULL && !ft_perror("minishell"))
         exit (1);
+    list->size = 0;
     list->head = NULL;
     list->tail = NULL;
     return (list);
@@ -37,6 +38,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
 
 t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
 {
+    list->size++;
     if (list->head == NULL)
     {
         list->head = new_pipe;

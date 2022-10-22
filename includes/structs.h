@@ -3,7 +3,7 @@
 
  #define METACHARS "|&;()<> \n\t"
  #define HANDLE	"<>"
- #define QUOTES	"\"'"
+ #define QUOTES	"\"'`"
  #define SPACES " \n\t\v\f\r"
  #define APPEND_FILES 1
  #define IN_FILES 2
@@ -12,6 +12,7 @@
  #define COMAND 5
  #define EXPORT 1
  #define ENV 0
+ #define HDOC_MODE 1
 
 
 
@@ -23,8 +24,10 @@ typedef struct s_spl_pipe
 	int				fd_out;
 	int				output_mode;
 	int				input_mode;
+	int				hdoc_mode;
 	int				flag_new_pipe;
-	char			*hdoc_input;;
+	char			*hdoc_input;
+	char			*f_h_name;
 	pid_t			pid;
 	char			**cmd;
 	char			*dlm;
@@ -38,8 +41,9 @@ typedef struct s_spl_pipe
 
 typedef struct s_list_spl_pipe
 {
-	t_spl_pipe   *head;
-	t_spl_pipe   *tail;
+	int			size;
+	t_spl_pipe	*head;
+	t_spl_pipe 	*tail;
 }               t_list_spl_pipe;
 
 typedef struct s_env

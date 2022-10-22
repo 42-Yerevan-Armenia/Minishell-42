@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   create_rd_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/22 18:49:55 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/22 17:33:16 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
+int create_rd_files(t_parse *parser)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
+	int i;
+	t_spl_pipe *tmp;
 
 	i = 0;
-	while (envp[i])
+	tmp = parser->data->cmd_line->head;
+	while (tmp->out_files[i])
 	{
-		tmp = ft_split(envp[i++], '=');
-		env = new_env(ft_strdup(tmp[0]), ft_strdup(tmp[1]), is_export);
-		set_env(env_list, env);
-		free_double(&tmp);
+		if (i != 0)
+			if (close(tmp->fd_out) == -1 && ft_perror("minishell"))
+				return (1);
+		tmp->fd_out = open(tmp->out_files[i], O_CREAT | tmp->output_mode | O_RDWR, 0777);
+		printf("fd = %d\n", tmp->fd_out );
+		if (tmp->fd_out == -1 && ft_perror("minishell"))
+			return (1);
+		i++;
 	}
-	return ((*env_list)->head);
+	return (0);
 }
