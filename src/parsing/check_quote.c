@@ -18,7 +18,6 @@ int	check_quote(t_parse *parser)
 	char	*tmp;
 	char	c;
 
-
 	i = 0;
 	tmp = parser->rd_ln;
 	while (tmp[i])
