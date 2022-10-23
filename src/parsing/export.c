@@ -39,8 +39,8 @@ static char	**split_for_exp(char *str, char c, int *flag)
 
 static int	is_valid_args(t_data *data, char **args)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 0;
@@ -49,13 +49,14 @@ static int	is_valid_args(t_data *data, char **args)
 		j = 0;
 		while (args[i][j] && args[i][j] != '+' && args[i][j] != '=')
 		{
-			if ((!ft_isalnum(args[i][j]) && args[i][j] != '_' 
-				&& args[i][j] != '$') || (ft_isdigit(args[i][j]) && j == 0))
-				{
-					// errno = ft_strjoin(ft_strjoin_all(args + 1), ": not a valid identifier");
-					ft_perror("minishell: export: ");
-					return (1);
-				}
+			if ((!ft_isalnum(args[i][j]) && args[i][j] != '_'
+					&& args[i][j] != '$') || (ft_isdigit(args[i][j]) && j == 0))
+			{
+				// errno = ft_strjoin(ft_strjoin_all(args + 1),
+				// ": not a valid identifier");
+				ft_perror("minishell: export: ");
+				return (1);
+			}
 			j++;
 		}
 		i++;
@@ -65,11 +66,11 @@ static int	is_valid_args(t_data *data, char **args)
 
 int	export(t_data *data, char **args)
 {
-	int	i;
-	int	j;
-	int flag;
-	t_list_env *exp;
-	char	**tmp;
+	int			i;
+	int			j;
+	int			flag;
+	t_list_env	*exp;
+	char		**tmp;
 
 	if (is_valid_args(data, args))
 		return (1);

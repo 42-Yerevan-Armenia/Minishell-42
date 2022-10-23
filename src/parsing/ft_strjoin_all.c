@@ -2,7 +2,7 @@
 
 char	*ft_strjoin_all(char **str)
 {
-	int i;
+	int		i;
 	char	*res;
 
 	i = 0;
