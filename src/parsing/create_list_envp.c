@@ -43,14 +43,10 @@ t_env *new_env(char *key, char *val, int is_export)
 
 static int del_one(t_env *env)
 {
-	// t_env *tmp;
-
-	// tmp = *env;
 	free_arr(&(env)->key);
 	free_arr(&(env)->val);
-	printf("%p\n", (env));
+	// printf("%p\n", (env));
 	free((env));
-	// (env) = NULL;
 	return (0);
 }
 
@@ -63,11 +59,42 @@ static int set_null(t_list_env **env)
 	return (0);
 }
 
+static	int find_var_rap(t_list_env **env, t_env *new_node)
+{
+	t_env	*head;
+	int		i;
+	int		flag;
+
+	head = (*env)->head;
+	i = 0;
+	flag = 0;
+	while (new_node->key[i])
+		i++;
+	if (i != 0 && new_node->key[i - 1] == '+' && ++flag)
+		new_node->key[i - 1] = '\0';
+	while (head)
+	{
+		if (!ft_strcmp(head->key, new_node->key))
+		{
+			if (flag == 0 && free_arr(&head->val))
+				head->val = new_node->val;
+			else
+				head->val = ft_strjoin(head->val, new_node->val);
+			del_one(new_node);
+			return (1);
+		}
+		head = head->next;
+	}
+	return (0);
+}
+
 static void set_exp(t_list_env **env, t_env *new_node)
 {
 	t_env	*tmp;
 
 	tmp = (*env)->head;
+	if (find_var_rap(env, new_node))
+		return ;
 	while (tmp->next && ft_strcmp(tmp->key, new_node->key) <= 0)
 		tmp = tmp->next;
 	if (tmp->next == NULL && ft_strcmp(tmp->key, new_node->key) <= 0)
@@ -78,7 +105,7 @@ static void set_exp(t_list_env **env, t_env *new_node)
 		(*env)->tail = new_node;
 	}
 	else
-		{
+	{
 		if (tmp->prev == NULL)
 		{
 			new_node->prev = NULL;
@@ -94,10 +121,10 @@ static void set_exp(t_list_env **env, t_env *new_node)
 	}
 }
 
+
 void set_env(t_list_env **env, t_env *new_node)
 {
 	t_env	*tmp;
-	// static int = 0;
 	(*env)->l_size++;
 	if ((*env)->head == NULL)
 	{
@@ -106,9 +133,10 @@ void set_env(t_list_env **env, t_env *new_node)
 	}
 	else
 	{
+		if (find_var_rap(env, new_node))
+			return ;
 		if (new_node->is_export == 0)
 		{
-			// printf("%d\n", i++);
 			(*env)->tail->next = new_node;
 			new_node->prev = (*env)->tail;
 			(*env)->tail = (*env)->tail->next;

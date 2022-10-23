@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 14:23:26 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:09:47 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 //  cat < b
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
 // "$HOME $PWD" "$HOME"
+
+
+void pass_qutoes(int *i, char *str)
+{
+	char tmp;
+
+	tmp = str[(*i)++];
+	while (str[*i] && str[*i] != tmp)
+		(*i)++;
+}
 
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
@@ -48,8 +58,14 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 		}
 	}
 	else
-		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])))
+	{
+		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])/* || tmp[*i] == '\'' || tmp[*i] == '"')*/))
+		{
+			if (tmp[*i] == '\'' || tmp[*i] == '"')
+				pass_qutoes(i, tmp);
 			*i += 1;
+		}
+	}
 		// printf("j = %d,i = %d\n", j, *i);
 		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)
@@ -134,7 +150,7 @@ int	find_exe(t_parse *parser)
 int	init(t_parse *parser, t_data *data, char **envp)
 {
 	parser->data = data;
-	// data->parser = parser;;
+	data->parser = parser;
 	parser->spl_qutoes = NULL;
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
@@ -164,7 +180,7 @@ int get_hd_mode_int_pipe(t_parse *parser)
 	}
 	return (0);
 }
-
+// sdgsdgsd"     "dsgsdgsdg
 int parsing(t_parse *parser)
 {
 	int	i = 0;
@@ -177,14 +193,11 @@ int parsing(t_parse *parser)
 	// {
 	// 	printf("mode = %d\n", parser->data->hdoc_mode[i++][0]);
 	// }
-	// find_hdoc_mode(parser);
-	// clean_quotes(&parser->join_pipe);
-	// while (parser->spl_pipe[i])
+	// while (parser->join_pipe[i])
 	// {
-	// 	printf("%s\n", parser->spl_pipe[i]);
+	// 	printf("%s\n", parser->join_pipe[i]);
 	// 	i++;
 	// }
-	// clean_quotes(&parser->data->cmd_line->head->heredoc);
 	find_exe(parser);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_int_pipe(parser);
@@ -197,6 +210,85 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
+char	**split_for_exp(char *str, char c, int *flag)
+{
+	char	**res;
+	int		i;
+
+	i = 0;
+	res = malloc(sizeof(char *) * 3);
+	fill_null((void *)&res, 3);
+	while (str[i])
+	{
+		if (str[i] == c)
+		{
+			res[0] = ft_substr(str, 0, i);
+			res[1] = ft_substr(str, i + 1, ft_strlen(str - i));
+			*flag = 1;
+			return (res);
+		}
+		i++;
+	}
+	res[0] = ft_strdup(str);
+	return (res);
+}
+
+int	export(t_data *data, char **args)
+{
+	int	i;
+	int	j;
+	int flag;
+	t_list_env *exp;
+	char	**tmp;
+
+	i = 1;
+	flag = 0;
+	exp = data->env_exp;
+	if (args == NULL)
+		return (1);
+	if (args[i] == NULL)
+	{
+		print_exp(exp->head);
+		return (0);
+	}
+	while (args[i])
+	{
+		tmp = split_for_exp(args[i], '=', &flag);
+		// tmp = ft_split(args[i], '=');
+		printf("%s\n", tmp[0]);
+		printf("%s\n", tmp[1]);
+		
+		set_env(&exp, new_env(tmp[0], tmp[1], EXPORT));
+		if (flag)
+			set_env(&data->env, new_env(tmp[0], tmp[1], ENV));
+		free_double(&tmp);
+		// while (i == 1)
+		// {
+		// 	/* code */
+		// }
+		i++;
+	}
+	return (0);
+}
+
+int	env(t_data *data, char **args)
+{
+	int	i;
+	int	j;
+	t_list_env *env;
+	char	**tmp;
+
+	i = 1;
+	env = data->env;
+	if (args == NULL)
+		return (1);
+	if (args[i] == NULL)
+	{
+		print_env(env->head);
+		return (0);
+	}
+	return (0);
+}
 
 int main(int ac, char **av, char **envp)
 {
@@ -221,7 +313,12 @@ int main(int ac, char **av, char **envp)
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
-				printf("%s", ft_heredoc(data.cmd_line->head, &parser));
+				// printf("%s\n", data.cmd_line->head->cmd);
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "e"))
+					export(&data, data.cmd_line->head->cmd);
+				// if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+				// 	env(&data, data.cmd_line->head->cmd);
+				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				// find_path(&data);
 				free_spl_pipe(&data.cmd_line);
 			}
@@ -233,3 +330,11 @@ int main(int ac, char **av, char **envp)
 	// char *ptr = &c;
 	// printf("%p\n", *ptr + 100);
 }
+
+
+
+
+// int main(int ac, char **av)
+// {
+// 	export();
+// }

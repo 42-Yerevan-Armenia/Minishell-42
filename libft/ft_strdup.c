@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:50 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:29:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:37:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*ft_strdup(const char *src)
 	char	*ptr;
 
 	i = 0;
-	while (src[i])
+	while (src && src[i])
 		i++;
 	ptr = malloc(i + 1);
 	if (!ptr && !ft_perror("minishell"))
 		return (0);
 	i = 0;
-	while (src[i])
+	while (src && src[i])
 	{
 		ptr[i] = src[i];
 		i++;

@@ -17,6 +17,7 @@
 
 
 
+typedef struct s_parse   t_parse;
 
 typedef struct s_spl_pipe
 {
@@ -76,7 +77,7 @@ typedef struct s_data
 	char			**cmd_paths;
 	char			*error_message;
 	// char			*hostory;
-	// t_parse			*parser;
+	t_parse			*parser;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;
 	t_list_env		*env_exp;

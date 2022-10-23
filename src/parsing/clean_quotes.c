@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 10:44:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:31:01 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	clean_quotes(char ***arr)
 
 int ft_clean_all_qutoes(t_spl_pipe *head)
 {
-		printf("hajopx");
 	while (head)
 	{
 		clean_quotes(&head->cmd);
