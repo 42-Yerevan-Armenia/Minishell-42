@@ -44,6 +44,7 @@ int     get_infile_fd(t_parse *parser);
 
 // builtins
 int	echo(t_data *data, char **args);
+int	export(t_data *data, char **args);
 
 
 
@@ -70,6 +71,8 @@ int				ft_clean_all_qutoes(t_spl_pipe *head);
 // int             find_hdoc_mode(char *str);
 int             get_all_hd_modes(t_parse *parser);
 size_t          arr_double_len(char	**arr);
+char	        *ft_strjoin_1(char *s1, char const *s2);
+char            *ft_strjoin_all(char **str);
 
 // env api
 t_list_env 	    *create_list_env(void);
@@ -80,6 +83,6 @@ char            *get_env_val(t_list_env *env, char *key);
 int 			print_env(t_env *head);
 int             print_exp(t_env *head);
 int         	print_env_rev(t_env *tail);
-
+int             env(t_data *data, char **args);
 
 #endif

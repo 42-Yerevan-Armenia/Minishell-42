@@ -210,85 +210,8 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-char	**split_for_exp(char *str, char c, int *flag)
-{
-	char	**res;
-	int		i;
 
-	i = 0;
-	res = malloc(sizeof(char *) * 3);
-	fill_null((void *)&res, 3);
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			res[0] = ft_substr(str, 0, i);
-			res[1] = ft_substr(str, i + 1, ft_strlen(str - i));
-			*flag = 1;
-			return (res);
-		}
-		i++;
-	}
-	res[0] = ft_strdup(str);
-	return (res);
-}
 
-int	export(t_data *data, char **args)
-{
-	int	i;
-	int	j;
-	int flag;
-	t_list_env *exp;
-	char	**tmp;
-
-	i = 1;
-	flag = 0;
-	exp = data->env_exp;
-	if (args == NULL)
-		return (1);
-	if (args[i] == NULL)
-	{
-		print_exp(exp->head);
-		return (0);
-	}
-	while (args[i])
-	{
-		tmp = split_for_exp(args[i], '=', &flag);
-		// tmp = ft_split(args[i], '=');
-		printf("%s\n", tmp[0]);
-		printf("%s\n", tmp[1]);
-		
-		set_env(&exp, new_env(tmp[0], tmp[1], EXPORT));
-		if (flag)
-			set_env(&data->env, new_env(tmp[0], tmp[1], ENV));
-		free_double(&tmp);
-		// while (i == 1)
-		// {
-		// 	/* code */
-		// }
-		i++;
-	}
-	return (0);
-}
-
-int	env(t_data *data, char **args)
-{
-	int	i;
-	int	j;
-	t_list_env *env;
-	char	**tmp;
-
-	i = 1;
-	env = data->env;
-	if (args == NULL)
-		return (1);
-	if (args[i] == NULL)
-	{
-		print_env(env->head);
-		return (0);
-	}
-	return (0);
-}
 
 int main(int ac, char **av, char **envp)
 {
@@ -315,9 +238,9 @@ int main(int ac, char **av, char **envp)
 				parsing(&parser);
 				// printf("%s\n", data.cmd_line->head->cmd);
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "e"))
-					export(&data, data.cmd_line->head->cmd);
-				// if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-				// 	env(&data, data.cmd_line->head->cmd);
+					printf("exit = %d\n", export(&data, data.cmd_line->head->cmd));
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+					env(&data, data.cmd_line->head->cmd);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				// find_path(&data);
 				free_spl_pipe(&data.cmd_line);
