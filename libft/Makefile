@@ -22,6 +22,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $(NAME) $(OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 	
 clean:
 	@$(RM) $(OBJS) $(BONUS_OBJS)

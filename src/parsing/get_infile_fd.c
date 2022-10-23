@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int get_infile_fd(t_parse *parser)
+int	get_infile_fd(t_parse *parser)
 {
 	int i;
 	t_spl_pipe *tmp;

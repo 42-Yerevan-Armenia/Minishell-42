@@ -12,21 +12,21 @@
 
 #include "minishell.h"
 
-char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr)
+char	*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr)
 {
 	char	*dest;
 	int		place_to_cont;
 	int		k;
 	char	*res;
 	char	*value;
-	
+
 	value = get_val(parser->data->env->head, parser->key);
-	res = malloc(sizeof(char) * (ft_strlen(src)
-		- ft_strlen( parser->key) + ft_strlen(value)) + 1);
+	res = malloc(sizeof(char) * (ft_strlen(src) - ft_strlen(parser->key)
+				+ ft_strlen(value)) + 1);
 	if (!res && !ft_perror("minishell"))
 		return (NULL);
-		// printf("key = %s\n", parser->key);
-		// printf("value = %s\n", value);
+	// printf("key = %s\n", parser->key);
+	// printf("value = %s\n", value);
 	dest = res;
 	k = 0;
 	*j = 0;
@@ -46,7 +46,7 @@ char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr)
 			// printf("ft_strlen(parser->key) = %d\n", ft_strlen(parser->key));
 			// printf("dest = %s\n", dest - k);
 		}
-		if (src[*j]/* && printf("%c %d\n", src[*j], src[*j])*/)
+		if (src[*j] /* && printf("%c %d\n", src[*j], src[*j])*/)
 			*dest++ = src[(*j)++];
 	}
 	*j = place_to_cont;
