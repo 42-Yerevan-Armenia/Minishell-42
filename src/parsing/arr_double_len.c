@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_null.c                                        :+:      :+:    :+:   */
+/*   arr_double_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 11:46:08 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 09:32:33 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/23 09:28:37 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/23 09:45:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	fill_null(void ***ptr, int len)
+size_t	arr_double_len(char	**arr)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < len)
-	{
-		(*ptr)[i++] = NULL;
-	}
-	return (0);
+	while (arr && arr[i])
+		i++;
+	return (i);
 }

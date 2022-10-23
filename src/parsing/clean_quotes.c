@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/22 20:34:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 09:47:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	count_quotes(char *arr)
 	return (count);
 }
 
-int	clean_quotes(char ***arr)
+static int	clean_quotes(char ***arr)
 {
 	int i;
 	char **res = *arr;
@@ -56,6 +56,19 @@ int	clean_quotes(char ***arr)
 		free_arr(&res[i]);
 		res[i] = tmp;
 		i++;
+	}
+	return (0);
+}
+
+int ft_clean_all_qutoes(t_spl_pipe *head)
+{
+	while (head)
+	{
+		clean_quotes(&head->cmd);
+		clean_quotes(&head->heredoc);
+		clean_quotes(&head->in_files);
+		clean_quotes(&head->out_files);
+		head = head->next;
 	}
 	return (0);
 }

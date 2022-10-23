@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/22 20:33:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 10:31:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,10 @@ static int	create_hiden_file(t_data *data, char **f_name)
 	return (fd);
 }
 
-// static char *rep_vars(res)
-// {
-
-// }
-
-char *ft_heredoc(t_parse *parser, char *dlmtr)
+char *ft_heredoc(t_spl_pipe *node, t_parse *parser)
 {
 	char	*res;
+	char	*rd_ln;
 	char	*ptr;
 	int		i;
 	char	*f_name;
@@ -64,26 +60,27 @@ char *ft_heredoc(t_parse *parser, char *dlmtr)
 	res = NULL;
 	f_name = NULL;
 	i = 0;
-	while (parser->data->cmd_line->head->heredoc[i])
+	while (node->heredoc[i])
 	{	
-		free_arr(&parser->data->cmd_line->head->hdoc_input);
+		free_arr(&node->hdoc_input);
 		while (1)
 		{
-			free_arr(&parser->rd_ln);
-			parser->rd_ln = readline(">>");
-			if (!parser->rd_ln && !ft_perror("minishell"))
+			free_arr(&rd_ln);
+			rd_ln = readline(">>");
+			if (!rd_ln && !ft_perror("minishell"))
 				exit (1);
 			if (res)
 				res = ft_strjoin(res, "\n");
-			if (!ft_strcmp(parser->rd_ln, dlmtr))
+			if (!ft_strcmp(rd_ln, node->heredoc[i]))
 				break;
-			res = ft_strjoin(res, parser->rd_ln);
+			res = ft_strjoin(res, rd_ln);
 		}
 		i++;
-		free_arr(&parser->rd_ln);
+		free_arr(&rd_ln);
 	}
-
+	if (node->hdoc_mode == HDOC_DQ_MODE)
+		rep_vars(parser, &res);
 	ft_putstr_fd(res, create_hiden_file(parser->data, &f_name));
-	free_arr(&parser->rd_ln);
+	free_arr(&rd_ln);
 	return (f_name);
 }

@@ -19,7 +19,7 @@ int	split_quotes(t_parse *parser)
 	parser->spl_qutoes = malloc(sizeof(char *) * (l_arr + 1));
 	if (!parser->spl_qutoes && !ft_perror("minishell"))
 		exit (1);
-	fill_null(&parser->spl_qutoes, l_arr + 1);
+	fill_null((void *)&parser->spl_qutoes, l_arr + 1);
 	parser->spl_qutoes[l_arr] = NULL;
 	while (tmp[i])
 	{

@@ -12,7 +12,8 @@
  #define COMAND 5
  #define EXPORT 1
  #define ENV 0
- #define HDOC_MODE 1
+ #define HDOC_SQ_MODE 1
+ #define HDOC_DQ_MODE 0
 
 
 
@@ -69,10 +70,12 @@ typedef struct s_list_env
 typedef struct s_data
 {
 	int             exit_status;
+	int				**hdoc_mode;
 	char			*path;
 	char			**cmd_paths;
 	char			*error_message;
 	char			*hostory;
+	// t_parse			*parser;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;
 	t_list_env		*env_exp;

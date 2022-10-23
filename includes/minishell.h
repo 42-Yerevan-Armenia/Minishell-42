@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/22 19:13:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 10:21:13 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <string.h>
 
 int pipex(int ac, char **av);
-char *ft_heredoc(t_parse *parser, char *dlmtr);
+// char *ft_heredoc(t_parse *parser, char *dlmtr);
 
 void    dis_prompt();
 int     split_quotes(t_parse *parser);
@@ -34,9 +34,10 @@ int	    init(t_parse *parser, t_data *data, char **envp);
 char	*get_val(t_env *head, char *key);
 char	*find_var(char *src, char **ptr, int j);
 char	*ft_replace(t_parse	*parser, char *src, int *j, char *k_ptr);
-int	    rep_vars(t_parse *parser);
+int	    rep_vars(t_parse *parser, char **str);
 t_env	*get_env(t_list_env **env_list, char **envp, int is_export);
-char	*ft_heredoc(t_parse *parser, char *dlmtr);
+// char	*ft_heredoc(t_parse *parser, char *dlmtr);
+char	*ft_heredoc(t_spl_pipe *node, t_parse *parser);
 int     create_rd_files(t_parse *parser);
 int     get_infile_fd(t_parse *parser);
 
@@ -50,7 +51,7 @@ int	echo(t_data *data, char **args);
 t_list_spl_pipe *create_list_pipe(void);
 t_spl_pipe      *new_spl_pipe(void  *arg1, void *arg2);
 t_spl_pipe      *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe);
-int             fill_null(char ***ptr, int len);
+int             fill_null(void ***ptr, int len);
 char	        **resize_arr(char **arr, int *l_arr);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem  		*count_elem(char *str);
@@ -64,7 +65,11 @@ int				free_envp(t_list_env **list);
 int				free_arr(char **arr);
 int             ft_perror(char *str);
 // int				count_quotes(char *arr);
-int 			clean_quotes(char ***arr);
+// int 			clean_quotes(char ***arr);
+int				ft_clean_all_qutoes(t_spl_pipe *head);
+// int             find_hdoc_mode(char *str);
+int             get_all_hd_modes(t_parse *parser);
+size_t          arr_double_len(char	**arr);
 
 // env api
 t_list_env 	    *create_list_env(void);

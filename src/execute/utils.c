@@ -29,6 +29,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     new_pipe->heredoc = NULL;
     new_pipe->in_files = NULL;
     new_pipe->out_files = NULL;
+    new_pipe->hdoc_mode = 0;
     new_pipe->output_mode = 0;
     new_pipe->input_mode = 0;
     new_pipe->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 17:55:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:33:53 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 09:37:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int split_pipe(t_parse *parser)
 	parser->spl_pipe = malloc(sizeof(char *) * (l_arr + 1));
 	if (parser->spl_pipe == NULL && !ft_perror("minishell"))
 		return (0);
-	fill_null(&parser->spl_pipe, l_arr + 1);
+	fill_null((void *)&parser->spl_pipe, l_arr + 1);
 	parser->spl_pipe[l_arr] = NULL;
 	i = 0;
 	j = 0;
