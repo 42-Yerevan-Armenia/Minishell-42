@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 10:31:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:23:26 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	// 	return (1);
 	// }
 	j = *i;
+	// printf("*i = %d\n", *i);
 	if (tmp[*i] == '\'' || tmp[*i] == '"')
 	{
+	// printf("*i = %d\n", *i);
 		while (tmp[*i] && (tmp[*i] == '\'' || tmp[*i] == '"'))
 		{
 			j = (*i)++;
@@ -57,7 +59,13 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	else if (c == IN_FILES)
 		node->in_files[k++] = ft_substr(tmp, j, *i - j);
 	else if (c == COMAND)
+	{
+		// printf("node->tmp = %d\n", node->tmp);
+		// printf("node->tmp = %d\n", n_cmd);
+		// if (node->tmp == n_cmd)
+		// 	resize_arr(node->cmd, &node->tmp);
 		node->cmd[n_cmd++] = ft_substr(tmp, j, *i - j);
+	}
 	if (c == O_APPEND || c == O_TRUNC)
 		node->output_mode = c;
 	else if (c == IN_FILES || c == HEREDOC)
@@ -131,6 +139,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
+	parser->l_arr = 2;
 	data->cmd_line = create_list_pipe();
 	data->env = create_list_env();
 	data->env_exp = create_list_env();
@@ -212,7 +221,7 @@ int main(int ac, char **av, char **envp)
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
-				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
+				printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				// find_path(&data);
 				free_spl_pipe(&data.cmd_line);
 			}
@@ -220,4 +229,7 @@ int main(int ac, char **av, char **envp)
 		}
 		free_envp(&data.env);
 	}
+	// char c = '4';
+	// char *ptr = &c;
+	// printf("%p\n", *ptr + 100);
 }

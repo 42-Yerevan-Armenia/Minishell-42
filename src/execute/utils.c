@@ -32,6 +32,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     new_pipe->hdoc_mode = 0;
     new_pipe->output_mode = 0;
     new_pipe->input_mode = 0;
+    new_pipe->tmp = 2;
     new_pipe->next = NULL;
     new_pipe->prev = NULL;
     return (new_pipe);

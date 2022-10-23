@@ -27,6 +27,7 @@ typedef struct s_spl_pipe
 	int				input_mode;
 	int				hdoc_mode;
 	int				flag_new_pipe;
+	int				tmp;
 	char			*hdoc_input;
 	char			*f_h_name;
 	pid_t			pid;
@@ -74,7 +75,7 @@ typedef struct s_data
 	char			*path;
 	char			**cmd_paths;
 	char			*error_message;
-	char			*hostory;
+	// char			*hostory;
 	// t_parse			*parser;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;
@@ -88,6 +89,7 @@ typedef struct s_parse
 	char		**spl_qutoes;
 	char		**spl_pipe;
 	char		**join_pipe;
+	int			l_arr;
 	t_data		*data;
 	char		*rd_ln;
 }               t_parse;

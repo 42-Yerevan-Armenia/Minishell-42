@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 10:31:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:27:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,27 @@ char *ft_heredoc(t_spl_pipe *node, t_parse *parser)
 	
 	res = NULL;
 	f_name = NULL;
+	rd_ln = NULL;
 	i = 0;
 	while (node->heredoc[i])
 	{	
-		free_arr(&node->hdoc_input);
+		free_arr(&rd_ln);
 		while (1)
 		{
 			free_arr(&rd_ln);
-			rd_ln = readline(">>");
+			rd_ln = readline(">");
 			if (!rd_ln && !ft_perror("minishell"))
 				exit (1);
 			if (res)
 				res = ft_strjoin(res, "\n");
-			if (!ft_strcmp(rd_ln, node->heredoc[i]))
+			if (node->heredoc[i] && !ft_strcmp(rd_ln, node->heredoc[i]))
 				break;
 			res = ft_strjoin(res, rd_ln);
 		}
 		i++;
 		free_arr(&rd_ln);
 	}
-	if (node->hdoc_mode == HDOC_DQ_MODE)
+	if (node->hdoc_mode == HDOC_DQ_MODE && res)
 		rep_vars(parser, &res);
 	ft_putstr_fd(res, create_hiden_file(parser->data, &f_name));
 	free_arr(&rd_ln);
