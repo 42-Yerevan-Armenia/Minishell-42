@@ -17,10 +17,9 @@
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
 // "$HOME $PWD" "$HOME"
 
-
-void pass_qutoes(int *i, char *str)
+void	pass_qutoes(int *i, char *str)
 {
-	char tmp;
+	char	tmp;
 
 	tmp = str[(*i)++];
 	while (str[*i] && str[*i] != tmp)
@@ -29,16 +28,16 @@ void pass_qutoes(int *i, char *str)
 
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
-	static	int	k;
-	static	int	m;
-	static	int	h;
-	static	int	n_cmd;
+	static int	k;
+	static int	m;
+	static int	h;
+	static int	n_cmd;
 	int			j;
 
 	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
 		init_zero(&k, &m, &h, &n_cmd);
 	while (ft_strchr(SPACES, tmp[*i]))
-		*i+= 1;
+		*i += 1;
 	// if (ft_strchr(METACHARS, tmp[*i]))
 	// {
 	// 	node->error_message = "syntax error\n";
@@ -48,7 +47,7 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	// printf("*i = %d\n", *i);
 	if (tmp[*i] == '\'' || tmp[*i] == '"')
 	{
-	// printf("*i = %d\n", *i);
+		// printf("*i = %d\n", *i);
 		while (tmp[*i] && (tmp[*i] == '\'' || tmp[*i] == '"'))
 		{
 			j = (*i)++;
@@ -59,15 +58,17 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	}
 	else
 	{
-		while(tmp[*i] && (!ft_strchr(METACHARS, tmp[*i])/* || tmp[*i] == '\'' || tmp[*i] == '"')*/))
+		while (tmp[*i] && (!ft_strchr(METACHARS, tmp[*i]) /* || tmp[*i] == '\''
+				|| tmp[*i] == '"')*/
+							))
 		{
 			if (tmp[*i] == '\'' || tmp[*i] == '"')
 				pass_qutoes(i, tmp);
 			*i += 1;
 		}
 	}
-		// printf("j = %d,i = %d\n", j, *i);
-		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
+	// printf("j = %d,i = %d\n", j, *i);
+	// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, j, *i - j);
 	else if (c == O_TRUNC || c == O_APPEND)
@@ -115,12 +116,12 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 
 int	find_exe(t_parse *parser)
 {
-	int		i;
+	int			i;
 	t_spl_pipe	*node;
-	t_elem	*quantity;
-	char	**tmp;
-	int		j;
-	int		k;
+	t_elem		*quantity;
+	char		**tmp;
+	int			j;
+	int			k;
 
 	i = 0;
 	tmp = parser->join_pipe;
@@ -128,22 +129,27 @@ int	find_exe(t_parse *parser)
 	{
 		node = add_pipe(parser->data->cmd_line, new_spl_pipe(NULL, NULL));
 		quantity = count_elem(tmp[i]);
-		// printf("quantity->in_file = %d\n, quantity->out_file = %d\n, quantity->out_append_files = %d\n, quantity->heredoc %d\n", quantity->in_file, quantity->out_file, quantity->out_append_files, quantity->heredoc);
+		// printf("quantity->in_file = %d\n, quantity->out_file = %d\n,
+		// quantity->out_append_files = %d\n, quantity->heredoc %d\n",
+		// quantity->in_file, quantity->out_file,
+		// quantity->out_append_files, quantity->heredoc);
 		node->in_files = malloc(sizeof(char *) * quantity->in_file);
-		node->out_files = malloc(sizeof(char *) * (quantity->out_file + quantity->out_append_files));
+		node->out_files = malloc(sizeof(char *) * (quantity->out_file
+					+ quantity->out_append_files));
 		node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
 		node->cmd = malloc(sizeof(char *) * 100);
-		if ((!node->in_files || !node->out_files || !node->heredoc || !node->cmd) && !ft_perror("minishell"))
+		if ((!node->in_files || !node->out_files || !node->heredoc
+				|| !node->cmd) && !ft_perror("minishell"))
 			return (0);
 		fill_null((void *)&node->cmd, 100);
 		fill_null((void *)&node->in_files, quantity->in_file);
-		fill_null((void *)&node->out_files, quantity->out_file + quantity->out_append_files);
+		fill_null((void *)&node->out_files, quantity->out_file
+				+ quantity->out_append_files);
 		fill_null((void *)&node->heredoc, quantity->heredoc);
 		fill_spl_pipe(node, tmp[i]);
 		free(quantity);
 		i++;
 	}
-	
 	return (0);
 }
 
@@ -165,9 +171,9 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-int get_hd_mode_int_pipe(t_parse *parser)
+int	get_hd_mode_int_pipe(t_parse *parser)
 {
-	t_spl_pipe *tmp;
+	t_spl_pipe	*tmp;
 	int			i;
 
 	i = 0;
@@ -181,9 +187,11 @@ int get_hd_mode_int_pipe(t_parse *parser)
 	return (0);
 }
 // sdgsdgsd"     "dsgsdgsdg
-int parsing(t_parse *parser)
+int	parsing(t_parse *parser)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	split_quotes(parser);
 	rep_vars(parser, NULL);
 	split_pipe(parser);
@@ -210,16 +218,15 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-
-
-
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_parse parser;
+	t_parse	parser;
 	t_data	data;
-	int i = 0;
-	int j = 0;
+	int		i;
+	int		j;
 
+	i = 0;
+	j = 0;
 	i = 0;
 	if (ac == 1)
 	{
@@ -231,14 +238,15 @@ int main(int ac, char **av, char **envp)
 		{
 			parser.rd_ln = readline("🔻minishell> ");
 			if (!parser.rd_ln && !ft_perror("minishell"))
-				exit (1);
+				exit(1);
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
 				// printf("%s\n", data.cmd_line->head->cmd);
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "e"))
-					printf("exit = %d\n", export(&data, data.cmd_line->head->cmd));
+					printf("exit = %d\n", export(&data,
+								data.cmd_line->head->cmd));
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
 					env(&data, data.cmd_line->head->cmd);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
@@ -253,9 +261,6 @@ int main(int ac, char **av, char **envp)
 	// char *ptr = &c;
 	// printf("%p\n", *ptr + 100);
 }
-
-
-
 
 // int main(int ac, char **av)
 // {
