@@ -135,7 +135,7 @@ void set_env(t_list_env **env, t_env *new_node)
 	{
 		if (find_var_rap(env, new_node))
 			return ;
-		if (new_node->is_export == 0)
+		if (new_node->is_export == 0 || new_node->is_export == 2)
 		{
 			(*env)->tail->next = new_node;
 			new_node->prev = (*env)->tail;

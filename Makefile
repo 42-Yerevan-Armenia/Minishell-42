@@ -34,12 +34,12 @@ $(LIBFT):
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	# @make --no-print-directory clean -C $(LIBFT_DIR)
+	@make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	# @make --no-print-directory fclean -C $(LIBFT_DIR)
+	@make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 

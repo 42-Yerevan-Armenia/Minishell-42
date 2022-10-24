@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 09:49:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 21:41:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 		{
 			if (tmp[*i] == '\'' || tmp[*i] == '"')
 				pass_qutoes(i, tmp);
+			// printf("%c\n", tmp[*i]);
 			*i += 1;
 		}
 	}
+			// printf("%d\n", j);
+			// printf("%d\n", *i);
 		// printf("j = %d,i = %d\n", j, *i);
 		// printf("j = %c,i = %c\n", tmp[j], tmp[*i]);
 	if (c == HEREDOC)

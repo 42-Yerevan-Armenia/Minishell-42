@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 14:27:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 21:33:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr)
 	}
 	*j = place_to_cont;
 	*dest = '\0';
+	// printf("dest = %s\n", dest);
 	free_arr(&src);
 	free_arr(&parser->key);
 	// printf("res = %s\n", res);

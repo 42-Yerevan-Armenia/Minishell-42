@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 14:31:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 20:40:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,33 @@ static int	clean_quotes(char ***arr)
 	int j;
 	int k;
 	char *tmp;
+	char c;
 
 	if (*arr == NULL)
 		return (0);
 	i = 0;
+	// printf("%s\n", res[0]);
+	// printf("%s\n", res[1]);
 	while (res[i])
 	{
 		j = 0;
 		k = 0;
+		// printf("count_quotes(res[i]) = %d\n", count_quotes(res[i]));
 		tmp = malloc(ft_strlen(res[i]) - count_quotes(res[i]) + 1);
 		while (res[i][j])
 		{
-			if (!ft_strchr(QUOTES, res[i][j]))
-				tmp[k++] = res[i][j];
-			j++;
+			while (res[i][j] && !ft_strchr(QUOTES, res[i][j]))
+				tmp[k++] = res[i][j++];
+			if (res[i][j] == '\0')
+				break;
+			c = res[i][j++];
+			while (res[i][j] && res[i][j] != c)
+				tmp[k++] = res[i][j++];
+			if (res[i][j])
+				j++;
 		}
 		tmp[k] = '\0';
+		// printf("tmp = %s\n", tmp);
 		free_arr(&res[i]);
 		res[i] = tmp;
 		i++;

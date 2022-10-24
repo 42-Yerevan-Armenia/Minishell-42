@@ -6,11 +6,14 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 12:36:17 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 21:31:09 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// export test+t=5
+// export a="'a'"
 
 static char	**split_for_exp(char *str, char c, int *flag)
 {
@@ -31,9 +34,7 @@ static char	**split_for_exp(char *str, char c, int *flag)
 		}
 		i++;
 	}
-	// printf("%d\n", i);
 	res[0] = ft_strdup(str);
-	// printf("res = %s\n", res[1]);
 	return (res);
 }
 
@@ -46,31 +47,30 @@ static int	is_valid_args(t_data *data, char **args)
 
 	i = 1;
 	j = 0;
-	if (args[i][0] == '=')
+	if (args[i] && args[i][0] == '=')
 	{
-		error = ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier");
-		ft_putstr_fd("minishell: export: %s\n", error);
+		error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier"));
+		ft_putendl_fd(error, 2);
 		free(error);
 		return (1);
 	}
 	while (args[i])
 	{
 		j = 0;
-		while (args[i][j] && args[i][j] != '+' && args[i][j] != '=')
+		while ((args[i][j] && args[i][j] != '+' && args[i][j] != '=')
+			|| (args[i][j] == '+' && args[i][j + 1] != '='))
 		{
 			if ((!ft_isalnum(args[i][j]) && args[i][j] != '_'
 					&& args[i][j] != '$') || (ft_isdigit(args[i][j]) && j == 0))
 			{
-				// if (ft_strchr(args[i], '='))
-				// 	identifier = ft_substr(args[i], 0, (size_t)(ft_strchr(args[i], '\0') - ft_strchr(args[i], '=')));
-				// else
-				// 	identifier = ft_substr(args[i], 0, ft_strlen(args[i]));
-				error = ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier");
-				printf("minishell: export: %s\n", error);
+				error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier"));
+				// error = ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier");
+				// printf("d = %d\n", args[i][j]);
+				ft_putendl_fd(error, 2);
 				free(error);
-				// free(identifier);
 				return (1);
 			}
+			// printf("c = %c\n", args[i][j]);
 			j++;
 		}
 		i++;
@@ -105,7 +105,6 @@ int	export(t_data *data, char **args)
 		// printf("%s\n", tmp[0]);
 		// printf("%s\n", tmp[1]);
 		set_env(&exp, new_env(tmp[0], tmp[1], EXPORT));
-		
 		if (flag)
 			set_env(&data->env, new_env(tmp[0], tmp[1], ENV));
 		free_double((void *)&tmp);

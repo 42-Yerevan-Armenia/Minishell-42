@@ -70,6 +70,7 @@ int	print_env(t_env *head)
 {
 	while (head)
 	{
+        // if (head->is_export == ENV)
 		printf("%s=%s\n", head->key, head->val);
 		head = head->next;
 	}
@@ -81,7 +82,8 @@ int	print_exp(t_env *head)
 {
 	while (head)
 	{
-		printf("declare -x %s=\"%s\"\n", head->key, head->val);
+        if (head->is_export == EXPORT)
+		    printf("declare -x %s=\"%s\"\n", head->key, head->val);
 		head = head->next;
 	}
     printf("***************export\n");

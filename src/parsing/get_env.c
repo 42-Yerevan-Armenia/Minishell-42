@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 09:33:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 21:06:22 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
 		set_env(env_list, env);
 		free_double((void *)&tmp);
 	}
+	if (is_export == 0)
+		set_env(env_list, env = new_env(ft_strdup("?"), ft_strdup("0"), 2));
 	return ((*env_list)->head);
 }
