@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 09:45:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 09:49:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int get_all_hd_modes(t_parse *parser)
 
     i = 0;
     tmp = parser->join_pipe;
-    parser->data->hdoc_mode = malloc(sizeof(char *) * (arr_double_len(tmp) + 1));
+    parser->data->hdoc_mode = malloc(sizeof(int *) * (arr_double_len(tmp) + 1));
     fill_null((void *)&parser->data->hdoc_mode, arr_double_len(tmp) + 1);
     while (tmp[i])
     {

@@ -79,7 +79,7 @@ static	int find_var_rap(t_list_env **env, t_env *new_node)
 			if (flag == 0 && free_arr(&head->val))
 				head->val = new_node->val;
 			else
-				head->val = ft_strjoin(head->val, new_node->val);
+				head->val = ft_strjoin_1(head->val, new_node->val);
 			del_one(new_node);
 			return (1);
 		}

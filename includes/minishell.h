@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 16:27:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 10:22:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char			**resize_arr(char **arr, int *l_arr);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
-int				free_double(char ***ptr);
+int				free_double(void ***ptr);
 int				free_parse(t_parse *parser);
 t_spl_pipe		*new_spl_pipe(void *arg1, void *arg2);
 int				free_spl_pipe(t_list_spl_pipe **list);
@@ -68,7 +68,8 @@ int				ft_clean_all_qutoes(t_spl_pipe *head);
 // int             find_hdoc_mode(char *str);
 int				get_all_hd_modes(t_parse *parser);
 size_t			arr_double_len(char **arr);
-char			*ft_strjoin_1(char *s1, char const *s2);
+char			*ft_strjoin_1(char *s1, char *s2);
+char            *ft_strjoin_2(char *s1, char *s2);
 char			*ft_strjoin_all(char **str);
 
 // env api

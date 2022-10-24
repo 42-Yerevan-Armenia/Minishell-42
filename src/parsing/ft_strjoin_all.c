@@ -9,7 +9,7 @@ char	*ft_strjoin_all(char **str)
 	res = malloc(1);
 	res[0] = '`';
 	while (str[i])
-		res = ft_strjoin(res, str[i++]);
-	res = ft_strjoin(res, "'");
+		res = ft_strjoin_1(res, str[i++]);
+	res = ft_strjoin_1(res, "'");
 	return (res);
 }

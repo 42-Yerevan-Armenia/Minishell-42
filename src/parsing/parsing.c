@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 18:09:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 09:49:05 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	static	int	h;
 	static	int	n_cmd;
 	int			j;
+	char		del;
 
 	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
 		init_zero(&k, &m, &h, &n_cmd);
@@ -45,16 +46,18 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	// 	return (1);
 	// }
 	j = *i;
-	// printf("*i = %d\n", *i);
 	if (tmp[*i] == '\'' || tmp[*i] == '"')
 	{
-	// printf("*i = %d\n", *i);
-		while (tmp[*i] && (tmp[*i] == '\'' || tmp[*i] == '"'))
+		while (tmp[*i] && ((tmp[*i] == '\'' || tmp[*i] == '"')/* || !ft_strchr(SPACES, tmp[*i])*/))
 		{
-			j = (*i)++;
-			while (tmp[*i] && tmp[*i] != tmp[j])
+	// printf("*i = %d\n", *i);
+			del = (*i)++;
+			while (tmp[*i] && tmp[*i] != del)
 				*i += 1;
-			(*i)++;
+	// printf("1) *i = %d\n", *i);
+			if (tmp[*i] && (tmp[*i] == '\'' || tmp[*i] == '"') && tmp[*i + 1] && !ft_strchr(METACHARS, tmp[*i + 1]))
+				pass_qutoes(i, tmp);
+	// printf("last *i = %d\n", *i);
 		}
 	}
 	else
@@ -155,6 +158,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
+	data->hdoc_mode = NULL;
 	parser->l_arr = 2;
 	data->cmd_line = create_list_pipe();
 	data->env = create_list_env();
@@ -178,6 +182,7 @@ int get_hd_mode_int_pipe(t_parse *parser)
 		i++;
 		tmp = tmp->next;
 	}
+	free_double((void *)&parser->data->hdoc_mode);
 	return (0);
 }
 // sdgsdgsd"     "dsgsdgsdg
@@ -189,6 +194,7 @@ int parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
+	// printf("%p\n", parser->data->hdoc_mode);
 	// while ( parser->data->hdoc_mode[i])
 	// {
 	// 	printf("mode = %d\n", parser->data->hdoc_mode[i++][0]);
@@ -209,88 +215,6 @@ int parsing(t_parse *parser)
 	free_parse(parser);
 	return (0);
 }
-
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_parse	parser;
-// 	t_data	data;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	res = malloc(sizeof(char *) * 3);
-// 	fill_null((void *)&res, 3);
-// 	while (str[i])
-// 	{
-// 		if (str[i] == c)
-// 		{
-// 			res[0] = ft_substr(str, 0, i);
-// 			res[1] = ft_substr(str, i + 1, ft_strlen(str - i));
-// 			*flag = 1;
-// 			return (res);
-// 		}
-// 		i++;
-// 	}
-// 	res[0] = ft_strdup(str);
-// 	return (res);
-// }
-
-// int	export(t_data *data, char **args)
-// {
-// 	int	i;
-// 	int	j;
-// 	int flag;
-// 	t_list_env *exp;
-// 	char	**tmp;
-
-// 	i = 1;
-// 	flag = 0;
-// 	exp = data->env_exp;
-// 	if (args == NULL)
-// 		return (1);
-// 	if (args[i] == NULL)
-// 	{
-// 		print_exp(exp->head);
-// 		return (0);
-// 	}
-// 	while (args[i])
-// 	{
-// 		tmp = split_for_exp(args[i], '=', &flag);
-// 		// tmp = ft_split(args[i], '=');
-// 		printf("%s\n", tmp[0]);
-// 		printf("%s\n", tmp[1]);
-		
-// 		set_env(&exp, new_env(tmp[0], tmp[1], EXPORT));
-// 		if (flag)
-// 			set_env(&data->env, new_env(tmp[0], tmp[1], ENV));
-// 		free_double(&tmp);
-// 		// while (i == 1)
-// 		// {
-// 		// 	/* code */
-// 		// }
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// int	env(t_data *data, char **args)
-// {
-// 	int	i;
-// 	int	j;
-// 	t_list_env *env;
-// 	char	**tmp;
-
-// 	i = 1;
-// 	env = data->env;
-// 	if (args == NULL)
-// 		return (1);
-// 	if (args[i] == NULL)
-// 	{
-// 		print_env(env->head);
-// 		return (0);
-// 	}
-// 	return (0);
-// }
 
 int main(int ac, char **av, char **envp)
 {
@@ -316,7 +240,7 @@ int main(int ac, char **av, char **envp)
 				add_history(parser.rd_ln);
 				parsing(&parser);
 				// printf("%s\n", data.cmd_line->head->cmd);
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "e"))
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
 					printf("exit = %d\n", export(&data,
 								data.cmd_line->head->cmd));
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
@@ -333,11 +257,3 @@ int main(int ac, char **av, char **envp)
 	// char *ptr = &c;
 	// printf("%p\n", *ptr + 100);
 }
-
-
-
-
-// int main(int ac, char **av)
-// {
-// 	export();
-// }

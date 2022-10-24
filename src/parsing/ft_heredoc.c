@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 14:27:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 10:21:39 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	create_hiden_file(t_data *data, char **f_name)
 	fd = -1;
 	doc = ".42doc";
 	i = 0;
-	while (!access(ft_strjoin_1(get_env_val(data->env, "TMPDIR"),
-				ft_strjoin_1(doc, ft_itoa(i))), F_OK))
+	while (!access(ft_strjoin(get_env_val(data->env, "TMPDIR"),
+				ft_strjoin(doc, ft_itoa(i))), F_OK))
 		i++;
-	*f_name = ft_strjoin_1(get_env_val(data->env, "TMPDIR"), ft_strjoin_1(doc,
+	*f_name = ft_strjoin(get_env_val(data->env, "TMPDIR"), ft_strjoin(doc,
 				ft_itoa(i)));
 	fd = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (fd == -1 && ft_perror("minishell"))
@@ -54,10 +54,10 @@ char	*ft_heredoc(t_spl_pipe *node, t_parse *parser)
 			if (!rd_ln && !ft_perror("minishell"))
 				exit(1);
 			if (res)
-				res = ft_strjoin(res, "\n");
+				res = ft_strjoin_1(res, "\n");
 			if (node->heredoc[i] && !ft_strcmp(rd_ln, node->heredoc[i]))
 				break ;
-			res = ft_strjoin(res, rd_ln);
+			res = ft_strjoin_1(res, rd_ln);
 		}
 		i++;
 		free_arr(&rd_ln);

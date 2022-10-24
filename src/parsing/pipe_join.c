@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:51:17 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 11:01:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 10:22:00 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	pipe_join(t_parse *parser)
 		while (parser->spl_pipe && parser->spl_pipe[i]
 			&& parser->spl_pipe[i][0] != '|')
 		{
-			parser->join_pipe[k] = ft_strjoin(parser->join_pipe[k],
+			parser->join_pipe[k] = ft_strjoin_1(parser->join_pipe[k],
 												parser->spl_pipe[i++]);
 		}
 		k++;
