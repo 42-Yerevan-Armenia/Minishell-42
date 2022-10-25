@@ -22,8 +22,8 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     if (new_pipe == NULL && !ft_perror("minishell"))
         exit (1);
     new_pipe->flag_new_pipe = 0;
-    new_pipe->fd_in = 0;
-    new_pipe->fd_out = 1;
+    //new_pipe->fd_in = 0;
+    //new_pipe->fd_out = 1;
     new_pipe->hdoc_input = NULL;
     new_pipe->cmd = NULL;
     new_pipe->heredoc = NULL;
@@ -64,7 +64,6 @@ void print_list(t_spl_pipe *head)
         head = head->next;
     }
 }
-
 
 int	print_env(t_env *head)
 {
