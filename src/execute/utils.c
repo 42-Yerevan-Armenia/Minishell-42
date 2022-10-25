@@ -7,6 +7,7 @@ t_list_spl_pipe *create_list_pipe(void)
     list = malloc(sizeof(t_list_spl_pipe));
     if (list == NULL && !ft_perror("minishell"))
         exit (1);
+    list->size = 0;
     list->head = NULL;
     list->tail = NULL;
     return (list);
@@ -21,8 +22,8 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     if (new_pipe == NULL && !ft_perror("minishell"))
         exit (1);
     new_pipe->flag_new_pipe = 0;
-    new_pipe->fd_in = 0;
-    new_pipe->fd_out = 1;
+    //new_pipe->fd_in = 0;
+    //new_pipe->fd_out = 1;
     new_pipe->hdoc_input = NULL;
     new_pipe->cmd = NULL;
     new_pipe->heredoc = NULL;
@@ -37,6 +38,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
 
 t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
 {
+    list->size++;
     if (list->head == NULL)
     {
         list->head = new_pipe;
@@ -61,7 +63,6 @@ void print_list(t_spl_pipe *head)
     }
     
 }
-
 
 int	print_env(t_env *head)
 {

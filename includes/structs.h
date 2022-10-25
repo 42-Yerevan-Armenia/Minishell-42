@@ -16,9 +16,8 @@
 typedef struct s_spl_pipe
 {
 	int				is_args;
-	int 			fd[2];
-	int				fd_in;
-	int				fd_out;
+	//int				fd_in;
+	//int				fd_out;
 	int				output_mode;
 	int				input_mode;
 	int				flag_new_pipe;
@@ -36,6 +35,7 @@ typedef struct s_spl_pipe
 
 typedef struct s_list_spl_pipe
 {
+	int			 size;
 	t_spl_pipe   *head;
 	t_spl_pipe   *tail;
 }               t_list_spl_pipe;
@@ -62,13 +62,6 @@ typedef struct s_list_env
 
 typedef struct s_data
 {
-<<<<<<< HEAD
-   t_list   *cmd_line;
-   pid_t    pid;
-   char     *cmd1;
-   char     **cmd_args;
-   char     **cmd_paths;
-=======
 	int             exit_status;
 	char			*path;
 	char			**cmd_paths;
@@ -76,7 +69,6 @@ typedef struct s_data
 	char			*hostory;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;
->>>>>>> d955117408ff67c89312b54b4372bb0503eac0bd
 }               t_data;
 
 typedef struct s_parse
