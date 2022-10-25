@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 10:22:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 19:52:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ t_env			*get_env(t_list_env **env_list, char **envp, int is_export);
 char			*ft_heredoc(t_spl_pipe *node, t_parse *parser);
 int				create_rd_files(t_parse *parser);
 int				get_infile_fd(t_parse *parser);
+
+
+// execute
+int    execute(t_data *data);
 
 // builtins
 int				echo(t_data *data, char **args);

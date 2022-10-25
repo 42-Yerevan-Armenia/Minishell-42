@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 18:04:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:11:43 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	is_valid_args(char *args)
 	char	*identifier;
 
 	i = 0;
-	if (args && args[0] == '=')
+	if (args && (args[0] == '=' || args[0] == '+'))
 	{
 		error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
 		ft_putendl_fd(error, 2);

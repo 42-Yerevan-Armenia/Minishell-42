@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 11:19:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 20:49:21 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 	node->flag_new_pipe = 0;
 	while (cmd_ln[i])
 	{
-		printf("%s\n", cmd_ln);
+		// printf("%s\n", cmd_ln);
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
 			get_files(cmd_ln, node, &i, HEREDOC);
 		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
@@ -296,7 +296,6 @@ int main(int ac, char **av, char **envp)
 			{
 				add_history(parser.rd_ln);
 				parsing(&parser);
-				// printf("%s\n", data.cmd_line->head->cmd);
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
 					printf("exit = %d\n", export(&data,
 								data.cmd_line->head->cmd));
@@ -306,8 +305,10 @@ int main(int ac, char **av, char **envp)
 					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
 					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
+				// else
+               	// 	execute(&data);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
-				// find_path(&data);
+				set_env(&data.env, new_env("?", ft_itoa(data.exit_status), 2));
 				free_spl_pipe(&data.cmd_line);
 			}
 			free_arr(&parser.rd_ln);
