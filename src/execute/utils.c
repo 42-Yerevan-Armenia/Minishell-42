@@ -29,8 +29,10 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
     new_pipe->heredoc = NULL;
     new_pipe->in_files = NULL;
     new_pipe->out_files = NULL;
+    new_pipe->hdoc_mode = 0;
     new_pipe->output_mode = 0;
     new_pipe->input_mode = 0;
+    new_pipe->tmp = 2;
     new_pipe->next = NULL;
     new_pipe->prev = NULL;
     return (new_pipe);
@@ -61,16 +63,17 @@ void print_list(t_spl_pipe *head)
         printf("%s\n", head->cmd[1]);
         head = head->next;
     }
-    
 }
 
 int	print_env(t_env *head)
 {
 	while (head)
 	{
+        // if (head->is_export == ENV)
 		printf("%s=%s\n", head->key, head->val);
 		head = head->next;
 	}
+    printf("***************env\n");
 	return (0);
 }
 
@@ -78,11 +81,23 @@ int	print_exp(t_env *head)
 {
 	while (head)
 	{
-		printf("%s=%s\n", head->key, head->val);
-		head = head->next_exp;
+        if (head->is_export == EXPORT)
+		    printf("declare -x %s=\"%s\"\n", head->key, head->val);
+		head = head->next;
 	}
+    printf("***************export\n");
 	return (0);
 }
+
+// int	print_env_rev(t_env *tail)
+// {
+// 	while (tail)
+// 	{
+// 		printf("%s=%s\n", tail->key, tail->val);
+// 		tail = tail->prev;
+// 	}
+// 	return (0);
+// }
 
 int ft_perror(char *str)
 {

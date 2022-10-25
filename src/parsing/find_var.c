@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:31:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 08:37:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,17 @@ char	*find_var(char *src, char **ptr, int j)
 		if (src[j] == '$')
 		{
 			*ptr = &src[j++];
-			while (src[j] && (!ft_strchr(METACHARS, src[j] && (src[j] != '$' && src[j] != '\'' && src[j] != '"')))
-			 && !ft_strchr(SPACES, src[j]) && ++(j))
+			// while (src[j] && (!ft_strchr(METACHARS, src[j] && (src[j] != '$' && src[j] != '\'' && src[j] != '"')))
+			//  && !ft_strchr(SPACES, src[j]) && ++(j))
+			// while ((src[j] && src[j] != '+' && src[j] != '=')
+			// 	|| (src[j] == '+' && src[j + 1] != '='))
+			// printf("src[i] = %c\n", src[j]);
+			if (src[j] == '?' && ++j)
 				len++;
+			else
+				while (src[j] && (ft_isalnum(src[j]) || src[j] == '_' /*|| src[j] == '$'*/) && ++j)
+					len++;
+				// printf("len = %d\n", len);
 			res = malloc(sizeof(char) * len + 1);
 			if (!res && !ft_perror("minishell"))
 				return (NULL);
@@ -42,5 +50,6 @@ char	*find_var(char *src, char **ptr, int j)
 	}
 	if (res)
 		res[i] = '\0';
+		// printf("res = %s\n", res);
 	return (res);
 }

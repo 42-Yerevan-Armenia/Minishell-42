@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/19 09:55:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 09:53:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void print_info(t_parse *parser)
 		// 	printf("%s\n", tmp->out_append_files[i++]);
 		// }
 		printf("OUTPUT_MODE = %d, ", tmp->output_mode);
-		printf("INPUT_MODE = %d", tmp->input_mode);
+		printf("INPUT_MODE = %d ", tmp->input_mode);
+		printf("HDOC_MODE = %d", tmp->hdoc_mode);
 		printf("\n\n*********************************\n");
 		tmp = tmp->next;
 	}

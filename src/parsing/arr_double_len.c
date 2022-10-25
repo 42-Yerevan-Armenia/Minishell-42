@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   arr_double_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 21:33:50 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 16:37:24 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/23 09:28:37 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/23 09:45:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *src)
+size_t	arr_double_len(char	**arr)
 {
-	int		i;
-	char	*ptr;
+	size_t	i;
 
 	i = 0;
-	while (src && src[i])
+	while (arr && arr[i])
 		i++;
-	ptr = malloc(i + 1);
-	if (!ptr && !ft_perror("minishell"))
-		return (0);
-	i = 0;
-	while (src && src[i])
-	{
-		ptr[i] = src[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (i);
 }

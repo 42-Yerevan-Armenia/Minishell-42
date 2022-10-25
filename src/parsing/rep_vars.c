@@ -6,26 +6,31 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:56:01 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 20:59:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:12:53 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	rep_vars(t_parse *parser)
+int	rep_vars(t_parse *parser, char **str)
 {
 	int	i;
 	int	j;
 	char	**tmp;
 	char	*key;
 	char	*ptr_var;
+	int		flag;
 	
-	if (!parser->spl_qutoes)
+	if (!parser->spl_qutoes && str == NULL)
 		return (1);
 	i = 0;
+	flag = 0;
 	j = 0;
 	ptr_var = NULL;
-	tmp = parser->spl_qutoes;
+	if (str == NULL)
+		tmp = parser->spl_qutoes;
+	else if (++flag)
+		tmp = str;
 	while (tmp[i])
 	{
 		if (tmp[i][0] != '\'')
@@ -46,6 +51,8 @@ int	rep_vars(t_parse *parser)
 				// printf("j = %d\n", j);
 			}
 		}
+		if (flag)
+			break;
 		j = 0;
 		i++;
 	}

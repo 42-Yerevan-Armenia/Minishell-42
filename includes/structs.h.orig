@@ -22,8 +22,8 @@ typedef struct s_parse   t_parse;
 typedef struct s_spl_pipe
 {
 	int				is_args;
-	int				fd_in;
-	int				fd_out;
+	//int				fd_in;
+	//int				fd_out;
 	int				output_mode;
 	int				input_mode;
 	int				hdoc_mode;
@@ -44,9 +44,15 @@ typedef struct s_spl_pipe
 
 typedef struct s_list_spl_pipe
 {
+<<<<<<< HEAD
 	int			size;
 	t_spl_pipe	*head;
 	t_spl_pipe 	*tail;
+=======
+	int			 size;
+	t_spl_pipe   *head;
+	t_spl_pipe   *tail;
+>>>>>>> master
 }               t_list_spl_pipe;
 
 typedef struct s_env

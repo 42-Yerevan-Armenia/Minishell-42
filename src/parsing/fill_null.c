@@ -6,13 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:46:08 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/13 19:50:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/23 09:32:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	fill_null(char ***ptr, int len)
+int	fill_null(void ***ptr, int len)
 {
 	int	i;
 

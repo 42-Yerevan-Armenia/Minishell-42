@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/19 10:50:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/24 21:17:21 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ char	*get_val(t_env *head, char *key)
 	{
 		// printf("head->key = %s\n", head->key);
 		// printf("key = %s\n", key);
-		if (!ft_strncmp(head->key, key, ft_strlen(key)))
+		if (!ft_strcmp(head->key, key) && printf("barev = %s\n", head->val))
 			return (head->val);
 		head = head->next;
 	}
-
 	return (NULL);
 }

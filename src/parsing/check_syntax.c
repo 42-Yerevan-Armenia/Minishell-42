@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 21:33:50 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 16:37:24 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/22 16:33:52 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/22 16:33:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *src)
-{
-	int		i;
-	char	*ptr;
+// int	check_syntax(t_parse *parser)
+// {
+// 	char	*tmp;
+// 	int		i;
 
-	i = 0;
-	while (src && src[i])
-		i++;
-	ptr = malloc(i + 1);
-	if (!ptr && !ft_perror("minishell"))
-		return (0);
-	i = 0;
-	while (src && src[i])
-	{
-		ptr[i] = src[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
+// 	tmp = parser->rd_ln;
+// 	i = 0;
+// 	while (tmp[i])
+// 	{
+// 		if (tmp[i] == '|')
+// 		{
+// 			if (tmp[i + 1] == '|' || tmp[i + 1] == '\0')
+// 				return (1);
+// 			while (tmp[i])
+// 			{
+				
+// 				i++;
+// 			}
+			
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }

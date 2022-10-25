@@ -11,7 +11,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = cc
 
-CFLAGS = -I./includes -g -ggdb3  -fsanitize=address
+CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
 
 SRCS = $(wildcard ./src/*/*.c)
 SRCS += $(wildcard ./src/*.c)
@@ -27,19 +27,19 @@ RM = rm -f
 all: $(NAME) 
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -lreadline  -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
 
 $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	#@make --no-print-directory clean -C $(LIBFT_DIR)
+	@make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	#@make --no-print-directory fclean -C $(LIBFT_DIR)
+	@make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 

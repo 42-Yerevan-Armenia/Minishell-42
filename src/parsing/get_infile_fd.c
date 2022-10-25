@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   get_infile_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 21:33:50 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 16:37:24 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/22 17:33:28 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/22 20:14:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *src)
+int	get_infile_fd(t_parse *parser)
 {
-	int		i;
-	char	*ptr;
+	int i;
+	t_spl_pipe *tmp;
 
 	i = 0;
-	while (src && src[i])
-		i++;
-	ptr = malloc(i + 1);
-	if (!ptr && !ft_perror("minishell"))
-		return (0);
-	i = 0;
-	while (src && src[i])
+	tmp = parser->data->cmd_line->head;
+	while (tmp->in_files[i])
 	{
-		ptr[i] = src[i];
+		if (i != 0)
+			if (close(tmp->fd_in) == -1 && ft_perror("minishell"))
+				return (1);
+		tmp->fd_in = open(tmp->in_files[i], O_RDONLY);
+		if (tmp->fd_in == -1 && ft_perror("minishell"))
+			return (1);
 		i++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	return (0);
 }
