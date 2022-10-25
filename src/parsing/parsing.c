@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 21:41:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:19:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void pass_qutoes(int *i, char *str)
 	while (str[*i] && str[*i] != tmp)
 		(*i)++;
 }
-
+//  echo "barev"  "sdgsdg"
 int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 {
 	static	int	k;
@@ -46,17 +46,24 @@ int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
 	// 	return (1);
 	// }
 	j = *i;
+	// printf("*i = %d\n", *i);
 	if (tmp[*i] == '\'' || tmp[*i] == '"')
 	{
 		while (tmp[*i] && ((tmp[*i] == '\'' || tmp[*i] == '"')/* || !ft_strchr(SPACES, tmp[*i])*/))
 		{
 	// printf("*i = %d\n", *i);
-			del = (*i)++;
+			del = tmp[(*i)++];
 			while (tmp[*i] && tmp[*i] != del)
 				*i += 1;
+			if (tmp[*i])
+				*i += 1;
 	// printf("1) *i = %d\n", *i);
-			if (tmp[*i] && (tmp[*i] == '\'' || tmp[*i] == '"') && tmp[*i + 1] && !ft_strchr(METACHARS, tmp[*i + 1]))
-				pass_qutoes(i, tmp);
+	// printf("1) *i = %c\n", tmp[*i]);
+			while (tmp[*i] && tmp[*i] != '\'' && tmp[*i] != '"' && !ft_strchr(METACHARS, tmp[*i]) && !ft_strchr(SPACES, tmp[*i]))
+				*i += 1;
+			if (tmp[*i] != '\'' && tmp[*i] != '"')
+				break;
+				// pass_qutoes(i, tmp);
 	// printf("last *i = %d\n", *i);
 		}
 	}
@@ -103,6 +110,7 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 	node->flag_new_pipe = 0;
 	while (cmd_ln[i])
 	{
+		printf("%s\n", cmd_ln);
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
 			get_files(cmd_ln, node, &i, HEREDOC);
 		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
@@ -219,6 +227,52 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
+static int	is_valid_args(char *args)
+{
+	int		i;
+	int		j;
+	char	*error;
+	char	*identifier;
+
+	i = 1;
+	j = 0;
+	while (args[i])
+	{
+		if ((!ft_isalnum(args[i]) && args[i] != '_'
+				&& args[i] != '$') || (ft_isdigit(args[i]) && i == 0))
+		{
+			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
+			ft_putendl_fd(error, 2);
+			free(error);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	unset(t_data *data, char **args)
+{
+	int			i;
+	int			j;
+	int			flag;
+	char		**tmp;
+
+	if (args == NULL)
+		return (1);
+	i = 1;
+	flag = 0;
+	while (args[i])
+	{
+		if (is_valid_args(args[i]))
+			return (1);
+		del_env_node(&data->env, args[i]);
+		del_env_node(&data->env_exp, args[i]);
+		i++;
+	}
+	return (0);
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_parse parser;
@@ -247,7 +301,11 @@ int main(int ac, char **av, char **envp)
 					printf("exit = %d\n", export(&data,
 								data.cmd_line->head->cmd));
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-					env(&data, data.cmd_line->head->cmd);
+					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
+					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
+					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				// find_path(&data);
 				free_spl_pipe(&data.cmd_line);
