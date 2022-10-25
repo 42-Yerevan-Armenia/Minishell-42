@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 11:36:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:04:04 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ static char	**split_for_exp(char *str, char c, int *flag)
 static int	is_valid_args(char *args)
 {
 	int		i;
-	int		j;
 	char	*error;
 	char	*identifier;
 
-	i = 1;
-	j = 0;
+	i = 0;
 	if (args && args[0] == '=')
 	{
 		error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
@@ -55,10 +53,10 @@ static int	is_valid_args(char *args)
 		return (1);
 	}
 	while ((args[i] && args[i] != '+' && args[i] != '=')
-			|| (args[i] == '+' && args[i] != '='))
+			|| (args[i] == '+' && args[i + 1] != '='))
 	{
 		if ((!ft_isalnum(args[i]) && args[i] != '_'
-				&& args[i] != '$') || (ft_isdigit(args[i]) && j == 0))
+				&& args[i] != '$') || (ft_isdigit(args[i]) && i == 0))
 		{
 			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
 			// error = ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args[i], "'")), ": not a valid identifier");
@@ -67,7 +65,6 @@ static int	is_valid_args(char *args)
 			free(error);
 		return (1);
 		}
-		// printf("c = %c\n", args[i][j]);
 		i++;
 	}
 	return (0);
