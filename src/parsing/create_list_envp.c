@@ -21,13 +21,13 @@ t_list_env *create_list_env(void)
 		exit (1);
 	list->head = NULL;
 	list->tail = NULL;
-	list->l_size = 0;
+	list->size = 0;
 	return (list);
 }
 
 t_env *new_env(char *key, char *val, int is_export)
 {
-	 int i;
+	int i;
 	t_env *new_node;
 
 	new_node = malloc(sizeof(t_env));
@@ -35,7 +35,10 @@ t_env *new_env(char *key, char *val, int is_export)
 		return (NULL);
 	new_node->is_export = is_export;
 	new_node->key = ft_strdup(key);
-	new_node->val = ft_strdup(val);
+	// printf("test key = %s\n", key);
+	new_node->val = NULL;
+	if (val)
+		new_node->val = ft_strdup(val);
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
@@ -55,7 +58,7 @@ static int set_null(t_list_env **env)
 {
 	(*env)->head = NULL;
 	(*env)->tail = NULL;
-	(*env)->l_size = 0;
+	(*env)->size = 0;
 	return (0);
 }
 
@@ -125,7 +128,7 @@ static void set_exp(t_list_env **env, t_env *new_node)
 void set_env(t_list_env **env, t_env *new_node)
 {
 	t_env	*tmp;
-	(*env)->l_size++;
+	(*env)->size++;
 	if ((*env)->head == NULL)
 	{
 		(*env)->head = new_node;
@@ -179,25 +182,25 @@ int	del_env_node(t_list_env **env, char *key)
 	if (tmp == NULL)
 		return (1);
 	del = tmp;
-	if ((*env)->l_size == 1 && !set_null(env) && !del_one(del))
+	if ((*env)->size == 1 && !set_null(env) && !del_one(del))
 		return (0);
 	del_env_node_helper(env, tmp, del);
 	return (0);
 }
 
-char *get_env_val(t_list_env *env, char *key)
-{
-	t_env	*tmp;
+// char *get_env_val(t_list_env *env, char *key)
+// {
+// 	t_env	*tmp;
 
-	tmp = env->head;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp->val);
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	tmp = env->head;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strcmp(tmp->key, key))
+// 			return (tmp->val);
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 
 // int main(int ac, char **av)
 // {

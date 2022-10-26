@@ -62,7 +62,7 @@ typedef struct s_env
 
 typedef struct s_list_env
 {
-	size_t	l_size;
+	size_t	size;
 	t_env	*head;
 	t_env   *tail;
 	// t_env	*head_exp;
@@ -77,6 +77,7 @@ typedef struct s_data
 	char			**cmd_paths;
 	char			*error_message;
 	// char			*hostory;
+	char			**envp;
 	t_parse			*parser;
 	t_list_spl_pipe	*cmd_line;
 	t_list_env		*env;

@@ -1,38 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_rd_files.c                                  :+:      :+:    :+:   */
+/*   env_cpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 17:56:00 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/26 18:40:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int create_rd_files(t_parse *parser)
+void print_env_arr(char **env)
 {
-	int i;
-	t_spl_pipe *tmp;
+    int i;
 
+    i = 0;
+    while (env && env[i])
+    {
+        printf("%s\n", env[i]);
+        i++;
+    }
+}
+
+
+char **env_cpy(t_list_env *env)
+{
+	char	**res;
+	t_env	*tmp;
+	int		i;
+
+	res = malloc(sizeof(char *) * (env->size + 1));
+	if (!res && ft_perror("minishell"))
+		exit(1);
+	fill_null((void *)&res, env->size + 1);
+	tmp = env->head;
 	i = 0;
-	tmp = parser->data->cmd_line->head;
 	while (tmp)
 	{
-		while (tmp->out_files[i])
-		{
-			if (i != 0)
-				if (close(tmp->fd_out) == -1 && ft_perror("minishell"))
-					return (1);
-			tmp->fd_out = open(tmp->out_files[i], O_CREAT | tmp->output_mode | O_RDWR, 0777);
-			// printf("fd = %d\n", tmp->fd_out );
-			if (tmp->fd_out == -1 && ft_perror("minishell"))
-				return (1);
-			i++;
-		}
+		if (tmp->is_export == ENV)
+			res[i++] = ft_strjoin_1(ft_strjoin(tmp->key, "="), tmp->val);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (res);
 }

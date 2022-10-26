@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_infile_fd.c                                    :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/22 17:33:28 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 17:44:30 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/26 21:28:26 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_infile_fd(t_parse *parser)
+int cd(t_data *data, char **args)
 {
 	int i;
-	t_spl_pipe *tmp;
 
 	i = 0;
-	tmp = parser->data->cmd_line->head;
-	while (tmp->in_files[i])
-	{
-		if (i != 0)
-			if (close(tmp->fd_in) == -1 && ft_perror("minishell"))
-				return (1);
-		tmp->fd_in = open(tmp->in_files[i], O_RDONLY);
-		if (tmp->fd_in == -1 && ft_perror("minishell"))
-			return (1);
-		i++;
-	}
+	if (!args)
+		return (1);
+	set_env(&data->env, new_env("OLDPWD", get_val(data->env->head, "PWD"), ENV));
+	chdir(args[1]);
+	char *ptr = getcwd(NULL, 100);
+	if (!ptr && errno == ENOENT)
+		set_env(&data->env, new_env("PWD", get_val(data->env->head, args[1]), ENV));
+	else if (!ptr && ft_perror("minishell"))
+		return (1);
+	else
+		set_env(&data->env, new_env("PWD", ptr, ENV));
 	return (0);
 }

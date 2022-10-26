@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 20:49:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:31:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->exit_status = 0;
 	get_env(&data->env, envp, ENV);
 	get_env(&data->env_exp, envp, EXPORT);
+	data->envp =  env_cpy(data->env);
 	return (0);
 }
 
@@ -205,6 +206,7 @@ int parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
+
 	// printf("%p\n", parser->data->hdoc_mode);
 	// while ( parser->data->hdoc_mode[i])
 	// {
@@ -218,58 +220,12 @@ int parsing(t_parse *parser)
 	find_exe(parser);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_int_pipe(parser);
-	// create_rd_files(parser);
+	create_rd_files(parser);
 	// get_infile_fd(parser);
 	if (parser->data->error_message)
 		printf("%s", parser->data->error_message);
 	print_info(parser);
 	free_parse(parser);
-	return (0);
-}
-
-static int	is_valid_args(char *args)
-{
-	int		i;
-	int		j;
-	char	*error;
-	char	*identifier;
-
-	i = 1;
-	j = 0;
-	while (args[i])
-	{
-		if ((!ft_isalnum(args[i]) && args[i] != '_'
-				&& args[i] != '$') || (ft_isdigit(args[i]) && i == 0))
-		{
-			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
-			ft_putendl_fd(error, 2);
-			free(error);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	unset(t_data *data, char **args)
-{
-	int			i;
-	int			j;
-	int			flag;
-	char		**tmp;
-
-	if (args == NULL)
-		return (1);
-	i = 1;
-	flag = 0;
-	while (args[i])
-	{
-		if (is_valid_args(args[i]))
-			return (1);
-		del_env_node(&data->env, args[i]);
-		del_env_node(&data->env_exp, args[i]);
-		i++;
-	}
 	return (0);
 }
 
@@ -299,16 +255,21 @@ int main(int ac, char **av, char **envp)
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
 					printf("exit = %d\n", export(&data,
 								data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
 					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
 					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
 					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
-				// else
-               	// 	execute(&data);
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "pwd"))
+					printf("exit = %d\n", pwd(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
+					printf("exit = %d\n", cd(&data, data.cmd_line->head->cmd));
+				else
+               		execute(&data);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				set_env(&data.env, new_env("?", ft_itoa(data.exit_status), 2));
+				// print_env_arr(data.envp);
 				free_spl_pipe(&data.cmd_line);
 			}
 			free_arr(&parser.rd_ln);

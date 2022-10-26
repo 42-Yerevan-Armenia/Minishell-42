@@ -3,7 +3,7 @@ minishell
 *.cpp
 *.sh
 a.out
-
+test
 ## Mlx related
 Makefile.gen
 /test/mlx-test
