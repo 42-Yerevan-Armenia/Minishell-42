@@ -80,22 +80,10 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	exit(1);
 }
 
-void	execute(t_data *data)
+void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
-	t_spl_pipe	*tmp;
-	int			psize;
-	int			res;
-	int			(*fds)[2];
-	int			i;
+	int	i;
 
-	tmp = data->cmd_line->head;
-	psize = data->cmd_line->size;
-	data->path = getenv("PATH");
-	data->cmd_paths = ft_split(data->path, ':');
-	fds = malloc(sizeof (*fds) * (psize - 1));
-	// if (tmp->fd_in != -1)
-	// 	dup2(tmp->fd_in, tmp->fds[0][0]);
-	// dup2(tmp->fd_out, tmp->fds[psize][1]);
 	i = -1;
 	while (++i < psize - 1)
 		pipe(fds[i]);
@@ -118,6 +106,22 @@ void	execute(t_data *data)
 		tmp = tmp->next;
 		i++;
 	}
+}
+
+int	execute(t_data *data)
+{
+	t_spl_pipe	*tmp;
+	int			psize;
+	int			res;
+	int			(*fds)[2];
+	int			i;
+
+	tmp = data->cmd_line->head;
+	psize = data->cmd_line->size;
+	data->path = getenv("PATH");
+	data->cmd_paths = ft_split(data->path, ':');
+	fds = malloc(sizeof (*fds) * (psize - 1));
+	forking(fds, psize, tmp, data);
 	close_fds(fds, psize);
 	i = -1;
 	while (data->cmd_paths[++i])
@@ -130,33 +134,5 @@ void	execute(t_data *data)
 		tmp = tmp->next;
 	}
 	data->exit_status = WEXITSTATUS(res);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	t_parse	parser;
-	t_data	data;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (ac == 1)
-	{
-		init(&parser, &data, envp);
-		data.error_message = NULL;
-		while (1)
-		{
-			parser.rd_ln = readline("🔻minishell> ");
-			if (parser.rd_ln[0])
-			{
-				add_history(parser.rd_ln);
-				parsing(&parser);
-				execute(&data);
-				free_spl_pipe(&data.cmd_line);
-			}
-			free_arr(&parser.rd_ln);
-		}
-		free_envp(&data.env);
-	}
+	return (0);
 }
