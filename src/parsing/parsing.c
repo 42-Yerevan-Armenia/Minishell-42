@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 11:19:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:31:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 	node->flag_new_pipe = 0;
 	while (cmd_ln[i])
 	{
+		// printf("%s\n", cmd_ln);
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
 			get_files(cmd_ln, node, &i, HEREDOC);
 		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
@@ -176,6 +177,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->exit_status = 0;
 	get_env(&data->env, envp, ENV);
 	get_env(&data->env_exp, envp, EXPORT);
+	data->envp =  env_cpy(data->env);
 	return (0);
 }
 
@@ -204,6 +206,7 @@ int parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
+
 	// printf("%p\n", parser->data->hdoc_mode);
 	// while ( parser->data->hdoc_mode[i])
 	// {
@@ -217,7 +220,7 @@ int parsing(t_parse *parser)
 	find_exe(parser);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_int_pipe(parser);
-	// create_rd_files(parser);
+	create_rd_files(parser);
 	// get_infile_fd(parser);
 	if (parser->data->error_message)
 		printf("%s", parser->data->error_message);
@@ -226,94 +229,54 @@ int parsing(t_parse *parser)
 	return (0);
 }
 
-static int	is_valid_args(char *args)
+int main(int ac, char **av, char **envp)
 {
-	int		i;
-	int		j;
-	char	*error;
-	char	*identifier;
+	t_parse parser;
+	t_data	data;
+	int i = 0;
+	int j = 0;
 
-	i = 1;
-	j = 0;
-	while (args[i])
+	i = 0;
+	if (ac == 1)
 	{
-		if ((!ft_isalnum(args[i]) && args[i] != '_'
-				&& args[i] != '$') || (ft_isdigit(args[i]) && i == 0))
+		init(&parser, &data, envp);
+		data.error_message = NULL;
+		// print_env(data.env->head);
+		// print_env(data.env_exp->head);
+		while (1)
 		{
-			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")), ": not a valid identifier"));
-			ft_putendl_fd(error, 2);
-			free(error);
-			return (1);
+			parser.rd_ln = readline("🔻minishell> ");
+			if (!parser.rd_ln && !ft_perror("minishell"))
+				exit (1);
+			if (parser.rd_ln[0])
+			{
+				add_history(parser.rd_ln);
+				parsing(&parser);
+				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
+					printf("exit = %d\n", export(&data,
+								data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
+					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
+					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "pwd"))
+					printf("exit = %d\n", pwd(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
+					printf("exit = %d\n", cd(&data, data.cmd_line->head->cmd));
+				else
+               		execute(&data);
+				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
+				set_env(&data.env, new_env("?", ft_itoa(data.exit_status), 2));
+				// print_env_arr(data.envp);
+				free_spl_pipe(&data.cmd_line);
+			}
+			free_arr(&parser.rd_ln);
 		}
-		i++;
+		free_envp(&data.env);
 	}
-	return (0);
+	// char c = '4';
+	// char *ptr = &c;
+	// printf("%p\n", *ptr + 100);
 }
-
-int	unset(t_data *data, char **args)
-{
-	int			i;
-	int			j;
-	int			flag;
-	char		**tmp;
-
-	if (args == NULL)
-		return (1);
-	i = 1;
-	flag = 0;
-	while (args[i])
-	{
-		if (is_valid_args(args[i]))
-			return (1);
-		del_env_node(&data->env, args[i]);
-		del_env_node(&data->env_exp, args[i]);
-		i++;
-	}
-	return (0);
-}
-
-// int main(int ac, char **av, char **envp)
-// {
-// 	t_parse parser;
-// 	t_data	data;
-// 	int i = 0;
-// 	int j = 0;
-
-// 	i = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		// print_env(data.env->head);
-// 		// print_env(data.env_exp->head);
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("🔻minishell> ");
-// 			if (!parser.rd_ln && !ft_perror("minishell"))
-// 				exit (1);
-// 			if (parser.rd_ln[0])
-// 			{
-// 				add_history(parser.rd_ln);
-// 				parsing(&parser);
-// 				// printf("%s\n", data.cmd_line->head->cmd);
-// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
-// 					printf("exit = %d\n", export(&data,
-// 								data.cmd_line->head->cmd));
-// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-// 					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
-// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
-// 					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
-// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
-// 					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
-// 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
-// 				// find_path(&data);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free_arr(&parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// 	// char c = '4';
-// 	// char *ptr = &c;
-// 	// printf("%p\n", *ptr + 100);
-// }

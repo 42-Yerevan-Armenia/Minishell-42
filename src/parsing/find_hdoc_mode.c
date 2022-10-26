@@ -6,11 +6,27 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 09:49:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/26 13:44:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int heredoc_limit(char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '<' && str[i + 1] == '<' && ++i && ++i)
+			count++;
+		i++;
+	}
+	return (count);
+}
 
 static int	is_single_qutoe(char *str)
 {
@@ -24,7 +40,7 @@ static int	is_single_qutoe(char *str)
 	return (HDOC_DQ_MODE);
 }
 
-int	find_hdoc_mode(char *str)
+static int	find_hdoc_mode(char *str)
 {
 	int i;
 	char	*tmp;
@@ -45,6 +61,8 @@ int get_all_hd_modes(t_parse *parser)
     char    **tmp;
     int i;
 
+	if (heredoc_limit(parser->rd_ln) > 16)
+		exit(2);
     i = 0;
     tmp = parser->join_pipe;
     parser->data->hdoc_mode = malloc(sizeof(int *) * (arr_double_len(tmp) + 1));

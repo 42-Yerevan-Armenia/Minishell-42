@@ -6,29 +6,55 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:21:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/25 12:26:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/26 09:30:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	valid_flag(char *s, int *i)
+{
+	int j;
+
+	j = 0;
+	if (!s)
+		return (-1);
+	if (s[j] == '-' && s[j + 1] == 'n' && ++j)
+	{
+		while (s[j])
+		{
+			if (s[j] != 'n')
+			{
+				return (1);
+			}
+			(j)++;
+		}
+	}
+	else
+		return (1);
+	(*i)++;
+	return (0);
+}
+
 int	echo(t_data *data, char **args)
 {
 	int	flag;
 	int	i;
+	int	j;
 
+	j = 0;
 	i  = 1;
 	flag  = 0;
 	if (arr_double_len(args) != 1)
 	{
-		while (args[i] && !ft_strcmp(args[i], "-n") && ++i)
-			flag = 1;
 		while (args[i])
 		{
+			while (((!valid_flag(args[i], &i))))
+				flag = 1;
 			ft_putstr_fd(args[i], 1);
-			i++;
-			if (args[i])
+			if (args[i + 1])
 				write(1, " ", 1);
+			i++;
 		}
 	}
 	if (flag == 0)

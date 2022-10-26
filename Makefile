@@ -9,25 +9,43 @@ NAME = minishell
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
+TMP = objs
+
 CC = cc
 
 CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
 
-SRCS = $(wildcard ./src/*/*.c)
-SRCS += $(wildcard ./src/*.c)
+SRCS = $(shell find . -name "*.c" | grep src | grep '\.c')
 
-OBJS = $(patsubst %.c, %.o, $(SRCS))
+OBJS_DIR = $(shell find . -name "*.c" | cut -d'/' -f4 | grep '\.c')
+OBJS = $(patsubst %.c, ./$(TMP)/%.o, $(OBJS_DIR))
 
-RM = rm -f
+RM = rm -fr
 
-.c.o:
-	@$(CC) $(CFLAGS) -c $< -o ${<:.c=.o}
+PRER = ./src/execute ./src/parsing
+
+# $(info $$OBJS_DIR is [${OBJS_DIR}])
+# $(info $$SRCS is [${SRCS}])
+
+# ./$(TMP)/%.o: $(shell find ./src/execute/$(%.c))
+# 	@$(CC) $(CFLAGS) -o $@ -c $< 
+# 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
+
+./$(TMP)/%.o: ./src/execute/%.c
+	@$(CC) $(CFLAGS) -o $@ -c $< 
 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
-all: $(NAME) 
+./$(TMP)/%.o: ./src/parsing/%.c
+	@$(CC) $(CFLAGS) -o $@ -c $< 
+	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
-$(NAME): $(OBJS) $(LIBFT)
+all: $(NAME)
+
+$(NAME): $(TMP) $(OBJS) $(LIBFT) 
 	@$(CC) $(CFLAGS) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
+
+$(TMP):
+	@mkdir $(TMP)
 
 $(LIBFT):
 	@make --no-print-directory -C $(LIBFT_DIR)
@@ -35,7 +53,8 @@ $(LIBFT):
 
 clean:
 	@make --no-print-directory clean -C $(LIBFT_DIR)
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJS_DIR)
+	$(RM) $(TMP)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean

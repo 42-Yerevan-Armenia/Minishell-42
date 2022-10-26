@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 10:22:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:30:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,17 @@ char			*ft_heredoc(t_spl_pipe *node, t_parse *parser);
 int				create_rd_files(t_parse *parser);
 int				get_infile_fd(t_parse *parser);
 
+
+// execute
+int    execute(t_data *data);
+
 // builtins
 int				echo(t_data *data, char **args);
 int				export(t_data *data, char **args);
+int             unset(t_data *data, char **args);
+int             env(t_data *data, char **args);
+int             pwd(t_data *data, char **args);
+int             cd(t_data *data, char **args);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);
@@ -77,10 +85,16 @@ t_list_env		*create_list_env(void);
 t_env			*new_env(char *key, char *val, int is_export);
 void			set_env(t_list_env **env, t_env *new_node);
 int				del_env_node(t_list_env **env, char *key);
-char			*get_env_val(t_list_env *env, char *key);
+// char			*get_env_val(t_list_env *env, char *key);
 int				print_env(t_env *head);
 int				print_exp(t_env *head);
 int				print_env_rev(t_env *tail);
-int				env(t_data *data, char **args);
+char            **split_for_env(char *str, char c);
+char            **env_cpy(t_list_env *env);
+
+
+// utils
+
+void print_env_arr(char **env);
 
 #endif
