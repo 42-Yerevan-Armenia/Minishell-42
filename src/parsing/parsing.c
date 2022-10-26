@@ -110,7 +110,6 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 	node->flag_new_pipe = 0;
 	while (cmd_ln[i])
 	{
-		printf("%s\n", cmd_ln);
 		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
 			get_files(cmd_ln, node, &i, HEREDOC);
 		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
@@ -273,48 +272,48 @@ int	unset(t_data *data, char **args)
 	return (0);
 }
 
-int main(int ac, char **av, char **envp)
-{
-	t_parse parser;
-	t_data	data;
-	int i = 0;
-	int j = 0;
+// int main(int ac, char **av, char **envp)
+// {
+// 	t_parse parser;
+// 	t_data	data;
+// 	int i = 0;
+// 	int j = 0;
 
-	i = 0;
-	if (ac == 1)
-	{
-		init(&parser, &data, envp);
-		data.error_message = NULL;
-		// print_env(data.env->head);
-		// print_env(data.env_exp->head);
-		while (1)
-		{
-			parser.rd_ln = readline("🔻minishell> ");
-			if (!parser.rd_ln && !ft_perror("minishell"))
-				exit (1);
-			if (parser.rd_ln[0])
-			{
-				add_history(parser.rd_ln);
-				parsing(&parser);
-				// printf("%s\n", data.cmd_line->head->cmd);
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
-					printf("exit = %d\n", export(&data,
-								data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
-					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
-				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
-					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
-				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
-				// find_path(&data);
-				free_spl_pipe(&data.cmd_line);
-			}
-			free_arr(&parser.rd_ln);
-		}
-		free_envp(&data.env);
-	}
-	// char c = '4';
-	// char *ptr = &c;
-	// printf("%p\n", *ptr + 100);
-}
+// 	i = 0;
+// 	if (ac == 1)
+// 	{
+// 		init(&parser, &data, envp);
+// 		data.error_message = NULL;
+// 		// print_env(data.env->head);
+// 		// print_env(data.env_exp->head);
+// 		while (1)
+// 		{
+// 			parser.rd_ln = readline("🔻minishell> ");
+// 			if (!parser.rd_ln && !ft_perror("minishell"))
+// 				exit (1);
+// 			if (parser.rd_ln[0])
+// 			{
+// 				add_history(parser.rd_ln);
+// 				parsing(&parser);
+// 				// printf("%s\n", data.cmd_line->head->cmd);
+// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
+// 					printf("exit = %d\n", export(&data,
+// 								data.cmd_line->head->cmd));
+// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+// 					printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
+// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
+// 					printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
+// 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
+// 					printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
+// 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
+// 				// find_path(&data);
+// 				free_spl_pipe(&data.cmd_line);
+// 			}
+// 			free_arr(&parser.rd_ln);
+// 		}
+// 		free_envp(&data.env);
+// 	}
+// 	// char c = '4';
+// 	// char *ptr = &c;
+// 	// printf("%p\n", *ptr + 100);
+// }
