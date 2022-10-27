@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 20:16:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:58:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**split_for_env(char *str, char c)
 	return (res);
 }
 
-t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
+void	get_env(t_data *data, char **envp, int is_export)
 {
 	t_env	*env;
 	char	**tmp;
@@ -50,11 +50,13 @@ t_env	*get_env(t_list_env **env_list, char **envp, int is_export)
 		// printf("tmp[0]= %s\n", tmp[0]);
 		// printf("tmp[1]= %s\n", tmp[1]);
 		env = new_env(tmp[0], tmp[1], is_export);
-		set_env(env_list, env);
+		// printf("env->key = %s\n", env->key);
+		// printf("i = %d\n", i);
+		// printf("tmp = %p\n", tmp);
+		set_env(data, env);
 		free_double((void *)&tmp);
 		i++;
 	}
-	if (is_export == 0)
-		set_env(env_list, env = new_env("?", "0", 2));
-	return ((*env_list)->head);
+	// if (is_export == 0)
+	// 	set_env(data, env = new_env("?", "0", FORME));
 }

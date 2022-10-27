@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/26 21:22:54 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:09:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	exit(1);
 }
 
-void	execute(t_data *data)
+int	execute(t_data *data)
 {
 	t_spl_pipe	*tmp;
 	int			psize;
@@ -130,33 +130,34 @@ void	execute(t_data *data)
 		tmp = tmp->next;
 	}
 	data->exit_status = WEXITSTATUS(res);
+	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	t_parse	parser;
-	t_data	data;
-	int		i;
-	int		j;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_parse	parser;
+// 	t_data	data;
+// 	int		i;
+// 	int		j;
 
-	i = 0;
-	j = 0;
-	if (ac == 1)
-	{
-		init(&parser, &data, envp);
-		data.error_message = NULL;
-		while (1)
-		{
-			parser.rd_ln = readline("🔻minishell> ");
-			if (parser.rd_ln[0])
-			{
-				add_history(parser.rd_ln);
-				parsing(&parser);
-				execute(&data);
-				free_spl_pipe(&data.cmd_line);
-			}
-			free_arr(&parser.rd_ln);
-		}
-		free_envp(&data.env);
-	}
-}
+// 	i = 0;
+// 	j = 0;
+// 	if (ac == 1)
+// 	{
+// 		init(&parser, &data, envp);
+// 		data.error_message = NULL;
+// 		while (1)
+// 		{
+// 			parser.rd_ln = readline("🔻minishell> ");
+// 			if (parser.rd_ln[0])
+// 			{
+// 				add_history(parser.rd_ln);
+// 				parsing(&parser);
+// 				execute(&data);
+// 				free_spl_pipe(&data.cmd_line);
+// 			}
+// 			free_arr(&parser.rd_ln);
+// 		}
+// 		free_envp(&data.env);
+// 	}
+// }

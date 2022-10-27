@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 18:39:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/27 19:49:14 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	unset(t_data *data, char **args)
 	{
 		if (is_valid_args(args[i]))
 			return (1);
-		del_env_node(&data->env, args[i]);
-		del_env_node(&data->env_exp, args[i]);
+		del_env_node(data->env, args[i]);
+		del_env_node(data->env_exp, args[i]);
 		i++;
 	}
 	data->envp =  env_cpy(data->env);

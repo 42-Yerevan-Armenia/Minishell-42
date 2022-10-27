@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:31:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:03:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,9 +175,10 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->env = create_list_env();
 	data->env_exp = create_list_env();
 	data->exit_status = 0;
-	get_env(&data->env, envp, ENV);
-	get_env(&data->env_exp, envp, EXPORT);
-	data->envp =  env_cpy(data->env);
+	get_env(data, envp, (EXPORT | ENV));
+	// set_env(&data->env, new_env("PWD", getcwd(NULL, 0), ENV));
+	// get_env(&data->env_exp, envp, EXPORT);
+	// data->envp =  env_cpy(data->env);
 	return (0);
 }
 
@@ -268,7 +269,7 @@ int main(int ac, char **av, char **envp)
 				else
                		execute(&data);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
-				set_env(&data.env, new_env("?", ft_itoa(data.exit_status), 2));
+				// set_env(&data, new_env("?", ft_itoa(data.exit_status), 2));
 				// print_env_arr(data.envp);
 				free_spl_pipe(&data.cmd_line);
 			}
