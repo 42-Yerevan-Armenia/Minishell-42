@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/27 19:48:20 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:33:00 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				print_env(t_env *head);
 int				print_exp(t_env *head);
 int				print_env_rev(t_env *tail);
 char            **split_for_env(char *str, char c);
-char            **env_cpy(t_list_env *env);
+char            **env_cpy(t_data *data, t_list_env *env);
 
 
 // utils

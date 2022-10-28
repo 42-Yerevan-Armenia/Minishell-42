@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/27 19:43:56 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:42:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int cd(t_data *data, char **args)
 	chdir(args[1]);
 	errno = 0;
 	char *ptr = getcwd(NULL, 0);
-	printf("ptr = %s\n", ptr);
+	// printf("ptr = %s\n", ptr);
 	// if (!ptr && errno == ENOENT)
 		// set_env(&data->env, new_env("PWD", get_val(data->env->head, args[1]), ENV));
 	/*else */if (!ptr && ft_perror("minishell"))
