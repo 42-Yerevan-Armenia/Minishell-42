@@ -50,7 +50,7 @@ static int del_one(t_env **env)
 		free_arr(&(*env)->key);
 		free_arr(&(*env)->val);
 		free((*env));
-	*env = NULL;
+		*env = NULL;
 	}
 	return (0);
 }
@@ -85,7 +85,6 @@ static	int find_var_rap(t_list_env *env, t_env *new_node)
 				head->val = ft_strdup(new_node->val);
 			else
 				head->val = ft_strjoin_1(head->val, new_node->val);
-			del_one(&new_node);
 			return (1);
 		}
 		head = head->next;
@@ -134,7 +133,7 @@ int set_env_helper(t_list_env *env, t_env *new_node)
 		env->tail = new_node;
 		return (1);
 	}
-	if (find_var_rap(env, new_node))
+	if (find_var_rap(env, new_node)/* && del_one(&new_node)*/)
 		return (2);
 	return (0);
 }
@@ -144,6 +143,7 @@ void set_env(t_data *data, t_env *new_node)
 	t_env	*tmp;
 	int		v_ret;
 
+	tmp = NULL;
 	if (new_node->is_export == (ENV | EXPORT))
 		tmp = new_env(new_node->key, new_node->val, new_node->is_export);
 	else
@@ -154,21 +154,21 @@ void set_env(t_data *data, t_env *new_node)
 		if (v_ret == 0 && ++(data->env_exp->size))
 			set_exp(data->env_exp, new_node);
 	}
-	// if ((tmp->is_export == ENV || tmp->is_export == (EXPORT | ENV))
-	// 	|| new_node->is_export == FORME)
-	// {
-	// 	v_ret = set_env_helper(data->env, tmp);
-	// 	if (v_ret == 0)
-	// 	{
-	// 		if (tmp->is_export != FORME)
-	// 			++(data->env->size);
-	// 		data->env->tail->next = tmp;
-	// 		tmp->prev = data->env->tail;
-	// 		data->env->tail = data->env->tail->next;
-	// 	}
-	// 	if (tmp->is_export != FORME)
-	// 		data->envp = env_cpy(data, data->env);
-	// }
+	if ((tmp->is_export == ENV || tmp->is_export == (EXPORT | ENV))
+		|| new_node->is_export == FORME)
+	{
+		v_ret = set_env_helper(data->env, tmp);
+		if (v_ret == 0)
+		{
+			if (tmp->is_export != FORME)
+				++(data->env->size);
+			data->env->tail->next = tmp;
+			tmp->prev = data->env->tail;
+			data->env->tail = data->env->tail->next;
+		}
+		if (tmp && tmp->is_export != FORME)
+			data->envp = env_cpy(data, data->env);
+	}
 }
 
 static void del_env_node_helper(t_list_env *env, t_env *tmp, t_env	*del)
