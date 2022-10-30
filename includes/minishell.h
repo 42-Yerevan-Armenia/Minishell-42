@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 11:03:09 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:54:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ int				rep_vars(t_parse *parser, char **str);
 // t_env			*get_env(t_list_env **env_list, char **envp, int is_export);
 void	        get_env(t_data *data, char **envp, int is_export);
 // char	*ft_heredoc(t_parse *parser, char *dlmtr);
-char			*ft_heredoc(t_spl_pipe *node, t_parse *parser);
+int			ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error);
 int				create_rd_files(t_parse *parser);
-int				get_infile_fd(t_parse *parser);
-
+int             get_infile_fd(t_spl_pipe *node);
 
 // execute
 int    execute(t_data *data);

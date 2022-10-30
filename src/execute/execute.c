@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/27 18:09:58 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:26:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 		exit(1);
 	}
 	else
-		data->path = get_cmd(data->cmd_paths, *data->cmd_line->head->cmd);
+		data->path = get_cmd(data->cmd_paths, *tmp->cmd);
 	if (!data->path)
 		free(data->path);
 	execve(data->path, tmp->cmd, &tmp->cmd[0]);
@@ -84,11 +84,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	exit(1);
 }
 
-<<<<<<< HEAD
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
-=======
-int	execute(t_data *data)
->>>>>>> edc58f7003f8233e351276dddd9674640714fe1c
 {
 	int	i;
 
@@ -150,7 +146,6 @@ int	execute(t_data *data)
 	return (0);
 }
 
-<<<<<<< HEAD
 void	b_fork(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
@@ -209,33 +204,3 @@ void	builtin_forking(t_data *data)
 	}
 	data->exit_status = WEXITSTATUS(res);
 }
-=======
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_parse	parser;
-// 	t_data	data;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("🔻minishell> ");
-// 			if (parser.rd_ln[0])
-// 			{
-// 				add_history(parser.rd_ln);
-// 				parsing(&parser);
-// 				execute(&data);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free_arr(&parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// }
->>>>>>> edc58f7003f8233e351276dddd9674640714fe1c

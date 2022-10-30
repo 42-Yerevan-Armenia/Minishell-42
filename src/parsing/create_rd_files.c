@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 17:56:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:20:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int create_rd_files(t_parse *parser)
 			tmp->fd_out = open(tmp->out_files[i], O_CREAT | tmp->output_mode | O_RDWR, 0777);
 			// printf("fd = %d\n", tmp->fd_out );
 			if (tmp->fd_out == -1 && ft_perror("minishell"))
-				return (1);
+				return (START_RD_LN);
 			i++;
 		}
 		tmp = tmp->next;

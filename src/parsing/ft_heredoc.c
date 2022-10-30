@@ -6,13 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 17:41:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:18:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	create_hiden_file(t_data *data, char **f_name)
+static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 {
 	int		i;
 	char	*doc;
@@ -35,20 +35,19 @@ static int	create_hiden_file(t_data *data, char **f_name)
 	fd = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	// printf("f_name = %s\n", *f_name);
 	if (fd == -1 && ft_perror("minishell"))
-		return (-1);
+		return (START_RD_LN);
+	node->fd_in = fd;
 	return (fd);
 }
 
-char	*ft_heredoc(t_spl_pipe *node, t_parse *parser)
+int	ft_heredoc(t_spl_pipe *node, t_parse *parser, int	*error)
 {
 	char	*res;
 	char	*rd_ln;
 	char	*ptr;
 	int		i;
-	char	*f_name;
 
 	res = NULL;
-	f_name = NULL;
 	rd_ln = NULL;
 	i = 0;
 	while (node->heredoc[i])
@@ -71,9 +70,9 @@ char	*ft_heredoc(t_spl_pipe *node, t_parse *parser)
 	}
 	if (node->hdoc_mode == HDOC_DQ_MODE && res)
 		rep_vars(parser, &res);
-	ft_putstr_fd(res, create_hiden_file(parser->data, &f_name));
+	*error = create_hiden_file(parser->data, node, &node->f_name);
+	ft_putstr_fd(res, i);
 	free_arr(&rd_ln);
 	free_arr(&res);
-
-	return (f_name);
+	return (0);
 }

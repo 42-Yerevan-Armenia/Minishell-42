@@ -22,13 +22,14 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
 	if (new_pipe == NULL && !ft_perror("minishell"))
 		exit (1);
 	new_pipe->flag_new_pipe = 0;
-	//new_pipe->fd_in = 0;
-	//new_pipe->fd_out = 1;
+	new_pipe->fd_in = 0;
+	new_pipe->fd_out = 1;
 	new_pipe->hdoc_input = NULL;
 	new_pipe->cmd = NULL;
 	new_pipe->heredoc = NULL;
 	new_pipe->in_files = NULL;
 	new_pipe->out_files = NULL;
+	new_pipe->f_name = NULL;
 	new_pipe->hdoc_mode = 0;
 	new_pipe->output_mode = 0;
 	new_pipe->input_mode = 0;

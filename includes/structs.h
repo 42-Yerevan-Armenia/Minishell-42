@@ -16,6 +16,7 @@
  #define FORME 4
  #define HDOC_SQ_MODE 1
  #define HDOC_DQ_MODE 0
+ #define START_RD_LN 100
 
 
 
@@ -32,7 +33,6 @@ typedef struct s_spl_pipe
 	int				flag_new_pipe;
 	int				tmp;
 	char			*hdoc_input;
-	char			*f_h_name;
 	pid_t			pid;
 	char			**cmd;
 	char			*dlm;
@@ -40,6 +40,7 @@ typedef struct s_spl_pipe
 	char			**in_files;
 	char			**heredoc;
 	char			*error_message;
+	char			*f_name;
 	struct s_spl_pipe	*next;
 	struct s_spl_pipe	*prev;
 }               t_spl_pipe;
