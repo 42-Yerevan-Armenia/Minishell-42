@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:30:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 11:03:09 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ char			*get_val(t_env *head, char *key);
 char			*find_var(char *src, char **ptr, int j);
 char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 int				rep_vars(t_parse *parser, char **str);
-t_env			*get_env(t_list_env **env_list, char **envp, int is_export);
+// t_env			*get_env(t_list_env **env_list, char **envp, int is_export);
+void	        get_env(t_data *data, char **envp, int is_export);
 // char	*ft_heredoc(t_parse *parser, char *dlmtr);
 char			*ft_heredoc(t_spl_pipe *node, t_parse *parser);
 int				create_rd_files(t_parse *parser);
@@ -93,14 +94,12 @@ char			*ft_strjoin_all(char **str);
 // env api
 t_list_env		*create_list_env(void);
 t_env			*new_env(char *key, char *val, int is_export);
-void			set_env(t_list_env **env, t_env *new_node);
-int				del_env_node(t_list_env **env, char *key);
+void            set_env(t_data *data, t_env *new_node);
+int				del_env_node(t_list_env *env, char *key);
 // char			*get_env_val(t_list_env *env, char *key);
-int				print_env(t_env *head);
-int				print_exp(t_env *head);
 int				print_env_rev(t_env *tail);
 char            **split_for_env(char *str, char c);
-char            **env_cpy(t_list_env *env);
+char            **env_cpy(t_data *data, t_list_env *env);
 
 
 // utils

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 18:40:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:42:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void print_env_arr(char **env)
 }
 
 
-char **env_cpy(t_list_env *env)
+char **env_cpy(t_data *data, t_list_env *env)
 {
 	char	**res;
 	t_env	*tmp;
@@ -39,9 +39,11 @@ char **env_cpy(t_list_env *env)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->is_export == ENV)
+		if (tmp->is_export == ENV || tmp->is_export == (ENV | EXPORT))
 			res[i++] = ft_strjoin_1(ft_strjoin(tmp->key, "="), tmp->val);
 		tmp = tmp->next;
 	}
+	free_double((void *)&data->envp);
+	// print_env_arr(res);
 	return (res);
 }

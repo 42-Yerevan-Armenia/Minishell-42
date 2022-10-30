@@ -2,6 +2,7 @@
 # define STRUCT_H
 
  #define METACHARS "|&;()<> \n\t"
+ #define UNEXPECTED "|&;()"
  #define HANDLE	"<>"
  #define QUOTES	"\"'`"
  #define SPACES " \n\t\v\f\r"
@@ -10,8 +11,9 @@
  #define OUT_FILES 3
  #define HEREDOC 4
  #define COMAND 5
- #define EXPORT 1
- #define ENV 0
+ #define EXPORT 2
+ #define ENV 1
+ #define FORME 4
  #define HDOC_SQ_MODE 1
  #define HDOC_DQ_MODE 0
 
@@ -86,14 +88,14 @@ typedef struct s_data
 
 typedef struct s_parse
 {
+	int			l_arr;
+	char		*rd_ln;
 	char		*key;
-	char		*val;
+	// char		*val;
 	char		**spl_qutoes;
 	char		**spl_pipe;
 	char		**join_pipe;
-	int			l_arr;
 	t_data		*data;
-	char		*rd_ln;
 }               t_parse;
 
 typedef struct s_elem

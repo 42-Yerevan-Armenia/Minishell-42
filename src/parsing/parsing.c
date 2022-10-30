@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:31:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 11:19:26 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,20 +164,21 @@ int	find_exe(t_parse *parser)
 int	init(t_parse *parser, t_data *data, char **envp)
 {
 	parser->data = data;
-	data->parser = parser;
+	parser->l_arr = 2;
+	parser->key = NULL;
 	parser->spl_qutoes = NULL;
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
+	data->parser = parser;
+	data->envp = NULL;
 	data->hdoc_mode = NULL;
-	parser->l_arr = 2;
 	data->cmd_line = create_list_pipe();
 	data->env = create_list_env();
 	data->env_exp = create_list_env();
 	data->exit_status = 0;
-	get_env(&data->env, envp, ENV);
-	get_env(&data->env_exp, envp, EXPORT);
-	data->envp =  env_cpy(data->env);
+	get_env(data, envp, (EXPORT | ENV));
+	// get_env(data, envp, (ENV));
 	return (0);
 }
 
@@ -197,37 +198,73 @@ int get_hd_mode_int_pipe(t_parse *parser)
 	free_double((void *)&parser->data->hdoc_mode);
 	return (0);
 }
+
+// int	empty_input(t_parse *parser)
+// {
+// 	int		i;
+// 	char	*tmp;
+
+// 	i = 0;
+// 	tmp = parser->rd_ln;
+// 	while (tmp[i])
+// 	{
+		
+// 		i++;
+// 	}
+	
+// }
+
+int	unexpected_tokens(t_parse *parser)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = parser->rd_ln;
+	while (tmp[i])
+	{
+		if (ft_strchr(UNEXPECTED, tmp[i]))
+		{
+			while (ft_strchr(SPACES, tmp[i]))
+				i++;
+			if (ft_strchr(UNEXPECTED, tmp[i]))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+// int	error_hendling(t_parse *parser)
+// {
+// 	return (0);
+// }
+
 // sdgsdgsd"     "dsgsdgsdg
+
 int parsing(t_parse *parser)
 {
 	int	i = 0;
+	if (unexpected_tokens(parser) == 1 && ft_putstr_fd("unexpected token\n",2))
+		return(1);
 	split_quotes(parser);
 	rep_vars(parser, NULL);
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
-
-	// printf("%p\n", parser->data->hdoc_mode);
-	// while ( parser->data->hdoc_mode[i])
-	// {
-	// 	printf("mode = %d\n", parser->data->hdoc_mode[i++][0]);
-	// }
-	// while (parser->join_pipe[i])
-	// {
-	// 	printf("%s\n", parser->join_pipe[i]);
-	// 	i++;
-	// }
 	find_exe(parser);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_int_pipe(parser);
-	create_rd_files(parser);
+	// create_rd_files(parser);
 	// get_infile_fd(parser);
-	if (parser->data->error_message)
-		printf("%s", parser->data->error_message);
 	print_info(parser);
-	free_parse(parser);
 	return (0);
 }
+
+// int free_all()
+// {
+// 	free_spl_pipe
+// }
 
 int main(int ac, char **av, char **envp)
 {
@@ -240,18 +277,23 @@ int main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
+<<<<<<< HEAD
 		data.error_message = NULL;
 		// print_env(data.env->head);
 		// print_env(data.env_exp->head);
 		//printf_header();
+=======
+>>>>>>> edc58f7003f8233e351276dddd9674640714fe1c
 		while (1)
 		{
+// start:
 			parser.rd_ln = readline("🔻minishell> ");
 			if (!parser.rd_ln && !ft_perror("minishell"))
 				exit (1);
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
+<<<<<<< HEAD
 				parsing(&parser);
 				if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
 					printf("exit = %d\n", export(&data,
@@ -278,13 +320,59 @@ int main(int ac, char **av, char **envp)
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));
 				set_env(&data.env, new_env("?", ft_itoa(data.exit_status), 2));
 				// print_env_arr(data.envp);
+=======
+				if (parsing(&parser) == 1 && !free_arr(&parser.rd_ln))
+					continue;
+				if (data.cmd_line->head->cmd[0])
+				{
+					if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
+						printf("exit = %d\n", export(&data,
+									data.cmd_line->head->cmd));
+					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
+						printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
+					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
+						printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
+					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
+						printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
+					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "pwd"))
+						printf("exit = %d\n", pwd(&data, data.cmd_line->head->cmd));
+					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
+						printf("exit = %d\n", cd(&data, data.cmd_line->head->cmd));
+					else
+						execute(&data);
+				}
+				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
+>>>>>>> edc58f7003f8233e351276dddd9674640714fe1c
 				free_spl_pipe(&data.cmd_line);
+				free_parse(&parser);
 			}
 			free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);
 	}
-	// char c = '4';
-	// char *ptr = &c;
-	// printf("%p\n", *ptr + 100);
 }
+
+
+// int main()
+// {
+// 	char *ptr;
+// 	char buf[100];
+// 	// printf("%ld\n", PATH_MAX);
+// 	ptr = getcwd(buf, 100);
+
+// 	printf("buf = %s\n", buf);
+// 	printf("buf = %p\n", buf);
+// 	printf("ptr = %s\n", ptr);
+// 	printf("ptr = %p\n", ptr);
+// 	ptr = getcwd(buf, 100);
+// 	// ptr = getcwd(NULL, 0);
+// 	printf("buf = %s\n", buf);
+// 	printf("buf = %p\n", buf);
+// 	printf("ptr = %s\n", ptr);
+// 	printf("ptr = %p\n", ptr);
+// 	while (1)
+// 	{
+// 		/* code */
+// 	}
+	
+// }

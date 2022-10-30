@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/26 20:23:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 11:02:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 
 // export test+t=5
 // export a="'a'"
+
+static int	print_exp(t_env *head)
+{
+	while (head)
+	{
+		if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
+		{
+			printf("declare -x %s", head->key);
+			if (head->val)
+				printf("=\"%s\"", head->val);
+			printf("\n");
+		}
+		head = head->next;
+	}
+	printf("***************export\n");
+	return (0);
+}
 
 static int	is_valid_args(char *args)
 {
@@ -73,12 +90,16 @@ int	export(t_data *data, char **args)
 		// tmp = ft_split(args[i], '=');
 		// printf("%s\n", tmp[0]);
 		// printf("%s\n", tmp[1]);
-		set_env(&exp, new_env(tmp[0], tmp[1], EXPORT));
 		if (tmp[1])
-			set_env(&data->env, new_env(tmp[0], tmp[1], ENV));
+			set_env(data, new_env(tmp[0], tmp[1], (ENV | EXPORT)));
+		else
+			set_env(data, new_env(tmp[0], tmp[1], EXPORT));
+		// printf("tmp = %p\n", tmp);
+		// printf("tmp[0] = %p\n", tmp[0]);
+		// printf("tmp[1] = %p\n", tmp[1]);
 		free_double((void *)&tmp);
 		i++;
 	}
-	data->envp =  env_cpy(data->env);
+	// data->envp =  env_cpy(data->env);
 	return (0);
 }

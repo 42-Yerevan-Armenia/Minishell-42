@@ -12,14 +12,13 @@ int	split_quotes(t_parse *parser)
 	int t;
 
 	tmp = parser->rd_ln;
-	k = 0;
 	parser->l_arr = 2;
+	k = 0;
 	i = 0;
 	parser->spl_qutoes = malloc(sizeof(char *) * (parser->l_arr + 1));
 	if (!parser->spl_qutoes && !ft_perror("minishell"))
 		exit (1);
 	fill_null((void *)&parser->spl_qutoes, parser->l_arr + 1);
-	parser->spl_qutoes[parser->l_arr] = NULL;
 	while (tmp[i])
 	{
 		t = i;

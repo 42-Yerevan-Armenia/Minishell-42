@@ -65,31 +65,6 @@ void print_list(t_spl_pipe *head)
 	}
 }
 
-int	print_env(t_env *head)
-{
-	while (head)
-	{
-		printf("%s=%s\n", head->key, head->val);
-		head = head->next;
-	}
-	printf("***************env\n");
-	return (0);
-}
-
-int	print_exp(t_env *head)
-{
-	while (head)
-	{
-		printf("declare -x %s", head->key);
-		if (head->val)
-			printf("=\"%s\"", head->val);
-		printf("\n");
-		head = head->next;
-	}
-	printf("***************export\n");
-	return (0);
-}
-
 // int	print_env_rev(t_env *tail)
 // {
 // 	while (tail)
