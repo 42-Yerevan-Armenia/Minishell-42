@@ -272,6 +272,7 @@ int main(int ac, char **av, char **envp)
 	t_data	data;
 	int i = 0;
 	int j = 0;
+	int ps;
 
 	i = 0;
 	if (ac == 1)
@@ -279,8 +280,7 @@ int main(int ac, char **av, char **envp)
 		init(&parser, &data, envp);
 		while (1)
 		{
-// start:
-			parser.rd_ln = readline("🔻minishell> ");
+			parser.rd_ln = readline("🔻minishell> ");	
 			if (!parser.rd_ln && !ft_perror("minishell"))
 				exit (1);
 			if (parser.rd_ln[0])
@@ -290,20 +290,18 @@ int main(int ac, char **av, char **envp)
 					continue;
 				if (data.cmd_line->head->cmd[0])
 				{
-					// if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
-					// 	printf("exit = %d\n", export(&data, data.cmd_line->head->cmd));
-					// else if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-					// 	printf("exit = %d\n", env(&data, data.cmd_line->head->cmd));
-					// else if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
-					// 	printf("exit = %d\n", echo(&data, data.cmd_line->head->cmd));
-					// else if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
-					// 	printf("exit = %d\n", unset(&data, data.cmd_line->head->cmd));
-					// else if (!ft_strcmp(data.cmd_line->head->cmd[0], "pwd"))
-					// 	printf("exit = %d\n", pwd(&data, data.cmd_line->head->cmd));
-					// else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
-					// 	printf("exit = %d\n", cd(&data, data.cmd_line->head->cmd));
-					// else
-						execute(&data);
+					ps = data.cmd_line->size;
+					i = -1;
+					while (i++ < ps)
+					{
+						if (ps == 1 && !ft_strcmp(data.cmd_line->head->cmd[0], "exit"))
+							printf("✅ exit = %d\n", ft_exit(&data, data.cmd_line->head->cmd));
+						else
+						{
+							ps = 0;
+							execute(&data);
+						}
+					}
 				}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
 				free_spl_pipe(&data.cmd_line);

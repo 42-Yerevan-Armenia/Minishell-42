@@ -19,7 +19,6 @@ int	pwd(t_data *data, char **args)
 
 	errno = 0;
 	ptr = getcwd(NULL, 0);
-	printf("PWD ❌\n");
 	if (ptr == NULL && errno == ENOENT)
 	{
 		my_pwd = get_val(data->env->head, "MY_PWD");

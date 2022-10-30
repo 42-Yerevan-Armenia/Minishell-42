@@ -13,11 +13,13 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS = -I./includes -Ireadline-arakhurs/include -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
 
-SRCS = $(shell find . -name "*.c" | grep src | grep '\.c')
+LINKER =  ./readline-arakhurs/lib/libreadline.dylib
 
-OBJS_DIR = $(shell find . -name "*.c" | cut -d'/' -f4 | grep '\.c')
+SRCS = $(shell find ./src -name "*.c" | grep src | grep '\.c')
+
+OBJS_DIR = $(shell find ./src -name "*.c" | cut -d'/' -f4 | grep '\.c')
 OBJS = $(patsubst %.c, ./$(TMP)/%.o, $(OBJS_DIR))
 
 RM = rm -fr
@@ -29,20 +31,20 @@ PRER = ./src/execute ./src/parsing
 
 # ./$(TMP)/%.o: $(shell find ./src/execute/$(%.c))
 # 	@$(CC) $(CFLAGS) -o $@ -c $< 
-# 	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
+# 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
 ./$(TMP)/%.o: ./src/execute/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< 
-	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
+	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
 ./$(TMP)/%.o: ./src/parsing/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< 
-	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
+	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
 all: $(NAME)
 
 $(NAME): $(TMP) $(OBJS) $(LIBFT) 
-	@$(CC) $(CFLAGS) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -lreadline $(LINKER) $(LIBFT)  -o $(NAME)
 
 $(TMP):
 	@mkdir $(TMP)

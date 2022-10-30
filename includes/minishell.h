@@ -18,8 +18,8 @@
 # include "defines.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include "readline/history.h"
+# include "readline/readline.h"
 # include <string.h>
 
 # define WHITE	"\033[0;29m"
@@ -31,7 +31,6 @@
 # define SKY	"\033[1;36m"
 
 void	printf_header(void);
-void	builtin_forking(t_data *data);
 // char *ft_heredoc(t_parse *parser, char *dlmtr);
 
 void			dis_prompt(void);

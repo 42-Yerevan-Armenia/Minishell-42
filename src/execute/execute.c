@@ -62,41 +62,47 @@ void	open_pipes(int i, int (*fds)[2], int psize)
 	close_fds(fds, psize);
 }
 
-void	do_cmd(t_data *data, t_spl_pipe *tmp)
+int run_builtins(t_data *data, t_spl_pipe *tmp, int psize)
+{
+	if (!ft_strcmp(tmp->cmd[0], "cd"))
+		printf("✅ exit = %d\n", cd(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "echo"))
+		printf("✅ exit = %d\n", echo(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "env"))
+		printf("✅ exit = %d\n", env(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "exit"))
+		printf("✅ exit = %d\n", ft_exit(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "export"))
+		printf("✅ exit = %d\n", export(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
+		printf("✅ exit = %d\n", pwd(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "unset"))
+		printf("✅ exit = %d\n", unset(data, tmp->cmd));
+	return (0);
+}
+
+void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 {
 	int	i;
 
 	i = 0;
-	if (access(*tmp->cmd, F_OK) == 0)
-		data->path = *tmp->cmd;
-	else if (ft_strchr(*tmp->cmd, '/'))
+	
+	if (ft_strnstr(BUILTINS, tmp->cmd[0], 35))
+		run_builtins(data, tmp, psize);
+	else
+	{
+		if (access(*tmp->cmd, F_OK) == 0)
+			data->path = *tmp->cmd;
+		else if (ft_strchr(*tmp->cmd, '/'))
+			printf(NOT_FOUND, *tmp->cmd);
+		else
+			data->path = get_cmd(data->cmd_paths, *tmp->cmd);
+		if (!data->path)
+			free(data->path);
+		execve(data->path, tmp->cmd, &tmp->cmd[0]);
 		printf(NOT_FOUND, *tmp->cmd);
-	else
-		data->path = get_cmd(data->cmd_paths, *tmp->cmd);
-	if (!data->path)
-		free(data->path);
-	execve(data->path, tmp->cmd, &tmp->cmd[0]);
-	printf(NOT_FOUND, *tmp->cmd);//EXIT not work
+	}
 	exit(1);
-}
-
-int check_builtins(t_data *data, t_spl_pipe *tmp)
-{
-	// if (!ft_strcmp(data->cmd_line->head->cmd[0], "export"))
-	// 	printf("exit = %d\n", export(data,	data->cmd_line->head->cmd));
-	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "env"))
-	// 	printf("exit = %d\n", env(data, data->cmd_line->head->cmd));
-	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "echo"))
-	// 	printf("exit = %d\n", echo(data, data->cmd_line->head->cmd));
-	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "unset"))
-	// 	printf("exit = %d\n", unset(data, data->cmd_line->head->cmd));
-	if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		printf("exit = %d\n", pwd(data, tmp->cmd));
-	else
-		do_cmd(data, tmp);
-	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "cd"))
-	// 	printf("exit = %d\n", cd(data, data->cmd_line->head->cmd));
-	return (0);
 }
 
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
@@ -116,11 +122,11 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)
-				check_builtins(data, tmp);
+				do_cmd(data, tmp, psize);
 			else
 			{
 				open_pipes(i, fds, psize);
-				check_builtins(data, tmp);
+				do_cmd(data, tmp, psize);
 			}
 		}
 		tmp = tmp->next;
