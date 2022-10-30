@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "structs.h"
+# include "defines.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>

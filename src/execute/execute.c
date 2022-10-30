@@ -24,7 +24,6 @@ char	*get_cmd(char **paths, char *cmd)
 		command = ft_strjoin(tmp, cmd);
 		if (access(command, F_OK) == 0)
 			return (command);
-		free(command);
 		paths++;
 	}
 	return (NULL);
@@ -71,49 +70,57 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	if (access(*tmp->cmd, F_OK) == 0)
 		data->path = *tmp->cmd;
 	else if (ft_strchr(*tmp->cmd, '/'))
-	{
-		printf("🔻minishell> %s: command not found ❌\n", *tmp->cmd);
-		exit(1);
-	}
+		printf(NOT_FOUND, *tmp->cmd);
 	else
-		data->path = get_cmd(data->cmd_paths, *data->cmd_line->head->cmd);
+		data->path = get_cmd(data->cmd_paths, *tmp->cmd);
 	if (!data->path)
 		free(data->path);
 	execve(data->path, tmp->cmd, &tmp->cmd[0]);
-	printf("🔻minishell> %s: command not found ❌\n", *tmp->cmd);//EXIT not work
+	printf(NOT_FOUND, *tmp->cmd);//EXIT not work
 	exit(1);
 }
 
-<<<<<<< HEAD
+int check_builtins(t_data *data, t_spl_pipe *tmp)
+{
+	// if (!ft_strcmp(data->cmd_line->head->cmd[0], "export"))
+	// 	printf("exit = %d\n", export(data,	data->cmd_line->head->cmd));
+	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "env"))
+	// 	printf("exit = %d\n", env(data, data->cmd_line->head->cmd));
+	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "echo"))
+	// 	printf("exit = %d\n", echo(data, data->cmd_line->head->cmd));
+	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "unset"))
+	// 	printf("exit = %d\n", unset(data, data->cmd_line->head->cmd));
+	if (!ft_strcmp(tmp->cmd[0], "pwd"))
+		printf("exit = %d\n", pwd(data, tmp->cmd));
+	else
+		do_cmd(data, tmp);
+	// else if (!ft_strcmp(data->cmd_line->head->cmd[0], "cd"))
+	// 	printf("exit = %d\n", cd(data, data->cmd_line->head->cmd));
+	return (0);
+}
+
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
-=======
-int	execute(t_data *data)
->>>>>>> edc58f7003f8233e351276dddd9674640714fe1c
 {
 	int	i;
 
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
-		{
-			printf("🔻minishell> Input File: No such file or directory ❌\n");
-			free(fds);
-			fds = NULL;
-		}
+			ft_putstr_fd(INPUT_FILE, 2);
 	i = 0;
 	while (i < psize)
 	{
 		tmp->pid = fork();
 		if (tmp->pid == -1)
-			printf("🔻minishell> fork: Resource temporarily unavailable ❌\n");
+			ft_putstr_fd(FORK, 2);
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)
-				do_cmd(data, tmp);
+				check_builtins(data, tmp);
 			else
 			{
 				open_pipes(i, fds, psize);
-				do_cmd(data, tmp);
+				check_builtins(data, tmp);
 			}
 		}
 		tmp = tmp->next;
@@ -136,10 +143,7 @@ int	execute(t_data *data)
 	fds = malloc(sizeof (*fds) * (psize - 1));
 	forking(fds, psize, tmp, data);
 	close_fds(fds, psize);
-	i = -1;
-	while (data->cmd_paths[++i])
-		free(data->cmd_paths[i]);
-	free(data->cmd_paths);
+	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	while (tmp)
 	{
@@ -149,93 +153,3 @@ int	execute(t_data *data)
 	data->exit_status = WEXITSTATUS(res);
 	return (0);
 }
-
-<<<<<<< HEAD
-void	b_fork(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
-{
-	int	i;
-	data->path = getenv("PATH");
-	data->cmd_paths = ft_split(data->path, ':');
-	i = -1;
-	while (data->cmd_paths[++i])
-		free(data->cmd_paths[i]);
-	free(data->cmd_paths);
-
-	i = -1;
-	while (++i < psize - 1)
-		if (pipe(fds[i]) == -1)
-		{
-			printf("🔻minishell> Input File: No such file or directory ❌\n");
-			free(fds);
-			fds = NULL;
-		}
-	i = 0;
-	while (i < psize)
-	{
-		tmp->pid = fork();
-		if (tmp->pid == -1)
-			printf("🔻minishell> fork: Resource temporarily unavailable ❌\n");
-		else if (tmp->pid == 0)
-		{
-			open_pipes(i, fds, psize);
-			//do_cmd(data, tmp);
-			printf("exit = %d\n", ft_exit(data, tmp->cmd));
-		}
-		tmp = tmp->next;
-		i++;
-	}
-}
-
-void	builtin_forking(t_data *data)
-{
-	t_spl_pipe	*tmp;
-	int			psize;
-	int			res;
-	int			(*fds)[2];
-
-	tmp = data->cmd_line->head;
-	psize = data->cmd_line->size;
-
-
-	fds = malloc(sizeof (*fds) * (psize - 1));
-	b_fork(fds, psize, tmp, data);
-	close_fds(fds, psize);
-
-	tmp = data->cmd_line->head;
-	while (tmp)
-	{
-		waitpid(tmp->pid, &res, 0);
-		tmp = tmp->next;
-	}
-	data->exit_status = WEXITSTATUS(res);
-}
-=======
-// int	main(int ac, char **av, char **envp)
-// {
-// 	t_parse	parser;
-// 	t_data	data;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	j = 0;
-// 	if (ac == 1)
-// 	{
-// 		init(&parser, &data, envp);
-// 		data.error_message = NULL;
-// 		while (1)
-// 		{
-// 			parser.rd_ln = readline("🔻minishell> ");
-// 			if (parser.rd_ln[0])
-// 			{
-// 				add_history(parser.rd_ln);
-// 				parsing(&parser);
-// 				execute(&data);
-// 				free_spl_pipe(&data.cmd_line);
-// 			}
-// 			free_arr(&parser.rd_ln);
-// 		}
-// 		free_envp(&data.env);
-// 	}
-// }
->>>>>>> edc58f7003f8233e351276dddd9674640714fe1c

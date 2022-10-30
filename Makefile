@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -I./includes -g -ggdb3  -fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
 
 SRCS = $(shell find . -name "*.c" | grep src | grep '\.c')
 
@@ -29,15 +29,15 @@ PRER = ./src/execute ./src/parsing
 
 # ./$(TMP)/%.o: $(shell find ./src/execute/$(%.c))
 # 	@$(CC) $(CFLAGS) -o $@ -c $< 
-# 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
+# 	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
 
 ./$(TMP)/%.o: ./src/execute/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< 
-	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
+	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
 
 ./$(TMP)/%.o: ./src/parsing/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< 
-	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
+	@echo "$(YELLOW)💡created ➡️ $(SKY) $(notdir $@)$(RESET)"
 
 all: $(NAME)
 
