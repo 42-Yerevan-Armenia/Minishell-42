@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:21:30 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 09:33:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/28 21:27:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,21 @@ int	free_spl_pipe(t_list_spl_pipe **list)
 		if (((t_spl_pipe *)(*list)->head)->next == NULL)
 		{
 			free(((*list)->head));
-			(*list)->head = NULL;
 			break;
 		}
 		(*list)->head = ((t_spl_pipe *)(*list)->head)->next;
 		if (((*list)->head))
 			free(((t_spl_pipe *)(*list)->head)->prev);
 	}
+	(*list)->head = NULL;
+	(*list)->tail = NULL;
+	(*list)->size = 0;
+	return (0);
+}
+
+int	free_data(t_data **data)
+{
+	free_double((void *)&(*data)->hdoc_mode);
+	free_double((void *)&(*data)->hdoc_mode);
 	return (0);
 }

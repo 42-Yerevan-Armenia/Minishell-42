@@ -35,7 +35,6 @@ t_env *new_env(char *key, char *val, int is_export)
 		return (NULL);
 	new_node->is_export = is_export;
 	new_node->key = ft_strdup(key);
-	// printf("test key = %s\n", key);
 	new_node->val = NULL;
 	if (val)
 		new_node->val = ft_strdup(val);
@@ -44,31 +43,34 @@ t_env *new_env(char *key, char *val, int is_export)
 	return (new_node);
 }
 
-static int del_one(t_env *env)
+static int del_one(t_env **env)
 {
-	free_arr(&(env)->key);
-	free_arr(&(env)->val);
-	// printf("%p\n", (env));
-	free((env));
+	if (*env != NULL)
+	{
+		free_arr(&(*env)->key);
+		free_arr(&(*env)->val);
+		free((*env));
+		*env = NULL;
+	}
 	return (0);
 }
 
 
-static int set_null(t_list_env **env)
+static int set_null(t_list_env *env)
 {
-	(*env)->head = NULL;
-	(*env)->tail = NULL;
-	(*env)->size = 0;
+	env->head = NULL;
+	env->tail = NULL;
+	env->size = 0;
 	return (0);
 }
 
-static	int find_var_rap(t_list_env **env, t_env *new_node)
+static	int find_var_rap(t_list_env *env, t_env *new_node)
 {
 	t_env	*head;
 	int		i;
 	int		flag;
 
-	head = (*env)->head;
+	head = env->head;
 	i = 0;
 	flag = 0;
 	while (new_node->key[i])
@@ -79,11 +81,10 @@ static	int find_var_rap(t_list_env **env, t_env *new_node)
 	{
 		if (!ft_strcmp(head->key, new_node->key))
 		{
-			if (flag == 0 && free_arr(&head->val))
-				head->val = new_node->val;
+			if (flag == 0 && !free_arr(&head->val))
+				head->val = ft_strdup(new_node->val);
 			else
 				head->val = ft_strjoin_1(head->val, new_node->val);
-			del_one(new_node);
 			return (1);
 		}
 		head = head->next;
@@ -91,13 +92,11 @@ static	int find_var_rap(t_list_env **env, t_env *new_node)
 	return (0);
 }
 
-static void set_exp(t_list_env **env, t_env *new_node)
+static void set_exp(t_list_env *env, t_env *new_node)
 {
 	t_env	*tmp;
 
-	tmp = (*env)->head;
-	if (find_var_rap(env, new_node))
-		return ;
+	tmp = env->head;
 	while (tmp->next && ft_strcmp(tmp->key, new_node->key) <= 0)
 		tmp = tmp->next;
 	if (tmp->next == NULL && ft_strcmp(tmp->key, new_node->key) <= 0)
@@ -105,14 +104,14 @@ static void set_exp(t_list_env **env, t_env *new_node)
 		new_node->prev = tmp;
 		new_node->next = NULL;
 		tmp->next = new_node;
-		(*env)->tail = new_node;
+		env->tail = new_node;
 	}
 	else
 	{
 		if (tmp->prev == NULL)
 		{
 			new_node->prev = NULL;
-			(*env)->head = new_node;
+			env->head = new_node;
 		}
 		else
 		{
@@ -124,132 +123,93 @@ static void set_exp(t_list_env **env, t_env *new_node)
 	}
 }
 
+int set_env_helper(t_list_env *env, t_env **new_node, t_env **tmp)
+{
+	if (env->head == NULL)
+	{
+		if ((*new_node)->is_export != FORME)
+			++(env->size);
+		env->head = *new_node;
+		env->tail = *new_node;
+		return (1);
+	}
+	if (find_var_rap(env, *new_node))
+	{
+		if ((*new_node)->is_export == EXPORT)
+			*tmp = NULL;
+		del_one(new_node);
+		return (2);
+	}
+	return (0);
+}
 
-void set_env(t_list_env **env, t_env *new_node)
+void set_env(t_data *data, t_env *new_node)
 {
 	t_env	*tmp;
-	(*env)->size++;
-	if ((*env)->head == NULL)
-	{
-		(*env)->head = new_node;
-		(*env)->tail = new_node;
-	}
+	int		v_ret;
+
+	tmp = NULL;
+	if (new_node->is_export == (ENV | EXPORT))
+		tmp = new_env(new_node->key, new_node->val, new_node->is_export);
 	else
+		tmp = new_node;
+	if (new_node && (new_node->is_export == EXPORT || new_node->is_export == (ENV | EXPORT)))
 	{
-		if (find_var_rap(env, new_node))
-			return ;
-		if (new_node->is_export == 0 || new_node->is_export == 2)
+		v_ret = set_env_helper(data->env_exp, &new_node, &tmp);
+		if (v_ret == 0 && ++(data->env_exp->size))
+			set_exp(data->env_exp, new_node);
+	}
+	if (tmp && ((tmp->is_export == ENV || tmp->is_export == (EXPORT | ENV))
+		|| tmp->is_export == FORME))
+	{
+		v_ret = set_env_helper(data->env, &tmp, &new_node);
+		if (v_ret == 0)
 		{
-			(*env)->tail->next = new_node;
-			new_node->prev = (*env)->tail;
-			(*env)->tail = (*env)->tail->next;
+			if (tmp->is_export != FORME)
+				++(data->env->size);
+			data->env->tail->next = tmp;
+			tmp->prev = data->env->tail;
+			data->env->tail = data->env->tail->next;
 		}
-		else
-			set_exp(env, new_node);
+		data->envp = env_cpy(data, data->env);
 	}
 }
 
-static void del_env_node_helper(t_list_env **env, t_env *tmp, t_env	*del)
+static void del_env_node_helper(t_list_env *env, t_env *tmp, t_env	*del)
 {
 	if (tmp->prev == NULL)
 	{
 		tmp->next->prev = NULL;
-		(*env)->head = tmp->next;
-		del_one(del);
+		env->head = tmp->next;
+		del_one(&del);
 	}
 	else if (tmp->next == NULL)
 	{
 		tmp->prev->next = NULL;
-		(*env)->tail = tmp->prev;
-		del_one(del);
+		env->tail = tmp->prev;
+		del_one(&del);
 	}
 	else
 	{
 		tmp->prev->next = tmp->next;
 		tmp->next->prev = tmp->prev;
-		del_one(del);
+		del_one(&del);
 	}
 }
 
-int	del_env_node(t_list_env **env, char *key)
+int	del_env_node(t_list_env *env, char *key)
 {
 	t_env	*tmp;
 	t_env	*del;
 
-	tmp = (*env)->head;
+	tmp = env->head;
 	while (tmp && ft_strcmp(tmp->key, key))
 		tmp = tmp->next;
 	if (tmp == NULL)
 		return (1);
 	del = tmp;
-	if ((*env)->size == 1 && !set_null(env) && !del_one(del))
+	if (env->size == 1 && !set_null(env) && !del_one(&del))
 		return (0);
 	del_env_node_helper(env, tmp, del);
 	return (0);
 }
-
-// char *get_env_val(t_list_env *env, char *key)
-// {
-// 	t_env	*tmp;
-
-// 	tmp = env->head;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strcmp(tmp->key, key))
-// 			return (tmp->val);
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
-
-// int main(int ac, char **av)
-// {
-// 	int i;
-// 	t_list_env *env;
-// 	t_list_env *env_exp;
-// 	char *ptr = malloc(100);
-// 	// ptr[0] = 'a';
-// 	// ptr = malloc(1);
-
-// 	i = 0;
-// 	if (ac == 1)
-// 	{
-// 		env = create_list_env();
-// 		env_exp = create_list_env();
-// 		set_env(&env_exp, new_env("vahan1", "hajox2", 1));
-// 		set_env(&env_exp, new_env("vahan2", "hajox", 1));
-// 		set_env(&env_exp, new_env("vahan4", "hajox5", 1));
-// 		set_env(&env_exp, new_env("vahan5", "hajox5", 1));
-// 		set_env(&env_exp, new_env("vahan", "hajox", 1));
-// 		set_env(&env_exp, new_env("vahan3", "hajox3", 1));
-// 		set_env(&env, new_env("vahan2", "hajox", 0));
-// 		set_env(&env, new_env("vahan", "hajox", 0));
-// 		set_env(&env, new_env("vahan4", "hajox5", 0));
-// 		set_env(&env, new_env("vahan3", "hajox3", 0));
-// 		set_env(&env, new_env("vahan5", "hajox5", 0));
-// 		set_env(&env, new_env("vahan1", "hajox2", 0));
-// 		del_env_node(&env, "vahan");
-// 		del_env_node(&env, "vahan1");
-// 		print_env(env->head);
-// 		print_env(env_exp->head);
-// 		while (1)
-// 		{
-// 		}
-// 	}
-// }
-
-// t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
-// {
-// 	if (list->head == NULL)
-// 	{
-// 		list->head = new_pipe;
-// 		list->tail = new_pipe;
-// 	}
-// 	else 
-// 	{
-// 		list->tail->next = new_pipe;
-// 		list->tail =  list->tail->next;
-// 	}
-// 	return (new_pipe);
-// }
-
