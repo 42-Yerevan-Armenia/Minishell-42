@@ -243,6 +243,7 @@ int main(int ac, char **av, char **envp)
 		data.error_message = NULL;
 		// print_env(data.env->head);
 		// print_env(data.env_exp->head);
+		//printf_header();
 		while (1)
 		{
 			parser.rd_ln = readline("🔻minishell> ");
@@ -265,6 +266,13 @@ int main(int ac, char **av, char **envp)
 					printf("exit = %d\n", pwd(&data, data.cmd_line->head->cmd));
 				else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
 					printf("exit = %d\n", cd(&data, data.cmd_line->head->cmd));
+				else if (!ft_strcmp(*data.cmd_line->head->cmd, "exit"))
+				{
+				 	if (!data.cmd_line->head->next)
+				 		printf("exit = %d\n", ft_exit(&data, data.cmd_line->head->cmd));
+				 	else
+				 		builtin_forking(&data);
+				}
 				else
                		execute(&data);
 				// printf("%s", ft_heredoc(data.cmd_line->head, &parser));

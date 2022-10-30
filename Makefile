@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -I./includes -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS = -I./includes -g -ggdb3  -fsanitize=address  #-Wall -Wextra -Werror 
 
 SRCS = $(shell find . -name "*.c" | grep src | grep '\.c')
 

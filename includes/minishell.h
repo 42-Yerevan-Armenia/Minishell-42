@@ -21,7 +21,16 @@
 # include <readline/readline.h>
 # include <string.h>
 
-int				pipex(int ac, char **av);
+# define WHITE	"\033[0;29m"
+# define RED	"\033[1;31m"
+# define GREEN	"\033[0;32m"
+# define YELLOW	"\033[1;33m"
+# define BLUE	"\033[1;34m"
+# define PHILO	"\033[0;35m"
+# define SKY	"\033[1;36m"
+
+void	printf_header(void);
+void	builtin_forking(t_data *data);
 // char *ft_heredoc(t_parse *parser, char *dlmtr);
 
 void			dis_prompt(void);
@@ -52,6 +61,7 @@ int             unset(t_data *data, char **args);
 int             env(t_data *data, char **args);
 int             pwd(t_data *data, char **args);
 int             cd(t_data *data, char **args);
+int				ft_exit(t_data *data, char **args);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);
