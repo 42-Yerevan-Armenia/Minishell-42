@@ -1,4 +1,5 @@
-// #include "minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 // int	main(void)
@@ -34,3 +35,25 @@
 //     // }
     
 // }
+
+// int main()
+// {
+//     char *ptr = malloc(20);
+//     ptr[0] = '1';
+//     ptr[1] = '2';
+//     ptr[2] = '3';
+//     ptr[3] = '4';
+//     ptr[4] = '\0';
+//     ptr[5] = '8';
+//     ptr[4] = '\0';
+//     int i = 0;
+//     while(ptr[i])
+//     {
+//         printf("%c", ptr[i++]);
+//     }
+//     printf(" - ");
+//     while(ptr[++i])
+//         printf("%c", ptr[i]);
+//     printf("\n");
+// }
+

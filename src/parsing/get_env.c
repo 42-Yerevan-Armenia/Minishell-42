@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/29 17:29:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 11:15:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,26 @@ void	get_env(t_data *data, char **envp, int is_export)
 	t_env	*env;
 	char	**tmp;
 	int		i;
+	char	*pwd;
 
 	i = 0;
 	while (envp[i])
 	{
-		// tmp = ft_split(envp[i], '=');
 		tmp = split_for_env(envp[i], '=');
-		// printf("tmp[0]= %s\n", tmp[0]);
-		// printf("tmp[1]= %s\n", tmp[1]);
 		env = new_env(tmp[0], tmp[1], is_export);
-		// printf("env->key = %s\n", env->key);
-		// printf("i = %d\n", i);
-		// printf("tmp = %p\n", tmp);
 		set_env(data, env);
 		free_double((void *)&tmp);
 		i++;
 	}
-	// if (is_export == 0)
-	// 	set_env(data, env = new_env("?", "0", FORME));
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL && errno == ENOENT)
+		ft_putstr_fd("shell-init: error retrieving current directory: getcwd: cannot\
+ access parent directories: No such file or directory", 2);
+	else
+		set_env(data, new_env("PWD", pwd, (ENV | EXPORT)));
+	set_env(data, new_env("MY_PWD", get_val(data->env->head, "PWD"), (FORME)));
+	set_env(data, new_env("OLDPWD", NULL, EXPORT));
+	free_arr(&pwd);
+	set_env(data, new_env("?", "0", (FORME)));
+	data->envp =  env_cpy(data, data->env);
 }

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/28 11:33:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 11:03:09 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ t_env			*new_env(char *key, char *val, int is_export);
 void            set_env(t_data *data, t_env *new_node);
 int				del_env_node(t_list_env *env, char *key);
 // char			*get_env_val(t_list_env *env, char *key);
-int				print_env(t_env *head);
-int				print_exp(t_env *head);
 int				print_env_rev(t_env *tail);
 char            **split_for_env(char *str, char c);
 char            **env_cpy(t_data *data, t_list_env *env);
