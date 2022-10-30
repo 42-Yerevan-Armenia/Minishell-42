@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 16:21:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:32:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,6 @@ int main(int ac, char **av, char **envp)
 		init(&parser, &data, envp);
 		while (1)
 		{
-// start:
 			parser.rd_ln = readline("🔻minishell> ");
 			if (!parser.rd_ln && !ft_perror("minishell"))
 				exit (1);
