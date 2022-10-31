@@ -205,7 +205,7 @@ int	get_hd_mode_in_pipe(t_parse *parser)
 // 	tmp = parser->rd_ln;
 // 	while (tmp[i])
 // 	{
-// 		if (ft_strchr(UNEXPECTED, tmp[i]))
+// 		if (ft_strchr(UNEXPECTED, tmp[i]) && ++i)
 // 		{
 // 			while (ft_strchr(SPACES, tmp[i]))
 // 				i++;
@@ -304,20 +304,20 @@ void	sig_term(int signum)
 	// write(1, "\nminishell>", ft_strlen("\nminishell>"));
 }
 
-int	hook_signals(void)
-{
-	// int					pid;
-	struct sigaction	term;
+// int	hook_signals(void)
+// {
+// 	// int					pid;
+// 	struct sigaction	term;
 
-	term.sa_handler = &sig_term;
-	term.sa_flags = SA_RESTART;
-	term.sa_mask = 0;
-	// signal(SIGUSR1, &sig_handler);
-	// signal(SIGUSR2, &sig_handler);
-	sigaction(SIGINT, &term, NULL);
-	// sigaction(SIGUSR2, &sa, NULL);
-	return (0);
-}
+// 	term.sa_handler = &sig_term;
+// 	term.sa_flags = SA_RESTART;
+// 	term.sa_mask = 0;
+// 	// signal(SIGUSR1, &sig_handler);
+// 	// signal(SIGUSR2, &sig_handler);
+// 	sigaction(SIGINT, &term, NULL);
+// 	// sigaction(SIGUSR2, &sa, NULL);
+// 	return (0);
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -325,6 +325,7 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	int		i;
 	int		j;
+	int		ps;
 
 	i = 0;
 	j = 0;
@@ -351,28 +352,20 @@ int	main(int ac, char **av, char **envp)
 					continue ;
 				if (data.cmd_line->head->cmd[0])
 				{
-					if (!ft_strcmp(data.cmd_line->head->cmd[0], "export"))
-						printf("exit = %d\n", export(&data,
-									data.cmd_line->head->cmd));
-					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "env"))
-						printf("exit = %d\n", env(&data,
-									data.cmd_line->head->cmd));
-					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "echo"))
-						printf("exit = %d\n", echo(
-									data.cmd_line->head->cmd));
-					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "unset"))
-						printf("exit = %d\n", unset(&data,
-									data.cmd_line->head->cmd));
-					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "pwd"))
-						printf("exit = %d\n", pwd(&data));
-					else if (!ft_strcmp(data.cmd_line->head->cmd[0], "cd"))
-						printf("exit = %d\n", cd(&data,
-									data.cmd_line->head->cmd));
-					else
-						execute(&data);
+					ps = data.cmd_line->size;
+					i = -1;
+					while (i++ < ps)
+					{
+						if (ps == 1 && !ft_strcmp(data.cmd_line->head->cmd[0], "exit"))
+							printf("✅ exit = %d\n", ft_exit(&data, data.cmd_line->head->cmd));
+						else
+						{
+							ps = 0;
+							execute(&data);
+						}
+					}
 				}
-				// set_env(&data, new_env("?", ft_itoa(data.exit_status),
-				// FORME));
+				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
 				free_spl_pipe(&data.cmd_line);
 				free_parse(&parser);
 			}

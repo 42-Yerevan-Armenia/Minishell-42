@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/31 10:19:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:50:34 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,26 @@
 static int	str_is_valid_num(char *str)
 {
 	int	i;
-
 	if (!str)
 		return (0);
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (ft_isdigit(str[i]))
-		i++;
+		 i++;
 	if (str[i] || !ft_isdigit(str[i - 1]) || i > 19)
 		return (0);
 	return (1);
-}
+ }
 
 int	ft_exit(t_data *data, char **args)
 {
 	int	exit_status;
-
-	ft_putstr_fd("exit\n", 1);
+	
+	if (data->cmd_line->tail)
+		return (1);
+	else
+		ft_putstr_fd("exit\n", 1);
 	if (args && data->exit_status >= 2 && !str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("🔻minishell> : exit: ", 2);

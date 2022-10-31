@@ -18,7 +18,7 @@ CFLAGS =  -I./includes -I./readline-vaghazar/include -g -ggdb3  -fsanitize=addre
 ifeq ($(HOME), /Users/vaghazar)
 LINKER = ./readline-vaghazar/lib/libreadline.dylib
 else ifeq ($(HOME), /Users/arakhurs)
-LINKER = ./readline-arakhurs/lib/libreadline.a
+LINKER = ./readline-arakhurs/lib/libreadline.dylib
 endif
 
 SRCS = $(shell find ./src -name "*.c" | grep src | grep '\.c')

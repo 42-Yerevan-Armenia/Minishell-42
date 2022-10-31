@@ -20,9 +20,9 @@ int	free_spl_pipe(t_list_spl_pipe **list)
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->out_files);
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->in_files);
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->heredoc);
-		// if ((*list)->head->f_name != NULL && (!unlink((*list)->head->f_name)
-		// 		|| ft_perror("minisehll: heredoc: ")))
-		// 	free_arr((void *)&((t_spl_pipe *)(*list)->head)->f_name);
+		if ((*list)->head->f_name != NULL && (!unlink((*list)->head->f_name)
+				|| ft_perror("minisehll: heredoc: ")))
+			free_arr((void *)&((t_spl_pipe *)(*list)->head)->f_name);
 		free_arr(&((*list)->head)->hdoc_input);
 		(*list)->size = 0;
 		if (((t_spl_pipe *)(*list)->head)->next == NULL)
