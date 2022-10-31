@@ -12,13 +12,36 @@
 
 #include "minishell.h"
 
+int split_pipe_helper(t_parse *parser, t_vars *v, char **tmp)
+{
+	while ((tmp[v->i] && (tmp[v->i][0] == '\'' || tmp[v->i][0] == '"')) 
+		&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+		parser->spl_pipe[v->k++] = ft_strdup(tmp[v->i++]);
+	while (tmp[v->i] && tmp[v->i][v->j])
+	{
+		v->t = v->j;
+		while (tmp[v->i][v->j] && tmp[v->i][v->j] != '|')
+			v->j++;
+		if (v->j == 0 && tmp[v->i][v->j] == '|' 
+			&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+			parser->spl_pipe[v->k++] = ft_strdup("|");
+		else if (!resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+		{
+			parser->spl_pipe[v->k++] = ft_substr(tmp[v->i], v->t, v->j - v->t);
+			if (tmp[v->i][v->j] == '|' 
+				&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+				parser->spl_pipe[v->k++] = ft_strdup("|");
+		}
+		if (tmp[v->i][v->j] != '\0')
+			v->j++;
+	}
+	v->j = 0;
+}
+
 int	split_pipe(t_parse *parser)
 {
 	char	**tmp;
-	int		t;
-	int		i;
-	int		j;
-	int		k;
+	t_vars	v;
 
 	tmp = parser->spl_qutoes;
 	parser->l_arr = 2;
@@ -26,44 +49,12 @@ int	split_pipe(t_parse *parser)
 	if (parser->spl_pipe == NULL && !ft_perror("minishell: "))
 		exit (1);
 	fill_null((void *)&parser->spl_pipe, parser->l_arr + 1);
-	init_zero(&i, &j, &k, NULL);
-	while (tmp[i])
+	init_vars(&v, 0, 0, 0);
+	while (tmp[v.i])
 	{
-		while ((tmp[i] && (tmp[i][0] == '\'' || tmp[i][0] == '"')))
-		{
-			if (parser->l_arr == k)
-				parser->spl_pipe = resize_arr(parser->spl_pipe, &parser->l_arr);
-			parser->spl_pipe[k++] = ft_strdup(tmp[i++]);
-		}
-		while (tmp[i] && tmp[i][j])
-		{
-			t = j;
-			while (tmp[i][j] && tmp[i][j] != '|')
-				j++;
-			if (j == 0 && tmp[i][j] == '|')
-			{
-				if (parser->l_arr == k)
-					parser->spl_pipe = resize_arr(parser->spl_pipe, &parser->l_arr);
-				parser->spl_pipe[k++] = ft_strdup("|");
-			}
-			else
-			{
-				if (parser->l_arr == k)
-					parser->spl_pipe = resize_arr(parser->spl_pipe, &parser->l_arr);
-				parser->spl_pipe[k++] = ft_substr(tmp[i], t, j - t);
-				if (tmp[i][j] == '|')
-				{
-					if (parser->l_arr == k)
-						parser->spl_pipe = resize_arr(parser->spl_pipe, &parser->l_arr);
-					parser->spl_pipe[k++] = ft_strdup("|");
-				}
-			}
-			if (tmp[i][j] != '\0')
-				j++;
-		}
-		j = 0;
-		if (tmp[i])
-			i++;
+		split_pipe_helper(parser, &v, tmp);
+		if (tmp[v.i])
+			v.i++;
 	}
 	return (0);
 }

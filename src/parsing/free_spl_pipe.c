@@ -14,7 +14,7 @@
 
 int	free_spl_pipe(t_list_spl_pipe **list)
 {
-	printf("%d\n", (*list)->head);
+	// printf("%d\n", (*list)->head);
 	while ((*list)->head)
 	{
 		free_double(&(((*list)->head)->cmd));

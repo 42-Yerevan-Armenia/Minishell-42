@@ -246,9 +246,9 @@ int	parsing(t_parse *parser)
 	int	i;
 
 	i = 0;
-	if (unexpected_tokens(parser) == START_RD_LN
-	/*&& ft_putstr_fd("unexpected token\n",2)*/)
-		return(START_RD_LN);
+	// if (unexpected_tokens(parser) == START_RD_LN
+	// /*&& ft_putstr_fd("unexpected token\n",2)*/)
+		// return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
@@ -262,13 +262,6 @@ int	parsing(t_parse *parser)
 	if (run_heredoc(parser->data) == START_RD_LN
 		|| create_rd_files(parser) == START_RD_LN)
 		return (START_RD_LN);
-	// t_spl_pipe *tmp = parser->data->cmd_line->head;
-	// while (tmp)
-	// {
-	// 	printf("tmp->fd_in = %d\n", tmp->fd_in);
-	// 	printf("tmp->fd_out = %d\n", tmp->fd_out);
-	// 	tmp = tmp->next;
-	// }
 	return (0);
 }
 
@@ -333,19 +326,19 @@ int	main(int ac, char **av, char **envp)
 				if (parsing(&parser) == START_RD_LN && !free_arr(&parser.rd_ln))
 					continue ;
 	// printf("")
-	printf("%d\n", data.cmd_line->head);
-	printf("%d\n", data.cmd_line->head->cmd);
-	sleep(1);
-				if (data.cmd_line->head->cmd[0])
-				{
-					execute(&data);
-				}
+	// printf("%d\n", data.cmd_line->head);
+	// printf("%d\n", data.cmd_line->head->cmd);
+	// sleep(1);
+				// if (data.cmd_line->head->cmd[0])
+				// {
+				// 	execute(&data);
+				// }
 
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
-			free_spl_pipe(&data.cmd_line);
-			free_parse(&parser);
-			free_arr(&parser.rd_ln);
+			// free_spl_pipe(&data.cmd_line);
+			// free_parse(&parser);
+			// free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);
 	}

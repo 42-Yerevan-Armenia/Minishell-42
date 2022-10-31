@@ -23,6 +23,8 @@
 # include "readline/readline.h"
 # include <string.h>
 # include <signal.h>
+ #include <sys/types.h>
+  #include <sys/wait.h>
 
 
 # include <sys/ioctl.h>
@@ -76,7 +78,7 @@ t_list_spl_pipe	*create_list_pipe(void);
 t_spl_pipe		*new_spl_pipe(void);
 t_spl_pipe		*add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe);
 int				fill_null(void ***ptr, int len);
-char			**resize_arr(char **arr, int *l_arr);
+int			  resize_arr(t_parse *parser, char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
@@ -96,6 +98,7 @@ size_t			arr_double_len(char **arr);
 char			*ft_strjoin_1(char *s1, char *s2);
 char			*ft_strjoin_2(char *s1, char *s2);
 char			*ft_strjoin_all(char **str);
+void      init_vars(t_vars *v, int i, int j, int k);
 
 // env api
 t_list_env		*create_list_env(void);

@@ -12,27 +12,39 @@
 
 #include "minishell.h"
 
-char	**resize_arr(char **arr, int *l_arr)
+static int free_double_r(char ***ptr)
+{
+	int	i;
+
+	i = 0;
+	while ((*ptr)[i])
+	{
+		free((*ptr)[i]);
+		(*ptr)[i] = NULL;
+		i++;
+	}
+	free(*ptr);
+	*ptr = NULL;
+}
+
+int	resize_arr(t_parse *parser, char ***arr, int *l_arr, int k)
 {
 	char	**tmp;
 	int		i;
 
+	if (parser->l_arr != k)
+		return (0);
 	i = -1;
 	*l_arr *= 2;
 	tmp = malloc(sizeof(char *) * (*l_arr + 1));
 	if (!tmp && !ft_perror("minishell: "))
 		exit(1);
 	fill_null((void *)&tmp, *l_arr + 1);
-	while (arr[++i])
-		tmp[i] = ft_strdup(arr[i]);
+	while ((*arr)[++i])
+		tmp[i] = ft_strdup((*arr)[i]);
 	while (i < (*l_arr / 2))
-	{
 		tmp[i++] = NULL;
-	}
-	i = 0;
-	while (arr && arr[i])
-		free(arr[i++]);
-	free(arr);
-	i = 0;
-	return (tmp);
+	free_double_r(arr);
+	*arr = tmp;
+	return (0);
 }

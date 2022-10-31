@@ -14,7 +14,7 @@
 
 int	free_parse(t_parse *parser)
 {
-	printf("parser->spl_qutoes = %d\n", parser->spl_qutoes[0]);
+	// printf("parser->spl_qutoes = %d\n", parser->spl_qutoes[0]);
 	// free_double(&parser->spl_qutoes);
 
 

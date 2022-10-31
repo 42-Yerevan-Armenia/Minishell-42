@@ -18,12 +18,12 @@ int	free_double(char ***ptr)
 
 	i = 0;
 		// write(1, "||||||\n", 9);
-	printf("ptr  = %d\n", (*ptr));
+	// printf("ptr  = %d\n", (*ptr));
 	if (*ptr == NULL && printf("es em\n"))
 		return (0);
 	while ((*ptr) && ((*ptr))[i])
 	{
-		printf("%d\n", (*ptr[i]));
+		// printf("%d\n", (*ptr[i]));
 		free(((*ptr))[i]);
 		((*ptr))[i++] = NULL;
 	}

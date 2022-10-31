@@ -95,4 +95,13 @@ typedef struct s_elem
 	int					out_append_files;
 }						t_elem;
 
+typedef struct s_vars
+{
+	int					i;
+	int					j;
+	int					k;
+	int					c;
+	int					t;
+}						t_vars;
+
 #endif

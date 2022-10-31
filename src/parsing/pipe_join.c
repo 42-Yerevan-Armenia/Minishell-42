@@ -34,7 +34,7 @@ int	pipe_join(t_parse *parser)
 		}
 		k++;
 		if (parser->l_arr == k)
-			parser->join_pipe = resize_arr(parser->join_pipe, &parser->l_arr);
+			resize_arr(parser, &parser->join_pipe, &parser->l_arr, k);
 		if (parser->spl_pipe[i])
 			i++;
 	}
