@@ -13,11 +13,17 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -I./includes -g -ggdb3  -fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS = -I./includes -I./readline-vaghazar/include -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
 
-SRCS = $(shell find . -name "*.c" | grep src | grep '\.c')
+ifeq ($(HOME), /Users/vaghazar)
+LINKER = ./readline-vaghazar/lib/libreadline.dylib
+else ifeq ($(HOME), /Users/arakhurs)
+LINKER = ./readline-arakhurs/lib/libreadline.a
+endif
 
-OBJS_DIR = $(shell find . -name "*.c" | cut -d'/' -f4 | grep '\.c')
+SRCS = $(shell find ./src -name "*.c" | grep src | grep '\.c')
+
+OBJS_DIR = $(shell find ./src -name "*.c" | cut -d'/' -f4 | grep '\.c')
 OBJS = $(patsubst %.c, ./$(TMP)/%.o, $(OBJS_DIR))
 
 RM = rm -fr
@@ -42,7 +48,7 @@ PRER = ./src/execute ./src/parsing
 all: $(NAME)
 
 $(NAME): $(TMP) $(OBJS) $(LIBFT) 
-	@$(CC) $(CFLAGS) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
+	$(CC) $(CFLAGS) $(LINKER) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
 
 $(TMP):
 	@mkdir $(TMP)

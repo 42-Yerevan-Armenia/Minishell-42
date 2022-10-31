@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 15:54:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:42:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
-# include <readline/readline.h>
+# include "readline/readline.h"
 # include <string.h>
+# include <signal.h>
 
 # define WHITE	"\033[0;29m"
 # define RED	"\033[1;31m"

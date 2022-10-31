@@ -6,12 +6,12 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 16:32:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:03:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+int	sig = 0;
 //  "<<hd'" |   kd|   dd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
 //  cat < b
 //  cat <<b <a<g>t<g>r >>p| -l -a "barev  "
@@ -303,6 +303,36 @@ int	run_heredoc(t_data *data)
 	}
 	return (0);
 }
+
+void	sig_term(int signum)
+{
+	sig = 1;
+	// ft_putstr_fd("\f", 0);
+	// ft_putchar_fd(10, 0);
+	rl_replace_line("", 0);
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
+	// close(0);
+	// ft_putstr_fd("\n\0", 0);
+	// write(1, "\nminishell>", ft_strlen("\nminishell>"));
+}
+
+int	hook_signals()
+{
+	int					pid;
+	struct sigaction	term;
+
+	term.sa_handler = &sig_term;
+	term.sa_flags = SA_RESTART;
+	term.sa_mask = 0;
+	// signal(SIGUSR1, &sig_handler);
+	// signal(SIGUSR2, &sig_handler);
+	sigaction(SIGINT, &term, NULL);
+		// sigaction(SIGUSR2, &sa, NULL);
+	return (0);
+}
+
 // <<b<<g<<t<a>t>u>y
 int main(int ac, char **av, char **envp)
 {
@@ -315,9 +345,15 @@ int main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
+		hook_signals();
 		while (1)
 		{
 			parser.rd_ln = readline("🔻minishell> ");
+			if (sig != 0)
+			{
+				sig = 0;
+				continue;
+			}
 			if (!parser.rd_ln && !ft_perror("minishell"))
 				exit (1);
 			if (parser.rd_ln[0])
@@ -352,28 +388,3 @@ int main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
-
-
-// int main()
-// {
-// 	char *ptr;
-// 	char buf[100];
-// 	// printf("%ld\n", PATH_MAX);
-// 	ptr = getcwd(buf, 100);
-
-// 	printf("buf = %s\n", buf);
-// 	printf("buf = %p\n", buf);
-// 	printf("ptr = %s\n", ptr);
-// 	printf("ptr = %p\n", ptr);
-// 	ptr = getcwd(buf, 100);
-// 	// ptr = getcwd(NULL, 0);
-// 	printf("buf = %s\n", buf);
-// 	printf("buf = %p\n", buf);
-// 	printf("ptr = %s\n", ptr);
-// 	printf("ptr = %p\n", ptr);
-// 	while (1)
-// 	{
-// 		/* code */
-// 	}
-	
-// }
