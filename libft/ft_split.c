@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:31:34 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:29:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:13:47 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_split(char const *s, char c)
 	i[1] = 0;
 	i[2] = 0;
 	splited = malloc(sizeof(char *) * (counting_word(s, c) + 1));
-	if (!splited && !ft_perror("minishell"))
+	if (!splited && !ft_perror("minishell: "))
 		return (0);
 	while (s[i[0]] != '\0')
 	{

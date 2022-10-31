@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:04 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/17 10:34:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:49:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 void		ft_putchar_fd(char c, int fd);
 int 		ft_putstr_fd(char *s, int fd);
-void		ft_putendl_fd(char *s, int fd);
+void		ft_putendl_fd(char *s, int fd, int flag);
 void		ft_putnbr_fd(int n, int fd);
 int			ft_strcmp(char *s1, char *s2);
 #endif

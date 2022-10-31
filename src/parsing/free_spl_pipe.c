@@ -6,12 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:21:30 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/28 21:27:44 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 11:46:52 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	free_spl_pipe(t_list_spl_pipe **list)
 {
@@ -21,12 +20,15 @@ int	free_spl_pipe(t_list_spl_pipe **list)
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->out_files);
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->in_files);
 		free_double((void *)&((t_spl_pipe *)(*list)->head)->heredoc);
-		free_arr(&((t_spl_pipe *)(*list)->head)->hdoc_input);
+		// if ((*list)->head->f_name != NULL && (!unlink((*list)->head->f_name)
+		// 		|| ft_perror("minisehll: heredoc: ")))
+		// 	free_arr((void *)&((t_spl_pipe *)(*list)->head)->f_name);
+		free_arr(&((*list)->head)->hdoc_input);
 		(*list)->size = 0;
 		if (((t_spl_pipe *)(*list)->head)->next == NULL)
 		{
 			free(((*list)->head));
-			break;
+			break ;
 		}
 		(*list)->head = ((t_spl_pipe *)(*list)->head)->next;
 		if (((*list)->head))

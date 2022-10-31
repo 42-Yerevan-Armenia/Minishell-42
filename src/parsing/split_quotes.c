@@ -1,33 +1,44 @@
-#include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/31 09:16:10 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 12:47:29 by vaghazar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//  "<<hd'" kddd|" dj $'* ><kkk -ld sdf"  rt' pwd|"$ho'|M
+#include "minishell.h"
 
 int	split_quotes(t_parse *parser)
 {
-	int i;
-	char c;
+	int		i;
+	char	c;
 	char	*tmp;
-	int	j;
-	int k;
-	int t;
+	int		j;
+	int		k;
+	int		t;
 
 	tmp = parser->rd_ln;
 	parser->l_arr = 2;
 	k = 0;
 	i = 0;
 	parser->spl_qutoes = malloc(sizeof(char *) * (parser->l_arr + 1));
-	if (!parser->spl_qutoes && !ft_perror("minishell"))
-		exit (1);
+	if (!parser->spl_qutoes && !ft_perror("minishell: "))
+		exit(1);
 	fill_null((void *)&parser->spl_qutoes, parser->l_arr + 1);
 	while (tmp[i])
 	{
 		t = i;
-		while (tmp[i] && (tmp[i] !=  '\'' && tmp[i] != '"'))
+		while (tmp[i] && (tmp[i] != '\'' && tmp[i] != '"'))
 			i++;
 		if (t != i)
 		{
 			if (parser->l_arr == k)
-				parser->spl_qutoes = resize_arr(parser->spl_qutoes, &parser->l_arr);
+				parser->spl_qutoes = resize_arr(parser->spl_qutoes,
+												&parser->l_arr);
 			parser->spl_qutoes[k++] = ft_substr(tmp, t, i - t);
 		}
 		if (tmp[i] && (tmp[i] == '\'' || tmp[i] == '"'))
@@ -39,7 +50,8 @@ int	split_quotes(t_parse *parser)
 			if (tmp[i] != c && printf("syntax error invalid quotes\n"))
 				return (1);
 			if (parser->l_arr == k)
-				parser->spl_qutoes = resize_arr(parser->spl_qutoes, &parser->l_arr);
+				parser->spl_qutoes = resize_arr(parser->spl_qutoes,
+												&parser->l_arr);
 			parser->spl_qutoes[k++] = ft_substr(tmp, j, i - j + 1);
 		}
 		if (tmp[i])

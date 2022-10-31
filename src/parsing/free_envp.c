@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/19 10:50:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:19:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	free_envp(t_list_env **list)
 		{
 			free(((*list)->head));
 			(*list)->head = NULL;
-			break;
+			break ;
 		}
 		(*list)->head = ((t_env *)(*list)->head)->next;
 		if (((*list)->head))

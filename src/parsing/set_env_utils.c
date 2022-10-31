@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   set_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 09:19:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 10:19:12 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/31 12:38:38 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 12:39:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	print_env(t_env *head)
+int	find_var_rap(t_list_env *env, t_env *new_node)
 {
+	t_env	*head;
+	int		i;
+	int		flag;
+
+	head = env->head;
+	i = 0;
+	flag = 0;
+	while (new_node->key[i])
+		i++;
+	if (i != 0 && new_node->key[i - 1] == '+' && ++flag)
+		new_node->key[i - 1] = '\0';
 	while (head)
 	{
-		if (head->is_export == ENV || head->is_export == (ENV | EXPORT))
-			printf("%s=%s\n", head->key, head->val);
+		if (!ft_strcmp(head->key, new_node->key))
+		{
+			if (flag == 0 && !free_arr(&head->val))
+				head->val = ft_strdup(new_node->val);
+			else
+				head->val = ft_strjoin_1(head->val, new_node->val);
+			return (1);
+		}
 		head = head->next;
-	}
-	return (0);
-}
-
-int	env(t_data *data, char **args)
-{
-	int			i;
-	t_list_env	*env;
-
-	i = 1;
-	env = data->env;
-	if (args == NULL)
-		return (1);
-	if (args[i] == NULL)
-	{
-		print_env(env->head);
-		return (0);
 	}
 	return (0);
 }

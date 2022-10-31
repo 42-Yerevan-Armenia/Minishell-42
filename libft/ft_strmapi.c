@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:25:37 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/18 21:29:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:13:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	i = 0;
 	len = ft_strlen(s);
 	str = malloc(sizeof(char) * len + 1);
-	if (!str && !ft_perror("minishell"))
+	if (!str && !ft_perror("minishell: "))
 		return (0);
 	while (s[i])
 	{
