@@ -6,13 +6,14 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:03:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:52:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		sig = 0;
+// int		g_sig[2] = {0, 0};
+int		g_sig = 1;
 
 void	pass_qutoes(int *i, char *str)
 {
@@ -109,7 +110,7 @@ int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 	return (0);
 }
 
-int	find_exe(t_parse *parser)
+t_spl_pipe	*find_exe(t_parse *parser)
 {
 	int			i;
 	t_spl_pipe	*node;
@@ -139,7 +140,7 @@ int	find_exe(t_parse *parser)
 		free(quantity);
 		i++;
 	}
-	return (0);
+	return (parser->data->cmd_line->head);
 }
 
 int	init(t_parse *parser, t_data *data, char **envp)
@@ -160,7 +161,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->env = create_list_env();
 	data->env_exp = create_list_env();
 	data->exit_status = 0;
-	get_env(data, envp, (EXPORT | ENV));
+	// get_env(data, envp, (EXPORT | ENV));
 	return (0);
 }
 
@@ -177,7 +178,7 @@ int	get_hd_mode_in_pipe(t_parse *parser)
 		i++;
 		tmp = tmp->next;
 	}
-	free_double((void *)&parser->data->hdoc_mode);
+	// free_double(&parser->data->hdoc_mode);
 	return (0);
 }
 
@@ -196,32 +197,48 @@ int	get_hd_mode_in_pipe(t_parse *parser)
 
 // }
 
-// int	unexpected_tokens(t_parse *parser)
-// {
-// 	char	*tmp;
-// 	int		i;
+int	unexpected_tokens(t_parse *parser)
+{
+	char	*tmp;
+	int		i;
 
-// 	i = 0;
-// 	tmp = parser->rd_ln;
-// 	while (tmp[i])
-// 	{
-// 		if (ft_strchr(UNEXPECTED, tmp[i]) && ++i)
-// 		{
-// 			while (ft_strchr(SPACES, tmp[i]))
-// 				i++;
-// 			if (ft_strchr(UNEXPECTED, tmp[i]))
-// 				return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	tmp = parser->rd_ln;
+	while (ft_strchr(SPACES, tmp[i]))
+		i++;
+	if (ft_strchr(UNEXPECTED, tmp[i]) && ft_putstr_fd(PIPE, 2))
+	{
+		// if (tmp[i] == )
+		return (START_RD_LN);
+	}
+	while (tmp[i])
+	{
+		if (ft_strchr(UNEXPECTED, tmp[i]) && ++i)
+		{
+			while (ft_strchr(SPACES, tmp[i]))
+				i++;
+			if (ft_strchr(UNEXPECTED, tmp[i]))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 // int	error_hendling(t_parse *parser)
 // {
 // 	return (0);
 // }
 
+int free_all(t_data *data)
+{
+	free_spl_pipe((void *)&data->cmd_line);
+
+	free_parse((void *)&data->parser);
+		// write(1, "||||||\n", 9);
+	free_arr(&data->parser->rd_ln);
+	return (0);
+}
 int		run_heredoc(t_data *data);
 
 int	parsing(t_parse *parser)
@@ -229,15 +246,16 @@ int	parsing(t_parse *parser)
 	int	i;
 
 	i = 0;
-	// if (unexpected_tokens(parser) == 1
-	// && ft_putstr_fd("unexpected token\n",2))
-	// 	return(1);
+	if (unexpected_tokens(parser) == START_RD_LN
+	/*&& ft_putstr_fd("unexpected token\n",2)*/)
+		return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
-	find_exe(parser);
+	if (find_exe(parser) == NULL && !free_all(parser->data))
+		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
 	print_info(parser);
@@ -254,68 +272,34 @@ int	parsing(t_parse *parser)
 	return (0);
 }
 
-// int free_all()
+
+
+
+// void	sig_term(int signum)
 // {
-// 	free_spl_pipe
+// 	struct termios	termios_p;
+
+// 	// tcgetattr(0, &termios_p);
+// 	// termios_p.c_lflag |= ECHOCTL;
+// 	// tcsetattr(0, 0, &termios_p);
+// 	g_sig = 0;
+// 	(void)signum;
+// 	rl_replace_line("", 0);
+// 	rl_on_new_line();
+// 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+// 	// rl_replace_line("", 0);
+// 	// rl_on_new_line();
 // }
-
-int	run_heredoc(t_data *data)
-{
-	t_spl_pipe	*head;
-	int			i;
-	int			error;
-
-	head = data->cmd_line->head;
-	i = 0;
-	error = 0;
-	while (head)
-	{
-		if (head->heredoc[0])
-			ft_heredoc(head, data->parser, &error);
-		// printf("head->fd_in = %d\n", head->fd_in);
-		if (error == START_RD_LN)
-			return (START_RD_LN);
-		// if (head->f_name)
-		// 	printf("%s\n", head->f_name);
-		if (error == START_RD_LN)
-			return (START_RD_LN);
-		if (head->input_mode == IN_FILES)
-			if (get_infile_fd(head) == START_RD_LN)
-				return (START_RD_LN);
-		// }
-		// printf("head->fd_in = %d\n", head->fd_in);
-		head = head->next;
-	}
-	return (0);
-}
-
-void	sig_term(int signum)
-{
-	sig = 1;
-	(void)signum;
-	ft_putstr_fd("\n", 0);
-	// ft_putchar_fd(10, 0);
-	// rl_replace_line("", 0);
-	// printf("\n");
-	// rl_on_new_line();
-	// rl_redisplay();
-	// close(0);
-	// ft_putstr_fd("\n\0", 0);
-	// write(1, "\nminishell>", ft_strlen("\nminishell>"));
-}
 
 // int	hook_signals(void)
 // {
-// 	// int					pid;
 // 	struct sigaction	term;
 
 // 	term.sa_handler = &sig_term;
 // 	term.sa_flags = SA_RESTART;
 // 	term.sa_mask = 0;
-// 	// signal(SIGUSR1, &sig_handler);
-// 	// signal(SIGUSR2, &sig_handler);
 // 	sigaction(SIGINT, &term, NULL);
-// 	// sigaction(SIGUSR2, &sa, NULL);
+// 	signal(SIGQUIT, SIG_IGN);
 // 	return (0);
 // }
 
@@ -323,13 +307,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
-	int		i;
-	int		j;
-	int		ps;
 
-	i = 0;
-	j = 0;
-	i = 0;
 	(void)av;
 	if (ac == 1)
 	{
@@ -337,38 +315,36 @@ int	main(int ac, char **av, char **envp)
 		// hook_signals();
 		while (1)
 		{
+			set_term_attr(TC_OFF);
 			parser.rd_ln = readline("🔻minishell> ");
-			// if (sig != 0)
-			// {
-			// 	sig = 0;
-			// 	continue ;
-			// }
-			if (!parser.rd_ln && !ft_perror("minishell: "))
+			if (g_sig == 0 && ++g_sig)
+				set_term_attr(TC_ON);
+			if (!parser.rd_ln)
+			{
+				// rl_replace_line("", 0);
+				// ft_putstr_fd("exit\n", 0);
+				// rl_on_new_line();
+				// rl_redisplay();
 				exit(1);
+			}
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
-				if (parsing(&parser) == 1 && !free_arr(&parser.rd_ln))
+				if (parsing(&parser) == START_RD_LN && !free_arr(&parser.rd_ln))
 					continue ;
+	// printf("")
+	printf("%d\n", data.cmd_line->head);
+	printf("%d\n", data.cmd_line->head->cmd);
+	sleep(1);
 				if (data.cmd_line->head->cmd[0])
 				{
-					ps = data.cmd_line->size;
-					i = -1;
-					while (i++ < ps)
-					{
-						if (ps == 1 && !ft_strcmp(data.cmd_line->head->cmd[0], "exit"))
-							printf("✅ exit = %d\n", ft_exit(&data, data.cmd_line->head->cmd));
-						else
-						{
-							ps = 0;
-							execute(&data);
-						}
-					}
+					execute(&data);
 				}
-				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
-				free_spl_pipe(&data.cmd_line);
-				free_parse(&parser);
+
 			}
+				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
+			free_spl_pipe(&data.cmd_line);
+			free_parse(&parser);
 			free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);

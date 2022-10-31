@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_parse.c                                       :+:      :+:    :+:   */
+/*   run_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 10:43:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:47:50 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/31 20:42:48 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 20:43:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	free_parse(t_parse *parser)
+int	run_heredoc(t_data *data)
 {
-	printf("parser->spl_qutoes = %d\n", parser->spl_qutoes[0]);
-	// free_double(&parser->spl_qutoes);
+	t_spl_pipe	*head;
+	int			i;
+	int			error;
 
-
-	// free_double(&parser->spl_pipe);
-	// free_double(&parser->join_pipe);
-	// free_arr(&parser->key);
+	head = data->cmd_line->head;
+	i = 0;
+	error = 0;
+	while (head)
+	{
+		if (head->heredoc[0])
+			ft_heredoc(head, data->parser, &error);
+		if (error == START_RD_LN)
+			return (START_RD_LN);
+		if (error == START_RD_LN)
+			return (START_RD_LN);
+		if (head->input_mode == IN_FILES)
+			if (get_infile_fd(head) == START_RD_LN)
+				return (START_RD_LN);
+		head = head->next;
+	}
 	return (0);
 }

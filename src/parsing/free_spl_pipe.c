@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:21:30 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 11:46:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:40:05 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int	free_spl_pipe(t_list_spl_pipe **list)
 {
+	printf("%d\n", (*list)->head);
 	while ((*list)->head)
 	{
-		free_double((void *)&(((t_spl_pipe *)(*list)->head)->cmd));
-		free_double((void *)&((t_spl_pipe *)(*list)->head)->out_files);
-		free_double((void *)&((t_spl_pipe *)(*list)->head)->in_files);
-		free_double((void *)&((t_spl_pipe *)(*list)->head)->heredoc);
+		free_double(&(((*list)->head)->cmd));
+		free_double(&((*list)->head)->out_files);
+		free_double(&((*list)->head)->in_files);
+		free_double(&((*list)->head)->heredoc);
 		if ((*list)->head->f_name != NULL && (!unlink((*list)->head->f_name)
 				|| ft_perror("minisehll: heredoc: ")))
 			free_arr((void *)&((t_spl_pipe *)(*list)->head)->f_name);

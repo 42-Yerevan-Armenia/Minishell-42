@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/30 12:26:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:49:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	execute(t_data *data)
 	fds = malloc(sizeof (*fds) * (psize - 1));
 	forking(fds, psize, tmp, data);
 	close_fds(fds, psize);
-	free_double((void *)&data->cmd_paths);
+	free_double(&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	while (tmp)
 	{

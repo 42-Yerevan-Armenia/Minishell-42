@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:46:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:49:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ int	export(t_data *data, char **args)
 		if (is_valid_args(args[i]))
 			return (1);
 		tmp = split_for_env(args[i], '=');
+		printf("tmp = %s\n", tmp[0]);
+		printf("tmp = %s\n", tmp[1]);
 		if (tmp[1])
 			set_env(data, new_env(tmp[0], tmp[1], (ENV | EXPORT)));
 		else
 			set_env(data, new_env(tmp[0], tmp[1], EXPORT));
-		free_double((void *)&tmp);
+		free_double(&tmp);
 		i++;
 	}
 	data->envp = env_cpy(data, data->env);

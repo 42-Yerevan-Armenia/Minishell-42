@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:47:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:57:07 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_valid_args(char *args)
 	int		i;
 	char	*error;
 
-	i = -1;
+	i = 0;
 	if (!args || !args[i])
 	{
 		error = ft_strjoin_2("minishell: unset: ", ft_strjoin_1(ft_strjoin_2
