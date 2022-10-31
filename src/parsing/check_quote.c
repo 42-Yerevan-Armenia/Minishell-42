@@ -14,7 +14,7 @@
 
 int	check_quote(t_parse *parser)
 {
-	int	i;
+	int		i;
 	char	*tmp;
 	char	c;
 

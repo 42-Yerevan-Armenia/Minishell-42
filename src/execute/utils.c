@@ -1,34 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/31 09:21:55 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 12:00:22 by vaghazar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_list_spl_pipe *create_list_pipe(void)
+t_list_spl_pipe	*create_list_pipe(void)
 {
-	t_list_spl_pipe  *list;
+	t_list_spl_pipe	*list;
 
 	list = malloc(sizeof(t_list_spl_pipe));
-	if (list == NULL && !ft_perror("minishell"))
-		exit (1);
+	if (list == NULL && !ft_perror("minishell: "))
+		exit(1);
 	list->size = 0;
 	list->head = NULL;
 	list->tail = NULL;
 	return (list);
 }
 
-t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
+t_spl_pipe	*new_spl_pipe(void)
 {
-	t_spl_pipe  *new_pipe;
-	t_spl_pipe  *tmp;
+	t_spl_pipe	*new_pipe;
 
 	new_pipe = malloc(sizeof(t_spl_pipe));
-	if (new_pipe == NULL && !ft_perror("minishell"))
-		exit (1);
+	if (new_pipe == NULL && !ft_perror("minishell: "))
+		exit(1);
 	new_pipe->flag_new_pipe = 0;
-	//new_pipe->fd_in = 0;
-	//new_pipe->fd_out = 1;
+	new_pipe->fd_in = 0;
+	new_pipe->fd_out = 1;
 	new_pipe->hdoc_input = NULL;
 	new_pipe->cmd = NULL;
 	new_pipe->heredoc = NULL;
 	new_pipe->in_files = NULL;
 	new_pipe->out_files = NULL;
+	new_pipe->f_name = NULL;
 	new_pipe->hdoc_mode = 0;
 	new_pipe->output_mode = 0;
 	new_pipe->input_mode = 0;
@@ -38,7 +50,7 @@ t_spl_pipe  *new_spl_pipe(void  *arg1, void *arg2)
 	return (new_pipe);
 }
 
-t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
+t_spl_pipe	*add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
 {
 	list->size++;
 	if (list->head == NULL)
@@ -46,16 +58,16 @@ t_spl_pipe *add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe)
 		list->head = new_pipe;
 		list->tail = new_pipe;
 	}
-	else 
+	else
 	{
 		list->tail->next = new_pipe;
 		new_pipe->prev = list->tail;
-		list->tail =  list->tail->next;
+		list->tail = list->tail->next;
 	}
 	return (new_pipe);
 }
 
-void print_list(t_spl_pipe *head)
+void	print_list(t_spl_pipe *head)
 {
 	while (head)
 	{
@@ -65,17 +77,7 @@ void print_list(t_spl_pipe *head)
 	}
 }
 
-// int	print_env_rev(t_env *tail)
-// {
-// 	while (tail)
-// 	{
-// 		printf("%s=%s\n", tail->key, tail->val);
-// 		tail = tail->prev;
-// 	}
-// 	return (0);
-// }
-
-int ft_perror(char *str)
+int	ft_perror(char *str)
 {
 	perror(str);
 	return (0);

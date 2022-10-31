@@ -13,9 +13,13 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -I./includes -Ireadline-arakhurs/include -g -ggdb3  #-fsanitize=address  #-Wall -Wextra -Werror 
+CFLAGS =  -I./includes -I./readline-vaghazar/include -g -ggdb3  -fsanitize=address #-Wall -Wextra -Werror  #-Wall -Wextra -Werror 
 
-LINKER =  ./readline-arakhurs/lib/libreadline.dylib
+ifeq ($(HOME), /Users/vaghazar)
+LINKER = ./readline-vaghazar/lib/libreadline.dylib
+else ifeq ($(HOME), /Users/arakhurs)
+LINKER = ./readline-arakhurs/lib/libreadline.dylib
+endif
 
 SRCS = $(shell find ./src -name "*.c" | grep src | grep '\.c')
 
@@ -44,7 +48,7 @@ PRER = ./src/execute ./src/parsing
 all: $(NAME)
 
 $(NAME): $(TMP) $(OBJS) $(LIBFT) 
-	@$(CC) $(CFLAGS) $(OBJS) -lreadline $(LINKER) $(LIBFT)  -o $(NAME)
+	@$(CC) $(CFLAGS) $(LINKER) $(OBJS) -lreadline  $(LIBFT)  -o $(NAME)
 
 $(TMP):
 	@mkdir $(TMP)
@@ -54,13 +58,13 @@ $(LIBFT):
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	# @make --no-print-directory clean -C $(LIBFT_DIR)
+	@make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS_DIR)
 	$(RM) $(TMP)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	# @make --no-print-directory fclean -C $(LIBFT_DIR)
+	@make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+prefix=/Users/vaghazar/Desktop/Minishell-42/readline-vaghazar
+=======
 prefix=/Users/arakhurs/Desktop/Minishell-42/readline-arakhurs
+>>>>>>> master
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

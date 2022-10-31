@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/31 09:19:44 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 10:19:12 by vaghazar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	print_env(t_env *head)
@@ -8,16 +20,13 @@ static int	print_env(t_env *head)
 			printf("%s=%s\n", head->key, head->val);
 		head = head->next;
 	}
-	printf("***************env\n");
 	return (0);
 }
 
 int	env(t_data *data, char **args)
 {
-	int	i;
-	int	j;
-	t_list_env *env;
-	char	**tmp;
+	int			i;
+	t_list_env	*env;
 
 	i = 1;
 	env = data->env;

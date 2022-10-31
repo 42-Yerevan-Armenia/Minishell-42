@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:30:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/03/17 21:30:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:45:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_putendl_fd(char *s, int fd, int flag)
 {
 	int	i;
 
@@ -23,4 +23,6 @@ void	ft_putendl_fd(char *s, int fd)
 		i++;
 	}
 	ft_putchar_fd('\n', fd);
+	if (s && flag == 1)
+		free(s);
 }

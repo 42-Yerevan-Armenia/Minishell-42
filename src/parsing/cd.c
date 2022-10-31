@@ -6,17 +6,19 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 10:47:40 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 10:16:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// bash: cd: HOME not set
+
+#define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
+ directories: No such file or directory\n"
 
 int	go_home(t_data *data)
 {
 	char	*tmp;
-	
+
 	tmp = get_val(data->env->head, "HOME");
 	if (!tmp && ft_putstr_fd("minishell: cd: HOME not set\n", 2))
 		return (1);
@@ -32,10 +34,10 @@ int	go_home(t_data *data)
 	return (0);
 }
 
-int deleted_dir(t_data *data, char **args)
+int	deleted_dir(t_data *data, char **args)
 {
 	char	*tmp;
-	
+
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL && errno == ENOENT)
 	{
@@ -49,11 +51,13 @@ int deleted_dir(t_data *data, char **args)
 		}
 		else
 		{
-			set_env(data, new_env("MY_PWD", ft_strjoin(ft_strjoin(get_val(data->env->head, "MY_PWD"), "/"), args[1]), FORME));
-			set_env(data, new_env("PWD",ft_strjoin(ft_strjoin(get_val(data->env->head, "MY_PWD"), "/"), args[1]), (ENV | EXPORT)));
-			ft_putstr_fd("minishell: cd: error retrieving current directory: getcwd: cannot access parent\
- directories: No such file or directory\n", 2);
-			return (0);
+			set_env(data, new_env("MY_PWD",
+					ft_strjoin(ft_strjoin(get_val(data->env->head,
+								"MY_PWD"), "/"), args[1]), FORME));
+			set_env(data, new_env("PWD", ft_strjoin(ft_strjoin(get_val(
+								data->env->head, "MY_PWD"), "/"),
+						args[1]), (ENV | EXPORT)));
+			ft_putstr_fd(CD_ERROR, 2);
 		}
 	}
 	return (0);
@@ -61,7 +65,7 @@ int deleted_dir(t_data *data, char **args)
 
 int	normal_behave(t_data *data, char **args, char *tmp)
 {
-	if (chdir(args[1]) == -1 && !ft_perror("minishel: cd:"))
+	if (chdir(args[1]) == -1 && !ft_perror("minishel: cd: "))
 		return (1);
 	tmp = getcwd(NULL, 0);
 	set_env(data, new_env("MY_PWD", tmp, FORME));
@@ -70,11 +74,10 @@ int	normal_behave(t_data *data, char **args, char *tmp)
 	return (0);
 }
 
-int cd(t_data *data, char **args)
+int	cd(t_data *data, char **args)
 {
 	char	*old_pwd;
 	char	*tmp;
-	int		ret_v;
 
 	tmp = NULL;
 	old_pwd = get_val(data->env->head, "MY_PWD");
@@ -88,9 +91,8 @@ int cd(t_data *data, char **args)
 			if (deleted_dir(data, args) == 1)
 				return (1);
 		}
-		else
-			if (normal_behave(data, args, tmp) == 1)
-				return (1);
+		else if (normal_behave(data, args, tmp) == 1)
+			return (1);
 	}
 	set_env(data, new_env("OLDPWD", old_pwd, (ENV | EXPORT)));
 	return (0);

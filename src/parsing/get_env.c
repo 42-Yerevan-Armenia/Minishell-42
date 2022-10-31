@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/30 11:15:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 12:25:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char	**split_for_env(char *str, char c)
 		{
 			res[0] = ft_substr(str, 0, i);
 			res[1] = ft_substr(str, i + 1, ft_strlen(str) - i);
-			// printf("%i = d\n", ft_strlen(str) - i);
-			// printf("%i = d\n", i);
 			return (res);
 		}
 		i++;
@@ -62,5 +60,5 @@ void	get_env(t_data *data, char **envp, int is_export)
 	set_env(data, new_env("OLDPWD", NULL, EXPORT));
 	free_arr(&pwd);
 	set_env(data, new_env("?", "0", (FORME)));
-	data->envp =  env_cpy(data, data->env);
+	data->envp = env_cpy(data, data->env);
 }

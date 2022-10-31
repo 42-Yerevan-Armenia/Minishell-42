@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/24 20:40:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 09:21:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	count_quotes(char *arr)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	if (arr == NULL)
 		return (0);
@@ -30,40 +30,43 @@ static int	count_quotes(char *arr)
 	return (count);
 }
 
+static void	clean_quotes_helper(char **res, char *tmp, int *i, int *k)
+{
+	char	c;
+	int		j;
+
+	j = 0;
+	while (res[*i][j])
+	{
+		while (res[*i][j] && !ft_strchr(QUOTES, res[*i][j]))
+			tmp[(*k)++] = res[*i][j++];
+		if (res[*i][j] == '\0')
+			break ;
+		c = res[*i][(j)++];
+		while (res[*i][j] && res[*i][j] != c)
+			tmp[(*k)++] = res[*i][j++];
+		if (res[*i][j])
+			j++;
+	}
+}
+
 static int	clean_quotes(char ***arr)
 {
-	int i;
-	char **res = *arr;
-	int j;
-	int k;
-	char *tmp;
-	char c;
+	int		i;
+	char	**res;
+	int		k;
+	char	*tmp;
 
+	res = *arr;
 	if (*arr == NULL)
 		return (0);
 	i = 0;
-	// printf("%s\n", res[0]);
-	// printf("%s\n", res[1]);
 	while (res[i])
 	{
-		j = 0;
 		k = 0;
-		// printf("count_quotes(res[i]) = %d\n", count_quotes(res[i]));
 		tmp = malloc(ft_strlen(res[i]) - count_quotes(res[i]) + 1);
-		while (res[i][j])
-		{
-			while (res[i][j] && !ft_strchr(QUOTES, res[i][j]))
-				tmp[k++] = res[i][j++];
-			if (res[i][j] == '\0')
-				break;
-			c = res[i][j++];
-			while (res[i][j] && res[i][j] != c)
-				tmp[k++] = res[i][j++];
-			if (res[i][j])
-				j++;
-		}
+		clean_quotes_helper(res, tmp, &i, &k);
 		tmp[k] = '\0';
-		// printf("tmp = %s\n", tmp);
 		free_arr(&res[i]);
 		res[i] = tmp;
 		i++;
@@ -71,7 +74,7 @@ static int	clean_quotes(char ***arr)
 	return (0);
 }
 
-int ft_clean_all_qutoes(t_spl_pipe *head)
+int	ft_clean_all_qutoes(t_spl_pipe *head)
 {
 	while (head)
 	{
