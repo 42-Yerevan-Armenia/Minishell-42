@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:53:23 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:49:17 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define PHILO	"\033[0;35m"
 # define SKY	"\033[1;36m"
 
-void	printf_header(void);
+void			printf_header(void);
 // char *ft_heredoc(t_parse *parser, char *dlmtr);
 
 void			printf_header(void);
@@ -54,7 +54,7 @@ int				get_infile_fd(t_spl_pipe *node);
 
 // execute
 int				execute(t_data *data);
-
+int	            check_builtins(t_data *data, t_spl_pipe *tmp);
 // builtins
 int				echo(char **args);
 int				export(t_data *data, char **args);

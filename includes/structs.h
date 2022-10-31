@@ -6,14 +6,14 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:54:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:45:34 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUTTS_H
-# define STRUTTS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-typedef struct s_parse   t_parse;
+typedef struct s_parse	t_parse;
 
 typedef struct s_spl_pipe
 {

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/30 12:26:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:40:38 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,22 @@ void	open_pipes(int i, int (*fds)[2], int psize)
 	close_fds(fds, psize);
 }
 
-int run_builtins(t_data *data, t_spl_pipe *tmp, int psize)
+int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
-		printf("✅ exit = %d\n", cd(data, tmp->cmd));
+		printf("❎ exit = %d\n", cd(data, tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "echo"))
-		printf("✅ exit = %d\n", echo(tmp->cmd));
+		printf("❎ exit = %d\n", echo(tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
-		printf("✅ exit = %d\n", env(data, tmp->cmd));
+		printf("❎ exit = %d\n", env(data, tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		printf("✅ exit = %d\n", ft_exit(data, tmp->cmd));
+		printf("❎ exit = %d\n", ft_exit(data, tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "export"))
-		printf("✅ exit = %d\n", export(data, tmp->cmd));
+		printf("❎ exit = %d\n", export(data, tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		printf("✅ exit = %d\n", pwd(data));
+		printf("❎ exit = %d\n", pwd(data));
 	else if (!ft_strcmp(tmp->cmd[0], "unset"))
-		printf("✅ exit = %d\n", unset(data, tmp->cmd));
+		printf("❎ exit = %d\n", unset(data, tmp->cmd));
 	return (0);
 }
 
@@ -86,9 +86,8 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 	int	i;
 
 	i = 0;
-	
 	if (ft_strnstr(BUILTINS, tmp->cmd[0], 35))
-		run_builtins(data, tmp, psize);
+		run_builtins(data, tmp);
 	else
 	{
 		if (access(*tmp->cmd, F_OK) == 0)
