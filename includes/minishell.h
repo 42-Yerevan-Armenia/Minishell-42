@@ -22,6 +22,9 @@
 # include "readline/history.h"
 # include "readline/readline.h"
 # include <string.h>
+# include <signal.h>
+# include <sys/wait.h>
+
 
 # define WHITE	"\033[0;29m"
 # define RED	"\033[1;31m"
@@ -107,3 +110,9 @@ int				find_var_rap(t_list_env *env, t_env *new_node);
 void			print_env_arr(char **env);
 
 #endif
+
+// need error keys for pipe and fork
+
+// fds did not closed after cat | cat | cat ...
+
+//do not see infile and outfile

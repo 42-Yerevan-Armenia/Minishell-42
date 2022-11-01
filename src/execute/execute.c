@@ -36,10 +36,12 @@ void	close_fds(int (*fds)[2], int psize)
 	i = -1;
 	while (++i < psize - 1)
 	{
-		close(fds[i][1]);
-		close(fds[i][0]);
+		if (close(fds[i][1]) == -1)
+			perror("CLOSE FAILED");
+		if (close(fds[i][0]) == -1)
+			perror("CLOSE FAILED");
 	}
-	free(fds);
+	//free(fds);
 }
 
 void	open_pipes(int i, int (*fds)[2], int psize)
@@ -111,13 +113,18 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
+		{
 			ft_putstr_fd(INPUT_FILE, 2);
+			exit(1);
+		}
 	i = 0;
 	while (i < psize)
 	{
 		tmp->pid = fork();
 		if (tmp->pid == -1)
+		{
 			ft_putstr_fd(FORK, 2);
+		}
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)
@@ -132,7 +139,70 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		i++;
 	}
 }
+/*
+void	pipes(t_data *data, int psize, t_spl_pipe *tmp)
+{
+	char *infile = tmp->in_files;
+	char *outfile = tmp->out_files;
+	int	tmpin = dup(0);
+	int	tmpout = dup(1);
+	int fdin;
+	int fdout;
+	int ret;
+	
+	if (infile)
+		fdin = open(infile, O_RDWR); 
+	else // Use default input
+		fdin=dup(tmpin);
 
+	int i = -1;
+	if (++i < psize)
+	{
+		//redirect input
+		dup2(fdin, 0);
+		close(fdin);
+		//setup output
+		if (i == psize)
+		{
+			// Last simple command 
+    		if(outfile)
+				fdout=open(outfile, O_RDWR);
+		}
+		else // Use default output
+			fdout=dup(tmpout);
+	}
+	else
+	{
+		// Not last 
+		//simple command
+		//create pipe
+		int fdpipe[2];
+		
+		pipe(fdpipe);
+		fdout=fdpipe[1];
+		fdin=fdpipe[0];
+	}// if/else
+	// Redirect output
+	dup2(fdout,1);
+	close(fdout);
+	// Create child process
+	ret = fork(); 
+	if(ret == 0)
+	{
+		execve(data->path, tmp->cmd, &tmp->cmd[0]);
+		perror("Error");
+		exit(1);
+	}
+	//  for
+	//restore in/out defaults
+	dup2(tmpin,0);
+	dup2(tmpout,1);
+	close(tmpin);
+	close(tmpout);
+	if (!data)// Wait for last command
+  		waitpid(tmp->pid, ret, NULL);
+}
+*/
 int	execute(t_data *data)
 {
 	t_spl_pipe	*tmp;
