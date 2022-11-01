@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:39:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:55:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,14 @@ static void	put_env(t_data *data, t_env *new_node, t_env *tmp)
 	data->envp = env_cpy(data, data->env);
 }
 
-
 void	set_env(t_data *data, t_env *new_node)
 {
 	t_env	*tmp;
 	int		v_ret;
 
 	tmp = NULL;
+	if (new_node->key == NULL)
+		return ;
 	if (new_node->is_export == (ENV | EXPORT))
 		tmp = new_env(new_node->key, new_node->val, new_node->is_export);
 	else

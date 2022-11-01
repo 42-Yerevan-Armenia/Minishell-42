@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 13:43:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/31 13:48:35 by arakhurs         ###   ########.fr       */
+/*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/11/01 13:58:14 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,22 @@
 # define HDOC_SQ_MODE 1
 # define HDOC_DQ_MODE 0
 # define START_RD_LN 100
+# define TC_ON 50
+# define TC_OFF 51
+# define FREE_ON 7
+# define FREE_OFF 8
+
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
 # define NOT_FOUND "🔻minishell> %s: command not found ❌\n"
+
 //Builtins
 # define BUILTINS "cd echo env exit export pwd unset"
+# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token"
+# define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
+ cannot access parent directories: No such file or directory"
+
 //Tokens
 //  #define RED_INPUT		1	// <
 //  #define RED_OUTPUT		2	// >

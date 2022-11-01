@@ -113,18 +113,13 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
-		{
-			ft_putstr_fd(INPUT_FILE, 2);
-			exit(1);
-		}
+			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
 	i = 0;
 	while (i < psize)
 	{
 		tmp->pid = fork();
 		if (tmp->pid == -1)
-		{
-			ft_putstr_fd(FORK, 2);
-		}
+			ft_putstr_fd(FORK, 2, FREE_OFF);
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)

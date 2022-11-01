@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 13:49:17 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/01 12:21:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@
 # include "readline/readline.h"
 # include <string.h>
 # include <signal.h>
-# include <sys/wait.h>
+ #include <sys/types.h>
+	#include <sys/wait.h>
 
+
+# include <sys/ioctl.h>
+# include <termios.h>
 
 # define WHITE	"\033[0;29m"
 # define RED	"\033[1;31m"
@@ -34,9 +38,9 @@
 # define PHILO	"\033[0;35m"
 # define SKY	"\033[1;36m"
 
-void			printf_header(void);
-// char *ft_heredoc(t_parse *parser, char *dlmtr);
+extern int	g_sig;
 
+void			printf_header(void);
 void			printf_header(void);
 void			builtin_forking(t_data *data);
 void			dis_prompt(void);
@@ -54,10 +58,15 @@ void			get_env(t_data *data, char **envp, int is_export);
 int				ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error);
 int				create_rd_files(t_parse *parser);
 int				get_infile_fd(t_spl_pipe *node);
+void			set_term_attr(int on_off);
 
 // execute
 int				execute(t_data *data);
-int	            check_builtins(t_data *data, t_spl_pipe *tmp);
+
+// parsing
+void			find_exe(t_parse *parser);
+int				get_hd_mode_in_pipe(t_parse *parser);
+
 // builtins
 int				echo(char **args);
 int				export(t_data *data, char **args);
@@ -66,13 +75,14 @@ int				env(t_data *data, char **args);
 int				pwd(t_data *data);
 int				cd(t_data *data, char **args);
 int				ft_exit(t_data *data, char **args);
+int				run_heredoc(t_data *data);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);
 t_spl_pipe		*new_spl_pipe(void);
 t_spl_pipe		*add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe);
 int				fill_null(void ***ptr, int len);
-char			**resize_arr(char **arr, int *l_arr);
+int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
@@ -92,6 +102,8 @@ size_t			arr_double_len(char **arr);
 char			*ft_strjoin_1(char *s1, char *s2);
 char			*ft_strjoin_2(char *s1, char *s2);
 char			*ft_strjoin_all(char **str);
+void			init_vars(t_vars *v, int i, int j, int k);
+void			pass_qutoes(int *i, char *str);
 
 // env api
 t_list_env		*create_list_env(void);

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:51:17 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:26:20 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 09:46:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	pipe_join(t_parse *parser)
 		}
 		k++;
 		if (parser->l_arr == k)
-			parser->join_pipe = resize_arr(parser->join_pipe, &parser->l_arr);
+			resize_arr(&parser->join_pipe, &parser->l_arr, k);
 		if (parser->spl_pipe[i])
 			i++;
 	}

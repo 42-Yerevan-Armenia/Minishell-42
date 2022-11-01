@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:02:58 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:56:45 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,22 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 	return (fd);
 }
 
-static void	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
+static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 {
 	int	i;
 
-	i = 0;
-	while ((*node)->heredoc[i])
+	i = -1;
+	while ((*node)->heredoc[++i])
 	{
 		free_arr(&rd_ln);
 		while (1)
 		{
 			free_arr(&rd_ln);
+			set_term_attr(TC_OFF);
 			rd_ln = readline(">");
+			if (g_sig == 0 && ++g_sig)
+				return (1);
+			set_term_attr(TC_ON);
 			if (!rd_ln && !ft_perror("minishell: "))
 				exit(1);
 			if (*res)
@@ -61,9 +65,9 @@ static void	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 				break ;
 			*res = ft_strjoin_1(*res, rd_ln);
 		}
-		i++;
 		free_arr(&rd_ln);
 	}
+	return (0);
 }
 
 int	ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error)
@@ -73,11 +77,12 @@ int	ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error)
 
 	res = parser->hered_vars;
 	rd_ln = NULL;
-	ft_heredoc_helper(&node, res, rd_ln);
+	if (ft_heredoc_helper(&node, res, rd_ln) == 1)
+		return (START_RD_LN);
 	if (node->hdoc_mode == HDOC_DQ_MODE && res)
 		rep_vars(parser, HEREDOC);
 	*error = create_hiden_file(parser->data, node, &node->f_name);
-	ft_putstr_fd(*res, *error);
+	ft_putstr_fd(*res, *error, FREE_OFF);
 	free_arr(&rd_ln);
 	free_double((void *)&res);
 	return (0);

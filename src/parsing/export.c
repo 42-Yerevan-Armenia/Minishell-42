@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:46:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 20:16:04 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	is_valid_args(char *args)
 	while ((args[i] && args[i] != '+' && args[i] != '=') || (args[i] == '+'
 			&& args[i + 1] != '='))
 	{
-		if ((!ft_isalnum(args[i]) && args[i] != '_' && args[i] != '$')
+		if ((!ft_isalnum(args[i]) && args[i] != '_')
 			|| (ft_isdigit(args[i]) && i == 0))
 		{
 			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(
@@ -82,8 +82,8 @@ int	export(t_data *data, char **args)
 		return (0);
 	while (args[i])
 	{
-		if (is_valid_args(args[i]))
-			return (1);
+		if (is_valid_args(args[i]) && ++i)
+			continue ;
 		tmp = split_for_env(args[i], '=');
 		if (tmp[1])
 			set_env(data, new_env(tmp[0], tmp[1], (ENV | EXPORT)));
