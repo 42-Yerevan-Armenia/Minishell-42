@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 13:45:34 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:24:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,19 @@ typedef struct s_parse
 
 typedef struct s_elem
 {
-	int					out_file;
-	int					in_file;
-	int					heredoc;
-	int					out_append_files;
+	int					out_f;
+	int					in_f;
+	int					hdoc;
+	int					out_a_f;
 }						t_elem;
+
+typedef struct s_vars
+{
+	int					i;
+	int					j;
+	int					k;
+	int					c;
+	int					t;
+}						t_vars;
 
 #endif

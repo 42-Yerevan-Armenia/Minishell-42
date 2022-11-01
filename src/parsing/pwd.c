@@ -6,14 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:27:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 20:27:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define SHELL_INIT "shell-init: error retrieving current \
- directory: getcwd: cannot access parent directories: No such file or directory\n"
 
 int	pwd(t_data *data)
 {
@@ -24,11 +21,11 @@ int	pwd(t_data *data)
 	ptr = getcwd(NULL, 0);
 	if (ptr == NULL && errno == ENOENT)
 	{
-		my_pwd = get_val(data->env->head, "MY_PWD");
+		my_pwd = get_val(data->env->head, "PWD");
 		if (my_pwd)
 			printf("%s\n", my_pwd);
 		else
-			ft_putstr_fd(SHELL_INIT, 2);
+			ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
 	}
 	else
 		printf("%s\n", ptr);

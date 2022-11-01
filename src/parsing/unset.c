@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:47:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:19:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@ static int	is_valid_args(char *args)
 	int		i;
 	char	*error;
 
-	i = -1;
-	if (!args || !args[i])
-	{
-		error = ft_strjoin_2("minishell: unset: ", ft_strjoin_1(ft_strjoin_2
-					("`", ft_strjoin(args, "'")), ": not a valid identifier"));
-		ft_putendl_fd(error, 2, 1);
-		return (1);
-	}
+	i = 0;
 	while (args[i])
 	{
 		if (((!ft_isalnum(args[i]) && args[i] != '_') || (ft_isdigit(args[i])
@@ -52,8 +45,8 @@ int	unset(t_data *data, char **args)
 	flag = 0;
 	while (args[i])
 	{
-		if (is_valid_args(args[i]))
-			return (1);
+		if (is_valid_args(args[i]) && ++i)
+			continue ;
 		del_env_node(data->env, args[i]);
 		del_env_node(data->env_exp, args[i]);
 		i++;

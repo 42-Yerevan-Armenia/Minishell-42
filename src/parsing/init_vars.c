@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_parse.c                                       :+:      :+:    :+:   */
+/*   init_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 10:43:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:47:50 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/11/01 08:31:09 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/11/01 08:31:14 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	free_parse(t_parse *parser)
+void	init_vars(t_vars *v, int i, int j, int k)
 {
-	// printf("parser->spl_qutoes = %d\n", parser->spl_qutoes[0]);
-	// free_double(&parser->spl_qutoes);
-
-
-	// free_double(&parser->spl_pipe);
-	// free_double(&parser->join_pipe);
-	// free_arr(&parser->key);
-	return (0);
+	v->i = i;
+	v->j = j;
+	v->k = k;
+	v->c = 0;
+	v->t = 0;
 }

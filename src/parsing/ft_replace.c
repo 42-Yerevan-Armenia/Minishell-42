@@ -6,13 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:24:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:31:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 {
@@ -26,7 +24,6 @@ char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 	*j = 0;
 	return (res);
 }
-
 
 char	*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr)
 {

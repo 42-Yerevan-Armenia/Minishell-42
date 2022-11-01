@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:25:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 20:11:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**split_for_env(char *str, char c)
 	{
 		if (str[i] == c)
 		{
-			res[0] = ft_substr(str, 0, i);
+			res[0] = ft_substr(str, 0, i + 1);
 			res[1] = ft_substr(str, i + 1, ft_strlen(str) - i);
 			return (res);
 		}
@@ -45,19 +45,18 @@ void	get_env(t_data *data, char **envp, int is_export)
 	while (envp[i])
 	{
 		tmp = split_for_env(envp[i], '=');
-		env = new_env(tmp[0], tmp[1], is_export);
-		set_env(data, env);
-		free_double((void *)&tmp);
+		if (ft_strcmp(tmp[0], "OLDPWD="))
+		{
+			env = new_env(tmp[0], tmp[1], is_export);
+			set_env(data, env);
+		}
 		i++;
 	}
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL && errno == ENOENT)
-		ft_putstr_fd("shell-init: error retrieving current directory: getcwd: cannot\
- access parent directories: No such file or directory", 2);
-	else
-		set_env(data, new_env("PWD", pwd, (ENV | EXPORT)));
-	set_env(data, new_env("MY_PWD", get_val(data->env->head, "PWD"), (FORME)));
-	set_env(data, new_env("OLDPWD", NULL, EXPORT));
+		ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
+	set_env(data, new_env("PWD", pwd, (FORME)));
+	set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
 	free_arr(&pwd);
 	set_env(data, new_env("?", "0", (FORME)));
 	data->envp = env_cpy(data, data->env);

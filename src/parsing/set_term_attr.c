@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_parse.c                                       :+:      :+:    :+:   */
+/*   set_term_attr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 10:43:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:47:50 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/10/31 20:25:37 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/10/31 20:26:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	free_parse(t_parse *parser)
+void	set_term_attr(int on_off)
 {
-	// printf("parser->spl_qutoes = %d\n", parser->spl_qutoes[0]);
-	// free_double(&parser->spl_qutoes);
+	struct termios	termios_p;
 
-
-	// free_double(&parser->spl_pipe);
-	// free_double(&parser->join_pipe);
-	// free_arr(&parser->key);
-	return (0);
+	tcgetattr(0, &termios_p);
+	if (on_off == TC_OFF)
+	{
+		termios_p.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, 0, &termios_p);
+	}
+	else if (on_off == TC_ON)
+	{
+		termios_p.c_lflag |= ECHOCTL;
+		tcsetattr(0, 0, &termios_p);
+	}
 }
