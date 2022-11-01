@@ -122,6 +122,7 @@ int				find_var_rap(t_list_env *env, t_env *new_node);
 // utils
 
 void			print_env_arr(char **env);
+void	pipes(t_data *data, int psize, t_spl_pipe *tmp);
 
 #endif
 

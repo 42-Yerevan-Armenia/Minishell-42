@@ -50,6 +50,7 @@ void	get_env(t_data *data, char **envp, int is_export)
 			env = new_env(tmp[0], tmp[1], is_export);
 			set_env(data, env);
 		}
+		free_double((void *)&tmp);
 		i++;
 	}
 	pwd = getcwd(NULL, 0);

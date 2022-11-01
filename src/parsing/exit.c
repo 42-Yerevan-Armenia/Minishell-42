@@ -52,7 +52,6 @@ int	ft_exit(t_data *data, char **args)
 		exit_status = ft_atoi(args[1]) % 256;
 	else
 		exit_status = 0;
-	free_envp(&data->env);
-	exit(1);
+	exit(ft_atoi(args[1]));	
 	return (0);
 }
