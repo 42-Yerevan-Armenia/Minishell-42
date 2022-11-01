@@ -6,14 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 18:13:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:30:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#define SHELL_INIT "shell-init: error retrieving current \
- directory: getcwd: cannot access parent directories: No such file or directory\n"
 
 int	pwd(t_data *data)
 {

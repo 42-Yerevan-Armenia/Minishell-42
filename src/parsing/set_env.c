@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 19:40:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:29:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	put_env(t_data *data, t_env *new_node, t_env *tmp)
 	}
 	data->envp = env_cpy(data, data->env);
 }
-
 
 void	set_env(t_data *data, t_env *new_node)
 {

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:21:30 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:40:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:32:07 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	free_spl_pipe(t_list_spl_pipe **list)
 {
-	// printf("%d\n", (*list)->head);
 	while ((*list)->head)
 	{
 		free_double(&(((*list)->head)->cmd));

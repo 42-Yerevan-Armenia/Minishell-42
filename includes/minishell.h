@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:39:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 10:24:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <string.h>
 # include <signal.h>
  #include <sys/types.h>
-  #include <sys/wait.h>
+	#include <sys/wait.h>
 
 
 # include <sys/ioctl.h>
@@ -63,6 +63,9 @@ void			set_term_attr(int on_off);
 // execute
 int				execute(t_data *data);
 
+// parsing
+void			find_exe(t_parse *parser);
+
 // builtins
 int				echo(char **args);
 int				export(t_data *data, char **args);
@@ -78,7 +81,7 @@ t_list_spl_pipe	*create_list_pipe(void);
 t_spl_pipe		*new_spl_pipe(void);
 t_spl_pipe		*add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe);
 int				fill_null(void ***ptr, int len);
-int			  resize_arr(t_parse *parser, char ***arr, int *l_arr, int k);
+int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
@@ -98,7 +101,8 @@ size_t			arr_double_len(char **arr);
 char			*ft_strjoin_1(char *s1, char *s2);
 char			*ft_strjoin_2(char *s1, char *s2);
 char			*ft_strjoin_all(char **str);
-void      init_vars(t_vars *v, int i, int j, int k);
+void			init_vars(t_vars *v, int i, int j, int k);
+void			pass_qutoes(int *i, char *str);
 
 // env api
 t_list_env		*create_list_env(void);

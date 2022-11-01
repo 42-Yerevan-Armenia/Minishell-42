@@ -6,30 +6,30 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 17:55:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 17:41:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 09:48:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int split_pipe_helper(t_parse *parser, t_vars *v, char **tmp)
+void	split_pipe_helper(t_parse *parser, t_vars *v, char **tmp)
 {
-	while ((tmp[v->i] && (tmp[v->i][0] == '\'' || tmp[v->i][0] == '"')) 
-		&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+	while ((tmp[v->i] && (tmp[v->i][0] == '\'' || tmp[v->i][0] == '"'))
+		&& !resize_arr(&parser->spl_pipe, &parser->l_arr, v->k))
 		parser->spl_pipe[v->k++] = ft_strdup(tmp[v->i++]);
 	while (tmp[v->i] && tmp[v->i][v->j])
 	{
 		v->t = v->j;
 		while (tmp[v->i][v->j] && tmp[v->i][v->j] != '|')
 			v->j++;
-		if (v->j == 0 && tmp[v->i][v->j] == '|' 
-			&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+		if (v->j == 0 && tmp[v->i][v->j] == '|'
+			&& !resize_arr(&parser->spl_pipe, &parser->l_arr, v->k))
 			parser->spl_pipe[v->k++] = ft_strdup("|");
-		else if (!resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+		else if (!resize_arr(&parser->spl_pipe, &parser->l_arr, v->k))
 		{
 			parser->spl_pipe[v->k++] = ft_substr(tmp[v->i], v->t, v->j - v->t);
-			if (tmp[v->i][v->j] == '|' 
-				&& !resize_arr(parser, &parser->spl_pipe, &parser->l_arr, v->k))
+			if (tmp[v->i][v->j] == '|'
+				&& !resize_arr(&parser->spl_pipe, &parser->l_arr, v->k))
 				parser->spl_pipe[v->k++] = ft_strdup("|");
 		}
 		if (tmp[v->i][v->j] != '\0')

@@ -6,142 +6,15 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:52:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 10:23:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // int		g_sig[2] = {0, 0};
-int		g_sig = 1;
 
-void	pass_qutoes(int *i, char *str)
-{
-	char	tmp;
-
-	tmp = str[(*i)++];
-	while (str[*i] && str[*i] != tmp)
-		(*i)++;
-}
-int	get_files(char *tmp, t_spl_pipe *node, int *i, int c)
-{
-	static int	k;
-	static int	m;
-	static int	h;
-	static int	n_cmd;
-	int			j;
-	char		del;
-
-	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
-		init_zero(&k, &m, &h, &n_cmd);
-	while (ft_strchr(SPACES, tmp[*i]))
-		*i += 1;
-	j = *i;
-	if (tmp[*i] == '\'' || tmp[*i] == '"')
-	{
-		while (tmp[*i] && ((tmp[*i] == '\'' || tmp[*i] == '"') /*
-					|| !ft_strchr(SPACES, tmp[*i])*/
-							))
-		{
-			del = tmp[(*i)++];
-			while (tmp[*i] && tmp[*i] != del)
-				*i += 1;
-			if (tmp[*i])
-				*i += 1;
-			while (tmp[*i] && tmp[*i] != '\'' && tmp[*i] != '"'
-				&& !ft_strchr(METACHARS, tmp[*i]) && !ft_strchr(SPACES,
-				tmp[*i]))
-				*i += 1;
-			if (tmp[*i] != '\'' && tmp[*i] != '"')
-				break ;
-		}
-	}
-	else
-	{
-		while (tmp[*i] && (!ft_strchr(METACHARS, tmp[*i]) /* || tmp[*i] == '\''
-				|| tmp[*i] == '"')*/
-							))
-		{
-			if (tmp[*i] == '\'' || tmp[*i] == '"')
-				pass_qutoes(i, tmp);
-			*i += 1;
-		}
-	}
-	if (c == HEREDOC)
-		node->heredoc[h++] = ft_substr(tmp, j, *i - j);
-	else if (c == O_TRUNC || c == O_APPEND)
-		node->out_files[m++] = ft_substr(tmp, j, *i - j);
-	else if (c == IN_FILES)
-		node->in_files[k++] = ft_substr(tmp, j, *i - j);
-	else if (c == COMAND)
-	{
-		// if (node->tmp == n_cmd)
-		// 	resize_arr(node->cmd, &node->tmp);
-		node->cmd[n_cmd++] = ft_substr(tmp, j, *i - j);
-	}
-	if (c == O_APPEND || c == O_TRUNC)
-		node->output_mode = c;
-	else if (c == IN_FILES || c == HEREDOC)
-		node->input_mode = c;
-	return (0);
-}
-
-int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
-{
-	int	i;
-
-	i = 0;
-	node->flag_new_pipe = 0;
-	while (cmd_ln[i])
-	{
-		if (cmd_ln[i] == '<' && cmd_ln[i + 1] == '<' && ++i && ++i)
-			get_files(cmd_ln, node, &i, HEREDOC);
-		else if (cmd_ln[i] == '>' && cmd_ln[i + 1] == '>' && ++i && ++i)
-			get_files(cmd_ln, node, &i, O_APPEND);
-		else if (cmd_ln[i] == '<' && ++i)
-			get_files(cmd_ln, node, &i, IN_FILES);
-		else if (cmd_ln[i] == '>' && ++i)
-			get_files(cmd_ln, node, &i, O_TRUNC);
-		else if (!ft_strchr(METACHARS, cmd_ln[i]))
-			get_files(cmd_ln, node, &i, COMAND);
-		if (cmd_ln[i] && !ft_strchr(HANDLE, cmd_ln[i]))
-			i++;
-	}
-	return (0);
-}
-
-t_spl_pipe	*find_exe(t_parse *parser)
-{
-	int			i;
-	t_spl_pipe	*node;
-	t_elem		*quantity;
-	char		**tmp;
-
-	i = 0;
-	tmp = parser->join_pipe;
-	while (tmp[i])
-	{
-		node = add_pipe(parser->data->cmd_line, new_spl_pipe());
-		quantity = count_elem(tmp[i]);
-		node->in_files = malloc(sizeof(char *) * quantity->in_file);
-		node->out_files = malloc(sizeof(char *) * (quantity->out_file
-					+ quantity->out_append_files));
-		node->heredoc = malloc(sizeof(char *) * quantity->heredoc);
-		node->cmd = malloc(sizeof(char *) * 100);
-		if ((!node->in_files || !node->out_files || !node->heredoc
-				|| !node->cmd) && !ft_perror("minishell: "))
-			exit (1);
-		fill_null((void *)&node->cmd, 100);
-		fill_null((void *)&node->in_files, quantity->in_file);
-		fill_null((void *)&node->out_files, quantity->out_file
-				+ quantity->out_append_files);
-		fill_null((void *)&node->heredoc, quantity->heredoc);
-		fill_spl_pipe(node, tmp[i]);
-		free(quantity);
-		i++;
-	}
-	return (parser->data->cmd_line->head);
-}
+int	g_sig = 1;
 
 int	init(t_parse *parser, t_data *data, char **envp)
 {
@@ -235,7 +108,6 @@ int free_all(t_data *data)
 	free_spl_pipe((void *)&data->cmd_line);
 
 	free_parse((void *)&data->parser);
-		// write(1, "||||||\n", 9);
 	free_arr(&data->parser->rd_ln);
 	return (0);
 }
@@ -254,8 +126,7 @@ int	parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
-	if (find_exe(parser) == NULL && !free_all(parser->data))
-		return (START_RD_LN);
+	find_exe(parser);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
 	print_info(parser);

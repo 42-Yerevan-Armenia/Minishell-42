@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:51:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:31:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ void	get_env(t_data *data, char **envp, int is_export)
 		tmp = split_for_env(envp[i], '=');
 		env = new_env(tmp[0], tmp[1], is_export);
 		set_env(data, env);
-		// free_double(&tmp);
 		i++;
 	}
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL && errno == ENOENT)
-		ft_putstr_fd("shell-init: error retrieving current directory: getcwd: cannot\
- access parent directories: No such file or directory", 2);
+		ft_putstr_fd(SHELL_INIT, 2);
 	else
 		set_env(data, new_env("PWD", pwd, (ENV | EXPORT)));
 	set_env(data, new_env("MY_PWD", get_val(data->env->head, "PWD"), (FORME)));

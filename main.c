@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 // int	main(void)
@@ -57,3 +58,13 @@
 //     printf("\n");
 // }
 
+
+
+// int main()
+// {
+//     char    arr[] = "123456";
+
+//     printf("%d\n", strlen(arr));
+//     printf("%d\n", strlen(arr + 1));
+//     printf("%d\n", strlen(arr + 5));
+// }

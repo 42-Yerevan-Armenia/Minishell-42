@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 20:55:30 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 08:30:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 //Builtins
 # define BUILTINS "cd echo env exit export pwd unset"
 # define PIPE "minishell: syntax error near unexpected token `|'\n"
+# define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
+ cannot access parent directories: No such file or directory\n"
 
 //Tokens
 //  #define RED_INPUT		1	// <

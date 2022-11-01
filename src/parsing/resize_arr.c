@@ -6,13 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 12:27:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 09:45:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int free_double_r(char ***ptr)
+static int	free_double_r(char ***ptr)
 {
 	int	i;
 
@@ -25,14 +25,15 @@ static int free_double_r(char ***ptr)
 	}
 	free(*ptr);
 	*ptr = NULL;
+	return (0);
 }
 
-int	resize_arr(t_parse *parser, char ***arr, int *l_arr, int k)
+int	resize_arr(char ***arr, int *l_arr, int k)
 {
 	char	**tmp;
 	int		i;
 
-	if (parser->l_arr != k)
+	if (*l_arr != k)
 		return (0);
 	i = -1;
 	*l_arr *= 2;
