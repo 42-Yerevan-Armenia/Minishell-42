@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:22:45 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 13:50:35 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:29:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ char	*ft_strjoin(char *s1, char const *s2)
 	return (ptr1);
 }
 
-char	*ft_charjoin(char *s1, char const s2)
+char	*ft_charjoin(char *s1, char const s2, int flag)
 {
 	char	*ptr;
 	char	*ptr1;
+	char	*arr_to_free;
 
+	arr_to_free = s1;
 	ptr = (char *) malloc(ft_strlen(s1) + 2);
 	if (ptr == 0 && !ft_perror("minishell: "))
 		return (0);
@@ -42,5 +44,6 @@ char	*ft_charjoin(char *s1, char const s2)
 		*ptr++ = *s1++;
 	*ptr++ = s2;
 	*ptr = '\0';
+	free_arr(&arr_to_free);
 	return (ptr1);
 }

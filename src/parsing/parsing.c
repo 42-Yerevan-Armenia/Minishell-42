@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 20:27:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:58:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	unexpected_tokens(t_parse *parser)
 {
 	char	*tmp;
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	tmp = parser->rd_ln;
 	while (tmp[i] && ft_strchr(SPACES, tmp[i]))
 		i++;
@@ -71,23 +73,33 @@ int	unexpected_tokens(t_parse *parser)
 	}
 	while (tmp[i])
 	{
-		while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-			i++;
 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
 			i++;
 		if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
 		{
-			ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`'), tmp[i]), '\''), 2, FREE_ON);
-			return (START_RD_LN);
+			// while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+			// 	i++;
+			if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
+			{
+				ft_putendl_fd(ft_charjoin(ft_strjoin(ft_strjoin(UNEXPECTED_TOKEN, '`'), tmp[i]), '\''), 2, FREE_ON);
+				return (START_RD_LN);
+			}
+			flag = 1;
 		}
-		// if (ft_strchr(UNEXPECTED, tmp[i]) && ++i)
-		// {
-		// 	while (ft_strchr(SPACES, tmp[i]))
-		// 		i++;
-		// 	if (ft_strchr(UNEXPECTED, tmp[i]))
-		// 		return (1);
-		// }
-		if (tmp[i])
+		else
+		{
+			while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
+				++i;
+			printf("tmp  =%s\n", tmp + i);
+			if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
+				i++;
+			if (tmp[i] == '\0' && i != 0)
+			{
+				ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_strjoin(UNEXPECTED_TOKEN, '`'), "newline"), '\''), 2, FREE_ON);
+				return (START_RD_LN);
+			}
+		}
+		if (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
 			i++;
 	}
 	return (0);
@@ -113,9 +125,9 @@ int	parsing(t_parse *parser)
 	int	i;
 
 	i = 0;
-	// if (unexpected_tokens(parser) == START_RD_LN
-	// /*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
-		// return(START_RD_LN);
+	if (unexpected_tokens(parser) == START_RD_LN
+	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
+		return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
@@ -165,7 +177,6 @@ int	parsing(t_parse *parser)
 // 	return (0);
 // }
 
-<<<<<<< HEAD
 int	check_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
@@ -184,14 +195,13 @@ int	check_builtins(t_data *data, t_spl_pipe *tmp)
 		printf("✅ exit = %d\n", unset(data, tmp->cmd));
 	return (0);
 }
-=======
-int run_builtins(t_data *data, t_spl_pipe *tmp, int psize);
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 
 int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
+	int		ps;
+	int		i;
 
 	(void)av;
 	if (ac == 1)
@@ -217,9 +227,8 @@ int	main(int ac, char **av, char **envp)
 				add_history(parser.rd_ln);
 				if (parsing(&parser) == START_RD_LN && !free_arr(&parser.rd_ln))
 					continue ;
-				if (data.cmd_line->head && data.cmd_line->head->cmd[0])
+				if (data.cmd_line->head && data.cmd_line->head->cmd && data.cmd_line->head->cmd[0])
 				{
-<<<<<<< HEAD
 					ps = data.cmd_line->size;
 					i = -1;
 					while (i++ < ps)
@@ -232,13 +241,9 @@ int	main(int ac, char **av, char **envp)
 						else
 						{
 							ps = 0;
-							execute(&data);
+							// execute(&data);
 						}
 					}
-=======
-					run_builtins(&data, data.cmd_line->head, 0);
-					execute(&data);
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 				}
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
