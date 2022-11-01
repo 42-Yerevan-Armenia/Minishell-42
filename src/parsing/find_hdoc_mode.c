@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 10:19:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:27:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,22 @@ int	get_all_hd_modes(t_parse *parser)
 		parser->data->hdoc_mode[i][0] = find_hdoc_mode(tmp[i]);
 		i++;
 	}
+	return (0);
+}
+
+int	get_hd_mode_in_pipe(t_parse *parser)
+{
+	t_spl_pipe	*tmp;
+	int			i;
+
+	i = 0;
+	tmp = parser->data->cmd_line->head;
+	while (tmp && parser->data->hdoc_mode[i])
+	{
+		tmp->hdoc_mode = parser->data->hdoc_mode[i][0];
+		i++;
+		tmp = tmp->next;
+	}
+	free_double((void *)&parser->data->hdoc_mode);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 10:24:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 12:21:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int				execute(t_data *data);
 
 // parsing
 void			find_exe(t_parse *parser);
+int				get_hd_mode_in_pipe(t_parse *parser);
 
 // builtins
 int				echo(char **args);
@@ -85,7 +86,7 @@ int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
-int				free_double(char ***ptr);
+int				free_double(void ***ptr);
 int				free_parse(t_parse *parser);
 int				free_spl_pipe(t_list_spl_pipe **list);
 void			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);

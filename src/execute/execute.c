@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/31 21:49:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:26:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 	int	i;
 
 	i = 0;
-	
+
 	if (ft_strnstr(BUILTINS, tmp->cmd[0], 35))
 		run_builtins(data, tmp, psize);
 	else
@@ -112,13 +112,13 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
-			ft_putstr_fd(INPUT_FILE, 2);
+			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
 	i = 0;
 	while (i < psize)
 	{
 		tmp->pid = fork();
 		if (tmp->pid == -1)
-			ft_putstr_fd(FORK, 2);
+			ft_putstr_fd(FORK, 2, FREE_OFF);
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)
@@ -149,7 +149,7 @@ int	execute(t_data *data)
 	fds = malloc(sizeof (*fds) * (psize - 1));
 	forking(fds, psize, tmp, data);
 	close_fds(fds, psize);
-	free_double(&data->cmd_paths);
+	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	while (tmp)
 	{

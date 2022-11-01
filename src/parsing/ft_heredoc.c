@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:49:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:56:45 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error)
 	if (node->hdoc_mode == HDOC_DQ_MODE && res)
 		rep_vars(parser, HEREDOC);
 	*error = create_hiden_file(parser->data, node, &node->f_name);
-	ft_putstr_fd(*res, *error);
+	ft_putstr_fd(*res, *error, FREE_OFF);
 	free_arr(&rd_ln);
-	free_double(&res);
+	free_double((void *)&res);
 	return (0);
 }

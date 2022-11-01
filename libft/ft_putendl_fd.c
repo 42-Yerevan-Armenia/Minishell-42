@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:30:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 17:57:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:52:52 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	ft_putendl_fd(char *s, int fd, int flag)
 		i++;
 	}
 	ft_putchar_fd('\n', fd);
-	if (s && flag == 1)
+	if (s && flag == FREE_ON)
 		free(s);
 }

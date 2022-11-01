@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 10:27:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:30:04 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 	static int	l_arr = 2;
 
 	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
+	{
+		l_arr = 2;
 		init_zero(&k, &m, &h, &n_cmd);
+	}
 	if (v->c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, v->j, v->i - v->j);
 	else if (v->c == O_TRUNC || v->c == O_APPEND)
 		node->out_files[m++] = ft_substr(tmp, v->j, v->i - v->j);
 	else if (v->c == IN_FILES)
 		node->in_files[k++] = ft_substr(tmp, v->j, v->i - v->j);
-	else if (v->c == COMAND)
-	{
-		resize_arr(&node->cmd, &l_arr, n_cmd);
+	else if (v->c == COMAND && !resize_arr(&node->cmd, &l_arr, n_cmd))
 		node->cmd[n_cmd++] = ft_substr(tmp, v->j, v->i - v->j);
-	}
 	if (v->c == O_APPEND || v->c == O_TRUNC)
 		node->output_mode = v->c;
 	else if (v->c == IN_FILES || v->c == HEREDOC)
@@ -104,6 +104,8 @@ static int	fill_spl_pipe(t_parse *parser, t_spl_pipe *node, char *cmd_ln)
 	}
 	return (0);
 }
+
+// export .a .b .c
 
 void	find_exe(t_parse *parser)
 {

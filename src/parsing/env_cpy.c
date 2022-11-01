@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 21:49:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:27:13 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ char	**env_cpy(t_data *data, t_list_env *env)
 			res[i++] = ft_strjoin_1(ft_strjoin(tmp->key, "="), tmp->val);
 		tmp = tmp->next;
 	}
-	free_double(&data->envp);
+	free_double((void *)&data->envp);
 	return (res);
 }

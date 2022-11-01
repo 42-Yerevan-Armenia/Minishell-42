@@ -68,3 +68,10 @@
 //     printf("%d\n", strlen(arr + 1));
 //     printf("%d\n", strlen(arr + 5));
 // }
+
+// int main()
+// {
+//     int *a;
+
+//     a = malloc(size)
+// }

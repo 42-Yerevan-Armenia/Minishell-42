@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:21:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 09:51:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:56:16 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	echo(char **args)
 		{
 			while (((!valid_flag(args[i], &i))))
 				flag = 1;
-			ft_putstr_fd(args[i], 1);
+			ft_putstr_fd(args[i], 1, FREE_OFF);
 			if (args[i + 1])
 				write(1, " ", 1);
 			i++;

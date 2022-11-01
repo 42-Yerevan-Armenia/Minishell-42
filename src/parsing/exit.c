@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/10/31 12:50:34 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:57:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ static int	str_is_valid_num(char *str)
 	if (str[i] || !ft_isdigit(str[i - 1]) || i > 19)
 		return (0);
 	return (1);
- }
+}
 
 int	ft_exit(t_data *data, char **args)
 {
 	int	exit_status;
-	
+
 	if (data->cmd_line->tail)
 		return (1);
 	else
-		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("exit\n", 1, FREE_OFF);
 	if (args && data->exit_status >= 2 && !str_is_valid_num(args[1]))
 	{
-		ft_putstr_fd("🔻minishell> : exit: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
+		ft_putstr_fd(args[1], 2, FREE_OFF);
+		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
 		exit_status = 255;
 	}
 	else if (args && data->exit_status > 2)
 	{
-		ft_putstr_fd("🔻minishell> : exit: too many arguments\n", 2);
+		ft_putstr_fd("🔻minishell> : exit: too many arguments\n", 2, FREE_OFF);
 		exit_status = 1;
 	}
 	else if (args && data->exit_status == 2)
