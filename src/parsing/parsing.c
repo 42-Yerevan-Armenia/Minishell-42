@@ -165,7 +165,6 @@ int	parsing(t_parse *parser)
 // 	return (0);
 // }
 
-<<<<<<< HEAD
 int	check_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
@@ -184,14 +183,13 @@ int	check_builtins(t_data *data, t_spl_pipe *tmp)
 		printf("✅ exit = %d\n", unset(data, tmp->cmd));
 	return (0);
 }
-=======
-int run_builtins(t_data *data, t_spl_pipe *tmp, int psize);
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 
 int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
+	int		ps;
+	int		i;
 
 	(void)av;
 	if (ac == 1)
@@ -219,7 +217,6 @@ int	main(int ac, char **av, char **envp)
 					continue ;
 				if (data.cmd_line->head && data.cmd_line->head->cmd[0])
 				{
-<<<<<<< HEAD
 					ps = data.cmd_line->size;
 					i = -1;
 					while (i++ < ps)
@@ -235,10 +232,6 @@ int	main(int ac, char **av, char **envp)
 							execute(&data);
 						}
 					}
-=======
-					run_builtins(&data, data.cmd_line->head, 0);
-					execute(&data);
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 				}
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));

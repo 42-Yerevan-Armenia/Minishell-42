@@ -6,11 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2022/10/31 13:39:08 by arakhurs         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/01 13:57:37 by vaghazar         ###   ########.fr       */
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +32,7 @@ int	ft_exit(t_data *data, char **args)
 {
 	int	exit_status;
 
-<<<<<<< HEAD
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
-=======
-	if (data->cmd_line->tail)
->>>>>>> 2986292a5d5b862f2e8953458a064a6855f124aa
 		return (1);
 	else
 		ft_putstr_fd("exit\n", 1, FREE_OFF);

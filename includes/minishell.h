@@ -124,7 +124,5 @@ void			print_env_arr(char **env);
 #endif
 
 // need error keys for pipe and fork
-
 // fds did not closed after cat | cat | cat ...
-
 //do not see infile and outfile
