@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 19:30:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:26:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	starting_quotes(char *tmp, t_vars *v)
 static int	get_files(char *tmp, t_spl_pipe *node, t_vars *v, int c)
 {
 	v->c = c;
-	while (ft_strchr(SPACES, tmp[v->i]))
+	while (tmp[v->i] && ft_strchr(SPACES, tmp[v->i]))
 		v->i += 1;
 	v->j = v->i;
 	if (tmp[v->i] == '\'' || tmp[v->i] == '"')

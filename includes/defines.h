@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 13:58:14 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:50:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define METACHARS "|&;()<> \n\t"
 # define UNEXPECTED "|&;()"
+# define UNEXPECTED_RED "|&;()><"
 # define HANDLE	"<>"
 # define QUOTES	"\"'`"
 # define SPACES " \n\t\v\f\r"

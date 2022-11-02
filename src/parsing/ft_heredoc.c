@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 13:56:45 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/02 21:10:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 		while (1)
 		{
 			free_arr(&rd_ln);
-			set_term_attr(TC_OFF);
+			// set_term_attr(TC_OFF);
 			rd_ln = readline(">");
 			if (g_sig == 0 && ++g_sig)
 				return (1);
-			set_term_attr(TC_ON);
+			// set_term_attr(TC_ON);
 			if (!rd_ln && !ft_perror("minishell: "))
 				exit(1);
 			if (*res)
