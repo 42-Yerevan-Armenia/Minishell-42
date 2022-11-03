@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 11:27:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 12:11:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	heredoc_limit(char *str)
 	{
 		if (str[i] == '<' && str[i + 1] == '<' && ++i && ++i)
 			count++;
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (count);
 }

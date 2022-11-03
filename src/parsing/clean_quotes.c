@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 09:21:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:04:30 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,35 @@ int	ft_clean_all_qutoes(t_spl_pipe *head)
 	{
 		clean_quotes(&head->cmd);
 		clean_quotes(&head->heredoc);
-		clean_quotes(&head->in_files);
-		clean_quotes(&head->out_files);
+		// clean_quotes(&head->rdc); // nayel
 		head = head->next;
 	}
+	return (0);
+}
+
+int	clean_quotes_single_arr(char **s)
+{
+	char	c;
+	int		i;
+	char	*res;
+	char	*tmp;
+
+	i = 0;
+	tmp = *s;
+	res = malloc(ft_strlen(tmp) + 1);
+	while (*tmp)
+	{
+		while (*tmp && !ft_strchr(QUOTES, *tmp))
+			res[i++] = *tmp++;
+		if (*tmp == '\0')
+			break ;
+		c = *tmp++;
+		while (*tmp && *tmp != c)
+			res[i++] = *tmp++;
+		if (*tmp)
+			tmp++;
+	}
+	res[i] = '\0';
+	*s = res;
 	return (0);
 }

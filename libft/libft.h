@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:04 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 13:54:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/01 21:29:57 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ int 		ft_putstr_fd(char *s, int fd, int flag);
 void		ft_putendl_fd(char *s, int fd, int flag);
 void		ft_putnbr_fd(int n, int fd);
 int			ft_strcmp(char *s1, char *s2);
-char        *ft_charjoin(char *s1, char const s2);
+char		*ft_charjoin(char *s1, char const s2, int flag);
 #endif

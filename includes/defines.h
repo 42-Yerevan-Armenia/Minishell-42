@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 13:58:14 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:34:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define METACHARS "|&;()<> \n\t"
 # define UNEXPECTED "|&;()"
 # define UNEXPECTED_RED "|&;()><"
-# define HANDLE "<>"
-# define QUOTES "\"'`"
+# define HANDLE	"<>"
+# define QUOTES	"\"'`"
 # define SPACES " \n\t\v\f\r"
 # define APPEND_FILES 1
 # define IN_FILES 2
@@ -47,6 +47,8 @@
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token"
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
+# define BAD_RDR "minishell: ambigous redirect\n"
+# define NO_SUCH_F ": No such file or directory\n"
 
 //Tokens
 //  #define RED_INPUT		1	// <

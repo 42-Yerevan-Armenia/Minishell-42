@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 12:21:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:52:39 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ char			*find_var(char *src, char **ptr, int j);
 char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 void			rep_vars(t_parse *parser, int flag);
 void			get_env(t_data *data, char **envp, int is_export);
-int				ft_heredoc(t_spl_pipe *node, t_parse *parser, int *error);
-int				create_rd_files(t_parse *parser);
-int				get_infile_fd(t_spl_pipe *node);
+int				ft_heredoc(t_spl_pipe *node, t_parse *parser);
+int				create_rd_files(t_parse *parser, int *error);
+int				get_infile_fd(t_spl_pipe *node, int	*error);
 void			set_term_attr(int on_off);
 
 // execute
@@ -67,6 +67,8 @@ int				run_builtins(t_data *data, t_spl_pipe *tmp);
 // parsing
 void			find_exe(t_parse *parser);
 int				get_hd_mode_in_pipe(t_parse *parser);
+int				ft_put_rdc_mode(char **s, int mode);
+int				ft_get_rdc_mode(char *s);
 
 // builtins
 int				echo(char **args);
@@ -97,6 +99,7 @@ int				ft_perror(char *str);
 // int				count_quotes(char *arr);
 // int 			clean_quotes(char ***arr);
 int				ft_clean_all_qutoes(t_spl_pipe *head);
+int				clean_quotes_single_arr(char **s);
 // int             find_hdoc_mode(char *str);
 int				get_all_hd_modes(t_parse *parser);
 size_t			arr_double_len(char **arr);

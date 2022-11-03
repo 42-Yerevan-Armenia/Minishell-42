@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 20:27:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:04:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-
-
 // int	empty_input(t_parse *parser)
 // {
 // 	int		i;
@@ -55,39 +53,96 @@ int	init(t_parse *parser, t_data *data, char **envp)
 
 // }
 
+int	find_unexpected_token(char *s, int i)
+{
+	while (s[i] && ft_strchr(SPACES, s[i]))
+		i++;
+	if (s[i] == '\0')
+	{
+		ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
+		return (START_RD_LN);
+	}
+	if (ft_strchr(UNEXPECTED_RED, s[i]))
+	{
+		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), s[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
+		return (START_RD_LN);
+	}
+	return (0);
+}
+
+int valid_redircet(char	*s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && !ft_strchr(UNEXPECTED, s[i]))
+	{
+		if (s[i] == '>' && s[i + 1] == '>' && ++i && ++i)
+		{
+			if (find_unexpected_token(s, i) == START_RD_LN)
+				return (START_RD_LN);
+		}
+		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		{
+			if (find_unexpected_token(s, i) == START_RD_LN)
+				return (START_RD_LN);
+		}
+		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		{
+			if (find_unexpected_token(s, i) == START_RD_LN)
+				return (START_RD_LN);
+		}
+		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		{
+			if (find_unexpected_token(s, i) == START_RD_LN)
+				return (START_RD_LN);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	unexpected_tokens(t_parse *parser)
 {
 	char	*tmp;
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	tmp = parser->rd_ln;
-	while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-		i++;
-	if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
-	{
-		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`'), tmp[i]), '\''), 2, FREE_ON);
-		return (START_RD_LN);
-	}
 	while (tmp[i])
 	{
-		while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-			i++;
-		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-			i++;
-		if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
-		{
-			ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`'), tmp[i]), '\''), 2, FREE_ON);
+		// valid_redircet(tmp + i);
+		if (valid_redircet(tmp + i))
 			return (START_RD_LN);
-		}
-		// if (ft_strchr(UNEXPECTED, tmp[i]) && ++i)
+		// while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+		// 	i++;
+		// if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
 		// {
-		// 	while (ft_strchr(SPACES, tmp[i]))
-		// 		i++;
-		// 	if (ft_strchr(UNEXPECTED, tmp[i]))
-		// 		return (1);
+		// 	if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
+		// 	{
+		// 		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
+		// 		return (START_RD_LN);
+		// 	}
+		// 	flag = 1;
 		// }
-		if (tmp[i])
+		// else
+		// {
+		// 	while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
+		// 		++i;
+		// 	if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
+		// 	{
+		// 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+		// 			i++;
+		// 		if (tmp[i] == '\0')
+		// 		{
+		// 			ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
+		// 			return (START_RD_LN);
+		// 		}
+		// 	}
+		// }
+		if (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
 			i++;
 	}
 	return (0);
@@ -107,7 +162,7 @@ int	free_all(t_data *data)
 	return (0);
 }
 int		run_heredoc(t_data *data);
-
+// < b <<a <<t^C r >>t >>p
 int	parsing(t_parse *parser)
 {
 	int	i;
@@ -115,7 +170,7 @@ int	parsing(t_parse *parser)
 	i = 0;
 	// if (unexpected_tokens(parser) == START_RD_LN
 	// /*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
-		// return(START_RD_LN);
+	// 	return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
@@ -127,10 +182,10 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
-	if ((run_heredoc(parser->data) == START_RD_LN
-		|| create_rd_files(parser) == START_RD_LN) && free_parse(parser))
+	if ((run_heredoc(parser->data) == START_RD_LN) && free_parse(parser))
 		return (START_RD_LN);
 	free_parse(parser);
+	// return (START_RD_LN);
 	return (0);
 }
 
