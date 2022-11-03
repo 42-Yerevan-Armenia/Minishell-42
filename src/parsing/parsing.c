@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:54:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:29:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,45 @@
 // int		g_sig[2] = {0, 0};
 
 int	g_sig = 1;
+
+int	is_valid(char	*str)
+{
+	int	i;
+	int	tmp;
+	
+	i = 0;
+	while (str[i] && ft_strchr(SPACES, str[i]))
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]) || i > 6)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	shell_lvl(t_data *data)
+{
+	char	*tmp;
+	char	*res;
+	
+	tmp = get_val(data->env->head, "SHLVL");
+	if (tmp == NULL || is_valid(tmp) == 1)
+		set_env(data, new_env("SHLVL", "1", (ENV | EXPORT)));
+	else if (ft_atoi(tmp) == 999)
+		set_env(data, new_env("SHLVL=", NULL, (ENV | EXPORT)));
+	else if (ft_atoi(tmp) >= 1000 && ft_putstr_fd("minishell: warning: shell level (1001) too high, resetting to 1", 2, FREE_ON))
+		set_env(data, new_env("SHLVL", "1", (ENV | EXPORT)));
+	else
+	{
+		res = ft_itoa(ft_atoi(tmp) + 1);
+		set_env(data, new_env("SHLVL", res, (ENV | EXPORT)));
+		free_arr(&res);
+	}
+	return (0);
+}
+
 
 int	init(t_parse *parser, t_data *data, char **envp)
 {
@@ -35,23 +74,9 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->env_exp = create_list_env();
 	data->exit_status = 0;
 	get_env(data, envp, (EXPORT | ENV));
+	// shell_lvl(data);
 	return (0);
 }
-
-// int	empty_input(t_parse *parser)
-// {
-// 	int		i;
-// 	char	*tmp;
-
-// 	i = 0;
-// 	tmp = parser->rd_ln;
-// 	while (tmp[i])
-// 	{
-
-// 		i++;
-// 	}
-
-// }
 
 int	find_unexpected_token(char *s, int i)
 {
@@ -157,13 +182,11 @@ int	free_all(t_data *data)
 	free_arr(&data->parser->rd_ln);
 	return (0);
 }
-int		run_heredoc(t_data *data);
 // < b <<a <<t^C r >>t >>p
 int	parsing(t_parse *parser)
 {
 	// int	i;
-	if (unexpected_tokens(parser) == START_RD_LN
-	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
+	if (unexpected_tokens(parser) == START_RD_LN)
 		return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
