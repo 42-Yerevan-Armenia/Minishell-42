@@ -82,17 +82,17 @@ int valid_redircet(char	*s)
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '<' && s[i + 1] == '<' && ++i && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '<' && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '>' && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
@@ -114,34 +114,34 @@ int	unexpected_tokens(t_parse *parser)
 	while (tmp[i])
 	{
 		// valid_redircet(tmp + i);
-		if (valid_redircet(tmp + i))
+		if (valid_redircet(tmp + i) == START_RD_LN)
 			return (START_RD_LN);
-		// while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-		// 	i++;
-		// if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
-		// {
-		// 	if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
-		// 	{
-		// 		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
-		// 		return (START_RD_LN);
-		// 	}
-		// 	flag = 1;
-		// }
-		// else
-		// {
-		// 	while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-		// 		++i;
-		// 	if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
-		// 	{
-		// 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-		// 			i++;
-		// 		if (tmp[i] == '\0')
-		// 		{
-		// 			ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
-		// 			return (START_RD_LN);
-		// 		}
-		// 	}
-		// }
+		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+			i++;
+		if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
+		{
+			if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
+			{
+				ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
+				return (START_RD_LN);
+			}
+			flag = 1;
+		}
+		else
+		{
+			while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
+				++i;
+			if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
+			{
+				while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+					i++;
+				if (tmp[i] == '\0')
+				{
+					ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
+					return (START_RD_LN);
+				}
+			}
+		}
 		if (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
 			i++;
 	}
@@ -168,9 +168,9 @@ int	parsing(t_parse *parser)
 	int	i;
 
 	i = 0;
-	// if (unexpected_tokens(parser) == START_RD_LN
-	// /*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
-	// 	return(START_RD_LN);
+	if (unexpected_tokens(parser) == START_RD_LN
+	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
+		return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);

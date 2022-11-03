@@ -77,7 +77,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 		run_builtins(data, tmp);
 	else
 	{
-		if (access(*tmp->cmd, F_OK) == 0)
+		if (access(*tmp->cmd, F_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
 			data->path = *tmp->cmd;
 		else if (ft_strchr(*tmp->cmd, '/'))
 			printf(NOT_FOUND, *tmp->cmd);
@@ -95,10 +95,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
 
-	if (*tmp->in_files)
-		tmp->fd_in = open(*tmp->in_files, O_RDWR);
-	if(*tmp->out_files)
-		tmp->fd_out =open(*tmp->out_files, O_TRUNC | O_CREAT | O_RDWR, 0644);
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)

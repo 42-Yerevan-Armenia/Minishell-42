@@ -44,6 +44,7 @@ char	*ft_charjoin(char *s1, char const s2, int flag)
 		*ptr++ = *s1++;
 	*ptr++ = s2;
 	*ptr = '\0';
-	free_arr(&arr_to_free);
+	if (flag == FREE_ON)
+		free_arr(&arr_to_free);
 	return (ptr1);
 }
