@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:24:50 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:54:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,12 @@ int	unexpected_tokens(t_parse *parser)
 {
 	char	*tmp;
 	int		i;
-	int		flag;
 
 	i = 0;
-	flag = 0;
 	tmp = parser->rd_ln;
 	while (tmp[i])
 	{
-		if (valid_redircet(tmp + i))
+		if (valid_redircet(tmp + i) == START_RD_LN)
 			return (START_RD_LN);
 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
 			i++;
@@ -124,7 +122,6 @@ int	unexpected_tokens(t_parse *parser)
 				ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
 				return (START_RD_LN);
 			}
-			flag = 1;
 		}
 		else
 		{
@@ -172,12 +169,12 @@ int	parsing(t_parse *parser)
 	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
 		return(START_RD_LN);
 		x++;
+	
+	split_quotes(parser);
 	// while (x >= 2)
 	// {
 	// 	// printf("barev\n");
 	// }
-	
-	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
 	pipe_join(parser);
@@ -226,25 +223,6 @@ int	parsing(t_parse *parser)
 // 	return (0);
 // }
 
-int	check_builtins(t_data *data, t_spl_pipe *tmp)
-{
-	if (!ft_strcmp(tmp->cmd[0], "cd"))
-		printf("✅ exit = %d\n", cd(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "echo"))
-		printf("✅ exit = %d\n", echo(tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "env"))
-		printf("✅ exit = %d\n", env(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		printf("✅ exit = %d\n", ft_exit(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "export"))
-		printf("✅ exit = %d\n", export(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		printf("✅ exit = %d\n", pwd(data));
-	else if (!ft_strcmp(tmp->cmd[0], "unset"))
-		printf("✅ exit = %d\n", unset(data, tmp->cmd));
-	return (0);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
@@ -280,19 +258,19 @@ int	main(int ac, char **av, char **envp)
 				{
 					ps = data.cmd_line->size;
 					i = -1;
-					// while (i++ < ps)
-					// {
-					// 	if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
-					// 	{
-					// 		ps = 0;
-					// 		check_builtins(&data, data.cmd_line->head);
-					// 	}
-					// 	else
-					// 	{
-					// 		ps = 0;
-					// 		execute(&data);
-					// 	}
-					// }
+					while (i++ < ps)
+					{
+						if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
+						{
+							ps = 0;
+							check_builtins(&data, data.cmd_line->head);
+						}
+						else
+						{
+							ps = 0;
+							execute(&data);
+						}
+					}
 				}
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));

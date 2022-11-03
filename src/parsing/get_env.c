@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:15:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:43:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	get_env(t_data *data, char **envp, int is_export)
 			env = new_env(tmp[0], tmp[1], is_export);
 			set_env(data, env);
 		}
-		free_double(&tmp);
+		free_double((void *)&tmp);
 		i++;
 	}
 	pwd = getcwd(NULL, 0);

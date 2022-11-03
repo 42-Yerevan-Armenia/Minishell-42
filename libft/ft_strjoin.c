@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:22:45 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 21:29:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:52:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_charjoin(char *s1, char const s2, int flag)
 		*ptr++ = *s1++;
 	*ptr++ = s2;
 	*ptr = '\0';
-	free_arr(&arr_to_free);
+	if (flag == FREE_ON)
+		free_arr(&arr_to_free);
 	return (ptr1);
 }

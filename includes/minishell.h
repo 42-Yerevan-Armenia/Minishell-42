@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 18:52:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:48:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 extern int	g_sig;
 
 void			printf_header(void);
-void			printf_header(void);
 void			builtin_forking(t_data *data);
 void			dis_prompt(void);
 int				split_quotes(t_parse *parser);
@@ -62,6 +61,8 @@ void			set_term_attr(int on_off);
 
 // execute
 int				execute(t_data *data);
+int				check_builtins(t_data *data, t_spl_pipe *tmp);
+int				run_builtins(t_data *data, t_spl_pipe *tmp);
 
 // parsing
 void			find_exe(t_parse *parser);
@@ -88,7 +89,7 @@ int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
 void			print_info(t_parse *parser);
-int				free_double(void ***ptr);
+int				free_double(char ***ptr);
 int				free_parse(t_parse *parser);
 int				free_spl_pipe(t_list_spl_pipe **list);
 void			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
@@ -123,11 +124,15 @@ int				find_var_rap(t_list_env *env, t_env *new_node);
 // utils
 
 void			print_env_arr(char **env);
+void	pipes(t_data *data, int psize, t_spl_pipe *tmp);
+void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize);
 
 #endif
 
 // need error keys for pipe and fork
-
 // fds did not closed after cat | cat | cat ...
+// do not see infile and outfile
 
-//do not see infile and outfile
+//dzem sax
+
+// free_all for exit
