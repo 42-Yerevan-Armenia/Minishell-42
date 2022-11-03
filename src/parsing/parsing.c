@@ -162,19 +162,10 @@ int		run_heredoc(t_data *data);
 int	parsing(t_parse *parser)
 {
 	// int	i;
-	static int x = 0;
-
-	// i = 0;
 	if (unexpected_tokens(parser) == START_RD_LN
 	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
 		return(START_RD_LN);
-		x++;
-	
 	split_quotes(parser);
-	// while (x >= 2)
-	// {
-	// 	// printf("barev\n");
-	// }
 	rep_vars(parser, 0);
 	split_pipe(parser);
 	pipe_join(parser);

@@ -77,7 +77,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 		run_builtins(data, tmp);
 	else
 	{
-		if (access(*tmp->cmd, F_OK) == 0)
+		if (access(*tmp->cmd, F_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
 			data->path = *tmp->cmd;
 		else if (ft_strchr(*tmp->cmd, '/'))
 			printf(NOT_FOUND, *tmp->cmd);
