@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:04:30 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:20:06 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	clean_quotes_single_arr(char **s)
 			tmp++;
 	}
 	res[i] = '\0';
+	free_arr(s);
 	*s = res;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:04:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:24:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,17 @@ int valid_redircet(char	*s)
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '<' && s[i + 1] == '<' && ++i && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '<' && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
 		}
-		if (s[i] == '<' && s[i + 1] == '>' && ++i && ++i)
+		if (s[i] == '>' && ++i)
 		{
 			if (find_unexpected_token(s, i) == START_RD_LN)
 				return (START_RD_LN);
@@ -113,35 +113,34 @@ int	unexpected_tokens(t_parse *parser)
 	tmp = parser->rd_ln;
 	while (tmp[i])
 	{
-		// valid_redircet(tmp + i);
 		if (valid_redircet(tmp + i))
 			return (START_RD_LN);
-		// while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-		// 	i++;
-		// if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
-		// {
-		// 	if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
-		// 	{
-		// 		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
-		// 		return (START_RD_LN);
-		// 	}
-		// 	flag = 1;
-		// }
-		// else
-		// {
-		// 	while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-		// 		++i;
-		// 	if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
-		// 	{
-		// 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-		// 			i++;
-		// 		if (tmp[i] == '\0')
-		// 		{
-		// 			ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
-		// 			return (START_RD_LN);
-		// 		}
-		// 	}
-		// }
+		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+			i++;
+		if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
+		{
+			if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
+			{
+				ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
+				return (START_RD_LN);
+			}
+			flag = 1;
+		}
+		else
+		{
+			while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
+				++i;
+			if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
+			{
+				while (tmp[i] && ft_strchr(SPACES, tmp[i]))
+					i++;
+				if (tmp[i] == '\0')
+				{
+					ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
+					return (START_RD_LN);
+				}
+			}
+		}
 		if (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
 			i++;
 	}
@@ -165,12 +164,19 @@ int		run_heredoc(t_data *data);
 // < b <<a <<t^C r >>t >>p
 int	parsing(t_parse *parser)
 {
-	int	i;
+	// int	i;
+	static int x = 0;
 
-	i = 0;
-	// if (unexpected_tokens(parser) == START_RD_LN
-	// /*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
-	// 	return(START_RD_LN);
+	// i = 0;
+	if (unexpected_tokens(parser) == START_RD_LN
+	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
+		return(START_RD_LN);
+		x++;
+	// while (x >= 2)
+	// {
+	// 	// printf("barev\n");
+	// }
+	
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
@@ -185,7 +191,7 @@ int	parsing(t_parse *parser)
 	if ((run_heredoc(parser->data) == START_RD_LN) && free_parse(parser))
 		return (START_RD_LN);
 	free_parse(parser);
-	// return (START_RD_LN);
+	// free_spl_pipe(&parser->data->cmd_line);
 	return (0);
 }
 
@@ -245,7 +251,7 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	int		ps;
 	int		i;
-
+	
 	(void)av;
 	if (ac == 1)
 	{
