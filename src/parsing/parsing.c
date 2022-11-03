@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:04:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:54:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,11 @@ int	unexpected_tokens(t_parse *parser)
 {
 	char	*tmp;
 	int		i;
-	int		flag;
 
 	i = 0;
-	flag = 0;
 	tmp = parser->rd_ln;
 	while (tmp[i])
 	{
-		// valid_redircet(tmp + i);
 		if (valid_redircet(tmp + i) == START_RD_LN)
 			return (START_RD_LN);
 		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
@@ -125,7 +122,6 @@ int	unexpected_tokens(t_parse *parser)
 				ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
 				return (START_RD_LN);
 			}
-			flag = 1;
 		}
 		else
 		{
@@ -165,9 +161,7 @@ int		run_heredoc(t_data *data);
 // < b <<a <<t^C r >>t >>p
 int	parsing(t_parse *parser)
 {
-	int	i;
-
-	i = 0;
+	// int	i;
 	if (unexpected_tokens(parser) == START_RD_LN
 	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
 		return(START_RD_LN);
@@ -185,7 +179,7 @@ int	parsing(t_parse *parser)
 	if ((run_heredoc(parser->data) == START_RD_LN) && free_parse(parser))
 		return (START_RD_LN);
 	free_parse(parser);
-	// return (START_RD_LN);
+	// free_spl_pipe(&parser->data->cmd_line);
 	return (0);
 }
 
@@ -226,7 +220,7 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	int		ps;
 	int		i;
-
+	
 	(void)av;
 	if (ac == 1)
 	{
