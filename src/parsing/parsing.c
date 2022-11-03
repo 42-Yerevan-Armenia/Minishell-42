@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/02 21:57:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:17:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,15 @@ int	free_all(t_data *data)
 	return (0);
 }
 int		run_heredoc(t_data *data);
-
+// < b <<a <<t^C r >>t >>p
 int	parsing(t_parse *parser)
 {
 	int	i;
 
 	i = 0;
-	if (unexpected_tokens(parser) == START_RD_LN
-	/*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
-		return(START_RD_LN);
+	// if (unexpected_tokens(parser) == START_RD_LN
+	// /*&& ft_putstr_fd("unexpected token\n",2, FREE_OFF)*/)
+	// 	return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
@@ -182,10 +182,10 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
-	if ((run_heredoc(parser->data) == START_RD_LN
-		|| create_rd_files(parser) == START_RD_LN) && free_parse(parser))
+	if ((run_heredoc(parser->data) == START_RD_LN) && free_parse(parser))
 		return (START_RD_LN);
 	free_parse(parser);
+	// return (START_RD_LN);
 	return (0);
 }
 
@@ -274,19 +274,19 @@ int	main(int ac, char **av, char **envp)
 				{
 					ps = data.cmd_line->size;
 					i = -1;
-					while (i++ < ps)
-					{
-						if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
-						{
-							ps = 0;
-							check_builtins(&data, data.cmd_line->head);
-						}
-						else
-						{
-							ps = 0;
-							execute(&data);
-						}
-					}
+					// while (i++ < ps)
+					// {
+					// 	if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
+					// 	{
+					// 		ps = 0;
+					// 		check_builtins(&data, data.cmd_line->head);
+					// 	}
+					// 	else
+					// 	{
+					// 		ps = 0;
+					// 		execute(&data);
+					// 	}
+					// }
 				}
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 09:21:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:17:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int	ft_clean_all_qutoes(t_spl_pipe *head)
 	{
 		clean_quotes(&head->cmd);
 		clean_quotes(&head->heredoc);
-		clean_quotes(&head->in_files);
-		clean_quotes(&head->out_files);
+		// clean_quotes(&head->rdc); // nayel
 		head = head->next;
 	}
 	return (0);

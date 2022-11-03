@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/23 09:53:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:58:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ void print_info(t_parse *parser)
 		}
 		printf("**IN_FILES - ");
 		i = 0;
-		while (tmp->in_files && tmp->in_files[i])
+		while (tmp->rdc[i])
 		{
-			printf("🛑 %s, ", tmp->in_files[i++]);
+			if (ft_get_rdc_mode(tmp->rdc[i]) == IN_FILES)
+				printf("🛑 %s, ", tmp->rdc[i]);
+			i++;
 		}
 		i = 0;
 		printf("**OUT_FILES - ");
-		while (tmp->out_files && tmp->out_files[i])
+		while (tmp->rdc && tmp->rdc[i])
 		{
-			printf("🛑 %s, ", tmp->out_files[i++]);
+			if (ft_get_rdc_mode(tmp->rdc[i]) == O_TRUNC)
+				printf("🛑 %s, ", tmp->rdc[i]);
+			i++;
 		}
 		i = 0;
 		printf("**HEREDOC - ");
@@ -47,12 +51,13 @@ void print_info(t_parse *parser)
 		}
 		i = 0;
 		// printf("\n----------------------------------\n");
-		// printf("APPEND \n");
-		// while (tmp->out_append_files[i])
-		// {
-		// 	printf("%s\n", tmp->out_append_files[i++]);
-		// }
-		printf("OUTPUT_MODE = %d, ", tmp->output_mode);
+		printf("APPEND ");
+		while (tmp->rdc[i])
+		{
+			if (ft_get_rdc_mode(tmp->rdc[i]) == O_APPEND)
+				printf("🛑 %s", tmp->rdc[i]);
+			i++;
+		}
 		printf("INPUT_MODE = %d ", tmp->input_mode);
 		printf("HDOC_MODE = %d", tmp->hdoc_mode);
 		printf("\n\n*********************************\n");

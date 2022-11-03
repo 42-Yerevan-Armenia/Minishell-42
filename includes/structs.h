@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 11:24:25 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:56:09 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_spl_pipe
 	int					is_args;
 	int					fd_in;
 	int					fd_out;
-	int					output_mode;
+	int					fd_hdc;
 	int					input_mode;
 	int					hdoc_mode;
 	int					flag_new_pipe;
@@ -28,10 +28,8 @@ typedef struct s_spl_pipe
 	char				*hdoc_input;
 	pid_t				pid;
 	char				**cmd;
-	char				*dlm;
-	char				**out_files;
-	char				**in_files;
 	char				**heredoc;
+	char				**rdc;
 	char				*error_message;
 	char				*f_name;
 	struct s_spl_pipe	*next;
@@ -89,10 +87,9 @@ typedef struct s_parse
 
 typedef struct s_elem
 {
-	int					out_f;
-	int					in_f;
 	int					hdoc;
 	int					out_a_f;
+	int					rdc;
 }						t_elem;
 
 typedef struct s_vars

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 20:42:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 20:43:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 13:46:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ int	run_heredoc(t_data *data)
 	while (head)
 	{
 		if (head->heredoc[0])
-			ft_heredoc(head, data->parser, &error);
-		if (error == START_RD_LN)
-			return (START_RD_LN);
-		if (error == START_RD_LN)
-			return (START_RD_LN);
-		if (head->input_mode == IN_FILES)
-			if (get_infile_fd(head) == START_RD_LN)
+			if (ft_heredoc(head, data->parser) == START_RD_LN)
 				return (START_RD_LN);
+		if (create_rd_files(data->parser, &error) == START_RD_LN)
+			return (START_RD_LN);
+		if (head->hdoc_mode == HEREDOC)
+			head->fd_in = head->fd_hdc;
 		head = head->next;
 	}
 	return (0);
