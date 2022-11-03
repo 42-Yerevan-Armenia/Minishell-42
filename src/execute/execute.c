@@ -91,6 +91,12 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 	exit(1);
 }
 
+void	pipe_redirections(t_spl_pipe *tmp)
+{
+	dup2(tmp->fd_out, 1);
+	dup2(tmp->fd_in, 0);
+}
+
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
@@ -110,6 +116,7 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		}
 		else if (tmp->pid == 0)
 		{
+			pipe_redirections(tmp);
 			if (psize == 1)
 				do_cmd(data, tmp, psize);
 			else
