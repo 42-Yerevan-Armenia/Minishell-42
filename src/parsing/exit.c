@@ -30,29 +30,27 @@ static int	str_is_valid_num(char *str)
 
 int	ft_exit(t_data *data, char **args)
 {
-	int	exit_status;
-
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
 	else
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
-	if (args && data->exit_status >= 2 && !str_is_valid_num(args[1]))
+	if (args[1] && !str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
-		exit_status = 255;
+		data->exit_status = 255;
+		exit(data->exit_status);
 	}
 	else if (args && data->exit_status > 2)
 	{
-		ft_putstr_fd("🔻minishell> : exit: too many arguments\n", 2, FREE_OFF);
-		exit_status = 1;
+		ft_putstr_fd(EXIT_ARG, 2, FREE_OFF);
+		data->exit_status = 1;
 	}
 	else if (args && data->exit_status == 2)
-		exit_status = ft_atoi(args[1]) % 256;
+		data->exit_status = ft_atoi(args[1]) % 256;
 	else
-		exit_status = 0;
-	free_envp(&data->env);
-	exit(1);
+		data->exit_status = 0;	
+	exit((unsigned char)ft_atoi(args[1]));
 	return (0);
 }

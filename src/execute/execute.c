@@ -29,7 +29,7 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	close_fds(int (*fds)[2], int psize)
+void	close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize)
 {
 	int	i;
 
@@ -40,47 +40,32 @@ void	close_fds(int (*fds)[2], int psize)
 			perror("CLOSE FAILED");
 		if (close(fds[i][0]) == -1)
 			perror("CLOSE FAILED");
+		// if (close(tmp->fd_in) != 0)
+		// 	perror("CLOSE FAILED");
+		// if (close(tmp->fd_out) != 1)
+		// 	perror("CLOSE FAILED");
 	}
-	//free(fds);
+	free(fds);
 }
 
-void	open_pipes(int i, int (*fds)[2], int psize)
+void	open_pipes(t_data *data, t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 {
 	if (i == 0)
 	{
-		if (dup2(fds[0][1], 1) < 0)
+		if (dup2(fds[0][1], tmp->fd_out) < 0)
 			exit(1);
 	}
-	else if (psize - 1 == i)
+	else if (i == psize - 1)
 	{
-		if (dup2(fds[i - 1][0], 0) < 0)
+		if (dup2(fds[i - 1][0], tmp->fd_in) < 0)
 			exit(1);
 	}
 	else
 	{
-		dup2(fds[i - 1][0], 0);
-		dup2(fds[i][1], 1);
+		dup2(fds[i - 1][0], tmp->fd_in);
+		dup2(fds[i][1], tmp->fd_out);
 	}
-	close_fds(fds, psize);
-}
-
-int	run_builtins(t_data *data, t_spl_pipe *tmp)
-{
-	if (!ft_strcmp(tmp->cmd[0], "cd"))
-		printf("❎ exit = %d\n", cd(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "echo"))
-		printf("❎ exit = %d\n", echo(tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "env"))
-		printf("❎ exit = %d\n", env(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		printf("❎ exit = %d\n", ft_exit(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "export"))
-		printf("❎ exit = %d\n", export(data, tmp->cmd));
-	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		printf("❎ exit = %d\n", pwd(data));
-	else if (!ft_strcmp(tmp->cmd[0], "unset"))
-		printf("❎ exit = %d\n", unset(data, tmp->cmd));
-	return (0);
+	close_fds(fds, tmp, psize);
 }
 
 void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
@@ -110,94 +95,37 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
 
+	if (*tmp->in_files)
+		tmp->fd_in = open(*tmp->in_files, O_RDWR);
+	if(*tmp->out_files)
+		tmp->fd_out =open(*tmp->out_files, O_TRUNC | O_CREAT | O_RDWR, 0644);
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
 			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
-	i = 0;
-	while (i < psize)
+	i = -1;
+	while (++i < psize)
 	{
 		tmp->pid = fork();
 		if (tmp->pid == -1)
+		{
 			ft_putstr_fd(FORK, 2, FREE_OFF);
+			break ;
+		}
 		else if (tmp->pid == 0)
 		{
 			if (psize == 1)
 				do_cmd(data, tmp, psize);
 			else
 			{
-				open_pipes(i, fds, psize);
+				open_pipes(data, tmp, i, fds, psize);
 				do_cmd(data, tmp, psize);
 			}
 		}
 		tmp = tmp->next;
-		i++;
 	}
 }
-/*
-void	pipes(t_data *data, int psize, t_spl_pipe *tmp)
-{
-	char *infile = tmp->in_files;
-	char *outfile = tmp->out_files;
-	int	tmpin = dup(0);
-	int	tmpout = dup(1);
-	int fdin;
-	int fdout;
-	int ret;
-	
-	if (infile)
-		fdin = open(infile, O_RDWR); 
-	else // Use default input
-		fdin=dup(tmpin);
 
-	int i = -1;
-	if (++i < psize)
-	{
-		//redirect input
-		dup2(fdin, 0);
-		close(fdin);
-		//setup output
-		if (i == psize)
-		{
-			// Last simple command 
-    		if(outfile)
-				fdout=open(outfile, O_RDWR);
-		}
-		else // Use default output
-			fdout=dup(tmpout);
-	}
-	else
-	{
-		// Not last 
-		//simple command
-		//create pipe
-		int fdpipe[2];
-		
-		pipe(fdpipe);
-		fdout=fdpipe[1];
-		fdin=fdpipe[0];
-	}// if/else
-	// Redirect output
-	dup2(fdout,1);
-	close(fdout);
-	// Create child process
-	ret = fork(); 
-	if(ret == 0)
-	{
-		execve(data->path, tmp->cmd, &tmp->cmd[0]);
-		perror("Error");
-		exit(1);
-	}
-	//  for
-	//restore in/out defaults
-	dup2(tmpin,0);
-	dup2(tmpout,1);
-	close(tmpin);
-	close(tmpout);
-	if (!data)// Wait for last command
-  		waitpid(tmp->pid, ret, NULL);
-}
-*/
 int	execute(t_data *data)
 {
 	t_spl_pipe	*tmp;
@@ -206,13 +134,18 @@ int	execute(t_data *data)
 	int			(*fds)[2];
 	int			i;
 
+	// printf("❎ %s\n", get_val(data->env->head, "PATH"));
+	// printf("❎ %s\n", *data->envp);
 	tmp = data->cmd_line->head;
 	psize = data->cmd_line->size;
-	data->path = getenv("PATH");
+	data->path = get_val(data->env->head, "PATH");
+	//data->path = getenv("PATH");
+	if (!data->path)
+		return (printf(NO_DIR, *tmp->cmd));
 	data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (psize - 1));
 	forking(fds, psize, tmp, data);
-	close_fds(fds, psize);
+	close_fds(fds, tmp, psize);
 	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	while (tmp)
@@ -221,5 +154,6 @@ int	execute(t_data *data)
 		tmp = tmp->next;
 	}
 	data->exit_status = WEXITSTATUS(res);
+	//pipes(data, psize, tmp);
 	return (0);
 }

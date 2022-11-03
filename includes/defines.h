@@ -38,9 +38,11 @@
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
+# define NO_DIR "🔻minishell> %s: No such file or directory ❌\n"
 # define NOT_FOUND "🔻minishell> %s: command not found ❌\n"
 
 //Builtins
+# define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
 # define BUILTINS "cd echo env exit export pwd unset"
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token"
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
