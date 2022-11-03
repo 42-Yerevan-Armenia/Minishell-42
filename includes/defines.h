@@ -15,8 +15,9 @@
 
 # define METACHARS "|&;()<> \n\t"
 # define UNEXPECTED "|&;()"
-# define HANDLE	"<>"
-# define QUOTES	"\"'`"
+# define UNEXPECTED_RED "|&;()><"
+# define HANDLE "<>"
+# define QUOTES "\"'`"
 # define SPACES " \n\t\v\f\r"
 # define APPEND_FILES 1
 # define IN_FILES 2
@@ -37,6 +38,7 @@
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
+# define NO_DIR "🔻minishell> %s: No such file or directory ❌\n"
 # define NOT_FOUND "🔻minishell> %s: command not found ❌\n"
 
 //Builtins

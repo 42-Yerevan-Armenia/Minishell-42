@@ -51,7 +51,7 @@ int	ft_exit(t_data *data, char **args)
 	else if (args && data->exit_status == 2)
 		exit_status = ft_atoi(args[1]) % 256;
 	else
-		exit_status = 0;
-	exit(ft_atoi(args[1]));	
+		exit_status = 0;	
+	exit((unsigned char)ft_atoi(args[1]));
 	return (0);
 }

@@ -169,6 +169,8 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
+	int		ps;
+	int		i;
 
 	(void)av;
 	if (ac == 1)
@@ -194,8 +196,24 @@ int	main(int ac, char **av, char **envp)
 				add_history(parser.rd_ln);
 				if (parsing(&parser) == START_RD_LN && !free_arr(&parser.rd_ln))
 					continue ;
-				if (data.cmd_line->head && data.cmd_line->head->cmd[0])
-					cheking(data);
+				if (data.cmd_line->head && data.cmd_line->head->cmd && data.cmd_line->head->cmd[0])
+				{
+					ps = data.cmd_line->size;
+					i = -1;
+					while (i++ < ps)
+					{
+						if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
+						{
+							ps = 0;
+							check_builtins(&data, data.cmd_line->head);
+						}
+						else
+						{
+							ps = 0;
+							execute(&data);
+						}
+					}
+				}
 			}
 				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
 			free_spl_pipe(&data.cmd_line);
