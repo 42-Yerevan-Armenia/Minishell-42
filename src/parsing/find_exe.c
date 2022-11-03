@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 14:18:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:07:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
 		if (node->rdc[m][0] == '\0')
 			node->rdc[m] = ft_strdup(BAD_RDR);
-		else
+		else if (!clean_quotes_single_arr(&node->rdc[m]))
 			ft_put_rdc_mode(&node->rdc[m], v->c);
 		m++;
 	}

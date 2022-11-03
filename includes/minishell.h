@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 13:44:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:52:39 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int				ft_perror(char *str);
 // int				count_quotes(char *arr);
 // int 			clean_quotes(char ***arr);
 int				ft_clean_all_qutoes(t_spl_pipe *head);
+int				clean_quotes_single_arr(char **s);
 // int             find_hdoc_mode(char *str);
 int				get_all_hd_modes(t_parse *parser);
 size_t			arr_double_len(char **arr);
