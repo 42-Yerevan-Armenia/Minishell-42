@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:48:18 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:09:00 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "readline/readline.h"
 # include "structs.h"
 # include "defines.h"
+# include "limits.h"
 # include <errno.h>
 # include <fcntl.h>
 # include "readline/history.h"
@@ -58,6 +59,7 @@ int				ft_heredoc(t_spl_pipe *node, t_parse *parser);
 int				create_rd_files(t_spl_pipe *head, int *error);
 int				get_infile_fd(t_spl_pipe *node, int	*error);
 void			set_term_attr(int on_off);
+int				shell_lvl(t_data *data);
 
 // execute
 int				execute(t_data *data);
@@ -71,6 +73,7 @@ void			find_exe(t_parse *parser);
 int				get_hd_mode_in_pipe(t_parse *parser);
 int				ft_put_rdc_mode(char **s, int mode);
 int				ft_get_rdc_mode(char *s);
+int				unexpected_tokens(t_parse *parser);
 
 // builtins
 int				echo(char **args);

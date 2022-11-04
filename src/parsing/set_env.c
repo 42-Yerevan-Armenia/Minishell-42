@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 19:55:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:04:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,17 @@ static void	set_exp(t_list_env *env, t_env *new_node)
 
 static int	set_env_helper(t_list_env *env, t_env **new_node, t_env **tmp)
 {
+	int	i;
+
+	i = ft_strlen((*new_node)->key);
 	if (env->head == NULL)
 	{
 		if ((*new_node)->is_export != FORME)
 			++(env->size);
+		if (i != 0 && (*new_node)->key[i - 1] == '=')
+		(*new_node)->key[i - 1] = '\0';
+		if (i != 0 && i != 1 && (*new_node)->key[i - 2] == '+')
+		(*new_node)->key[i - 2] = '\0';
 		env->head = *new_node;
 		env->tail = *new_node;
 		return (1);

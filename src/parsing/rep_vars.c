@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:56:01 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 10:59:50 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:35:50 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	rep_vars(t_parse *parser, int flag)
 	j = 0;
 	tmp = parser->spl_qutoes;
 	if (flag == HEREDOC)
-		tmp = parser->hered_vars;
+		tmp = parser->hered_res;
 	while (tmp[++i])
 	{
 		if (tmp[i][0] != '\'')

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 13:56:09 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:35:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_parse
 	char				**spl_qutoes;
 	char				**spl_pipe;
 	char				**join_pipe;
-	char				**hered_vars;
+	char				**hered_res;
 	t_data				*data;
 }						t_parse;
 

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/03 19:26:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:56:32 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ void	pipex(int (*fds)[2], int psize)
 
 	i = -1;
 	while (++i < psize - 1)
-		if (pipe(fds[i]) == -1)
-			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
-}
 
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
