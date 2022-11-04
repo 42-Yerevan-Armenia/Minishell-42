@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 20:22:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 09:56:43 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	go_home(t_data *data)
 		return (1);
 	else
 	{
-		if (chdir(tmp) == -1 && !ft_perror("minishel: cd :"))
+		if (chdir(tmp) == -1 && !ft_perror("minishel: cd : "))
 			return (1);
 		tmp = getcwd(NULL, 0);
 		set_env(data, new_env("PWD", tmp, FORME));
@@ -41,7 +41,7 @@ int	deleted_dir(t_data *data, char **args)
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL && errno == ENOENT)
 	{
-		if (chdir(args[1]) == -1 && !ft_perror("minishell: cd: "))
+		if (chdir(args[1]) == -1 && !ft_putendl_fd(ft_strjoin_1(ft_strjoin("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
 			return (1);
 		tmp = getcwd(NULL, 0);
 		if (tmp && !free_arr(&tmp))
@@ -65,7 +65,7 @@ int	deleted_dir(t_data *data, char **args)
 
 int	normal_behave(t_data *data, char **args, char *tmp)
 {
-	if (chdir(args[1]) == -1 && !ft_perror("minishel: cd: "))
+	if (chdir(args[1]) == -1 && !ft_putendl_fd(ft_strjoin_1(ft_strjoin("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
 		return (1);
 	tmp = getcwd(NULL, 0);
 	set_env(data, new_env("PWD", tmp, FORME));

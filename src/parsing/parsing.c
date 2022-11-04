@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 21:29:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:51:57 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,6 @@
 // int		g_sig[2] = {0, 0};
 
 int	g_sig = 1;
-
-int	is_valid(char	*str)
-{
-	int	i;
-	int	tmp;
-	
-	i = 0;
-	while (str[i] && ft_strchr(SPACES, str[i]))
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]) || i > 6)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	shell_lvl(t_data *data)
-{
-	char	*tmp;
-	char	*res;
-	
-	tmp = get_val(data->env->head, "SHLVL");
-	if (tmp == NULL || is_valid(tmp) == 1)
-		set_env(data, new_env("SHLVL", "1", (ENV | EXPORT)));
-	else if (ft_atoi(tmp) == 999)
-		set_env(data, new_env("SHLVL=", NULL, (ENV | EXPORT)));
-	else if (ft_atoi(tmp) >= 1000 && ft_putstr_fd("minishell: warning: shell level (1001) too high, resetting to 1", 2, FREE_ON))
-		set_env(data, new_env("SHLVL", "1", (ENV | EXPORT)));
-	else
-	{
-		res = ft_itoa(ft_atoi(tmp) + 1);
-		set_env(data, new_env("SHLVL", res, (ENV | EXPORT)));
-		free_arr(&res);
-	}
-	return (0);
-}
-
 
 int	init(t_parse *parser, t_data *data, char **envp)
 {
@@ -74,106 +35,10 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->env_exp = create_list_env();
 	data->exit_status = 0;
 	get_env(data, envp, (EXPORT | ENV));
-	// shell_lvl(data);
+	shell_lvl(data);
+	data->envp = env_cpy(data, data->env);
 	return (0);
 }
-
-int	find_unexpected_token(char *s, int i)
-{
-	while (s[i] && ft_strchr(SPACES, s[i]))
-		i++;
-	if (s[i] == '\0')
-	{
-		ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
-		return (START_RD_LN);
-	}
-	if (ft_strchr(UNEXPECTED_RED, s[i]))
-	{
-		ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), s[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
-		return (START_RD_LN);
-	}
-	return (0);
-}
-
-int valid_redircet(char	*s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && !ft_strchr(UNEXPECTED, s[i]))
-	{
-		if (s[i] == '>' && s[i + 1] == '>' && ++i && ++i)
-		{
-			if (find_unexpected_token(s, i) == START_RD_LN)
-				return (START_RD_LN);
-		}
-		if (s[i] == '<' && s[i + 1] == '<' && ++i && ++i)
-		{
-			if (find_unexpected_token(s, i) == START_RD_LN)
-				return (START_RD_LN);
-		}
-		if (s[i] == '<' && ++i)
-		{
-			if (find_unexpected_token(s, i) == START_RD_LN)
-				return (START_RD_LN);
-		}
-		if (s[i] == '>' && ++i)
-		{
-			if (find_unexpected_token(s, i) == START_RD_LN)
-				return (START_RD_LN);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	unexpected_tokens(t_parse *parser)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = parser->rd_ln;
-	while (tmp[i])
-	{
-		if (valid_redircet(tmp + i) == START_RD_LN)
-			return (START_RD_LN);
-		while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-			i++;
-		if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]))
-		{
-			if (tmp[i] == '\0' || ft_strchr(UNEXPECTED, tmp[i]))
-			{
-				ft_putendl_fd(ft_charjoin(ft_charjoin(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), tmp[i], FREE_ON), '\'', FREE_ON), 2, FREE_ON);
-				return (START_RD_LN);
-			}
-		}
-		else
-		{
-			while (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-				++i;
-			if (tmp[i] && ft_strchr(UNEXPECTED, tmp[i]) && ++i)
-			{
-				while (tmp[i] && ft_strchr(SPACES, tmp[i]))
-					i++;
-				if (tmp[i] == '\0')
-				{
-					ft_putendl_fd(ft_charjoin(ft_strjoin_1(ft_charjoin(UNEXPECTED_TOKEN, '`', FREE_OFF), "newline"), '\'', FREE_ON), 2, FREE_ON);
-					return (START_RD_LN);
-				}
-			}
-		}
-		if (tmp[i] && !ft_strchr(UNEXPECTED, tmp[i]))
-			i++;
-	}
-	return (0);
-}
-
-// int	error_hendling(t_parse *parser)
-// {
-// 	return (0);
-// }
-
 int	free_all(t_data *data)
 {
 	free_spl_pipe((void *)&data->cmd_line);

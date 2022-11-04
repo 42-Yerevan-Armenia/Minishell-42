@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 14:18:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:01:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	create_rd_files(t_parse *parser, int *error)
 				if (close(tmp->fd_out) == -1 && ft_perror("minishell: "))
 					return (START_RD_LN);
 			tmp->fd_out = open(tmp->rdc[i],
-				O_CREAT | mode | O_RDWR, 0777);
+				O_CREAT | mode | O_RDWR, 0644);
 			if (tmp->fd_out == -1 && ft_perror("minishell: "))
 				return (START_RD_LN);
 		}

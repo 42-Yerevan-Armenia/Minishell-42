@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 20:27:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 09:58:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	pwd(t_data *data)
 		if (my_pwd)
 			printf("%s\n", my_pwd);
 		else
-			ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
+			ft_putendl_fd(SHELL_INIT, 2, FREE_OFF);
 	}
 	else
 		printf("%s\n", ptr);
