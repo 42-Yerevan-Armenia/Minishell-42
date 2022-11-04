@@ -56,15 +56,17 @@ char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 void			rep_vars(t_parse *parser, int flag);
 void			get_env(t_data *data, char **envp, int is_export);
 int				ft_heredoc(t_spl_pipe *node, t_parse *parser);
-int				create_rd_files(t_parse *parser, int *error);
+int				create_rd_files(t_spl_pipe *head, int *error);
 int				get_infile_fd(t_spl_pipe *node, int	*error);
 void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
 
 // execute
 int				execute(t_data *data);
-int				check_builtins(t_data *data, t_spl_pipe *tmp);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
+void			pipe_redirections(t_spl_pipe *tmp);
+void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
+void			close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize);
 
 // parsing
 void			find_exe(t_parse *parser);

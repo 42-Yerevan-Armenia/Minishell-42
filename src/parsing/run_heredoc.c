@@ -26,7 +26,7 @@ int	run_heredoc(t_data *data)
 		if (head->heredoc[0])
 			if (ft_heredoc(head, data->parser) == START_RD_LN)
 				return (START_RD_LN);
-		if (create_rd_files(data->parser, &error) == START_RD_LN)
+		if (create_rd_files(head, &error) == START_RD_LN)
 			return (START_RD_LN);
 		if (head->hdoc_mode == HEREDOC)
 			head->fd_in = head->fd_hdc;

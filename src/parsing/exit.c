@@ -33,24 +33,26 @@ int	ft_exit(t_data *data, char **args)
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
 	else
+	{
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
+		exit(data->exit_status = 0);
+	}
 	if (args[1] && !str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
 		data->exit_status = 255;
-		exit(data->exit_status);
 	}
-	else if (args && data->exit_status > 2)
+	else if (args && args[2])
 	{
 		ft_putstr_fd(EXIT_ARG, 2, FREE_OFF);
 		data->exit_status = 1;
 	}
-	else if (args && data->exit_status == 2)
+	else if (args && ft_atoi(args[1]) >= 255)
 		data->exit_status = ft_atoi(args[1]) % 256;
 	else
-		data->exit_status = 0;	
-	exit((unsigned char)ft_atoi(args[1]));
+		data->exit_status = 0;
+	exit(data->exit_status);
 	return (0);
 }

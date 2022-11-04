@@ -111,6 +111,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
+		//printf_header();
 		// hook_signals();
 		while (1)
 		{
@@ -140,7 +141,7 @@ int	main(int ac, char **av, char **envp)
 						if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
 						{
 							ps = 0;
-							check_builtins(&data, data.cmd_line->head);
+							run_builtins(&data, data.cmd_line->head);
 						}
 						else
 						{

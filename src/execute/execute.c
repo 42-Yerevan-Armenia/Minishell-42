@@ -12,93 +12,37 @@
 
 #include "../includes/minishell.h"
 
-char	*get_cmd(char **paths, char *cmd)
+int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
-	char	*tmp;
-	char	*command;
-
-	tmp = 0;
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		command = ft_strjoin(tmp, cmd);
-		if (access(command, F_OK) == 0)
-			return (command);
-		paths++;
-	}
-	return (NULL);
+	if (!ft_strcmp(tmp->cmd[0], "cd"))
+		printf("✅ exit = %d\n", cd(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "echo"))
+		printf("✅ exit = %d\n", echo(tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "env"))
+		printf("✅ exit = %d\n", env(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "exit"))
+		printf("✅ exit = %d\n", ft_exit(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "export"))
+		printf("✅ exit = %d\n", export(data, tmp->cmd));
+	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
+		printf("✅ exit = %d\n", pwd(data));
+	else if (!ft_strcmp(tmp->cmd[0], "unset"))
+		printf("✅ exit = %d\n", unset(data, tmp->cmd));
+	return (0);
 }
 
-void	close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize)
+void	pipex(int (*fds)[2], int psize)
 {
 	int	i;
 
 	i = -1;
 	while (++i < psize - 1)
-	{
-		if (close(fds[i][1]) == -1)
-			perror("CLOSE FAILED");
-		if (close(fds[i][0]) == -1)
-			perror("CLOSE FAILED");
-		// if (close(tmp->fd_in) != 0)
-		// 	perror("CLOSE FAILED");
-		// if (close(tmp->fd_out) != 1)
-		// 	perror("CLOSE FAILED");
-	}
-	free(fds);
-}
-
-void	open_pipes(t_data *data, t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
-{
-	if (i == 0)
-	{
-		if (dup2(fds[0][1], tmp->fd_out) < 0)
-			exit(1);
-	}
-	else if (i == psize - 1)
-	{
-		if (dup2(fds[i - 1][0], tmp->fd_in) < 0)
-			exit(1);
-	}
-	else
-	{
-		dup2(fds[i - 1][0], tmp->fd_in);
-		dup2(fds[i][1], tmp->fd_out);
-	}
-	close_fds(fds, tmp, psize);
-}
-
-void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
-{
-	int	i;
-
-	i = 0;
-	if (ft_strnstr(BUILTINS, tmp->cmd[0], 35))
-		run_builtins(data, tmp);
-	else
-	{
-		if (access(*tmp->cmd, F_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
-			data->path = *tmp->cmd;
-		else if (ft_strchr(*tmp->cmd, '/'))
-			printf(NOT_FOUND, *tmp->cmd);
-		else
-			data->path = get_cmd(data->cmd_paths, *tmp->cmd);
-		if (!data->path)
-			free(data->path);
-		execve(data->path, tmp->cmd, data->envp);
-		printf(NOT_FOUND, *tmp->cmd);
-	}
-	exit(1);
-}
 
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (++i < psize - 1)
-		if (pipe(fds[i]) == -1)
-			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
+	pipex(fds, psize);
 	i = -1;
 	while (++i < psize)
 	{
@@ -110,11 +54,12 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		}
 		else if (tmp->pid == 0)
 		{
+			pipe_redirections(tmp);
 			if (psize == 1)
 				do_cmd(data, tmp, psize);
 			else
 			{
-				open_pipes(data, tmp, i, fds, psize);
+				open_pipes(tmp, i, fds, psize);
 				do_cmd(data, tmp, psize);
 			}
 		}
@@ -130,12 +75,9 @@ int	execute(t_data *data)
 	int			(*fds)[2];
 	int			i;
 
-	// printf("❎ %s\n", get_val(data->env->head, "PATH"));
-	// printf("❎ %s\n", *data->envp);
 	tmp = data->cmd_line->head;
 	psize = data->cmd_line->size;
 	data->path = get_val(data->env->head, "PATH");
-	//data->path = getenv("PATH");
 	if (!data->path)
 		return (printf(NO_DIR, *tmp->cmd));
 	data->cmd_paths = ft_split(data->path, ':');
@@ -150,6 +92,5 @@ int	execute(t_data *data)
 		tmp = tmp->next;
 	}
 	data->exit_status = WEXITSTATUS(res);
-	//pipes(data, psize, tmp);
 	return (0);
 }
