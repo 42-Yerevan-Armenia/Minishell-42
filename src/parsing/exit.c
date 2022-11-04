@@ -33,7 +33,10 @@ int	ft_exit(t_data *data, char **args)
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
 	else
+	{
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
+		exit(data->exit_status = 0);
+	}
 	if (args[1] && !str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
@@ -49,7 +52,7 @@ int	ft_exit(t_data *data, char **args)
 	else if (args && ft_atoi(args[1]) >= 255)
 		data->exit_status = ft_atoi(args[1]) % 256;
 	else
-		data->exit_status = 0;	
+		data->exit_status = 0;
 	exit(data->exit_status);
 	return (0);
 }

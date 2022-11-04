@@ -225,6 +225,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
+		//printf_header();
 		// hook_signals();
 		while (1)
 		{
