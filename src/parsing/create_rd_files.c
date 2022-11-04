@@ -38,7 +38,7 @@ int	create_rd_files(t_spl_pipe *head, int *error)
 				if (close(head->fd_out) == -1 && ft_perror("minishell: "))
 					return (START_RD_LN);
 			head->fd_out = open(head->rdc[i],
-				O_CREAT | mode | O_RDWR, 0777);
+				O_CREAT | mode | O_RDWR, 0644);
 			if (head->fd_out == -1 && ft_perror("minishell: "))
 				return (START_RD_LN);
 		}

@@ -61,8 +61,10 @@ void			set_term_attr(int on_off);
 
 // execute
 int				execute(t_data *data);
-int				check_builtins(t_data *data, t_spl_pipe *tmp);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
+void			pipe_redirections(t_spl_pipe *tmp);
+void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
+void			close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize);
 
 // parsing
 void			find_exe(t_parse *parser);
