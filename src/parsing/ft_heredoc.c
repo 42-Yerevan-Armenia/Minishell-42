@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 12:49:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:05:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 	}
 	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR"), ft_strjoin_2(doc,
 				ft_itoa(i)));
-	printf("f_name = %p\n", *f_name);
-	node->fd_hdc = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	printf("f_name = %s\n", *f_name);
+	printf("get_val = %s\n", get_val(data->env->head, "TMPDIR"));
+	node->fd_hdc = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (node->fd_hdc == -1 && ft_perror("minishell: "))
 		return (START_RD_LN);
 	return (node->fd_hdc);
@@ -56,7 +57,7 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 			// set_term_attr(TC_ON);
 			if (!rd_ln && !ft_perror("minishell: "))
 				exit(1);
-			if (*res)
+			if (res && *res)
 				*res = ft_strjoin_1(*res, "\n");
 			if ((*node)->heredoc[i] && !ft_strcmp(rd_ln, (*node)->heredoc[i]))
 				break ;
@@ -73,10 +74,12 @@ int	ft_heredoc(t_spl_pipe *node, t_parse *parser)
 	char	*rd_ln;
 	int		fd;
 
-	res = parser->hered_vars;
 	rd_ln = NULL;
+	res = malloc(sizeof(char *) * 2);
+	fill_null((void *)&res, 2);
 	if (ft_heredoc_helper(&node, res, rd_ln) == 1)
 		return (START_RD_LN);
+	parser->hered_res = res;
 	if (node->hdoc_mode == HDOC_DQ_MODE && res)
 		rep_vars(parser, HEREDOC);
 	fd = create_hiden_file(parser->data, node, &node->f_name);

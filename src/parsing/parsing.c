@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 13:51:57 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:05:07 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	parser->spl_pipe = NULL;
 	parser->join_pipe = NULL;
 	parser->rd_ln = NULL;
-	parser->hered_vars = malloc(sizeof(char *) * 2);
-	fill_null((void *)&parser->hered_vars, 2);
+	parser->hered_res = NULL;
 	data->parser = parser;
 	data->envp = NULL;
 	data->hdoc_mode = NULL;
@@ -42,7 +41,6 @@ int	init(t_parse *parser, t_data *data, char **envp)
 int	free_all(t_data *data)
 {
 	free_spl_pipe((void *)&data->cmd_line);
-
 	free_parse((void *)&data->parser);
 	free_arr(&data->parser->rd_ln);
 	return (0);
