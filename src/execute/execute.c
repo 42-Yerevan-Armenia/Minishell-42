@@ -94,6 +94,9 @@ int	execute(t_data *data)
 		waitpid(tmp->pid, &res, 0);
 		tmp = tmp->next;
 	}
-	data->exit_status = WEXITSTATUS(res);
+	if (WIFEXITED(res))
+		data->exit_status = WEXITSTATUS(res);
+	else if (WIFSIGNALED(res))
+		data->exit_status = WTERMSIG(res) + 128;
 	return (0);
 }

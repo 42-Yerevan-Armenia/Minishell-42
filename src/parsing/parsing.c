@@ -151,7 +151,7 @@ int	main(int ac, char **av, char **envp)
 					}
 				}
 			}
-				// set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
+				set_env(&data, new_env("?", ft_itoa(data.exit_status), FORME));
 			free_spl_pipe(&data.cmd_line);
 			free_arr(&parser.rd_ln);
 		}

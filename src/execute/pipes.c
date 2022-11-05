@@ -85,12 +85,14 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 			printf(NO_DIR, *tmp->cmd);
 		else
 			data->path = get_cmd(data->cmd_paths, *tmp->cmd);
+		data->exit_status = 1;
 		if (!data->path)
 		{
 			free(data->path);
 			printf(NOT_FOUND, *tmp->cmd);
+			data->exit_status = 127;
 		}
 		execve(data->path, tmp->cmd, data->envp);
 	}
-	exit(1);
+	exit(data->exit_status);
 }
