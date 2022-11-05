@@ -82,13 +82,15 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 		if (access(*tmp->cmd, X_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
 			data->path = *tmp->cmd;
 		else if (ft_strchr(*tmp->cmd, '/'))
-			printf(NOT_FOUND, *tmp->cmd);
+			printf(NO_DIR, *tmp->cmd);
 		else
 			data->path = get_cmd(data->cmd_paths, *tmp->cmd);
 		if (!data->path)
+		{
 			free(data->path);
+			printf(NOT_FOUND, *tmp->cmd);
+		}
 		execve(data->path, tmp->cmd, data->envp);
-		printf(NOT_FOUND, *tmp->cmd);
 	}
 	exit(1);
 }
