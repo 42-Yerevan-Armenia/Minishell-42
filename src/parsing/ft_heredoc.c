@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 17:27:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 19:14:52 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 	i = -1;
 	while ((*node)->heredoc[++i])
 	{
+		free_arr(res);
 		free_arr(&rd_ln);
 		while (1)
 		{
