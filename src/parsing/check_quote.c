@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:20:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 20:24:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:24:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	check_quote(t_parse *parser)
 				return (1);
 			while (tmp[i] && tmp[i] != c)
 				i++;
-			printf("barev\n");
 			if (tmp[i] != c && ft_putstr_fd("minishell: syntax error near\
  unexpected token `newline'\n", 2, FREE_OFF))
 				return (1);
