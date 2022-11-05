@@ -88,6 +88,11 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 			data->path = *tmp->cmd;
 		else if (access(*tmp->cmd, X_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
 			data->path = *tmp->cmd;
+		else if (ft_strchr(*tmp->cmd, '/' && access(*tmp->cmd, F_OK)))
+		{
+			printf(NO_PERM, *tmp->cmd);
+			data->exit_status = 126;
+		}
 		else if (ft_strchr(*tmp->cmd, '/'))
 			printf(NO_DIR, *tmp->cmd);
 		else
