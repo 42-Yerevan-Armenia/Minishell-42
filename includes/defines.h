@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 09:54:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 16:58:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define FORME 4
 # define HDOC_SQ_MODE 1
 # define HDOC_DQ_MODE 0
-# define START_RD_LN 100
+# define START_RD_LN -1
 # define TC_ON 50
 # define TC_OFF 51
 # define FREE_ON 7
