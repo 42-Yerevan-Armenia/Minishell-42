@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 17:23:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:01:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@ static int	is_single_qutoe(char *str)
 	i = 0;
 	while (str[i] && ft_strchr(SPACES, str[i]))
 		i++;
-	if (str[i] == '\'')
-		return (HDOC_SQ_MODE);
+	while (str[i] && !ft_strchr(METACHARS, str[i]))
+	{
+		if (str[i] == '\'')
+			return (HDOC_SQ_MODE);
+		i++;
+	}
 	return (HDOC_DQ_MODE);
 }
 
