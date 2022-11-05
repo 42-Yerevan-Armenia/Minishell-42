@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 16:46:32 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:23:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	free_all(t_data *data)
 int	parsing(t_parse *parser)
 {
 	// int	i;
-	if (unexpected_tokens(parser) == START_RD_LN)
+	if (check_quote(parser) == 1 || unexpected_tokens(parser) == START_RD_LN)
 		return(START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
@@ -57,6 +57,8 @@ int	parsing(t_parse *parser)
 	pipe_join(parser);
 	get_all_hd_modes(parser);
 	find_exe(parser);
+	if (parser->data->cmd_line->head == NULL)
+		return (START_RD_LN);
 	print_info(parser);
 	if (parser->data->cmd_line->head == NULL && free_parse(parser))
 		return (START_RD_LN);

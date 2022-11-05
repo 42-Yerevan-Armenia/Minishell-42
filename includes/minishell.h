@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 10:09:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:03:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int				get_hd_mode_in_pipe(t_parse *parser);
 int				ft_put_rdc_mode(char **s, int mode);
 int				ft_get_rdc_mode(char *s);
 int				unexpected_tokens(t_parse *parser);
+int				check_quote(t_parse *parser);
 
 // builtins
 int				echo(char **args);
