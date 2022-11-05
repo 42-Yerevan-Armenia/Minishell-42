@@ -29,12 +29,6 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	pipe_redirections(t_spl_pipe *tmp)
-{
-	dup2(tmp->fd_out, 1);
-	dup2(tmp->fd_in, 0);
-}
-
 void	close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize)
 {
 	int	i;
@@ -70,6 +64,31 @@ void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 	close_fds(fds, tmp, psize);
 }
 
+void	cmd_errors(t_data *data, t_spl_pipe *tmp)
+{
+	if (ft_strchr(*(tmp->cmd), '/') && access(*tmp->cmd, X_OK) == 0)
+	{
+		printf(IS_DIR, *tmp->cmd);
+		data->exit_status = 126;
+	}
+	else if (access(*tmp->cmd, X_OK) == 0)
+		data->path = *tmp->cmd;
+	else if (access(*tmp->cmd, X_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
+		data->path = *tmp->cmd;
+	else if (ft_strchr(*tmp->cmd, '/' && access(*tmp->cmd, F_OK)))
+	{
+		printf(NO_PERM, *tmp->cmd);
+		data->exit_status = 126;
+	}
+	else if (ft_strchr(*tmp->cmd, '/'))
+		printf(NO_DIR, *tmp->cmd);
+	else
+	{
+		data->path = get_cmd(data->cmd_paths, *tmp->cmd);
+		data->exit_status = 1;
+	}
+}
+
 void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 {
 	int	i;
@@ -79,27 +98,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 		run_builtins(data, tmp);
 	else
 	{
-		if (ft_strchr(*(tmp->cmd), '/') && access(*tmp->cmd, X_OK) == 0 )
-		{
-			printf(IS_DIR, *tmp->cmd);
-			data->exit_status = 126;
-		}
-		else if (access(*tmp->cmd, X_OK) == 0)
-			data->path = *tmp->cmd;
-		else if (access(*tmp->cmd, X_OK) == 0 && ft_strcmp(*tmp->cmd, "minishell"))
-			data->path = *tmp->cmd;
-		else if (ft_strchr(*tmp->cmd, '/' && access(*tmp->cmd, F_OK)))
-		{
-			printf(NO_PERM, *tmp->cmd);
-			data->exit_status = 126;
-		}
-		else if (ft_strchr(*tmp->cmd, '/'))
-			printf(NO_DIR, *tmp->cmd);
-		else
-		{
-			data->path = get_cmd(data->cmd_paths, *tmp->cmd);
-			data->exit_status = 1;
-		}
+		cmd_errors(data, tmp);
 		if (!data->path)
 		{
 			free(data->path);
