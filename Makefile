@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS =  -I./includes -I./readline-vaghazar/include -g -ggdb3  -fsanitize=address #-Wall -Wextra -Werror  #-Wall -Wextra -Werror 
+CFLAGS =  -I./includes -I./readline-vaghazar/include -g -ggdb3  #-fsanitize=address #-Wall -Wextra -Werror  #-Wall -Wextra -Werror 
 
 ifeq ($(HOME), /Users/vaghazar)
 LINKER = ./readline-vaghazar/lib/libreadline.dylib
@@ -58,13 +58,13 @@ $(LIBFT):
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	#@make --no-print-directory clean -C $(LIBFT_DIR)
+	# @make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS_DIR)
 	$(RM) $(TMP)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	#@make --no-print-directory fclean -C $(LIBFT_DIR)
+	# @make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 
