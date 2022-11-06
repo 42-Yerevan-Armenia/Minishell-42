@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 20:42:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 10:17:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:52:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	run_heredoc(t_data *data)
 			head->fd_in = head->fd_hdc;
 		head = head->next;
 	}
-	// printf("fd_in = %d\n", data->cmd_line->head->fd_in);
-	// printf("fd_out = %d\n", data->cmd_line->head->fd_out);
+	printf("fd_in = %d\n", data->cmd_line->head->fd_in);
+	printf("fd_out = %d\n", data->cmd_line->head->fd_out);
 	return (0);
 }

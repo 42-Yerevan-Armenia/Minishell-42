@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:31:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:42:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTS_H
 
 typedef struct s_parse	t_parse;
+typedef struct s_data	t_data;
 
 typedef struct s_spl_pipe
 {
@@ -29,6 +30,7 @@ typedef struct s_spl_pipe
 	char				**heredoc;
 	char				**rdc;
 	char				*f_name;
+	t_data				*data;
 	struct s_spl_pipe	*next;
 	struct s_spl_pipe	*prev;
 }						t_spl_pipe;

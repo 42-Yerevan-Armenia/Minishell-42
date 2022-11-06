@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 10:58:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:41:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				run_heredoc(t_data *data);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);
-t_spl_pipe		*new_spl_pipe(void);
+t_spl_pipe		*new_spl_pipe(t_data *data);
 t_spl_pipe		*add_pipe(t_list_spl_pipe *list, t_spl_pipe *new_pipe);
 int				fill_null(void ***ptr, int len);
 int				resize_arr(char ***arr, int *l_arr, int k);
