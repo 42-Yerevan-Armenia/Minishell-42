@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 17:39:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:56:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	print_info(parser);
-	// get_hd_mode_in_pipe(parser);
-	// if ((run_heredoc(parser->data) == START_RD_LN))
-	// 	return (START_RD_LN);
+	get_hd_mode_in_pipe(parser);
+	if ((run_heredoc(parser->data) == START_RD_LN))
+		return (START_RD_LN);
 	free_parse(parser);
 	return (0);
 }
@@ -70,16 +70,11 @@ void	sig_term(int signum)
 {
 	struct termios	termios_p;
 
-	// tcgetattr(0, &termios_p);
-	// termios_p.c_lflag |= ECHOCTL;
-	// tcsetattr(0, 0, &termios_p);
 	g_sig = 0;
 	(void)signum;
-	rl_replace_line("", 0);
-	rl_on_new_line();
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
 int	hook_signals(void)
@@ -106,14 +101,18 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
-		//printf_header();
 		hook_signals();
+		//printf_header();
 		while (1)
 		{
 			set_term_attr(TC_OFF);
 			parser.rd_ln = readline("🔻minishell> ");
-			// if (g_sig == 0 && ++g_sig)
-				set_term_attr(TC_ON);
+			if (g_sig == 0 && ++g_sig)
+			{
+				set_env(&data, new_env("?", "1", FORME));
+				continue ;
+			}
+			set_term_attr(TC_ON);
 			if (!parser.rd_ln)
 			{
 				// rl_replace_line("", 0);
@@ -133,13 +132,13 @@ int	main(int ac, char **av, char **envp)
 					i = -1;
 					while (i++ < ps)
 					{
-
-						if (data.cmd_line->head->cmd[0][0] != '\0' && ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
+						if (data.cmd_line->head->cmd[0] && data.cmd_line->head->cmd[0][0] && ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
 						{
+						;
 							ps = 0;
 							run_builtins(&data, data.cmd_line->head);
 						}
-						else
+						else if (data.cmd_line->head->cmd[0])
 						{
 							ps = 0;
 							execute(&data);
@@ -156,3 +155,4 @@ int	main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
+

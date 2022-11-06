@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:19:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:45:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:41:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list_spl_pipe	*create_list_pipe(void)
 	return (list);
 }
 
-t_spl_pipe	*new_spl_pipe(void)
+t_spl_pipe	*new_spl_pipe(t_data *data)
 {
 	t_spl_pipe	*new_pipe;
 
@@ -43,6 +43,7 @@ t_spl_pipe	*new_spl_pipe(void)
 	new_pipe->fd_hdc = 0;
 	new_pipe->input_mode = 0;
 	new_pipe->tmp = 2;
+	new_pipe->data = data;;
 	new_pipe->next = NULL;
 	new_pipe->prev = NULL;
 	return (new_pipe);

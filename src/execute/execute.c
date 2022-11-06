@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/06 17:38:54 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:53:05 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		}
 		else if (tmp->pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			pipe_redirections(tmp);
 			if (psize == 1)
 				do_cmd(data, tmp, psize);
@@ -71,7 +73,8 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 				open_pipes(tmp, i, fds, psize);
 				do_cmd(data, tmp, psize);
 			}
-		}
+		} /*else
+			signal(SIGINT, SIG_DFL);*/
 		tmp = tmp->next;
 	}
 }
@@ -101,6 +104,10 @@ int	execute(t_data *data)
 	if (WIFEXITED(data->res))
 		data->exit_status = WEXITSTATUS(data->res);
 	else if (WIFSIGNALED(data->res))
+	{
 		data->exit_status = WTERMSIG(data->res) + 128;
+		if (WTERMSIG(data->res) == SIGQUIT)
+			printf("Quit: 3\n");
+	}
 	return (0);
 }

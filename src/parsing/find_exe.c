@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 16:11:45 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:43:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	find_exe(t_parse *parser)
 	i = -1;
 	while (tmp[++i])
 	{
-		node = add_pipe(parser->data->cmd_line, new_spl_pipe());
+		node = add_pipe(parser->data->cmd_line, new_spl_pipe(parser->data));
 		qty = count_elem(tmp[i]);
 		node->heredoc = malloc(sizeof(char *) * qty->hdoc);
 		node->rdc = malloc(sizeof(char *) * qty->rdc);
