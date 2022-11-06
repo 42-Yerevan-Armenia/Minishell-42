@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 20:03:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:58:07 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int				ft_put_rdc_mode(char **s, int mode);
 int				ft_get_rdc_mode(char *s);
 int				unexpected_tokens(t_parse *parser);
 int				check_quote(t_parse *parser);
+int				ft_put_rdc_mode(char **s, int mode);
+int				ft_get_rdc_mode(char *s);
 
 // builtins
 int				echo(char **args);
@@ -98,7 +100,7 @@ void			print_info(t_parse *parser);
 int				free_double(char ***ptr);
 int				free_parse(t_parse *parser);
 int				free_spl_pipe(t_list_spl_pipe **list);
-void			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
+int				init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int				free_envp(t_list_env **list);
 int				free_arr(char **arr);
 int				ft_perror(char *str);

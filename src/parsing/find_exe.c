@@ -6,56 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 17:24:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:58:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_put_rdc_mode(char **s, int mode)
-{
-	int		i;
-	char	*res;
-	char	*tmp;
-
-	if (*s == NULL)
-		return (1);
-	i = 0;
-	tmp = *s;
-	res = malloc(ft_strlen(*s) + 3);
-	while (*tmp)
-		res[i++] = *tmp++;
-	res[i++] = '\0';
-	res[i++] = mode;
-	res[i] = '\0';
-	*s = res;
-	return (0);
-}
-
-int	ft_get_rdc_mode(char *s)
-{
-	int		i;
-
-	if (s == NULL || *s == '\0' || !ft_strcmp(s, BAD_RDR))
-		return (1);
-	i = 0;
-	while (s[i])
-		i++;
-	i++;
-	if (s[i] == OUT_FILES)
-		return (O_TRUNC);
-	if (s[i] == APPEND_FILES)
-		return (O_APPEND);
-	return (s[i]);
-}
-
-// int main()
-// {
-// 	char *s = "barev";
-
-// 	ft_put_rdc_mode(&s, 8);
-// 	printf("%d\n", ft_get_rdc_mode(s));
-// }
 
 static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 {
@@ -64,18 +19,13 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 	static int	n_cmd;
 	static int	l_arr = 2;
 
-	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
-	{
+	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe)
+		&& !init_zero(&m, &h, &n_cmd, NULL))
 		l_arr = 2;
-		init_zero(&m, &h, &n_cmd, NULL);
-	}
 	if (v->c == HEREDOC)
 		node->heredoc[h++] = ft_substr(tmp, v->j, v->i - v->j);
 	else if (v->c == COMAND && !resize_arr(&node->cmd, &l_arr, n_cmd))
-	{
-		node->cmd[n_cmd] = ft_substr(tmp, v->j, v->i - v->j);
-		n_cmd++;
-	}
+		node->cmd[n_cmd++] = ft_substr(tmp, v->j, v->i - v->j);
 	else
 	{
 		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
@@ -89,34 +39,6 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 		node->input_mode = v->c;
 	return (0);
 }
-
-// static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
-// {
-// 	static int	k;
-// 	static int	m;
-// 	static int	h;
-// 	static int	n_cmd;
-// 	static int	l_arr = 2;
-
-// 	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe))
-// 	{
-// 		l_arr = 2;
-// 		init_zero(&k, &m, &h, &n_cmd);
-// 	}
-// 	if (v->c == HEREDOC)
-// 		node->heredoc[h++] = ft_substr(tmp, v->j, v->i - v->j);
-// 	else if (v->c == O_TRUNC || v->c == O_APPEND)
-// 		node->out_files[m++] = ft_substr(tmp, v->j, v->i - v->j);
-// 	else if (v->c == IN_FILES)
-// 		node->in_files[k++] = ft_substr(tmp, v->j, v->i - v->j);
-// 	else if (v->c == COMAND && !resize_arr(&node->cmd, &l_arr, n_cmd))
-// 		node->cmd[n_cmd++] = ft_substr(tmp, v->j, v->i - v->j);
-// 	if (v->c == O_APPEND || v->c == O_TRUNC)
-// 		node->output_mode = v->c;
-// 	else if (v->c == IN_FILES || v->c == HEREDOC)
-// 		node->input_mode = v->c;
-// 	return (0);
-// }
 
 static void	starting_quotes(char *tmp, t_vars *v)
 {
@@ -182,8 +104,6 @@ static int	fill_spl_pipe(t_parse *parser, t_spl_pipe *node, char *cmd_ln)
 	}
 	return (0);
 }
-
-// export .a .b .c
 
 void	find_exe(t_parse *parser)
 {

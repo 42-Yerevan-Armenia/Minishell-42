@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 21:47:40 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:59:01 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*get_val(t_env *head, char *key)
 {
 	while (key && head)
 	{
-		// printf("%s")
 		if (!ft_strcmp(head->key, key))
 			return (head->val);
 		head = head->next;

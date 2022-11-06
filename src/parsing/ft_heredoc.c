@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 19:14:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:36:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,20 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 		while (1)
 		{
 			free_arr(&rd_ln);
-			// set_term_attr(TC_OFF);
+			set_term_attr(TC_OFF);
 			rd_ln = readline(">");
-			if (g_sig == 0 && ++g_sig)
-				return (1);
-			// set_term_attr(TC_ON);
-			if (!rd_ln && !ft_perror("minishell: "))
-				exit(1);
+			set_term_attr(TC_ON);
+			if (!rd_ln && !free_arr(res))
+			{
+				rl_replace_line("", 0);
+				// rl_on_new_line();
+				// rl_replace_line("", 0);
+				// rl_on_new_line();
+				// rl_redisplay();
+				return (START_RD_LN);
+			}
+			if (g_sig == 0 && !free_arr(res) && !free_arr(&rd_ln) && ++g_sig)
+				return (START_RD_LN);
 			if (res && *res)
 				*res = ft_strjoin_1(*res, "\n");
 			if ((*node)->heredoc[i] && !ft_strcmp(rd_ln, (*node)->heredoc[i]))
@@ -84,7 +91,7 @@ int	ft_heredoc(t_spl_pipe *node, t_parse *parser)
 	node->fd_hdc = create_hiden_file(parser->data, node, &node->f_name);
 	if (node->fd_hdc == START_RD_LN)
 		return (START_RD_LN);
-	ft_putstr_fd(*res, node->fd_in, FREE_OFF);
+	ft_putstr_fd(*res, node->fd_hdc, FREE_OFF);
 	free_arr(&rd_ln);
 	free_double((void *)&res);
 	return (node->fd_hdc);

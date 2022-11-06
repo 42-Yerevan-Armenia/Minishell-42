@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:19:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 13:41:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 11:45:39 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_spl_pipe	*new_spl_pipe(void)
 	new_pipe->flag_new_pipe = 0;
 	new_pipe->fd_in = 0;
 	new_pipe->fd_out = 1;
-	new_pipe->hdoc_input = NULL;
 	new_pipe->cmd = NULL;
 	new_pipe->heredoc = NULL;
+	new_pipe->rdc = NULL;
 	new_pipe->f_name = NULL;
 	new_pipe->hdoc_mode = 0;
 	new_pipe->fd_hdc = 0;
