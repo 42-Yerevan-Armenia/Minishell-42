@@ -38,7 +38,13 @@ void	pipex(int (*fds)[2], int psize)
 	i = -1;
 	while (++i < psize - 1)
 		if (pipe(fds[i]) == -1)
-            ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
+			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
+}
+
+void	pipe_redirections(t_spl_pipe *tmp)
+{
+	dup2(tmp->fd_out, 1);
+	dup2(tmp->fd_in, 0);
 }
 
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
@@ -76,7 +82,6 @@ int	execute(t_data *data)
 	int			psize;
 	int			res;
 	int			(*fds)[2];
-	int			i;
 
 	tmp = data->cmd_line->head;
 	psize = data->cmd_line->size;
@@ -94,6 +99,9 @@ int	execute(t_data *data)
 		waitpid(tmp->pid, &res, 0);
 		tmp = tmp->next;
 	}
-	data->exit_status = WEXITSTATUS(res);
+	if (WIFEXITED(res))
+		data->exit_status = WEXITSTATUS(res);
+	else if (WIFSIGNALED(res))
+		data->exit_status = WTERMSIG(res) + 128;
 	return (0);
 }
