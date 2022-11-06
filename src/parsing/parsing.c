@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:55:44 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:56:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
+		hook_signals();
 		//printf_header();
 		while (1)
 		{
-			hook_signals();
 			set_term_attr(TC_OFF);
 			parser.rd_ln = readline("🔻minishell> ");
 			if (g_sig == 0 && ++g_sig)
