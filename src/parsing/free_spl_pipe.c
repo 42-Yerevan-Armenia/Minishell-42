@@ -6,16 +6,11 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 17:21:30 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:43:29 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 13:38:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
-
-
 
 int	free_spl_pipe(t_list_spl_pipe **list)
 {

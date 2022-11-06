@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:27:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/04 21:28:09 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 13:26:52 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 		first = find_first(s1, set);
 		last = find_last(s1, set);
 		ptr = ft_substr(s1, first, ft_strlen(s1) - first - last);
-		// printf("|||||||||\n");
-		// free((void *)s1);
 		return (ptr);
 	}
 	else
