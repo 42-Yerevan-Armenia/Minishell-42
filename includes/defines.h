@@ -38,7 +38,9 @@
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
+# define IS_DIR "🔻minishell> %s: is a directory ❌\n"
 # define NO_DIR "🔻minishell> %s: No such file or directory ❌\n"
+# define NO_PERM "🔻minishell> %s: Permission denied ❌\n"
 # define NOT_FOUND "🔻minishell> %s: command not found ❌\n"
 
 //Builtins
