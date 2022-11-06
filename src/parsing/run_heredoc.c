@@ -35,7 +35,7 @@ int	run_heredoc(t_data *data)
 			head->fd_in = head->fd_hdc;
 		head = head->next;
 	}
-	printf("fd_in = %d\n", data->cmd_line->head->fd_in);
-	printf("fd_out = %d\n", data->cmd_line->head->fd_out);
+	// printf("fd_in = %d\n", data->cmd_line->head->fd_in);
+	// printf("fd_out = %d\n", data->cmd_line->head->fd_out);
 	return (0);
 }

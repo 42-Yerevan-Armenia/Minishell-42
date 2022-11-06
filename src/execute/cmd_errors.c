@@ -29,10 +29,8 @@ int	cmd_errors_2(t_data *data, t_spl_pipe *tmp)
 
 void	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
 {
-	ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-	ft_strjoin(*tmp->cmd, FAR)), 2, FREE_ON);
-	ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-	ft_strjoin(*tmp->cmd, USAGE)), 2, FREE_ON);
+	ft_putstr_fd(ft_strjoin(*tmp->cmd, FAR), 2, FREE_ON);
+	ft_putstr_fd(ft_strjoin(*tmp->cmd, USAGE), 2, FREE_ON);
 	data->exit_status = 2;
 }
 

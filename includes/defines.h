@@ -38,7 +38,7 @@
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
-# define FAR ": filename argument required ❌\n"
+# define FAR ": filename argument required \n"
 # define USAGE ": usage: . filename [arguments]\n"
 # define IS_DIR ": is a directory ❌\n"
 # define NO_DIR ": No such file or directory ❌\n"
