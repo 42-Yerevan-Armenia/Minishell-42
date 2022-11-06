@@ -34,6 +34,7 @@ int	ft_exit(t_data *data, char **args)
 		return (1);
 	else
 	{
+	printf("❌ %s\n", *args);
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
 		exit(data->exit_status = 0);
 	}

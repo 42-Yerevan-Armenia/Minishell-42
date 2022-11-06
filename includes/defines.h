@@ -38,7 +38,7 @@
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
-# define FAR ": filename argument required \n"
+# define FAR ": filename argument required ❌\n"
 # define USAGE ": usage: . filename [arguments]\n"
 # define IS_DIR ": is a directory ❌\n"
 # define NO_DIR ": No such file or directory ❌\n"
@@ -52,8 +52,8 @@
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
 # define BAD_RDR "minishell: ambigous redirect"
-# define NO_SUCH_F ": No such file or directory\n"
+# define NO_SUCH_F ": No such file or directory ❌\n"
 # define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
- directories: No such file or directory\n"
+ directories: No such file or directory ❌\n"
 
 #endif
