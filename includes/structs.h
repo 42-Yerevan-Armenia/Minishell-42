@@ -58,6 +58,8 @@ typedef struct s_list_env
 
 typedef struct s_data
 {
+	int					psize;
+	int					res;
 	int					exit_status;
 	int					**hdoc_mode;
 	char				*path;
