@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:56:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 20:10:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			set_term_attr(TC_OFF);
+			printf("barev\n");
 			parser.rd_ln = readline("🔻minishell> ");
 			if (g_sig == 0 && ++g_sig)
 			{
