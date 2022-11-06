@@ -127,13 +127,14 @@ int	main(int ac, char **av, char **envp)
 				add_history(parser.rd_ln);
 				if (parsing(&parser) == START_RD_LN && !free_parse(&parser) && free_spl_pipe(&data.cmd_line))
 					continue ;
-				if (data.cmd_line->head && data.cmd_line->head->cmd && data.cmd_line->head->cmd[0])
+				if (data.cmd_line->head && data.cmd_line->head->cmd)
 				{
 					ps = data.cmd_line->size;
 					i = -1;
 					while (i++ < ps)
 					{
-						if (ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
+
+						if (data.cmd_line->head->cmd[0][0] != '\0' && ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
 						{
 							ps = 0;
 							run_builtins(&data, data.cmd_line->head);

@@ -24,8 +24,9 @@
 # include "readline/readline.h"
 # include <string.h>
 # include <signal.h>
- #include <sys/types.h>
-	#include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <dirent.h>
 
 
 # include <sys/ioctl.h>

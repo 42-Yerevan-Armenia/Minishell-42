@@ -79,29 +79,28 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 int	execute(t_data *data)
 {
 	t_spl_pipe	*tmp;
-	int			psize;
-	int			res;
 	int			(*fds)[2];
 
 	tmp = data->cmd_line->head;
-	psize = data->cmd_line->size;
+	data->psize = data->cmd_line->size;
 	data->path = get_val(data->env->head, "PATH");
 	if (!data->path)
-		return (printf(NO_DIR, *tmp->cmd));
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(*tmp->cmd, NO_DIR)), 2, FREE_ON);
 	data->cmd_paths = ft_split(data->path, ':');
-	fds = malloc(sizeof (*fds) * (psize - 1));
-	forking(fds, psize, tmp, data);
-	close_fds(fds, tmp, psize);
+	fds = malloc(sizeof (*fds) * (data->psize - 1));
+	forking(fds, data->psize, tmp, data);
+	close_fds(fds, tmp, data->psize);
 	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	while (tmp)
 	{
-		waitpid(tmp->pid, &res, 0);
+		waitpid(tmp->pid, &data->res, 0);
 		tmp = tmp->next;
 	}
-	if (WIFEXITED(res))
-		data->exit_status = WEXITSTATUS(res);
-	else if (WIFSIGNALED(res))
-		data->exit_status = WTERMSIG(res) + 128;
+	if (WIFEXITED(data->res))
+		data->exit_status = WEXITSTATUS(data->res);
+	else if (WIFSIGNALED(data->res))
+		data->exit_status = WTERMSIG(data->res) + 128;
 	return (0);
 }
