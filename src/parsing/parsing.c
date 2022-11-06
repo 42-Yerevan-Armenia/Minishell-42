@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 12:13:56 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:39:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	print_info(parser);
-	get_hd_mode_in_pipe(parser);
-	if ((run_heredoc(parser->data) == START_RD_LN))
-		return (START_RD_LN);
+	// get_hd_mode_in_pipe(parser);
+	// if ((run_heredoc(parser->data) == START_RD_LN))
+	// 	return (START_RD_LN);
 	free_parse(parser);
 	return (0);
 }
@@ -125,9 +125,9 @@ int	main(int ac, char **av, char **envp)
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
-				if (parsing(&parser) == START_RD_LN && !free_parse(&parser) && free_spl_pipe(&data.cmd_line))
+				if (parsing(&parser) == START_RD_LN && !free_parse(&parser) && !free_spl_pipe(&data.cmd_line))
 					continue ;
-				if (data.cmd_line->head && data.cmd_line->head->cmd && data.cmd_line->head->cmd[0])
+				if (data.cmd_line->head && data.cmd_line->head->cmd)
 				{
 					ps = data.cmd_line->size;
 					i = -1;

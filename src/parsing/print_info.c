@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:59:27 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 13:58:20 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 16:09:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void print_info(t_parse *parser)
 		while (tmp->cmd && tmp->cmd[i])
 		{
 			printf("🛑 %s ", tmp->cmd[i++]);
+			// printf("c =  %c ", tmp->cmd[i][0]);
 		}
 		printf("**IN_FILES - ");
 		i = 0;

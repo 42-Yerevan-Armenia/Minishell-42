@@ -31,10 +31,10 @@
 //     int a = 0;
 //     // while (1)
 //     // {
-        
+		
 //         printf("%s", get_next_line(a));
 //     // }
-    
+	
 // }
 
 // int main()
@@ -69,9 +69,13 @@
 //     printf("%d\n", strlen(arr + 5));
 // }
 
+// #include <sys/types.h>
+// #include <dirent.h>
+// #include <errno.h>
 // int main()
 // {
-//     int *a;
-
-//     a = malloc(size)
+// 	printf("%s\n", opendir("includes/test"));
+// 	if (errno == ENOTDIR)
+// 		printf("ENOTDIR\n");
 // }
+
