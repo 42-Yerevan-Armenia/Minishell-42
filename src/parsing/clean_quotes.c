@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:20:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:40:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	count_quotes(char *arr)
 {
-	int	i;
-	int	count;
+	int		i;
+	int		count;
+	char	c;
 
 	if (arr == NULL)
 		return (0);
@@ -24,8 +25,14 @@ static int	count_quotes(char *arr)
 	while (arr[i])
 	{
 		if (ft_strchr(QUOTES, arr[i]))
+		{
 			count++;
-		i++;
+			c = arr[i++];
+			while (arr[i] && arr[i] != c)
+				i++;
+		}
+		if (arr[i])
+			i++;
 	}
 	return (count);
 }
@@ -80,7 +87,6 @@ int	ft_clean_all_qutoes(t_spl_pipe *head)
 	{
 		clean_quotes(&head->cmd);
 		clean_quotes(&head->heredoc);
-		// clean_quotes(&head->rdc); // nayel
 		head = head->next;
 	}
 	return (0);

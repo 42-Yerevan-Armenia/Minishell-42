@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:38:38 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 21:55:29 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 11:48:17 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_var_rap(t_list_env *env, t_env *new_node)
 	while (head)
 	{
 		if (!ft_strcmp(head->key, new_node->key)
-				&& head->is_export == new_node->is_export)
+			&& head->is_export == new_node->is_export)
 		{
 			if (flag == 0 && !free_arr(&head->val))
 				head->val = ft_strdup(new_node->val);

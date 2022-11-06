@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 20:24:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 10:37:39 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@
 //Builtins
 # define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
 # define BUILTINS "cd echo env exit export pwd unset"
-# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token"
+# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
 # define BAD_RDR "minishell: ambigous redirect"
-# define NO_SUCH_F ": No such file or directory"
-
+# define NO_SUCH_F ": No such file or directory\n"
+# define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
+ directories: No such file or directory\n"
 //Tokens
 //  #define RED_INPUT		1	// <
 //  #define RED_OUTPUT		2	// >

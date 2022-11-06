@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 19:57:19 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 11:27:21 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 int	is_herdoc(char *ptr_sign, char	*start, int i)
 {
-	if (&ptr_sign[i] == start)
-		return (0);
-	i--;
-	while (&ptr_sign[i] != start && ft_strchr(SPACES, ptr_sign[i]))
+	if (&ptr_sign[i] != start)
+	{
 		i--;
-	if (&ptr_sign[i] != start && ptr_sign[i] == '<' && ptr_sign[i - 1] == '<')
-		return (1);
-	return (0);
-}
-
-int is_end_of_file(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_strchr(SPACES, str[i]))
+		while (&ptr_sign[i] != start && ft_strchr(SPACES, ptr_sign[i]))
+			i--;
+		if (&ptr_sign[i] != start && ptr_sign[i] == '<'
+			&& ptr_sign[i - 1] == '<')
+			return (1);
+	}
+	i = 1;
+	while (ptr_sign[i] && ft_strchr(SPACES, ptr_sign[i]))
 		i++;
-	if (str[i] == '\0')
+	if (ptr_sign[i] == '\0')
 		return (1);
 	return (0);
 }
@@ -44,7 +39,7 @@ static void	find_var_helper(char *src, char **res, char **ptr, int j)
 	init_zero(&len, &i, NULL, NULL);
 	while (src[j])
 	{
-		if (src[j] == '$' && !is_herdoc(src + j, src, i) && !is_end_of_file(src + j + 1))
+		if (src[j] == '$' && !is_herdoc(src + j, src, i))
 		{
 			*ptr = &src[j++];
 			if (src[j] == '?' && ++j)

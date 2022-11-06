@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 20:01:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/06 11:40:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	get_hd_mode_in_pipe(t_parse *parser)
 
 	i = 0;
 	tmp = parser->data->cmd_line->head;
+	tmp->hdoc_mode = 0;
 	while (tmp && parser->data->hdoc_mode[i])
 	{
 		tmp->hdoc_mode = parser->data->hdoc_mode[i][0];
