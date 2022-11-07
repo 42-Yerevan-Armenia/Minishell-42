@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 20:44:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:38:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,7 @@
 int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
-<<<<<<< HEAD
-	{
-		printf("✅ exit = %d\n", cd(data, tmp->cmd));
-
-	}
-=======
 		data->exit_status = cd(data, tmp->cmd);
->>>>>>> 4ce9632c2ced1713288d96850136f13d73ef93c3
 	else if (!ft_strcmp(tmp->cmd[0], "echo"))
 		data->exit_status = echo(tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
