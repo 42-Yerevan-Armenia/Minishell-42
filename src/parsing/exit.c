@@ -32,11 +32,10 @@ int	ft_exit(t_data *data, char **args)
 {
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
-	else
+	else if (!args[1])
 	{
-	printf("❌ %s\n", *args);
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
-		exit(data->exit_status = 0);
+		exit(data->exit_status = 127);
 	}
 	if (args[1] && !str_is_valid_num(args[1]))
 	{
