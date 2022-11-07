@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 10:37:39 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:56:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define FREE_ON 7
 # define FREE_OFF 8
 
+extern int g_sig;
+
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
 # define INPUT_FILE "🔻minishell> Input File: No such file or directory ❌\n"
@@ -47,7 +49,7 @@
 
 //Builtins
 # define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
-# define BUILTINS "cdechoenvexitexportpwdunset"
+# define BUILTINS "1cd1echo1env1exit1export1pwd1unset"
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
