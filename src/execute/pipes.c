@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 09:23:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:37:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 	close_fds(fds, psize);
 }
 
-void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
+void	do_cmd(t_data *data, t_spl_pipe *tmp)
 {
 	int	i;
 

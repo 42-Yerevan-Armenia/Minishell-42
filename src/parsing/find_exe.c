@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:45:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:30:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 	if (node->flag_new_pipe == 0 && ++(node->flag_new_pipe)
 		&& !init_zero(&m, &h, &n_cmd, NULL))
 		l_arr = 2;
-		
 	if (v->c == HEREDOC)
-	{
 		node->heredoc[h++] = ft_substr(tmp, v->j, v->i - v->j);
-	}
 	else if (v->c == COMAND && !resize_arr(&node->cmd, &l_arr, n_cmd))
 		node->cmd[n_cmd++] = ft_substr(tmp, v->j, v->i - v->j);
 	else
 	{
-	
 		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
 		if (node->rdc[m][0] == '\0')
 			node->rdc[m] = ft_strdup(BAD_RDR);
@@ -85,7 +81,7 @@ static int	get_files(char *tmp, t_spl_pipe *node, t_vars *v, int c)
 	return (0);
 }
 
-static int	fill_spl_pipe(t_parse *parser, t_spl_pipe *node, char *cmd_ln)
+static int	fill_spl_pipe(t_spl_pipe *node, char *cmd_ln)
 {
 	t_vars	v;
 
@@ -106,7 +102,6 @@ static int	fill_spl_pipe(t_parse *parser, t_spl_pipe *node, char *cmd_ln)
 		if (cmd_ln[v.i] && !ft_strchr(HANDLE, cmd_ln[v.i]))
 			v.i++;
 	}
-
 	return (0);
 }
 
@@ -132,7 +127,7 @@ void	find_exe(t_parse *parser)
 		fill_null((void *)&node->cmd, 3);
 		fill_null((void *)&node->heredoc, qty->hdoc);
 		fill_null((void *)&node->rdc, qty->rdc);
-		fill_spl_pipe(parser, node, tmp[i]);
+		fill_spl_pipe(node, tmp[i]);
 		free(qty);
 	}
 }

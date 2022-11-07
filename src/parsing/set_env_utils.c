@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:38:38 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:48:17 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:32:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	find_var_rap(t_list_env *env, t_env *new_node)
 		new_node->key[i - 1] = '\0';
 	if (i != 0 && i != 1 && new_node->key[i - 2] == '+' && ++flag)
 		new_node->key[i - 2] = '\0';
+	printf("%s\n", new_node->key);
 	while (head)
 	{
 		if (!ft_strcmp(head->key, new_node->key)

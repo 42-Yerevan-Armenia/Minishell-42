@@ -6,11 +6,13 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 09:59:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 12:13:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:27:37 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 static int	find_unexpected_token(char *s, int i)
 {
@@ -84,13 +86,13 @@ static int	unexpected_char(char *tmp, int i)
 	return (0);
 }
 
-int	unexpected_tokens(t_parse *parser)
+int	unexpected_tokens(t_parse *p)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = parser->rd_ln;
+	tmp = p->rd_ln;
 	while (tmp[i])
 	{
 		if (valid_redircet(tmp + i) == START_RD_LN)

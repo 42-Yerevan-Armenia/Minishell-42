@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:56:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:34:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define TC_OFF 51
 # define FREE_ON 7
 # define FREE_OFF 8
+# define FREE_1 1
+# define FREE_2 2
 
 extern int g_sig;
 
@@ -52,8 +54,8 @@ extern int g_sig;
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
-# define BAD_RDR "minishell: ambigous redirect"
-# define NO_SUCH_F ": No such file or directory ❌\n"
+# define BAD_RDR "minishell: ambigous redirect\n"
+# define NO_SUCH_F ": No such file or directory\n"
 # define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
  directories: No such file or directory ❌\n"
 

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 17:55:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:38:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 			signal(SIGQUIT, SIG_DFL);
 			pipe_redirections(tmp);
 			if (psize == 1)
-				do_cmd(data, tmp, psize);
+				do_cmd(data, tmp);
 			else
 			{
 				open_pipes(tmp, i, fds, psize);
-				do_cmd(data, tmp, psize);
+				do_cmd(data, tmp);
 			}
 		}
 		tmp = tmp->next;

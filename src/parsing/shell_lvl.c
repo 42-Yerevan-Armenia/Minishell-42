@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 09:44:26 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:49:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:29:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	is_valid(char	*str)
 {
 	int	i;
-	int	tmp;
 
 	i = 0;
 	while (str[i] && ft_strchr(SPACES, str[i]))

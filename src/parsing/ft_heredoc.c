@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:54:20 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:03:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,39 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 	return (node->fd_hdc);
 }
 
+static int	ft_heredoc_rdln(t_spl_pipe **node, char **rd_ln, char ***res)
+{
+	set_term_attr(TC_OFF);
+	*rd_ln = readline("> ");
+	set_term_attr(TC_ON);
+	if (!*rd_ln && !free_double(res))
+		return (START_RD_LN);
+	if (g_sig == 0 && !free_double(res) && !free_arr(rd_ln) && ++g_sig)
+	{
+		set_env((*node)->data, new_env("?", "1", FORME));
+		return (START_RD_LN);
+	}
+	return (0);
+}
+
 static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 {
 	int	i;
-	int	fd;
 
 	i = -1;
 	while ((*node)->heredoc[++i])
 	{
 		free_arr(res);
-		free_arr(&rd_ln);
-		while (1)
+		while (!free_arr(&rd_ln))
 		{
-			free_arr(&rd_ln);
-			set_term_attr(TC_OFF);
-			rd_ln = readline("> ");
-			set_term_attr(TC_ON);
-			if (!rd_ln && !free_arr(res))
+			if (ft_heredoc_rdln(node, &rd_ln, &res) == START_RD_LN)
 				return (START_RD_LN);
-			if (g_sig == 0 && !free_arr(res) && !free_arr(&rd_ln) && ++g_sig)
-			{
-				set_env((*node)->data, new_env("?", "1", FORME));
-				return (START_RD_LN);
-			}
 			if (res && *res)
 				*res = ft_strjoin_1(*res, "\n");
 			if ((*node)->heredoc[i] && !ft_strcmp(rd_ln, (*node)->heredoc[i]))
 				break ;
 			*res = ft_strjoin_1(*res, rd_ln);
+			free_arr(&rd_ln);
 		}
 		free_arr(&rd_ln);
 	}
@@ -75,7 +80,6 @@ int	ft_heredoc(t_spl_pipe *node, t_parse *parser)
 {
 	char	**res;
 	char	*rd_ln;
-	int		fd;
 
 	rd_ln = NULL;
 	res = malloc(sizeof(char *) * 2);
