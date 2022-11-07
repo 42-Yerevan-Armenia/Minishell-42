@@ -49,7 +49,6 @@ extern int g_sig;
 
 //Builtins
 # define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
-# define BUILTINS "1cd1echo1env1exit1export1pwd1unset"
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"

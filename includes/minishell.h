@@ -71,12 +71,13 @@ int				shell_lvl(t_data *data);
 void            cmd_errors_1(t_data *data, t_spl_pipe *tmp);
 int	            cmd_errors_2(t_data *data, t_spl_pipe *tmp);
 int	            cmd_errors(t_data *data, t_spl_pipe *tmp);
-int				execute(t_data *data);
+void                        execute(t_data *data);
+int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
 char	        *get_cmd(char **paths, char *cmd);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
-void			close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize);
+void			close_fds(int (*fds)[2], int psize);
 
 // parsing
 void			find_exe(t_parse *parser);
@@ -97,6 +98,8 @@ int				pwd(t_data *data);
 int				cd(t_data *data, char **args);
 int				ft_exit(t_data *data, char **args);
 int				run_heredoc(t_data *data);
+int	                     search_builtin(char *s, char **builtins);
+char	                     **ft_bultins(void);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);

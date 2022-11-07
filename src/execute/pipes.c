@@ -29,7 +29,7 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize)
+void	close_fds(int (*fds)[2], int psize)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 		dup2(fds[i - 1][0], tmp->fd_in);
 		dup2(fds[i][1], tmp->fd_out);
 	}
-	close_fds(fds, tmp, psize);
+	close_fds(fds, psize);
 }
 
 void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
@@ -69,7 +69,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
 	int	i;
 
 	i = 0;
-	if (*tmp->cmd[0] != '\0' && ft_strnstr(BUILTINS, tmp->cmd[0], 35))
+	if (*tmp->cmd[0] != '\0' && search_builtin(tmp->cmd[0], data->builtins))
 		run_builtins(data, tmp);
 	else
 	{
