@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 21:37:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:58:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
-	char	*status;
-	
+
 	(void)av;
 	data.builtins =  ft_bultins();
 	if (ac == 1)
@@ -118,4 +117,3 @@ int	main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
-
