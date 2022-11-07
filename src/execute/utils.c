@@ -21,16 +21,6 @@ void	pass_qutoes(int *i, char *str)
 		(*i)++;
 }
 
-void	print_list(t_spl_pipe *head)
-{
-	while (head)
-	{
-		printf("%s, ", head->cmd[0]);
-		printf("%s\n", head->cmd[1]);
-		head = head->next;
-	}
-}
-
 int	ft_perror(char *str)
 {
 	perror(str);
