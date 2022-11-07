@@ -6,15 +6,20 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:41:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:52:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+
+
+       // #include <readline/readline.h>
+       // #include <readline/history.h>
+
 # include "../libft/libft.h"
-# include "readline/readline.h"
+// # include "readline/readline.h"
 # include "structs.h"
 # include "defines.h"
 # include "limits.h"

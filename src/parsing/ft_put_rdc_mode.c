@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 10:54:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:46:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:41:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_put_rdc_mode(char **s, int mode)
 	res[i++] = '\0';
 	res[i++] = mode;
 	res[i] = '\0';
+	free_arr(s);
 	*s = res;
 	return (0);
 }

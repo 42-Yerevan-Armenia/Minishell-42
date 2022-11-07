@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:45:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:54:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 {
 	int	i;
+	int	fd;
 
 	i = -1;
 	while ((*node)->heredoc[++i])
@@ -50,13 +51,10 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 		{
 			free_arr(&rd_ln);
 			set_term_attr(TC_OFF);
-			rd_ln = readline(">");
+			rd_ln = readline("> ");
 			set_term_attr(TC_ON);
 			if (!rd_ln && !free_arr(res))
-			{
-				rl_replace_line("", 0);
 				return (START_RD_LN);
-			}
 			if (g_sig == 0 && !free_arr(res) && !free_arr(&rd_ln) && ++g_sig)
 			{
 				set_env((*node)->data, new_env("?", "1", FORME));

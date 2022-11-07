@@ -44,10 +44,6 @@ extern int sleep();
 extern void exit();
 #endif
 
-#ifdef HAVE_LOCALE_H
-#  include <locale.h>
-#endif
-
 #if defined (READLINE_LIBRARY)
 #  include "posixstat.h"
 #  include "readline.h"
@@ -104,10 +100,6 @@ main (argc, argv)
   struct stat sb;
   int opt, fd, nch;
   FILE *ifp;
-
-#ifdef HAVE_SETLOCALE
-  setlocale (LC_ALL, "");
-#endif
 
   progname = strrchr(argv[0], '/');
   if (progname == 0)

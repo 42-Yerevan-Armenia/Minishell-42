@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/06 19:53:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:55:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		}
 		else if (tmp->pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			pipe_redirections(tmp);
 			if (psize == 1)
@@ -73,11 +72,12 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 				open_pipes(tmp, i, fds, psize);
 				do_cmd(data, tmp, psize);
 			}
-		} /*else
-			signal(SIGINT, SIG_DFL);*/
+		}
 		tmp = tmp->next;
 	}
 }
+
+int	hook_signals(void);
 
 int	execute(t_data *data)
 {
@@ -96,6 +96,7 @@ int	execute(t_data *data)
 	close_fds(fds, tmp, data->psize);
 	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
+	signal(SIGINT, SIG_IGN);
 	while (tmp)
 	{
 		waitpid(tmp->pid, &data->res, 0);
@@ -107,7 +108,10 @@ int	execute(t_data *data)
 	{
 		data->exit_status = WTERMSIG(data->res) + 128;
 		if (WTERMSIG(data->res) == SIGQUIT)
-			return (1);
+			printf("Quit: 3\n");
+		if (WTERMSIG(data->res) == SIGINT)
+			write(1, "\n", 1);
 	}
+	hook_signals();
 	return (0);
 }

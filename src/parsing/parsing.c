@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:56:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:55:00 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,11 @@ int	parsing(t_parse *parser)
 void	sig_term(int signum)
 {
 	struct termios	termios_p;
-
-	g_sig = 0;
 	(void)signum;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
+	g_sig = 0;
 }
 
 int	hook_signals(void)
@@ -102,7 +101,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		init(&parser, &data, envp);
 		hook_signals();
-		//printf_header();
 		while (1)
 		{
 			set_term_attr(TC_OFF);
@@ -114,13 +112,7 @@ int	main(int ac, char **av, char **envp)
 			}
 			set_term_attr(TC_ON);
 			if (!parser.rd_ln)
-			{
-				// rl_replace_line("", 0);
-				// ft_putstr_fd("exit\n", 0, FREE_OFF);
-				// rl_on_new_line();
-				// rl_redisplay();
 				exit(1);
-			}
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
@@ -150,7 +142,7 @@ int	main(int ac, char **av, char **envp)
 			set_env(&data, new_env("?", status, FORME));
 			free_arr(&status);
 			free_spl_pipe(&data.cmd_line);
-			// free_arr(&parser.rd_ln);
+			free_arr(&parser.rd_ln);
 		}
 		free_envp(&data.env);
 	}
