@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:55:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:34:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,24 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	return (0);
 }
 
-int	free_all(t_data *data)
+int	ft_get_status_in_env(t_data *data, t_parse *parser)
 {
-	free_spl_pipe((void *)&data->cmd_line);
-	free_parse((void *)&data->parser);
-	free_arr(&data->parser->rd_ln);
+	char	*status;
+
+	status = ft_itoa(data->exit_status);
+	set_env(data, new_env("?", status, FORME));
+	free_arr(&status);
+	free_spl_pipe(&data->cmd_line);
+	free_arr(&parser->rd_ln);
+	free_parse(parser);
 	return (0);
 }
 
 int	parsing(t_parse *parser)
 {
-	if (check_quote(parser) == 1 || unexpected_tokens(parser) == START_RD_LN)
+	if (((check_quote(parser) == 1)
+			|| (unexpected_tokens(parser) == START_RD_LN))
+		&& !put_exit_s(parser->data, 258))
 		return (START_RD_LN);
 	split_quotes(parser);
 	rep_vars(parser, 0);
@@ -66,25 +73,18 @@ int	parsing(t_parse *parser)
 	return (0);
 }
 
-void	sig_term(int signum)
+int	ft_readline_main(t_parse *parser, t_data *data)
 {
-	struct termios	termios_p;
-	(void)signum;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	g_sig = 0;
-}
-
-int	hook_signals(void)
-{
-	struct sigaction	term;
-
-	term.sa_handler = &sig_term;
-	term.sa_flags = SA_RESTART;
-	term.sa_mask = 0;
-	sigaction(SIGINT, &term, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	set_term_attr(TC_OFF);
+	parser->rd_ln = readline("🔻minishell> ");
+	if (g_sig == 0 && ++g_sig && !free_arr(&parser->rd_ln))
+	{
+		set_env(data, new_env("?", "1", FORME));
+		return (1);
+	}
+	set_term_attr(TC_ON);
+	if (!parser->rd_ln)
+		exit(1);
 	return (0);
 }
 
@@ -94,29 +94,21 @@ int	main(int ac, char **av, char **envp)
 	t_data	data;
 	int		ps;
 	int		i;
-	char	*status;
-	
+
 	(void)av;
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
 		hook_signals();
-		while (1)
+		while (!free_arr(&parser.rd_ln))
 		{
-			set_term_attr(TC_OFF);
-			parser.rd_ln = readline("🔻minishell> ");
-			if (g_sig == 0 && ++g_sig)
-			{
-				set_env(&data, new_env("?", "1", FORME));
+			if (ft_readline_main(&parser, &data) == 1)
 				continue ;
-			}
-			set_term_attr(TC_ON);
-			if (!parser.rd_ln)
-				exit(1);
 			if (parser.rd_ln[0])
 			{
 				add_history(parser.rd_ln);
-				if (parsing(&parser) == START_RD_LN && !free_parse(&parser) && !free_spl_pipe(&data.cmd_line))
+				if (parsing(&parser) == START_RD_LN
+					&& !ft_get_status_in_env(&data, &parser))
 					continue ;
 				if (data.cmd_line->head && data.cmd_line->head->cmd)
 				{
@@ -126,7 +118,6 @@ int	main(int ac, char **av, char **envp)
 					{
 						if (data.cmd_line->head->cmd[0] && data.cmd_line->head->cmd[0][0] && ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
 						{
-						;
 							ps = 0;
 							run_builtins(&data, data.cmd_line->head);
 						}
@@ -138,11 +129,7 @@ int	main(int ac, char **av, char **envp)
 					}
 				}
 			}
-			status = ft_itoa(data.exit_status);
-			set_env(&data, new_env("?", status, FORME));
-			free_arr(&status);
-			free_spl_pipe(&data.cmd_line);
-			free_arr(&parser.rd_ln);
+			ft_get_status_in_env(&data, &parser);
 		}
 		free_envp(&data.env);
 	}

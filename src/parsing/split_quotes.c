@@ -6,27 +6,47 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:16:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:49:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:10:32 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	pass_qutoe(int *i, char *str)
+{
+	char	tmp;
+
+	tmp = str[(*i)++];
+	while (str[*i] && str[*i] != tmp)
+		(*i)++;
+	if (str[*i])
+		*i += 1;
+}
+
 void	split_quotes_helper(t_parse *parser, t_vars *v, char *tmp)
 {
-	while (tmp[v->i] && (tmp[v->i] != '\'' && tmp[v->i] != '"'))
-		v->i++;
-	if (v->t != v->i
-		&& !resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k))
-		parser->spl_qutoes[v->k++] = ft_substr(tmp, v->t, v->i - v->t);
-	if (tmp[v->i] && (tmp[v->i] == '\'' || tmp[v->i] == '"'))
+	while (1)
 	{
-		v->j = v->i;
-		v->c = tmp[v->i++];
-		while (tmp[v->i] && (tmp[v->i] != v->c && tmp[v->i] != v->c))
+		while (tmp[v->i] && (tmp[v->i] != '\'' && tmp[v->i] != '"'))
 			v->i++;
-		resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k);
-		parser->spl_qutoes[v->k++] = ft_substr(tmp, v->j, v->i - v->j + 1);
+		if (tmp[v->i] != 0 && !ft_strchr(METACHARS, tmp[v->i - 1]))
+		{
+			pass_qutoe(&v->i, tmp);
+			continue ;
+		}
+		if (v->t != v->i
+			&& !resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k))
+			parser->spl_qutoes[v->k++] = ft_substr(tmp, v->t, v->i - v->t);
+		if (tmp[v->i] && (tmp[v->i] == '\'' || tmp[v->i] == '"'))
+		{
+			v->j = v->i;
+			v->c = tmp[v->i++];
+			while (tmp[v->i] && (tmp[v->i] != v->c && tmp[v->i] != v->c))
+				v->i++;
+			resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k);
+			parser->spl_qutoes[v->k++] = ft_substr(tmp, v->j, v->i - v->j + 1);
+		}
+		break ;
 	}
 }
 

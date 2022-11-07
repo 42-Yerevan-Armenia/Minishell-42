@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 17:55:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:44:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
+	{
 		printf("✅ exit = %d\n", cd(data, tmp->cmd));
+
+	}
 	else if (!ft_strcmp(tmp->cmd[0], "echo"))
 		printf("✅ exit = %d\n", echo(tmp->cmd));
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
@@ -66,11 +69,11 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 			signal(SIGQUIT, SIG_DFL);
 			pipe_redirections(tmp);
 			if (psize == 1)
-				do_cmd(data, tmp, psize);
+				do_cmd(data, tmp);
 			else
 			{
 				open_pipes(tmp, i, fds, psize);
-				do_cmd(data, tmp, psize);
+				do_cmd(data, tmp);
 			}
 		}
 		tmp = tmp->next;
@@ -93,7 +96,7 @@ int	execute(t_data *data)
 	data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	forking(fds, data->psize, tmp, data);
-	close_fds(fds, tmp, data->psize);
+	close_fds(fds, data->psize);
 	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);

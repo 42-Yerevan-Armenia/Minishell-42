@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 10:53:23 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:32:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	create_outfiles(t_spl_pipe *head, int i, int mode)
 	return (0);
 }
 
-int	create_rd_files(t_spl_pipe *head, int *error)
+int	create_rd_files(t_spl_pipe *head)
 {
 	int			i;
 	int			mode;
@@ -45,7 +45,8 @@ int	create_rd_files(t_spl_pipe *head, int *error)
 	while (head->rdc[++i])
 	{
 		if (!ft_strcmp(head->rdc[i], BAD_RDR)
-			&& ft_putstr_fd(BAD_RDR, 2, FREE_OFF))
+			&& ft_putstr_fd(BAD_RDR, 2, FREE_OFF)
+			&& put_exit_s(head->data, 1))
 			return (START_RD_LN);
 		mode = ft_get_rdc_mode(head->rdc[i]);
 		if (mode == IN_FILES)

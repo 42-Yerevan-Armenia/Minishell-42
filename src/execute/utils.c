@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:21:55 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 10:19:45 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:17:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ void	print_list(t_spl_pipe *head)
 int	ft_perror(char *str)
 {
 	perror(str);
+	return (0);
+}
+
+int	put_exit_s(t_data *data, int status)
+{
+	data->exit_status = status;
 	return (0);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_parse.c                                       :+:      :+:    :+:   */
+/*   hook_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 10:43:46 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 18:57:49 by vaghazar         ###   ########.fr       */
+/*   Created: 2022/11/07 18:39:16 by vaghazar          #+#    #+#             */
+/*   Updated: 2022/11/07 18:41:56 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	free_parse(t_parse *parser)
+static void	sig_term(int signum)
 {
-	free_double(&parser->spl_qutoes);
-	free_double(&parser->spl_pipe);
-	free_double(&parser->join_pipe);
-	free_arr(&parser->rd_ln);
-	free_arr(&parser->key);
+	g_sig = 0;
+	(void)signum;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+}
+
+int	hook_signals(void)
+{
+	struct sigaction	term;
+
+	term.sa_handler = &sig_term;
+	term.sa_flags = SA_RESTART;
+	term.sa_mask = 0;
+	sigaction(SIGINT, &term, NULL);
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }

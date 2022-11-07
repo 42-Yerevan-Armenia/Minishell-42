@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 09:23:52 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:27:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize)
+void	close_fds(int (*fds)[2], int psize)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 		dup2(fds[i - 1][0], tmp->fd_in);
 		dup2(fds[i][1], tmp->fd_out);
 	}
-	close_fds(fds, tmp, psize);
+	close_fds(fds, psize);
 }
 
 int	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
@@ -111,7 +111,7 @@ int	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
 	return (0);
 }
 
-void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
+void	do_cmd(t_data *data, t_spl_pipe *tmp)
 {
 	int	i;
 

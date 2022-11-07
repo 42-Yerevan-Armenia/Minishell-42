@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:52:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:18:14 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 
 
-       // #include <readline/readline.h>
-       // #include <readline/history.h>
+	   // #include <readline/readline.h>
+	   // #include <readline/history.h>
 
 # include "../libft/libft.h"
 // # include "readline/readline.h"
@@ -62,7 +62,7 @@ char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 void			rep_vars(t_parse *parser, int flag);
 void			get_env(t_data *data, char **envp, int is_export);
 int				ft_heredoc(t_spl_pipe *node, t_parse *parser);
-int				create_rd_files(t_spl_pipe *head, int *error);
+int				create_rd_files(t_spl_pipe *head);
 int				get_infile_fd(t_spl_pipe *node, int	*error);
 void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
@@ -72,7 +72,7 @@ int				execute(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
-void			close_fds(int (*fds)[2], t_spl_pipe *tmp, int psize);
+void			close_fds(int (*fds)[2], int psize);
 
 // parsing
 void			find_exe(t_parse *parser);
@@ -135,11 +135,15 @@ char			**env_cpy(t_data *data, t_list_env *env);
 int				del_one(t_env **env);
 int				find_var_rap(t_list_env *env, t_env *new_node);
 
+// signals
+int				hook_signals(void);
+
 // utils
 
 void			print_env_arr(char **env);
-void	pipes(t_data *data, int psize, t_spl_pipe *tmp);
-void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize);
+void			pipes(t_data *data, int psize, t_spl_pipe *tmp);
+void			do_cmd(t_data *data, t_spl_pipe *tmp);
+int				put_exit_s(t_data *data, int status);
 
 #endif
 
