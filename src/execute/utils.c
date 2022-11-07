@@ -27,8 +27,30 @@ int	ft_perror(char *str)
 	return (0);
 }
 
-int	put_exit_s(t_data *data, int status)
+char	**ft_bultins(void)
 {
-	data->exit_status = status;
+	char	**res;
+
+	res = malloc(sizeof(char *) * 8);
+	fill_null((void *)&res, 8);
+	res[0] = "cd";
+	res[1] = "echo";
+	res[2] = "env";
+	res[3] = "exit";
+	res[4] = "export";
+	res[5] = "pwd";
+	res[6] = "unset"; 
+
+	return (res);
+}
+
+int	search_builtin(char *s, char **builtins)
+{
+	int	i;
+
+	i = 0;
+	while (builtins[i])
+		if (!ft_strcmp(s, builtins[i++]))
+			return (1);
 	return (0);
 }

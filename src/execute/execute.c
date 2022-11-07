@@ -12,6 +12,29 @@
 
 #include "../includes/minishell.h"
 
+void	execute(t_data *data)
+{
+	int		i;
+	int		ps;
+
+	ps = data->cmd_line->size;
+	i = -1;
+	while (i++ < ps)
+	{
+		if (data->cmd_line->head->cmd[0] && data->cmd_line->head->cmd[0][0] \
+		&& ps == 1 && search_builtin(data->cmd_line->head->cmd[0], data->builtins))
+		{
+			ps = 0;
+			run_builtins(data, data->cmd_line->head);
+		}
+		else if (data->cmd_line->head->cmd[0])
+		{
+			ps = 0;
+			run_binar(data);
+		}
+	}
+}
+
 int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
@@ -79,7 +102,7 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 
 int	hook_signals(void);
 
-int	execute(t_data *data)
+int	run_binar(t_data *data)
 {
 	t_spl_pipe	*tmp;
 	int			(*fds)[2];

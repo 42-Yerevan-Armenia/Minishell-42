@@ -69,7 +69,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	int	i;
 
 	i = 0;
-	if (*tmp->cmd[0] != '\0' && ft_strnstr(BUILTINS, tmp->cmd[0], 35))
+	if (*tmp->cmd[0] != '\0' && search_builtin(tmp->cmd[0], data->builtins))
 		run_builtins(data, tmp);
 	else
 	{

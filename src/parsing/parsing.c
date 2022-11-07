@@ -92,10 +92,10 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
-	int		ps;
-	int		i;
-
+	char	*status;
+	
 	(void)av;
+	data.builtins =  ft_bultins();
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
@@ -111,23 +111,7 @@ int	main(int ac, char **av, char **envp)
 					&& !ft_get_status_in_env(&data, &parser))
 					continue ;
 				if (data.cmd_line->head && data.cmd_line->head->cmd)
-				{
-					ps = data.cmd_line->size;
-					i = -1;
-					while (i++ < ps)
-					{
-						if (data.cmd_line->head->cmd[0] && data.cmd_line->head->cmd[0][0] && ps == 1 && ft_strnstr(BUILTINS, data.cmd_line->head->cmd[0], 35))
-						{
-							ps = 0;
-							run_builtins(&data, data.cmd_line->head);
-						}
-						else if (data.cmd_line->head->cmd[0])
-						{
-							ps = 0;
-							execute(&data);
-						}
-					}
-				}
+					execute(&data);
 			}
 			ft_get_status_in_env(&data, &parser);
 		}

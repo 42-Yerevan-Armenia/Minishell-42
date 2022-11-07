@@ -67,6 +67,7 @@ typedef struct s_data
 	char				*path;
 	char				**cmd_paths;
 	char				**envp;
+	char				**builtins;
 	t_parse				*parser;
 	t_list_spl_pipe		*cmd_line;
 	t_list_env			*env;
