@@ -7,7 +7,6 @@ test
 ## Mlx related
 Makefile.gen
 /test/mlx-test
-print_info.c
 
 ## Editor
 .vscode/*
