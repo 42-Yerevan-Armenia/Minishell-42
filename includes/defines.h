@@ -54,8 +54,8 @@ extern int g_sig;
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
  cannot access parent directories: No such file or directory"
 # define BAD_RDR "minishell: ambigous redirect"
-# define NO_SUCH_F ": No such file or directory\n"
+# define NO_SUCH_F ": No such file or directory ❌\n"
 # define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
- directories: No such file or directory\n"
+ directories: No such file or directory ❌\n"
 
 #endif
