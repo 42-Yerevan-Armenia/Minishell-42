@@ -135,6 +135,6 @@ int	run_binar(t_data *data)
 		if (WTERMSIG(data->res) == SIGINT)
 			write(1, "\n", 1);
 	}
-	hook_signals();
+	// hook_signals();
 	return (0);
 }

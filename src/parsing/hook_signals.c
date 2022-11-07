@@ -10,25 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
-static void	sig_term(int signum)
-{
-	g_sig = 0;
-	(void)signum;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-}
+// static void	sig_term(int signum)
+// {
+// 	g_sig = 0;
+// 	(void)signum;
+// 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+// 	rl_on_new_line();
+// 	rl_replace_line("", 0);
+// }
 
-int	hook_signals(void)
-{
-	struct sigaction	term;
+// int	hook_signals(void)
+// {
+// 	struct sigaction	term;
 
-	term.sa_handler = &sig_term;
-	term.sa_flags = SA_RESTART;
-	term.sa_mask = 0;
-	sigaction(SIGINT, &term, NULL);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
-}
+// 	term.sa_handler = &sig_term;
+// 	term.sa_flags = SA_RESTART;
+// 	term.sa_mask = 0;
+// 	sigaction(SIGINT, &term, NULL);
+// 	signal(SIGQUIT, SIG_IGN);
+// 	return (0);
+// }

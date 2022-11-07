@@ -24,9 +24,10 @@ void	rep_vars(t_parse *parser, int flag)
 	tmp = parser->spl_qutoes;
 	if (flag == HEREDOC)
 		tmp = parser->hered_res;
+	// printf("%s\n", tmp[1]);
 	while (tmp[++i])
 	{
-		if (tmp[i][0] != '\'')
+		if (tmp[i][0] != '\'' || flag == HEREDOC)
 		{
 			while (tmp[i][j])
 			{

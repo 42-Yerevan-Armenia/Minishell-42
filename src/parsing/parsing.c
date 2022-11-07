@@ -98,7 +98,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
-		hook_signals();
+		// hook_signals();
 		while (!free_arr(&parser.rd_ln))
 		{
 			if (ft_readline_main(&parser, &data) == 1)

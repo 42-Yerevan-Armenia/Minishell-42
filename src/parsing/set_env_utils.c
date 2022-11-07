@@ -25,16 +25,14 @@ int	find_var_rap(t_list_env *env, t_env *new_node)
 		new_node->key[i - 1] = '\0';
 	if (i != 0 && i != 1 && new_node->key[i - 2] == '+' && ++flag)
 		new_node->key[i - 2] = '\0';
-	printf("new_node->key = %s\n", new_node->key);
-	printf("new_node->is_export = %d\n", new_node->is_export);
 	while (head)
 	{
 		if (!ft_strcmp(head->key, new_node->key)
-			&& head->is_export == new_node->is_export)
+			&& new_node->is_export != FORME)
 		{
-			if (flag == 0 && !free_arr(&head->val) && printf("barev%s\n", new_node->key))
+			if (flag == 0 && !free_arr(&head->val))
 				head->val = ft_strdup(new_node->val);
-			else if (printf("hajox\n"))
+			else
 				head->val = ft_strjoin_1(head->val, new_node->val);
 			return (1);
 		}
