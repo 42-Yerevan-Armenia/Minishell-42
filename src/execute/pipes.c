@@ -64,6 +64,7 @@ void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 	close_fds(fds, psize);
 }
 
+<<<<<<< HEAD
 int	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
 {
 	if (*tmp->cmd[0] == 0)
@@ -112,6 +113,9 @@ int	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
 }
 
 void	do_cmd(t_data *data, t_spl_pipe *tmp)
+=======
+void	do_cmd(t_data *data, t_spl_pipe *tmp, int psize)
+>>>>>>> 4ce9632c2ced1713288d96850136f13d73ef93c3
 {
 	int	i;
 
@@ -120,7 +124,7 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 		run_builtins(data, tmp);
 	else
 	{
-		cmd_errors_1(data, tmp);
+		cmd_errors(data, tmp);
 		if (!data->path)
 		{
 			free(data->path);

@@ -68,8 +68,12 @@ void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
 
 // execute
+void            cmd_errors_1(t_data *data, t_spl_pipe *tmp);
+int	            cmd_errors_2(t_data *data, t_spl_pipe *tmp);
+int	            cmd_errors(t_data *data, t_spl_pipe *tmp);
 int				execute(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
+char	        *get_cmd(char **paths, char *cmd);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);

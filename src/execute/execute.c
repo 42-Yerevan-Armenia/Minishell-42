@@ -15,22 +15,26 @@
 int	run_builtins(t_data *data, t_spl_pipe *tmp)
 {
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
+<<<<<<< HEAD
 	{
 		printf("✅ exit = %d\n", cd(data, tmp->cmd));
 
 	}
+=======
+		data->exit_status = cd(data, tmp->cmd);
+>>>>>>> 4ce9632c2ced1713288d96850136f13d73ef93c3
 	else if (!ft_strcmp(tmp->cmd[0], "echo"))
-		printf("✅ exit = %d\n", echo(tmp->cmd));
+		data->exit_status = echo(tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
-		printf("✅ exit = %d\n", env(data, tmp->cmd));
+		data->exit_status = env(data, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		printf("✅ exit = %d\n", ft_exit(data, tmp->cmd));
+		data->exit_status = ft_exit(data, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "export"))
-		printf("✅ exit = %d\n", export(data, tmp->cmd));
+		data->exit_status = export(data, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		printf("✅ exit = %d\n", pwd(data));
+		data->exit_status = pwd(data);
 	else if (!ft_strcmp(tmp->cmd[0], "unset"))
-		printf("✅ exit = %d\n", unset(data, tmp->cmd));
+		data->exit_status = unset(data, tmp->cmd);
 	return (0);
 }
 
