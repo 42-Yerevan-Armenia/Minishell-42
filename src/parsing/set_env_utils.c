@@ -25,7 +25,6 @@ int	find_var_rap(t_list_env *env, t_env *new_node)
 		new_node->key[i - 1] = '\0';
 	if (i != 0 && i != 1 && new_node->key[i - 2] == '+' && ++flag)
 		new_node->key[i - 2] = '\0';
-	printf("%s\n", new_node->key);
 	while (head)
 	{
 		if (!ft_strcmp(head->key, new_node->key)

@@ -92,7 +92,6 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
-	char	*status;
 	
 	(void)av;
 	data.builtins =  ft_bultins();

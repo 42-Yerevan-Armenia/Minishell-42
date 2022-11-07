@@ -27,6 +27,12 @@ int	ft_perror(char *str)
 	return (0);
 }
 
+int	put_exit_s(t_data *data, int status)
+ {
+ 	data->exit_status = status;
+ 	return (0);
+ }
+
 char	**ft_bultins(void)
 {
 	char	**res;
