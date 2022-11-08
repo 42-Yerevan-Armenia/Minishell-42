@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 20:03:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:44:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	ft_heredoc_rdln(t_spl_pipe **node, char **rd_ln, char ***res)
 		return (START_RD_LN);
 	if (g_sig == 0 && !free_double(res) && !free_arr(rd_ln) && ++g_sig)
 	{
-		set_env((*node)->data, new_env("?", "1", FORME));
+		set_env((*node)->data, new_env("?=", "1", FORME));
 		return (START_RD_LN);
 	}
 	return (0);

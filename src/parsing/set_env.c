@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/05 17:06:43 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:51:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ static int	set_env_helper(t_list_env *env, t_env **new_node, t_env **tmp)
 	{
 		if ((*new_node)->is_export != FORME)
 			++(env->size);
-		if (i != 0 && (*new_node)->key[i - 1] == '=')
-		(*new_node)->key[i - 1] = '\0';
+		// if (i != 0 && (*new_node)->key[i - 1] == '=')
+		// (*new_node)->key[i - 1] = '\0';
 		if (i != 0 && i != 1 && (*new_node)->key[i - 2] == '+')
-		(*new_node)->key[i - 2] = '\0';
+		{
+			(*new_node)->key[i - 2] = '=';
+			(*new_node)->key[i - 1] = '\0';
+		}
 		env->head = *new_node;
 		env->tail = *new_node;
 		return (1);

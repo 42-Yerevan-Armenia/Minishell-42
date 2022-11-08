@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:46:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:45:17 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	get_env(t_data *data, char **envp, int is_export)
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL && errno == ENOENT)
 		ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
-	set_env(data, new_env("PWD", pwd, (FORME)));
+	set_env(data, new_env("PWD=", pwd, (FORME)));
 	set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
 	free_arr(&pwd);
-	set_env(data, new_env("?", "0", (FORME)));
+	set_env(data, new_env("?=", "0", (FORME)));
 	data->envp = env_cpy(data, data->env);
 }

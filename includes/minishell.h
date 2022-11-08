@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 21:38:26 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 21:25:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void			find_path(t_data *data);
 int				parsing(t_parse *parser);
 int				init(t_parse *parser, t_data *data, char **envp);
 char			*get_val(t_env *head, char *key);
+t_env			*get_node(t_env *head, char *key);
 char			*find_var(char *src, char **ptr, int j);
 char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 void			rep_vars(t_parse *parser, int flag);

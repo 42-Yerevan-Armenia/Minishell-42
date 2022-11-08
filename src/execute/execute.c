@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 21:38:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:31:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	}
 }
 
-int	hook_signals(void);
 
 int	run_binar(t_data *data)
 {
@@ -135,6 +134,6 @@ int	run_binar(t_data *data)
 		if (WTERMSIG(data->res) == SIGINT)
 			write(1, "\n", 1);
 	}
-	// hook_signals();
+	hook_signals();
 	return (0);
 }
