@@ -75,6 +75,8 @@ void                        execute(t_data *data);
 int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
 char	        *get_cmd(char **paths, char *cmd);
+void			pipex(int (*fds)[2], int psize);
+void			pid_check(int (*fds)[2], int psize, int i, t_spl_pipe *tmp, t_data *data);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);

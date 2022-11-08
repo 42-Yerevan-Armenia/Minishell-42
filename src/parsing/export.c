@@ -28,7 +28,7 @@ static int	print_exp(t_env *head)
 	return (0);
 }
 
-static int	is_valid_args_helper(char *args)
+static int	is_valid_args_helper(char *args, t_data *data)
 {
 	char	*error;
 
@@ -38,18 +38,19 @@ static int	is_valid_args_helper(char *args)
 				ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")),
 					": not a valid identifier"));
 		ft_putendl_fd(error, 2, FREE_ON);
+		data->exit_status = 1;
 		return (1);
 	}
 	return (0);
 }
 
-static int	is_valid_args(char *args)
+static int	is_valid_args(char *args, t_data *data)
 {
 	int		i;
 	char	*error;
 
 	i = 0;
-	if (is_valid_args_helper(args) == 1)
+	if (is_valid_args_helper(args, data) == 1)
 		return (1);
 	while ((args[i] && args[i] != '+' && args[i] != '=') || (args[i] == '+'
 			&& args[i + 1] != '='))
@@ -61,6 +62,7 @@ static int	is_valid_args(char *args)
 						ft_strjoin_2("`", ft_strjoin(args, "'")),
 						": not a valid identifier"));
 			ft_putendl_fd(error, 2, FREE_ON);
+			data->exit_status = 1;
 			return (1);
 		}
 		i++;
@@ -82,7 +84,7 @@ int	export(t_data *data, char **args)
 		return (0);
 	while (args[i])
 	{
-		if (is_valid_args(args[i]) && ++i)
+		if (is_valid_args(args[i], data) && ++i)
 			continue ;
 		tmp = split_for_env(args[i], '=');
 		if (tmp[1])
@@ -93,5 +95,5 @@ int	export(t_data *data, char **args)
 		i++;
 	}
 	data->envp = env_cpy(data, data->env);
-	return (0);
+	return (data->exit_status);
 }

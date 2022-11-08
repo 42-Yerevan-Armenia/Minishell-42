@@ -21,8 +21,8 @@ void	execute(t_data *data)
 	i = -1;
 	while (i++ < ps)
 	{
-		if (data->cmd_line->head->cmd[0] && data->cmd_line->head->cmd[0][0] \
-		&& ps == 1 && search_builtin(data->cmd_line->head->cmd[0], data->builtins))
+		if (data->cmd_line->head->cmd[0] && data->cmd_line->head->cmd[0][0] && \
+		ps == 1 && search_builtin(data->cmd_line->head->cmd[0], data->builtins))
 		{
 			ps = 0;
 			run_builtins(data, data->cmd_line->head);
@@ -54,22 +54,6 @@ int	run_builtins(t_data *data, t_spl_pipe *tmp)
 	return (0);
 }
 
-void	pipex(int (*fds)[2], int psize)
-{
-	int	i;
-
-	i = -1;
-	while (++i < psize - 1)
-		if (pipe(fds[i]) == -1)
-			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
-}
-
-void	pipe_redirections(t_spl_pipe *tmp)
-{
-	dup2(tmp->fd_out, 1);
-	dup2(tmp->fd_in, 0);
-}
-
 void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 {
 	int	i;
@@ -85,22 +69,31 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 			break ;
 		}
 		else if (tmp->pid == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			pipe_redirections(tmp);
-			if (psize == 1)
-				do_cmd(data, tmp);
-			else
-			{
-				open_pipes(tmp, i, fds, psize);
-				do_cmd(data, tmp);
-			}
-		}
+			pid_check(fds, psize, i, tmp, data);
 		tmp = tmp->next;
 	}
 }
 
 int	hook_signals(void);
+
+void	sig_wait(t_spl_pipe	*tmp, t_data *data)
+{
+	while (tmp)
+	{
+		waitpid(tmp->pid, &data->res, 0);
+		tmp = tmp->next;
+	}
+	if (WIFEXITED(data->res))
+		data->exit_status = WEXITSTATUS(data->res);
+	else if (WIFSIGNALED(data->res))
+	{
+		data->exit_status = WTERMSIG(data->res) + 128;
+		if (WTERMSIG(data->res) == SIGQUIT)
+			printf("Quit: 3\n");
+		if (WTERMSIG(data->res) == SIGINT)
+			write(1, "\n", 1);
+	}
+}
 
 int	run_binar(t_data *data)
 {
@@ -120,21 +113,7 @@ int	run_binar(t_data *data)
 	free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
-	while (tmp)
-	{
-		waitpid(tmp->pid, &data->res, 0);
-		tmp = tmp->next;
-	}
-	if (WIFEXITED(data->res))
-		data->exit_status = WEXITSTATUS(data->res);
-	else if (WIFSIGNALED(data->res))
-	{
-		data->exit_status = WTERMSIG(data->res) + 128;
-		if (WTERMSIG(data->res) == SIGQUIT)
-			printf("Quit: 3\n");
-		if (WTERMSIG(data->res) == SIGINT)
-			write(1, "\n", 1);
-	}
+	sig_wait(tmp, data);
 	hook_signals();
 	return (0);
 }

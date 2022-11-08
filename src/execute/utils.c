@@ -28,10 +28,10 @@ int	ft_perror(char *str)
 }
 
 int	put_exit_s(t_data *data, int status)
- {
- 	data->exit_status = status;
- 	return (0);
- }
+{
+	data->exit_status = status;
+	return (0);
+}
 
 char	**ft_bultins(void)
 {
@@ -45,8 +45,7 @@ char	**ft_bultins(void)
 	res[3] = "exit";
 	res[4] = "export";
 	res[5] = "pwd";
-	res[6] = "unset"; 
-
+	res[6] = "unset";
 	return (res);
 }
 

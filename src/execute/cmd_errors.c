@@ -62,3 +62,27 @@ int	cmd_errors(t_data *data, t_spl_pipe *tmp)
 	}
 	return (0);
 }
+
+void	pipex(int (*fds)[2], int psize)
+{
+	int	i;
+
+	i = -1;
+	while (++i < psize - 1)
+		if (pipe(fds[i]) == -1)
+			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
+}
+
+void	pid_check(int (*fds)[2], int psize, int i, \
+t_spl_pipe *tmp, t_data *data)
+{
+	signal(SIGQUIT, SIG_DFL);
+	pipe_redirections(tmp);
+	if (psize == 1)
+		do_cmd(data, tmp);
+	else
+	{
+		open_pipes(tmp, i, fds, psize);
+		do_cmd(data, tmp);
+	}
+}

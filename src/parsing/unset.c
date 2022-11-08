@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	is_valid_args(char *args)
+static int	is_valid_args(char *args, t_data *data)
 {
 	int		i;
 	char	*error;
@@ -27,6 +27,7 @@ static int	is_valid_args(char *args)
 						("`", ft_strjoin(args, "'")),
 						": not a valid identifier"));
 			ft_putendl_fd(error, 2, FREE_ON);
+			data->exit_status = 1;
 			return (1);
 		}
 		i++;
@@ -45,12 +46,12 @@ int	unset(t_data *data, char **args)
 	flag = 0;
 	while (args[i])
 	{
-		if (is_valid_args(args[i]) && ++i)
+		if (is_valid_args(args[i], data) && ++i)
 			continue ;
 		del_env_node(data->env, args[i]);
 		del_env_node(data->env_exp, args[i]);
 		i++;
 	}
 	data->envp = env_cpy(data, data->env);
-	return (0);
+	return (data->exit_status);
 }
