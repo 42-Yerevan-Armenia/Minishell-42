@@ -74,7 +74,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	}
 }
 
-
 void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 {
 	while (tmp)
