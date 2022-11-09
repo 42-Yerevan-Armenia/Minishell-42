@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:19:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 10:19:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:41:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	print_env(t_env *head)
 	while (head)
 	{
 		if (head->is_export == ENV || head->is_export == (ENV | EXPORT))
-			printf("%s=%s\n", head->key, head->val);
+			printf("%s%s\n", head->key, head->val);
 		head = head->next;
 	}
 	return (0);

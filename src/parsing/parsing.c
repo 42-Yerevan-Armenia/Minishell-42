@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 21:37:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:02:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_get_status_in_env(t_data *data, t_parse *parser)
 	char	*status;
 
 	status = ft_itoa(data->exit_status);
-	set_env(data, new_env("?", status, FORME));
+	set_env(data, new_env("?=", status, FORME));
 	free_arr(&status);
 	free_spl_pipe(&data->cmd_line);
 	free_arr(&parser->rd_ln);
@@ -79,7 +79,7 @@ int	ft_readline_main(t_parse *parser, t_data *data)
 	parser->rd_ln = readline("🔻minishell> ");
 	if (g_sig == 0 && ++g_sig && !free_arr(&parser->rd_ln))
 	{
-		set_env(data, new_env("?", "1", FORME));
+		set_env(data, new_env("?=", "1", FORME));
 		return (1);
 	}
 	set_term_attr(TC_ON);
@@ -92,7 +92,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
-	
+
 	(void)av;
 	data.builtins =  ft_bultins();
 	if (ac == 1)
@@ -117,4 +117,3 @@ int	main(int ac, char **av, char **envp)
 		free_envp(&data.env);
 	}
 }
-

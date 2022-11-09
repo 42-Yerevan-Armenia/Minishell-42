@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:21:55 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 20:17:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:57:09 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,9 @@ int	search_builtin(char *s, char **builtins)
 			return (1);
 	return (0);
 }
+
+int    put_exit_s(t_data *data, int status)
+ {
+     data->exit_status = status;
+     return (0);
+ }

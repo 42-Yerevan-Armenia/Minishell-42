@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes  -I./readline-vaghazar/include # -g -ggdb3  #-fsanitize=address #  #-Wall -Wextra -Werror 
+CFLAGS =  -I./includes  -I./readline-vaghazar/include# -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  #-Wall -Wextra -Werror 
 
 ifeq ($(HOME), /Users/vaghazar)
 LINKER = -L ./readline-vaghazar/lib/
@@ -54,11 +54,11 @@ $(TMP):
 	@mkdir $(TMP)
 
 $(LIBFT):
-	@make --no-print-directory -C $(LIBFT_DIR)
+	# @make --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	# @make --no-print-directory clean -C $(LIBFT_DIR)
+	@make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS_DIR)
 	$(RM) $(TMP)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"

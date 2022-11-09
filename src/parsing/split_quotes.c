@@ -22,18 +22,11 @@ static void	pass_qutoe(int *i, char *str)
 	if (str[*i])
 		*i += 1;
 }
-
+// c="$HOME"
 void	split_quotes_helper(t_parse *parser, t_vars *v, char *tmp)
 {
-	while (1)
-	{
 		while (tmp[v->i] && (tmp[v->i] != '\'' && tmp[v->i] != '"'))
 			v->i++;
-		if (tmp[v->i] != 0 && !ft_strchr(METACHARS, tmp[v->i - 1]))
-		{
-			pass_qutoe(&v->i, tmp);
-			continue ;
-		}
 		if (v->t != v->i
 			&& !resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k))
 			parser->spl_qutoes[v->k++] = ft_substr(tmp, v->t, v->i - v->t);
@@ -46,8 +39,6 @@ void	split_quotes_helper(t_parse *parser, t_vars *v, char *tmp)
 			resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k);
 			parser->spl_qutoes[v->k++] = ft_substr(tmp, v->j, v->i - v->j + 1);
 		}
-		break ;
-	}
 }
 
 int	split_quotes(t_parse *parser)

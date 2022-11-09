@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 21:38:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/09 18:59:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	}
 }
 
-int	hook_signals(void);
 
 void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 {
