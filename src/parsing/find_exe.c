@@ -30,9 +30,14 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 	{
 		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
 		if (node->rdc[m][0] == '\0')
+		{
+			free_arr(&node->rdc[m]);
 			node->rdc[m] = ft_strdup(BAD_RDR);
+		}
 		else if (!clean_quotes_single_arr(&node->rdc[m]))
 			ft_put_rdc_mode(&node->rdc[m], v->c);
+		else
+			free_arr(&node->rdc[m]);
 		m++;
 	}
 	if (v->c == IN_FILES || v->c == HEREDOC)
