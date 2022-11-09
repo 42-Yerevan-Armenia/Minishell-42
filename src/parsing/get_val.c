@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 21:53:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:55:13 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,26 @@ char	*get_val(t_env *head, char *key)
 t_env	*get_node(t_env *head, char *key)
 {
 	char	*ptr;
+	int		i;
 
-	ptr = ft_strjoin(key, "=");
+	i = 0;
+	ptr = NULL;
+	while (key[i])
+		i++;
+	if (i != 0 && key[i - 1] == '=')
+	{
+		ptr = ft_strdup(key);
+		ptr[i - 1] = '\0';
+	}
+	else
+		ptr = ft_strjoin(key, "=");
+	// printf("key = %s\n", key);
+	// printf("ptr = %s\n", ptr);
 	while (key && head)
 	{
-		if (!ft_strcmp(head->key, key))
+		if (!ft_strcmp(head->key, key) && !free_arr(&ptr))
 			return (head);
-		if (!ft_strcmp(head->key, ptr) && !free_arr(&ptr))
+		if (ptr && !ft_strcmp(head->key, ptr) && !free_arr(&ptr))
 			return (head);
 		head = head->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 21:51:25 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:57:28 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	set_env(t_data *data, t_env *new_node)
 		tmp = new_env(new_node->key, new_node->val, new_node->is_export);
 	else
 		tmp = new_node;
-	if (new_node && (new_node->is_export == EXPORT
+	if (/*new_node && */(new_node->is_export == EXPORT
 			|| new_node->is_export == (ENV | EXPORT)))
 	{
 		v_ret = set_env_helper(data->env_exp, &new_node, &tmp);

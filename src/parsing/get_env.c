@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 20:45:17 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/09 20:04:16 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	get_env(t_data *data, char **envp, int is_export)
 	while (envp[i])
 	{
 		tmp = split_for_env(envp[i], '=');
+		// printf(" tmp[0] = %s\n", tmp[0]);
+		// printf(" tmp[1] = %s\n", tmp[1]);
 		if (ft_strcmp(tmp[0], "OLDPWD="))
 		{
 			env = new_env(tmp[0], tmp[1], is_export);
