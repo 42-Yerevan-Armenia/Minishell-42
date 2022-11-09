@@ -59,9 +59,3 @@ int	search_builtin(char *s, char **builtins)
 			return (1);
 	return (0);
 }
-
-int    put_exit_s(t_data *data, int status)
- {
-     data->exit_status = status;
-     return (0);
- }
