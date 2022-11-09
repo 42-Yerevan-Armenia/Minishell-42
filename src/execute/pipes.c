@@ -12,6 +12,12 @@
 
 #include "../includes/minishell.h"
 
+void	pipe_redirections(t_spl_pipe *tmp)
+{
+	dup2(tmp->fd_out, 1);
+	dup2(tmp->fd_in, 0);
+}
+
 char	*get_cmd(char **paths, char *cmd)
 {
 	char	*tmp;
