@@ -12,12 +12,8 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
-
-	   // #include <readline/readline.h>
-	   // #include <readline/history.h>
-
+// #include <readline/readline.h>
+// #include <readline/history.h>
 # include "../libft/libft.h"
 // # include "readline/readline.h"
 # include "structs.h"
@@ -32,7 +28,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <dirent.h>
-
 
 # include <sys/ioctl.h>
 # include <termios.h>
@@ -69,15 +64,16 @@ void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
 
 // execute
-void            cmd_errors_1(t_data *data, t_spl_pipe *tmp);
-int	            cmd_errors_2(t_data *data, t_spl_pipe *tmp);
-int	            cmd_errors(t_data *data, t_spl_pipe *tmp);
-void                        execute(t_data *data);
+void			cmd_errors_1(t_data *data, t_spl_pipe *tmp);
+int				cmd_errors_2(t_data *data, t_spl_pipe *tmp);
+int				cmd_errors(t_data *data, t_spl_pipe *tmp);
+void			execute(t_data *data);
 int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
-char	        *get_cmd(char **paths, char *cmd);
+char			*get_cmd(char **paths, char *cmd);
 void			pipex(int (*fds)[2], int psize);
-void			pid_check(int (*fds)[2], int psize, int i, t_spl_pipe *tmp, t_data *data);
+void			pid_check(int (*fds)[2], int psize, int i, \
+				t_spl_pipe *tmp, t_data *data);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);
@@ -101,8 +97,8 @@ int				pwd(t_data *data);
 int				cd(t_data *data, char **args);
 int				ft_exit(t_data *data, char **args);
 int				run_heredoc(t_data *data);
-int	                     search_builtin(char *s, char **builtins);
-char	                     **ft_bultins(void);
+int				search_builtin(char *s, char **builtins);
+char			**ft_bultins(void);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);

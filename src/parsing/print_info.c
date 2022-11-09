@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-void print_info(t_parse *parser)
+void	print_info(t_parse *parser)
 {
-	int	i;
-	t_spl_pipe *tmp = parser->data->cmd_line->head;
+	int			i;
+	t_spl_pipe	*tmp;
 
+	tmp = parser->data->cmd_line->head;
 	i = 0;
-	
 	while (tmp)
 	{
 		printf("\n----------------------------------\n");

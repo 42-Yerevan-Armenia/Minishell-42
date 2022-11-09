@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 static int	find_unexpected_token(char *s, int i)
 {
 	while (s[i] && ft_strchr(SPACES, s[i]))

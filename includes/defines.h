@@ -37,7 +37,7 @@
 # define FREE_1 1
 # define FREE_2 2
 
-extern int g_sig;
+extern int	g_sig;
 
 //Pipes
 # define FORK "🔻minishell> fork: Resource temporarily unavailable ❌\n"
