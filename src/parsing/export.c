@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 20:03:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:29:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	print_exp(t_env *head)
 		if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
 		{
 			printf("declare -x %s", head->key);
-			// printf("head->val = %s\n",  head->val);
 			if (head->val)
 				printf("\"%s\"", head->val);
 			printf("\n");
@@ -88,8 +87,6 @@ int	export(t_data *data, char **args)
 		if (is_valid_args(args[i], data) && ++i)
 			continue ;
 		tmp = split_for_env(args[i], '=');
-		// printf("tmp0 = %s\n", tmp[0]);
-		// printf("tmp1 = %s\n", tmp[1]);
 		if (tmp[1])
 			set_env(data, new_env(tmp[0], tmp[1], (ENV | EXPORT)));
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_api.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:09:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 19:53:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:30:10 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ int	del_env_node(t_list_env *env, char *key)
 	t_env	*del;
 
 	tmp = get_node(env->head, key);
-	// tmp = env->head;
-	// while (tmp && ft_strcmp(tmp->key, key))
-	// 	tmp = tmp->next;
 	if (tmp == NULL)
 		return (1);
 	del = tmp;

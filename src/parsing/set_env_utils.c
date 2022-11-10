@@ -12,34 +12,13 @@
 
 #include "minishell.h"
 
-int	find_var_rap(t_list_env *env, t_env *new_node)
+static int	find_var_rap_helper(t_env *head, int flag, t_env *new_node)
 {
-	t_env	*head;
-	int		i;
-	int		flag;
-
-	head = env->head;
-	i = ft_strlen(new_node->key);
-	flag = 0;
-	// if (i != 0 && new_node->key[i - 1] == '=')
-	// 	new_node->key[i - 1] = '\0';
-	if (i >= 2 && new_node->key[i - 2] == '+' && ++flag)
-	{
-		new_node->key[i - 2] = '=';
-		new_node->key[i - 1] = '\0';
-	}
 	head = get_node(head, new_node->key);
-	// if (head)
-	// {
-	// 	printf("stex head->key = %s\n", head->key);
-	// 	printf("stex head->val = %s\n", head->val);
-	// }
 	if (head != NULL)
 	{
-		// printf("hajox\n");
-		// printf("new_node->val = %s\n", new_node->val);
-		// printf("new_node->key = %s\n", new_node->key);
-		if (flag == 0 && new_node->val && !free_arr(&head->val) && !free_arr(&head->key))
+		if (flag == 0 && new_node->val
+			&& !free_arr(&head->val) && !free_arr(&head->key))
 		{
 			head->key = ft_strdup(new_node->key);
 			head->val = ft_strdup(new_node->val);
@@ -49,9 +28,24 @@ int	find_var_rap(t_list_env *env, t_env *new_node)
 			head->key = ft_strdup(new_node->key);
 			head->val = ft_strjoin_1(head->val, new_node->val);
 		}
-		// printf("astex head->key = %s\n", head->key);
-		// printf("astex head->val = %s\n", head->val);
 		return (1);
 	}
+	return (0);
+}
+
+int	find_var_rap(t_list_env *env, t_env *new_node)
+{
+	int		i;
+	int		flag;
+
+	i = ft_strlen(new_node->key);
+	flag = 0;
+	if (i >= 2 && new_node->key[i - 2] == '+' && ++flag)
+	{
+		new_node->key[i - 2] = '=';
+		new_node->key[i - 1] = '\0';
+	}
+	if (find_var_rap_helper(env->head, flag, new_node) == 1)
+		return (1);
 	return (0);
 }

@@ -12,17 +12,6 @@
 
 #include "minishell.h"
 
-static void	pass_qutoe(int *i, char *str)
-{
-	char	tmp;
-
-	tmp = str[(*i)++];
-	while (str[*i] && str[*i] != tmp)
-		(*i)++;
-	if (str[*i])
-		*i += 1;
-}
-// c="$HOME"
 void	split_quotes_helper(t_parse *parser, t_vars *v, char *tmp)
 {
 	while (tmp[v->i] && (tmp[v->i] != '\'' && tmp[v->i] != '"'))

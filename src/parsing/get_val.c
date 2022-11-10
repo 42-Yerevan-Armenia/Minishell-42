@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 19:55:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:27:14 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ t_env	*get_node(t_env *head, char *key)
 	}
 	else
 		ptr = ft_strjoin(key, "=");
-	// printf("key = %s\n", key);
-	// printf("ptr = %s\n", ptr);
 	while (key && head)
 	{
 		if (!ft_strcmp(head->key, key) && !free_arr(&ptr))

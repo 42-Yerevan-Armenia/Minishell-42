@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 19:02:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:26:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_sig = 1;
-
-int	init(t_parse *parser, t_data *data, char **envp)
-{
-	parser->data = data;
-	parser->l_arr = 2;
-	parser->key = NULL;
-	parser->spl_qutoes = NULL;
-	parser->spl_pipe = NULL;
-	parser->join_pipe = NULL;
-	parser->rd_ln = NULL;
-	parser->hered_res = NULL;
-	data->parser = parser;
-	data->envp = NULL;
-	data->hdoc_mode = NULL;
-	data->cmd_line = create_list_pipe();
-	data->env = create_list_env();
-	data->env_exp = create_list_env();
-	data->exit_status = 0;
-	get_env(data, envp, (EXPORT | ENV));
-	shell_lvl(data);
-	data->envp = env_cpy(data, data->env);
-	return (0);
-}
 
 int	ft_get_status_in_env(t_data *data, t_parse *parser)
 {
@@ -88,32 +65,37 @@ int	ft_readline_main(t_parse *parser, t_data *data)
 	return (0);
 }
 
+void	start(t_parse *parser, t_data *data)
+{
+	while (!free_arr(&parser->rd_ln))
+	{
+		if (ft_readline_main(parser, data) == 1)
+			continue ;
+		if (parser->rd_ln[0])
+		{
+			add_history(parser->rd_ln);
+			if (parsing(parser) == START_RD_LN
+				&& !ft_get_status_in_env(data, parser))
+				continue ;
+			if (data->cmd_line->head && data->cmd_line->head->cmd)
+				execute(data);
+		}
+		ft_get_status_in_env(data, parser);
+	}	
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_parse	parser;
 	t_data	data;
 
 	(void)av;
-	data.builtins =  ft_bultins();
+	data.builtins = ft_bultins();
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
 		hook_signals();
-		while (!free_arr(&parser.rd_ln))
-		{
-			if (ft_readline_main(&parser, &data) == 1)
-				continue ;
-			if (parser.rd_ln[0])
-			{
-				add_history(parser.rd_ln);
-				if (parsing(&parser) == START_RD_LN
-					&& !ft_get_status_in_env(&data, &parser))
-					continue ;
-				if (data.cmd_line->head && data.cmd_line->head->cmd)
-					execute(&data);
-			}
-			ft_get_status_in_env(&data, &parser);
-		}
+		start(&parser, &data);
 		free_envp(&data.env);
 	}
 }

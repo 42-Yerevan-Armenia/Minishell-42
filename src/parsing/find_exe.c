@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 20:13:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:29:37 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	fill_arrs(t_spl_pipe *node, char *tmp, t_vars *v)
 	else if (v->c == COMAND && !resize_arr(&node->cmd, &l_arr, n_cmd))
 		node->cmd[n_cmd++] = ft_substr(tmp, v->j, v->i - v->j);
 	else
- 	{
- 		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
- 		if (node->rdc[m][0] == '\0' && !free_arr(&node->rdc[m]))
- 			node->rdc[m] = ft_strdup(BAD_RDR);
- 		else if (!clean_quotes_single_arr(&node->rdc[m]))
- 			ft_put_rdc_mode(&node->rdc[m], v->c);
+	{
+		node->rdc[m] = ft_substr(tmp, v->j, v->i - v->j);
+		if (node->rdc[m][0] == '\0' && !free_arr(&node->rdc[m]))
+			node->rdc[m] = ft_strdup(BAD_RDR);
+		else if (!clean_quotes_single_arr(&node->rdc[m]))
+			ft_put_rdc_mode(&node->rdc[m], v->c);
 		m++;
 	}
 	if (v->c == IN_FILES || v->c == HEREDOC)

@@ -55,8 +55,6 @@ static int	set_env_helper(t_list_env *env, t_env **new_node, t_env **tmp)
 	{
 		if ((*new_node)->is_export != FORME)
 			++(env->size);
-		// if (i != 0 && (*new_node)->key[i - 1] == '=')
-		// (*new_node)->key[i - 1] = '\0';
 		if (i != 0 && i != 1 && (*new_node)->key[i - 2] == '+')
 		{
 			(*new_node)->key[i - 2] = '=';
@@ -104,7 +102,7 @@ void	set_env(t_data *data, t_env *new_node)
 		tmp = new_env(new_node->key, new_node->val, new_node->is_export);
 	else
 		tmp = new_node;
-	if (/*new_node && */(new_node->is_export == EXPORT
+	if ((new_node->is_export == EXPORT
 			|| new_node->is_export == (ENV | EXPORT)))
 	{
 		v_ret = set_env_helper(data->env_exp, &new_node, &tmp);

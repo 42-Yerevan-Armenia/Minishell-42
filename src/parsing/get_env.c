@@ -45,8 +45,6 @@ void	get_env(t_data *data, char **envp, int is_export)
 	while (envp[i])
 	{
 		tmp = split_for_env(envp[i], '=');
-		// printf(" tmp[0] = %s\n", tmp[0]);
-		// printf(" tmp[1] = %s\n", tmp[1]);
 		if (ft_strcmp(tmp[0], "OLDPWD="))
 		{
 			env = new_env(tmp[0], tmp[1], is_export);
