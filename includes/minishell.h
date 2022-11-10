@@ -6,16 +6,13 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 18:26:33 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:47:11 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-// #include <readline/readline.h>
-// #include <readline/history.h>
 # include "../libft/libft.h"
-// # include "readline/readline.h"
 # include "structs.h"
 # include "defines.h"
 # include "limits.h"
@@ -109,7 +106,6 @@ int				fill_null(void ***ptr, int len);
 int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
-void			print_info(t_parse *parser);
 int				free_double(char ***ptr);
 int				free_parse(t_parse *parser);
 int				free_spl_pipe(t_list_spl_pipe **list);
@@ -117,11 +113,8 @@ int				init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int				free_envp(t_list_env **list);
 int				free_arr(char **arr);
 int				ft_perror(char *str);
-// int				count_quotes(char *arr);
-// int 			clean_quotes(char ***arr);
 int				ft_clean_all_qutoes(t_spl_pipe *head);
 int				clean_quotes_single_arr(char **s);
-// int             find_hdoc_mode(char *str);
 int				get_all_hd_modes(t_parse *parser);
 size_t			arr_double_len(char **arr);
 char			*ft_strjoin_1(char *s1, char *s2);
@@ -153,11 +146,3 @@ void			do_cmd(t_data *data, t_spl_pipe *tmp);
 int				put_exit_s(t_data *data, int status);
 
 #endif
-
-// need error keys for pipe and fork
-// fds did not closed after cat | cat | cat ...
-// do not see infile and outfile
-
-//dzem sax
-
-// free_all for exit

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 20:44:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 18:53:03 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@ static int	ft_heredoc_rdln(t_spl_pipe **node, char **rd_ln, char ***res)
 	*rd_ln = readline("> ");
 	set_term_attr(TC_ON);
 	if (!*rd_ln && !free_double(res))
+	{
+		(*node)->data->exit_status = 0;
 		return (START_RD_LN);
+	}
 	if (g_sig == 0 && !free_double(res) && !free_arr(rd_ln) && ++g_sig)
 	{
-		set_env((*node)->data, new_env("?=", "1", FORME));
+		(*node)->data->exit_status = 1;
 		return (START_RD_LN);
 	}
 	return (0);

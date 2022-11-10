@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_lvl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 09:44:26 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 20:42:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:33:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_valid(char	*str)
 	i = 0;
 	while (str[i] && ft_strchr(SPACES, str[i]))
 		i++;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isdigit(str[i]) || i > 12)
 			return (1);
@@ -35,8 +35,10 @@ int	shell_lvl(t_data *data)
 	long	num;
 
 	tmp = get_val(data->env->head, "SHLVL");
+	if (tmp && tmp[0] == '=')
+		tmp++;
 	num = ft_atoi(tmp);
-	if (tmp == NULL || is_valid(tmp) == 1)
+	if ((tmp == NULL || is_valid(tmp) == 1))
 		set_env(data, new_env("SHLVL=", "1", (ENV | EXPORT)));
 	else if (num == 999)
 		set_env(data, new_env("SHLVL=", NULL, (ENV | EXPORT)));

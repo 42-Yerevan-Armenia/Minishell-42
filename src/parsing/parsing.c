@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 18:26:54 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:47:03 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	parsing(t_parse *parser)
 	if (parser->data->cmd_line->head == NULL)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
-	print_info(parser);
 	get_hd_mode_in_pipe(parser);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
@@ -78,7 +77,11 @@ void	start(t_parse *parser, t_data *data)
 				&& !ft_get_status_in_env(data, parser))
 				continue ;
 			if (data->cmd_line->head && data->cmd_line->head->cmd)
+			{
+				set_env(data, new_env("_=", data->cmd_line->tail->cmd \
+				[arr_double_len(data->cmd_line->tail->cmd) - 1], (ENV)));
 				execute(data);
+			}
 		}
 		ft_get_status_in_env(data, parser);
 	}	

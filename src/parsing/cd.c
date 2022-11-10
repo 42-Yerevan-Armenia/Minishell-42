@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 20:44:17 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:05:58 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,28 @@ int	go_home(t_data *data)
 	return (0);
 }
 
+static void	deleted_dir_helper(t_data *data, char **args)
+{
+	char	*tmp;
+
+	tmp = getcwd(NULL, 0);
+	if (tmp)
+	{
+		set_env(data, new_env("PWD=", tmp, FORME));
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		free_arr(&tmp);
+	}
+	else
+	{
+		tmp = ft_strjoin_1(ft_strjoin(get_val
+					(data->env->head, "PWD"), "/"), args[1]);
+		set_env(data, new_env("PWD=", tmp, FORME));
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		ft_putstr_fd(CD_ERROR, 2, FREE_OFF);
+	}
+	free_arr(&tmp);
+}
+
 int	deleted_dir(t_data *data, char **args)
 {
 	char	*tmp;
@@ -41,21 +63,8 @@ int	deleted_dir(t_data *data, char **args)
 		if (chdir(args[1]) == -1 && !ft_putendl_fd(ft_strjoin_1(ft_strjoin
 					("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
 			return (1);
-		tmp = getcwd(NULL, 0);
-		if (tmp && !free_arr(&tmp))
-		{
-			set_env(data, new_env("PWD=", tmp, FORME));
-			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
-		}
-		else
-		{
-			set_env(data, new_env("PWD=", ft_strjoin(ft_strjoin(get_val
-							(data->env->head, "PWD"), "/"), args[1]), FORME));
-			set_env(data, new_env("PWD=", ft_strjoin(ft_strjoin(get_val(
-								data->env->head, "PWD"), "/"),
-						args[1]), (ENV | EXPORT)));
-			ft_putstr_fd(CD_ERROR, 2, FREE_OFF);
-		}
+		free_arr(&tmp);
+		deleted_dir_helper(data, args);
 	}
 	return (0);
 }

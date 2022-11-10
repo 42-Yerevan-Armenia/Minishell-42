@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/07 21:37:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:18:32 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,23 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	i = 0;
 	if (*tmp->cmd[0] != '\0' && search_builtin(tmp->cmd[0], data->builtins))
 		run_builtins(data, tmp);
+	else if (data->path)
+	{
+		if (cmd_errors(data, tmp) == 1)
+			execve(data->path, tmp->cmd, data->envp);
+		// if (!data->path)
+		// {
+		// 	free(data->path);
+		// 	ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		// 	ft_strjoin(*tmp->cmd, NOT_FOUND)), 2, FREE_ON);
+		// 	data->exit_status = 127;
+		// }
+	}
 	else
 	{
-		cmd_errors(data, tmp);
-		if (!data->path)
-		{
-			free(data->path);
-			ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-			ft_strjoin(*tmp->cmd, NOT_FOUND)), 2, FREE_ON);
-			data->exit_status = 127;
-		}
-		execve(data->path, tmp->cmd, data->envp);
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(*tmp->cmd, NO_DIR)), 2, FREE_ON);
+		data->exit_status = 127;
 	}
 	exit(data->exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_cpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/01 11:27:13 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:45:55 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**env_cpy(t_data *data, t_list_env *env)
 	while (tmp)
 	{
 		if (tmp->is_export == ENV || tmp->is_export == (ENV | EXPORT))
-			res[i++] = ft_strjoin_1(ft_strjoin(tmp->key, "="), tmp->val);
+			res[i++] = ft_strjoin(tmp->key, tmp->val);
 		tmp = tmp->next;
 	}
 	free_double((void *)&data->envp);

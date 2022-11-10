@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 20:25:21 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:26:12 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_herdoc(char *ptr_sign, char	*start, int i)
 	i = 1;
 	while (ptr_sign[i] && ft_strchr(SPACES, ptr_sign[i]))
 		i++;
-	if (ptr_sign[i] == '\0')
+	if (ptr_sign[i] == '\0' || ptr_sign[i] == '"' || ptr_sign[i] == '\'')
 		return (1);
 	return (0);
 }
