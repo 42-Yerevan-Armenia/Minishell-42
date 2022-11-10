@@ -32,6 +32,8 @@ void	execute(t_data *data)
 			ps = 0;
 			run_binar(data);
 		}
+		set_env(data, new_env("_", data->cmd_line->tail->cmd \
+		[arr_double_len(data->cmd_line->tail->cmd) - 1], (ENV | EXPORT)));
 	}
 }
 
