@@ -4,6 +4,7 @@ minishell
 *.sh
 a.out
 test
+printf_info.c
 ## Mlx related
 Makefile.gen
 /test/mlx-test

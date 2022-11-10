@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/09 18:59:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:55:40 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 	}
 }
 
-
 void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 {
 	while (tmp)
@@ -88,7 +87,7 @@ void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 	{
 		data->exit_status = WTERMSIG(data->res) + 128;
 		if (WTERMSIG(data->res) == SIGQUIT)
-			printf("Quit: 3\n");
+			ft_putstr_fd("Quit: 3\n", 2, FREE_OFF);
 		if (WTERMSIG(data->res) == SIGINT)
 			write(1, "\n", 1);
 	}
@@ -102,10 +101,10 @@ int	run_binar(t_data *data)
 	tmp = data->cmd_line->head;
 	data->psize = data->cmd_line->size;
 	data->path = get_val(data->env->head, "PATH");
-	if (!data->path)
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NO_DIR)), 2, FREE_ON);
-	data->cmd_paths = ft_split(data->path, ':');
+	if (data->path)
+	{
+		data->cmd_paths = ft_split(data->path, ':');
+	}
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	forking(fds, data->psize, tmp, data);
 	close_fds(fds, data->psize);

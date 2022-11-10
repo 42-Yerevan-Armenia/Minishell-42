@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS =  -I./includes  -I./readline-vaghazar/include# -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  #-Wall -Wextra -Werror 
+CFLAGS =  -I./includes  -I./readline-vaghazar/include -Wall -Wextra -Werror# -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  
 
 ifeq ($(HOME), /Users/vaghazar)
 LINKER = -L ./readline-vaghazar/lib/
@@ -29,13 +29,6 @@ OBJS = $(patsubst %.c, ./$(TMP)/%.o, $(OBJS_DIR))
 RM = rm -fr
 
 PRER = ./src/execute ./src/parsing
-
-# $(info $$OBJS_DIR is [${OBJS_DIR}])
-# $(info $$SRCS is [${SRCS}])
-
-# ./$(TMP)/%.o: $(shell find ./src/execute/$(%.c))
-# 	@$(CC) $(CFLAGS) -o $@ -c $< 
-# 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
 ./$(TMP)/%.o: ./src/execute/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< 
@@ -54,7 +47,7 @@ $(TMP):
 	@mkdir $(TMP)
 
 $(LIBFT):
-	# @make --no-print-directory -C $(LIBFT_DIR)
+	@make --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
@@ -64,7 +57,7 @@ clean:
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	# @make --no-print-directory fclean -C $(LIBFT_DIR)
+	@make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 

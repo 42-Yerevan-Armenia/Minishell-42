@@ -28,7 +28,7 @@ static int	str_is_valid_num(char *str)
 	return (1);
 }
 
-int	ft_exit(t_data *data, char **args)
+int	ex(t_data *data, char **args)
 {
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
@@ -37,6 +37,12 @@ int	ft_exit(t_data *data, char **args)
 		ft_putstr_fd("exit\n", 1, FREE_OFF);
 		exit(data->exit_status = 127);
 	}
+	return (0);
+}
+
+int	ft_exit(t_data *data, char **args)
+{
+	ex(data, args);
 	if (args[1] && !str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);

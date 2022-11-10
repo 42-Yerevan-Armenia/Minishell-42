@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 20:04:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:04:15 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,10 @@ char	**split_for_env(char *str, char c)
 	return (res);
 }
 
-void	get_env(t_data *data, char **envp, int is_export)
+static void	get_env_helper(t_data *data)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
 	char	*pwd;
 
-	i = 0;
-	while (envp[i])
-	{
-		tmp = split_for_env(envp[i], '=');
-		// printf(" tmp[0] = %s\n", tmp[0]);
-		// printf(" tmp[1] = %s\n", tmp[1]);
-		if (ft_strcmp(tmp[0], "OLDPWD="))
-		{
-			env = new_env(tmp[0], tmp[1], is_export);
-			set_env(data, env);
-		}
-		free_double((void *)&tmp);
-		i++;
-	}
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL && errno == ENOENT)
 		ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
@@ -63,4 +46,28 @@ void	get_env(t_data *data, char **envp, int is_export)
 	free_arr(&pwd);
 	set_env(data, new_env("?=", "0", (FORME)));
 	data->envp = env_cpy(data, data->env);
+}
+
+void	get_env(t_data *data, char **envp, int is_export)
+{
+	t_env	*env;
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	while (envp[i])
+	{
+		tmp = split_for_env(envp[i], '=');
+		if (ft_strcmp(tmp[0], "OLDPWD="))
+		{
+			if (!ft_strcmp(tmp[0], "_="))
+				env = new_env(tmp[0], tmp[1], ENV);
+			else
+				env = new_env(tmp[0], tmp[1], is_export);
+			set_env(data, env);
+		}
+		free_double((void *)&tmp);
+		i++;
+	}
+	get_env_helper(data);
 }

@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 21:25:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:47:11 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
-
-	   // #include <readline/readline.h>
-	   // #include <readline/history.h>
-
 # include "../libft/libft.h"
-// # include "readline/readline.h"
 # include "structs.h"
 # include "defines.h"
 # include "limits.h"
@@ -32,7 +25,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <dirent.h>
-
 
 # include <sys/ioctl.h>
 # include <termios.h>
@@ -47,6 +39,7 @@
 
 extern int	g_sig;
 
+int				init(t_parse *parser, t_data *data, char **envp);
 void			printf_header(void);
 void			builtin_forking(t_data *data);
 void			dis_prompt(void);
@@ -69,15 +62,16 @@ void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
 
 // execute
-void            cmd_errors_1(t_data *data, t_spl_pipe *tmp);
-int	            cmd_errors_2(t_data *data, t_spl_pipe *tmp);
-int	            cmd_errors(t_data *data, t_spl_pipe *tmp);
-void                        execute(t_data *data);
+void			cmd_errors_1(t_data *data, t_spl_pipe *tmp);
+int				cmd_errors_2(t_data *data, t_spl_pipe *tmp);
+int				cmd_errors(t_data *data, t_spl_pipe *tmp);
+void			execute(t_data *data);
 int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
-char	        *get_cmd(char **paths, char *cmd);
+char			*get_cmd(char **paths, char *cmd);
 void			pipex(int (*fds)[2], int psize);
-void			pid_check(int (*fds)[2], int psize, int i, t_spl_pipe *tmp, t_data *data);
+void			pid_check(int (*fds)[2], int psize, int i, \
+				t_spl_pipe *tmp, t_data *data);
 void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);
@@ -101,8 +95,8 @@ int				pwd(t_data *data);
 int				cd(t_data *data, char **args);
 int				ft_exit(t_data *data, char **args);
 int				run_heredoc(t_data *data);
-int	                     search_builtin(char *s, char **builtins);
-char	                     **ft_bultins(void);
+int				search_builtin(char *s, char **builtins);
+char			**ft_bultins(void);
 
 // helper func
 t_list_spl_pipe	*create_list_pipe(void);
@@ -112,7 +106,6 @@ int				fill_null(void ***ptr, int len);
 int				resize_arr(char ***arr, int *l_arr, int k);
 char			*ft_strchrs(const char *s, const char *set);
 t_elem			*count_elem(char *str);
-void			print_info(t_parse *parser);
 int				free_double(char ***ptr);
 int				free_parse(t_parse *parser);
 int				free_spl_pipe(t_list_spl_pipe **list);
@@ -120,11 +113,8 @@ int				init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 int				free_envp(t_list_env **list);
 int				free_arr(char **arr);
 int				ft_perror(char *str);
-// int				count_quotes(char *arr);
-// int 			clean_quotes(char ***arr);
 int				ft_clean_all_qutoes(t_spl_pipe *head);
 int				clean_quotes_single_arr(char **s);
-// int             find_hdoc_mode(char *str);
 int				get_all_hd_modes(t_parse *parser);
 size_t			arr_double_len(char **arr);
 char			*ft_strjoin_1(char *s1, char *s2);
@@ -156,11 +146,3 @@ void			do_cmd(t_data *data, t_spl_pipe *tmp);
 int				put_exit_s(t_data *data, int status);
 
 #endif
-
-// need error keys for pipe and fork
-// fds did not closed after cat | cat | cat ...
-// do not see infile and outfile
-
-//dzem sax
-
-// free_all for exit
