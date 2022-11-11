@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/10 20:55:40 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 19:43:48 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,12 @@ int	run_binar(t_data *data)
 	data->psize = data->cmd_line->size;
 	data->path = get_val(data->env->head, "PATH");
 	if (data->path)
-	{
 		data->cmd_paths = ft_split(data->path, ':');
-	}
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	forking(fds, data->psize, tmp, data);
 	close_fds(fds, data->psize);
-	free_double((void *)&data->cmd_paths);
+	if (data->path)
+		free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);

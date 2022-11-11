@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 20:47:11 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:15:30 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,10 @@ int				cmd_errors(t_data *data, t_spl_pipe *tmp);
 void			execute(t_data *data);
 int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
-char			*get_cmd(char **paths, char *cmd);
+char			*get_cmd(char **paths, char *cmd, t_data *data);
 void			pipex(int (*fds)[2], int psize);
 void			pid_check(int (*fds)[2], int psize, int i, \
 				t_spl_pipe *tmp, t_data *data);
-void			pipe_redirections(t_spl_pipe *tmp);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);
 

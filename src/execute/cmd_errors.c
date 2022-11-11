@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:07:00 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/06 18:07:02 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:30:56 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,9 @@
 int	cmd_errors_2(t_data *data, t_spl_pipe *tmp)
 {
 	if (access(*tmp->cmd, F_OK) != 0)
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NO_DIR)), 2, FREE_ON);
+		no_dir(tmp, data);
 	else if (access(*tmp->cmd, X_OK) != 0)
-	{
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NO_PERM)), 2, FREE_ON);
-		data->exit_status = 126;
-	}
+		no_perm(tmp, data);
 	data->path = *tmp->cmd;
 	return (1);
 }
@@ -34,55 +29,41 @@ void	cmd_errors_1(t_data *data, t_spl_pipe *tmp)
 	data->exit_status = 2;
 }
 
+void	check_path(t_data *data, t_spl_pipe *tmp)
+{
+	if (ft_strchr(*tmp->cmd, '/') && access(*tmp->cmd, X_OK) == 0)
+		data->path = *tmp->cmd;
+	else if (data->path)
+		data->path = get_cmd(data->cmd_paths, *tmp->cmd, data);
+	else if (access(*tmp->cmd, X_OK) != 0)
+		not_found(tmp, data);
+	else
+		no_dir(tmp, data);
+}
+
 int	cmd_errors(t_data *data, t_spl_pipe *tmp)
 {
 	if (*tmp->cmd[0] == 0)
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NOT_FOUND)), 2, FREE_ON);
+		not_found(tmp, data);
 	else if (tmp->cmd[0][0] == '.' && !tmp->cmd[0][1])
 		cmd_errors_1(data, tmp);
 	else if (opendir(*tmp->cmd) && ft_strchr(*(tmp->cmd), '/'))
-	{
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, IS_DIR)), 2, FREE_ON);
-		data->exit_status = 126;
-	}
+		is_dir(tmp, data);
 	else if (tmp->cmd[0][0] == '/' || (tmp->cmd[0][1] == '.' \
 		&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
 		&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
 		&& tmp->cmd[0][1] == '.' && tmp->cmd[0][2] == '/'))
+	{
 		cmd_errors_2(data, tmp);
+		data->path = ft_strdup(*tmp->cmd);
+		return (1);
+	}
 	else if (tmp->cmd[0][0] == '.')
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NOT_FOUND)), 2, FREE_ON);
+		not_found(tmp, data);
 	else
 	{
-		data->path = get_cmd(data->cmd_paths, *tmp->cmd);
+		check_path(data, tmp);
 		return (1);
 	}
 	return (0);
-}
-
-void	pipex(int (*fds)[2], int psize)
-{
-	int	i;
-
-	i = -1;
-	while (++i < psize - 1)
-		if (pipe(fds[i]) == -1)
-			ft_putstr_fd(INPUT_FILE, 2, FREE_OFF);
-}
-
-void	pid_check(int (*fds)[2], int psize, int i, \
-t_spl_pipe *tmp, t_data *data)
-{
-	signal(SIGQUIT, SIG_DFL);
-	pipe_redirections(tmp);
-	if (psize == 1)
-		do_cmd(data, tmp);
-	else
-	{
-		open_pipes(tmp, i, fds, psize);
-		do_cmd(data, tmp);
-	}
 }
