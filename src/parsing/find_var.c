@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   find_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 19:26:12 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:43:27 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_herdoc(char *ptr_sign, char	*start, int i)
+//  echo $"HOME"
+int	is_herdoc(char *ptr_sign, char	*start, int i, char *next_arr)
 {
 	if (&ptr_sign[i] != start)
 	{
@@ -26,20 +26,28 @@ int	is_herdoc(char *ptr_sign, char	*start, int i)
 	i = 1;
 	while (ptr_sign[i] && ft_strchr(SPACES, ptr_sign[i]))
 		i++;
-	if (ptr_sign[i] == '\0' || ptr_sign[i] == '"' || ptr_sign[i] == '\'')
+	if (ptr_sign[i] == '"' || ptr_sign[i] == '\'')
 		return (1);
+	if (ptr_sign[i] == '\0')
+	{
+		if (next_arr && (next_arr[0] == '\'' || next_arr[0] == '"'))
+			return (0);
+		return (1);
+	}
 	return (0);
 }
 
-static void	find_var_helper(char *src, char **res, char **ptr, int j)
+static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
+	char	*res;
 
 	init_zero(&len, &i, NULL, NULL);
+	res = NULL;
 	while (src[j])
 	{
-		if (src[j] == '$' && !is_herdoc(src + j, src, i))
+		if (src[j] == '$' && !is_herdoc(src + j, src, i, next))
 		{
 			*ptr = &src[j++];
 			if (src[j] == '?' && ++j)
@@ -47,30 +55,28 @@ static void	find_var_helper(char *src, char **res, char **ptr, int j)
 			else
 				while (src[j] && (ft_isalnum(src[j]) || src[j] == '_') && ++j)
 					len++;
-			(*res) = malloc(sizeof(char) * len + 1);
-			if (!(*res) && !ft_perror("minishell: "))
+			res = malloc(sizeof(char) * len + 1);
+			if (!res && !ft_perror("minishell: "))
 				exit(1);
 			while (len)
-				(*res)[i++] = src[j - len--];
+				res[i++] = src[j - len--];
 			break ;
 		}
 		j++;
 	}
-	if ((*res))
-		(*res)[i] = '\0';
+	if (res)
+		res[i] = '\0';
+	return (res);
 }
 
-char	*find_var(char *src, char **ptr, int j)
+char	*find_var(char *src, char **ptr, int j, char *next)
 {
 	int		i;
-	char	*res;
 	int		len;
 
 	i = 0;
 	len = 0;
-	res = NULL;
 	if (!src)
 		return (NULL);
-	find_var_helper(src, &res, ptr, j);
-	return (res);
+	return (find_var_helper(src, ptr, j, next));
 }

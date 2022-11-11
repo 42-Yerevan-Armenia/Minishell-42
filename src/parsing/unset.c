@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/09 19:45:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:27:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static int	is_valid_args(char *args, t_data *data)
 	char	*error;
 
 	i = 0;
-	while (args[i])
+	while (args)
 	{
-		if (((!ft_isalnum(args[i]) && args[i] != '_') || (ft_isdigit(args[i])
+		if ((args[0] == '\0' || (!ft_isalnum(args[i])
+					&& args[i] != '_') || (ft_isdigit(args[i])
 					&& i == 0)))
 		{
 			error = ft_strjoin_2("minishell: unset: ", ft_strjoin_1(ft_strjoin_2
@@ -31,6 +32,8 @@ static int	is_valid_args(char *args, t_data *data)
 			return (1);
 		}
 		i++;
+		if (args[i] == '\0')
+			break ;
 	}
 	return (0);
 }
@@ -44,6 +47,7 @@ int	unset(t_data *data, char **args)
 		return (1);
 	i = 1;
 	flag = 0;
+	data->exit_status = 0;
 	while (args[i])
 	{
 		if (is_valid_args(args[i], data) && ++i)

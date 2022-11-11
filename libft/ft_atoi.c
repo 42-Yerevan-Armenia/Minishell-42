@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:34 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/05/23 13:23:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:53:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ long long	ft_atoi(const char *nptr)
 	long long	num;
 	int			temp;
 
+	if (nptr == NULL)
+		return (0);
 	num = 0;
 	temp = 1;
 	while (*nptr == ' ' || *nptr == '\t' || *nptr == '\n'

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 21:34:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:44:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ extern int	g_sig;
 # define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
 # define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
- cannot access parent directories: No such file or directory"
+ cannot access parent directories: No such file or directory\n"
 # define BAD_RDR "minishell: ambigous redirect\n"
 # define NO_SUCH_F ": No such file or directory\n"
 # define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\

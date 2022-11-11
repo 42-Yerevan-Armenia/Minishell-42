@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/10 20:55:40 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:28:17 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	run_binar(t_data *data)
 
 	tmp = data->cmd_line->head;
 	data->psize = data->cmd_line->size;
-	data->path = get_val(data->env->head, "PATH");
+	data->path = get_val(data->env->head, "PATH", ENV);
 	if (data->path)
 	{
 		data->cmd_paths = ft_split(data->path, ':');
@@ -112,6 +112,6 @@ int	run_binar(t_data *data)
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
-	hook_signals();
+	// hook_signals();
 	return (0);
 }

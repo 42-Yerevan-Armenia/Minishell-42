@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 19:04:15 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:39:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,25 @@ char	**split_for_env(char *str, char c)
 static void	get_env_helper(t_data *data)
 {
 	char	*pwd;
+	char	*tmp;
 
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL && errno == ENOENT)
-		ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
-	set_env(data, new_env("PWD=", pwd, (FORME)));
-	set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
+	pwd = NULL;
+	// tmp = get_val(data->env->head, "PWD=", ENV);
+	// if (tmp == NULL)
+	// {
+	// 	pwd = getcwd(NULL, 0);
+	// 	if (pwd == NULL && errno == ENOENT)
+	// 		ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
+	// 	else
+	// 		set_env(data, new_env("PWD=", pwd, (FORME)));
+	// }
+	// else
+	// 	set_env(data, new_env("PWD=", ft_strdup(tmp), (FORME)));
+	// set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
 	free_arr(&pwd);
-	set_env(data, new_env("?=", "0", (FORME)));
-	data->envp = env_cpy(data, data->env);
+
+	// set_env(data, new_env("?=", "0", (FORME)));
+	// print_forme(data->env->head);
 }
 
 void	get_env(t_data *data, char **envp, int is_export)
