@@ -43,7 +43,7 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
-	print_info(parser);
+	// print_info(parser);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
 	free_parse(parser);
@@ -98,8 +98,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init(&parser, &data, envp);
-		// hook_signals();
-
+		hook_signals();
 		start(&parser, &data);
 		free_envp(&data.env);
 	}

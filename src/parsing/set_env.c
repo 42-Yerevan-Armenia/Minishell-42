@@ -75,6 +75,9 @@ static int	set_env_helper(t_list_env *env, t_env **new_node)
 static void	put_env(t_data *data, t_env *new_node)
 {
 	int	v_ret;
+
+	if (new_node->is_export == (ENV | EXPORT))
+		new_node->is_export = ENV;
 	v_ret = set_env_helper(data->env, &new_node);
 	if (v_ret == 0)
 	{
@@ -91,10 +94,11 @@ int	set_env(t_data *data, t_env *new_node)
 {
 	int		mode;
 	int		v_ret;
+	t_env *env;
 
-	mode = new_node->is_export;
 	if (new_node->key == NULL)
 		return (1);
+	env = new_env(new_node->key, new_node->val, new_node->is_export);
 	if ((new_node->is_export == EXPORT
 			|| new_node->is_export == (ENV | EXPORT)))
 	{
@@ -103,14 +107,14 @@ int	set_env(t_data *data, t_env *new_node)
 		if (v_ret == 0 && ++(data->env_exp->size))
 			set_exp(data->env_exp, new_node);
 	}
-	if (((mode == ENV || mode == (ENV | EXPORT))
-			|| mode == FORME))
+	else 
+		del_one(&new_node);
+	if (((env->is_export == ENV || env->is_export == (ENV | EXPORT))
+			|| env->is_export == FORME))
 	{
-		if (mode != FORME)
-			v_ret = ENV;
-		put_env(data, new_env(new_node->key, new_node->val, v_ret));
-		if (mode != EXPORT && mode != (ENV | EXPORT))
-			del_one(&new_node);
+		put_env(data, env);
 	}
+	else
+		del_one(&env);
 	return (0);
 }

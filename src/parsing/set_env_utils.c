@@ -20,7 +20,7 @@ static int	find_var_rap_helper(t_env *head, int flag, t_env *new_node)
 	if (head != NULL)
 	{
 		if (flag == 0 && new_node->val
-			&& !free_arr(&head->val) && !free_arr(&head->key))
+			&& !free_arr(&head->val) && !free_arr(&head->key) && printf("stex em\n"))
 		{
 			head->key = ft_strdup(new_node->key);
 			head->val = ft_strdup(new_node->val);

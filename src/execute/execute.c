@@ -112,6 +112,6 @@ int	run_binar(t_data *data)
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
-	// hook_signals();
+	hook_signals();
 	return (0);
 }

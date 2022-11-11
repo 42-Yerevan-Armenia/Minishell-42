@@ -20,6 +20,8 @@
 # include <fcntl.h>
 # include "readline/history.h"
 # include "readline/readline.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <string.h>
 # include <signal.h>
 # include <sys/types.h>
