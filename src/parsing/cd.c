@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 21:05:58 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:11:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	go_home(t_data *data)
 {
 	char	*tmp;
 
-	tmp = get_val(data->env->head, "HOME");
+	tmp = get_val(data->env->head, "HOME", ENV);
 	if (!tmp && ft_putstr_fd("minishell: cd: HOME not set\n", 2, FREE_OFF))
 		return (1);
 	else
@@ -25,7 +25,8 @@ int	go_home(t_data *data)
 			return (1);
 		tmp = getcwd(NULL, 0);
 		set_env(data, new_env("PWD=", tmp, FORME));
-		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		if (get_node(data->env->head, "PWD", ENV) != NULL)
+			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		free_arr(&tmp);
 	}
 	return (0);
@@ -39,15 +40,17 @@ static void	deleted_dir_helper(t_data *data, char **args)
 	if (tmp)
 	{
 		set_env(data, new_env("PWD=", tmp, FORME));
-		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		if (get_val(data->env->head, "PWD", ENV) != NULL)
+			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		free_arr(&tmp);
 	}
 	else
 	{
 		tmp = ft_strjoin_1(ft_strjoin(get_val
-					(data->env->head, "PWD"), "/"), args[1]);
+					(data->env->head, "PWD", FORME), "/"), args[1]);
 		set_env(data, new_env("PWD=", tmp, FORME));
-		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		if (get_val(data->env->head, "PWD", ENV) != NULL)
+			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		ft_putstr_fd(CD_ERROR, 2, FREE_OFF);
 	}
 	free_arr(&tmp);
@@ -60,7 +63,7 @@ int	deleted_dir(t_data *data, char **args)
 	tmp = getcwd(NULL, 0);
 	if (tmp == NULL && errno == ENOENT)
 	{
-		if (chdir(args[1]) == -1 && !ft_putendl_fd(ft_strjoin_1(ft_strjoin
+		if (chdir(args[1]) == -1 && ft_putstr_fd(ft_strjoin_1(ft_strjoin
 					("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
 			return (1);
 		free_arr(&tmp);
@@ -71,12 +74,13 @@ int	deleted_dir(t_data *data, char **args)
 
 int	normal_behave(t_data *data, char **args, char *tmp)
 {
-	if (chdir(args[1]) == -1 && !ft_putendl_fd(ft_strjoin_1(
+	if (chdir(args[1]) == -1 && ft_putstr_fd(ft_strjoin_1(
 				ft_strjoin("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
 		return (1);
 	tmp = getcwd(NULL, 0);
 	set_env(data, new_env("PWD=", tmp, FORME));
-	set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+	if (get_val(data->env->head, "PWD", ENV) != NULL)
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 	free_arr(&tmp);
 	return (0);
 }
@@ -87,7 +91,9 @@ int	cd(t_data *data, char **args)
 	char	*tmp;
 
 	tmp = NULL;
-	old_pwd = get_val(data->env->head, "PWD");
+	old_pwd = get_val(data->env->head, "PWD", FORME);
+	if (old_pwd != NULL)
+		set_env(data, new_env("OLDPWD=", ft_strdup(old_pwd), (ENV | EXPORT)));
 	if (arr_double_len(args) == 1)
 		go_home(data);
 	else
@@ -102,6 +108,5 @@ int	cd(t_data *data, char **args)
 			return (1);
 		free_arr(&tmp);
 	}
-	set_env(data, new_env("OLDPWD=", old_pwd, (ENV | EXPORT)));
 	return (0);
 }

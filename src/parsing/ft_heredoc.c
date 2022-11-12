@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 18:53:03 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:15:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 	i = 0;
 	while (++i)
 	{
-		path = ft_strjoin_2(get_val(data->env->head, "TMPDIR"),
+		path = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV),
 				ft_strjoin_2(doc, ft_itoa(i)));
 		if (access(path, F_OK) && !free_arr(&path))
 			break ;
 		free_arr(&path);
 	}
-	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR"), ft_strjoin_2(doc,
-				ft_itoa(i)));
+	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV),
+			ft_strjoin_2(doc, ft_itoa(i)));
 	node->fd_hdc = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (node->fd_hdc == -1 && ft_perror("minishell: "))
 		return (START_RD_LN);

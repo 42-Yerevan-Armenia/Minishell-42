@@ -13,10 +13,10 @@ TMP = objs
 
 CC = cc
 
-CFLAGS =  -I./includes  -I./readline-vaghazar/include -Wall -Wextra -Werror# -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  
+CFLAGS =  -I./includes  -I./readline-vaghazar/include  -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  
 
 ifeq ($(HOME), /Users/vaghazar)
-LINKER = -L ./readline-vaghazar/lib/
+LINKER = -L ./readline-vaghazar/lib/ -lreadline
 else ifeq ($(HOME), /Users/arakhurs)
 LINKER = -L ./readline-arakhurs/lib
 endif
@@ -51,13 +51,13 @@ $(LIBFT):
 	@echo "$(GREEN)✅ $(NAME) sucessfully created$(RESET)"
 
 clean:
-	@make --no-print-directory clean -C $(LIBFT_DIR)
+	# @make --no-print-directory clean -C $(LIBFT_DIR)
 	@$(RM) $(OBJS_DIR)
 	$(RM) $(TMP)
 	@echo "$(RED)♨️  clean  🗑$(RESET)"
 
 fclean: clean
-	@make --no-print-directory fclean -C $(LIBFT_DIR)
+	# @make --no-print-directory fclean -C $(LIBFT_DIR)
 	@$(RM) $(NAME)
 	@echo "$(RED)♨️  fclean  🗑$(RESET)"
 

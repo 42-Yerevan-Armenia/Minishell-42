@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_cpy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/10 20:45:55 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:22:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	**env_cpy(t_data *data, t_list_env *env)
 	char	**res;
 	t_env	*tmp;
 	int		i;
-
 	res = malloc(sizeof(char *) * (env->size + 1));
 	if (!res && ft_perror("minishell: "))
 		exit(1);

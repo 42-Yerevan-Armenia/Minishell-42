@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:56:01 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:48:07 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:05:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rep_vars(t_parse *parser, int flag)
 		{
 			while (tmp[i][j])
 			{
-				parser->key = find_var(tmp[i], &ptr_var, j);
+				parser->key = find_var(tmp[i], &ptr_var, j, tmp[i + 1]);
 				if (!parser->key)
 					break ;
 				tmp[i] = ft_replace(parser, tmp[i], &j, ptr_var);

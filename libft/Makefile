@@ -4,7 +4,7 @@ NAME = libft.a
 
 CC	=	cc
 
-CFLAGS = -I../includes -Wall -Wextra -Werror
+CFLAGS = -I../includes -Wall -Wextra -Werror  #-fsanitize=address
 
 SRCS = $(wildcard *.c)
 
