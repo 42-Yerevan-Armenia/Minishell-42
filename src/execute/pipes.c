@@ -6,19 +6,29 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/10 21:18:32 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:24:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	pipe_redirections(t_spl_pipe *tmp)
+void	no_access(char *cmd, t_data *data)
 {
-	dup2(tmp->fd_out, 1);
-	dup2(tmp->fd_in, 0);
+	if (ft_strchr(cmd, '.'))
+	{
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(cmd, NO_PERM)), 2, FREE_ON);
+		data->exit_status = 126;
+	}
+	else
+	{
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);
+		data->exit_status = 127;
+	}
 }
 
-char	*get_cmd(char **paths, char *cmd)
+char	*get_cmd(char **paths, char *cmd, t_data *data)
 {
 	char	*tmp;
 	char	*command;
@@ -32,6 +42,8 @@ char	*get_cmd(char **paths, char *cmd)
 			return (command);
 		paths++;
 	}
+	if (!(access(command, X_OK) == 0))
+		no_access(cmd, data);
 	return (NULL);
 }
 
@@ -77,23 +89,10 @@ void	do_cmd(t_data *data, t_spl_pipe *tmp)
 	i = 0;
 	if (*tmp->cmd[0] != '\0' && search_builtin(tmp->cmd[0], data->builtins))
 		run_builtins(data, tmp);
-	else if (data->path)
+	else
 	{
 		if (cmd_errors(data, tmp) == 1)
 			execve(data->path, tmp->cmd, data->envp);
-		// if (!data->path)
-		// {
-		// 	free(data->path);
-		// 	ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		// 	ft_strjoin(*tmp->cmd, NOT_FOUND)), 2, FREE_ON);
-		// 	data->exit_status = 127;
-		// }
-	}
-	else
-	{
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(*tmp->cmd, NO_DIR)), 2, FREE_ON);
-		data->exit_status = 127;
 	}
 	exit(data->exit_status);
 }

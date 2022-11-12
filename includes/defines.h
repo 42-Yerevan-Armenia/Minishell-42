@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
 /*   Updated: 2022/11/11 10:44:36 by vaghazar         ###   ########.fr       */
@@ -58,5 +58,10 @@ extern int	g_sig;
 # define NO_SUCH_F ": No such file or directory\n"
 # define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
  directories: No such file or directory ❌\n"
+
+void	not_found(t_spl_pipe *tmp, t_data *data);
+void	is_dir(t_spl_pipe *tmp, t_data *data);
+void	no_dir(t_spl_pipe *tmp, t_data *data);
+void	no_perm(t_spl_pipe *tmp, t_data *data);
 
 #endif

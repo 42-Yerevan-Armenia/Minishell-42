@@ -102,13 +102,12 @@ int	run_binar(t_data *data)
 	data->psize = data->cmd_line->size;
 	data->path = get_val(data->env->head, "PATH", ENV);
 	if (data->path)
-	{
 		data->cmd_paths = ft_split(data->path, ':');
-	}
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	forking(fds, data->psize, tmp, data);
 	close_fds(fds, data->psize);
-	free_double((void *)&data->cmd_paths);
+	if (data->path)
+		free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
