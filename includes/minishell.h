@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 16:35:22 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:13:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void			pass_qutoes(int *i, char *str);
 t_list_env		*create_list_env(void);
 t_env			*new_env(char *key, char *val, int is_export);
 int				set_env(t_data *data, t_env *new_node);
-int				del_env_node(t_list_env *env, char *key);
+int				del_env_node(t_list_env *env, char *key, int mode);
 // char			*get_env_val(t_list_env *env, char *key);
 int				print_env_rev(t_env *tail);
 char			**split_for_env(char *str, char c);

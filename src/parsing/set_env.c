@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 21:07:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 17:35:41 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	set_env(t_data *data, t_env *new_node)
 {
 	int		mode;
 	int		v_ret;
-	t_env *env;
+	t_env	*env;
 
 	if (new_node->key == NULL)
 		return (1);
@@ -107,7 +107,7 @@ int	set_env(t_data *data, t_env *new_node)
 		if (v_ret == 0 && ++(data->env_exp->size))
 			set_exp(data->env_exp, new_node);
 	}
-	else 
+	else
 		del_one(&new_node);
 	if (((env->is_export == ENV || env->is_export == (ENV | EXPORT))
 			|| env->is_export == FORME))

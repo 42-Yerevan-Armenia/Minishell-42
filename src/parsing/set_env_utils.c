@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:38:38 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 20:34:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:12:23 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	find_var_rap_helper(t_env *head, int flag, t_env *new_node)
 	if (head != NULL)
 	{
 		if (flag == 0 && new_node->val
-			&& !free_arr(&head->val) && !free_arr(&head->key) && printf("stex em\n"))
+			&& !free_arr(&head->val) && !free_arr(&head->key))
 		{
 			head->key = ft_strdup(new_node->key);
 			head->val = ft_strdup(new_node->val);

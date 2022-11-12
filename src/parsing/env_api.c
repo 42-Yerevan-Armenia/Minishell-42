@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:09:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 16:03:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:13:23 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ t_env	*new_env(char *key, char *val, int is_export)
 	new_node->val = NULL;
 	if (val)
 		new_node->val = ft_strdup(val);
-	if (g_sig == 10)
-	{
-		printf("new_node->val ===== %s\n", new_node->val);
-		printf("val ===== %s\n", val);
-	}
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
@@ -76,15 +71,16 @@ static void	del_env_node_helper(t_list_env *env, t_env *tmp, t_env *del)
 	}
 }
 
-int	del_env_node(t_list_env *env, char *key)
+int	del_env_node(t_list_env *env, char *key, int mode)
 {
 	t_env	*tmp;
 	t_env	*del;
 
-	tmp = get_node(env->head, key, (ENV | EXPORT));
+	tmp = get_node(env->head, key, mode);
 	if (tmp == NULL || tmp->is_export == FORME)
 		return (1);
 	del = tmp;
+	env->size--;
 	if (env->size == 1 && !set_null(env) && !del_one(&del))
 		return (0);
 	del_env_node_helper(env, tmp, del);

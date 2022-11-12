@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 16:36:26 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:15:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 			break ;
 		free_arr(&path);
 	}
-	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV), ft_strjoin_2(doc,
-				ft_itoa(i)));
+	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV),
+			ft_strjoin_2(doc, ft_itoa(i)));
 	node->fd_hdc = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (node->fd_hdc == -1 && ft_perror("minishell: "))
 		return (START_RD_LN);

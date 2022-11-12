@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 09:44:26 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 17:02:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:00:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	shell_lvl(t_data *data)
 	long	num;
 
 	tmp = get_val(data->env->head, "SHLVL", ENV);
-	printf("tmp = %s\n", tmp);
 	if (tmp && tmp[0] == '=')
 		tmp++;
 	if ((tmp == NULL || is_valid(tmp) == 1))
@@ -44,17 +43,16 @@ int	shell_lvl(t_data *data)
 		return (0);
 	}
 	num = ft_atoi(tmp);
-// 	if (num == 999)
-// 		set_env(data, new_env("SHLVL=", NULL, (ENV | EXPORT)));
-// 	else if (num >= 1000 && ft_putstr_fd(ft_strjoin_1(ft_strjoin("minishell:\
-//  warning: shell level (", tmp), ") too high, resetting to 1\n"), 2, FREE_ON))
-// 		set_env(data, new_env("SHLVL=", "1", (ENV | EXPORT)));
-// 	else
-// 	{
+	if (num == 999)
+		set_env(data, new_env("SHLVL=", NULL, (ENV | EXPORT)));
+	else if (num >= 1000 && ft_putstr_fd(ft_strjoin_1(ft_strjoin("minishell:\
+ warning: shell level (", tmp), ") too high, resetting to 1\n"), 2, FREE_ON))
+		set_env(data, new_env("SHLVL=", "1", (ENV | EXPORT)));
+	else
+	{
 		res = ft_itoa(num + 1);
-		printf("res = %s\n", res);
 		set_env(data, new_env("SHLVL", res, (ENV | EXPORT)));
-		// free_arr(&res);
-// 	}
+		free_arr(&res);
+	}
 	return (0);
 }

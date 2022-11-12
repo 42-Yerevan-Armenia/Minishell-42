@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 20:31:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:09:53 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
-	// print_info(parser);
+	print_info(parser);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
 	free_parse(parser);
@@ -69,6 +69,8 @@ void	start(t_parse *parser, t_data *data)
 {
 	while (!free_arr(&parser->rd_ln))
 	{
+		printf("env = %zu\n", data->env->size);
+		printf("env_exp = %zu\n", data->env_exp->size);
 		if (ft_readline_main(parser, data) == 1)
 			continue ;
 		if (parser->rd_ln[0])

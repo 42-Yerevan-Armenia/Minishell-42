@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 16:37:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 18:32:10 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void print_forme(t_env *head)
 		head = head->next;
 	}
 }
-
 
 int	pwd(t_data *data)
 {
