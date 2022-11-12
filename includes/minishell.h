@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:13:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:32:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ void			pid_check(int (*fds)[2], int psize, int i, \
 				t_spl_pipe *tmp, t_data *data);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 void			close_fds(int (*fds)[2], int psize);
+int				ft_get_status_in_env(t_data *data, t_parse *parser);	
 
 // parsing
+int				parsing(t_parse *parser);
 void			find_exe(t_parse *parser);
 int				get_hd_mode_in_pipe(t_parse *parser);
 int				ft_put_rdc_mode(char **s, int mode);

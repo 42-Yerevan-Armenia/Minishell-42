@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/12 18:24:54 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/12 20:15:47 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ char	*get_cmd(char **paths, char *cmd, t_data *data)
 			return (command);
 		paths++;
 	}
-	if (!(access(command, X_OK) == 0))
-		no_access(cmd, data);
+	// if (!(access(command, X_OK) == 0))
+	// 	no_access(cmd, data);
 	return (NULL);
 }
 
