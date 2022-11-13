@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:10:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:17:07 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*get_val(t_env *head, char *key, int mode)
 	ptr = ft_strjoin(key, "=");
 	while (key && head)
 	{
-		if (!ft_strcmp(head->key, key) && head->is_export == mode)
+		if (!ft_strcmp(head->key, key) && head->is_export == mode
+			&& !free_arr(&ptr))
 			return (head->val);
 		if (!ft_strcmp(head->key, ptr) && head->is_export == mode
 			&& !free_arr(&ptr))

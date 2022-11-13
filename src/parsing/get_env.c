@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:05:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:21:17 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static void	get_env_helper(t_data *data)
 			set_env(data, new_env("PWD=", pwd, (FORME)));
 	}
 	else
-		set_env(data, new_env("PWD=", ft_strdup(tmp), (FORME)));
+		set_env(data, new_env("PWD=", tmp, (FORME)));
 	set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
 	free_arr(&pwd);
 	set_env(data, new_env("?=", "0", (FORME)));
-	print_forme(data->env->head);
+	//print_forme(data->env->head);
 }
 
 void	get_env(t_data *data, char **envp, int is_export)

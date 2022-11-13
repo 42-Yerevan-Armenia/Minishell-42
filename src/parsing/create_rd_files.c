@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_rd_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 20:32:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:44:13 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	create_infiles(t_spl_pipe *head, int i)
+int	create_infiles(t_spl_pipe *head, int i, t_data *data)
 {
 	if (head->fd_in != 0)
 		if (close(head->fd_in) == -1 && ft_perror("minishell: "))
@@ -20,7 +20,10 @@ int	create_infiles(t_spl_pipe *head, int i)
 	head->fd_in = open(head->rdc[i], O_RDONLY);
 	if (head->fd_in == -1 && ft_putstr_fd(ft_strjoin_1(ft_strjoin
 				("minishell: ", head->rdc[i]), NO_SUCH_F), 2, FREE_ON))
+	{
+		data->exit_status = 1;
 		return (START_RD_LN);
+	}
 	return (0);
 }
 
@@ -36,7 +39,7 @@ int	create_outfiles(t_spl_pipe *head, int i, int mode)
 	return (0);
 }
 
-int	create_rd_files(t_spl_pipe *head)
+int	create_rd_files(t_spl_pipe *head, t_data *data)
 {
 	int			i;
 	int			mode;
@@ -51,7 +54,7 @@ int	create_rd_files(t_spl_pipe *head)
 		mode = ft_get_rdc_mode(head->rdc[i]);
 		if (mode == IN_FILES)
 		{
-			if (create_infiles(head, i) == START_RD_LN)
+			if (create_infiles(head, i, data) == START_RD_LN)
 				return (START_RD_LN);
 		}
 		if (mode == O_TRUNC || mode == O_APPEND)
