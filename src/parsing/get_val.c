@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   get_val.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
 /*   Updated: 2022/11/12 19:25:15 by vaghazar         ###   ########.fr       */

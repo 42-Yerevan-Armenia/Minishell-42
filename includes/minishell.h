@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 19:32:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:44:44 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char			*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr);
 void			rep_vars(t_parse *parser, int flag);
 void			get_env(t_data *data, char **envp, int is_export);
 int				ft_heredoc(t_spl_pipe *node, t_parse *parser);
-int				create_rd_files(t_spl_pipe *head);
+int				create_rd_files(t_spl_pipe *head, t_data *data);
 int				get_infile_fd(t_spl_pipe *node, int	*error);
 void			set_term_attr(int on_off);
 int				shell_lvl(t_data *data);
