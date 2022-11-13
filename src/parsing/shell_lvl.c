@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 09:44:26 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:00:58 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:28:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	shell_lvl(t_data *data)
 	long	num;
 
 	tmp = get_val(data->env->head, "SHLVL", ENV);
-	if (tmp && tmp[0] == '=')
-		tmp++;
 	if ((tmp == NULL || is_valid(tmp) == 1))
 	{
 		set_env(data, new_env("SHLVL=", "1", (ENV | EXPORT)));
@@ -51,7 +49,7 @@ int	shell_lvl(t_data *data)
 	else
 	{
 		res = ft_itoa(num + 1);
-		set_env(data, new_env("SHLVL", res, (ENV | EXPORT)));
+		set_env(data, new_env("SHLVL=", res, (ENV | EXPORT)));
 		free_arr(&res);
 	}
 	return (0);

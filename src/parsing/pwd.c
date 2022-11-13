@@ -6,13 +6,13 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 19:21:19 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:54:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_forme(t_env *head)
+void	print_forme(t_env *head)
 {
 	while (head)
 	{

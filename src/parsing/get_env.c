@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 19:21:17 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:34:05 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,23 @@ static void	get_env_helper(t_data *data)
 	char	*tmp;
 
 	pwd = NULL;
-	tmp = get_val(data->env->head, "PWD=", ENV);
+	tmp = get_val(data->env->head, "PWD", ENV);
 	if (tmp == NULL)
 	{
 		pwd = getcwd(NULL, 0);
 		if (pwd == NULL && errno == ENOENT)
 			ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
 		else
+		{
 			set_env(data, new_env("PWD=", pwd, (FORME)));
+			set_env(data, new_env("PWD=", pwd, (ENV | EXPORT)));
+		}
+		free_arr(&pwd);
 	}
 	else
 		set_env(data, new_env("PWD=", tmp, (FORME)));
 	set_env(data, new_env("OLDPWD", NULL, (EXPORT)));
-	free_arr(&pwd);
 	set_env(data, new_env("?=", "0", (FORME)));
-	//print_forme(data->env->head);
 }
 
 void	get_env(t_data *data, char **envp, int is_export)

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:07:00 by arakhurs          #+#    #+#             */
 /*   Updated: 2022/11/12 20:25:52 by arakhurs         ###   ########.fr       */
@@ -11,6 +11,22 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	no_access(char *cmd, t_data *data)
+{
+	if (ft_strchr(cmd, '.'))
+	{
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(cmd, NO_PERM)), 2, FREE_ON);
+		data->exit_status = 126;
+	}
+	else
+	{
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);
+		data->exit_status = 127;
+	}
+}
 
 int	cmd_errors_2(t_data *data, t_spl_pipe *tmp)
 {
@@ -34,7 +50,12 @@ void	check_path(t_data *data, t_spl_pipe *tmp)
 	if (ft_strchr(*tmp->cmd, '/') && access(*tmp->cmd, X_OK) == 0)
 		data->path = *tmp->cmd;
 	else if (data->path)
+	{
 		data->path = get_cmd(data->cmd_paths, *tmp->cmd, data);
+		if (data->path == NULL)
+			if (!(access(*tmp->cmd, X_OK) == 0))
+				no_access(*tmp->cmd, data);
+	}
 	else if (access(*tmp->cmd, X_OK) != 0)
 		not_found(tmp, data);
 	else

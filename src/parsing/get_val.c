@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:45:02 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 19:17:07 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:25:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,15 @@ char	*get_val(t_env *head, char *key, int mode)
 t_env	*get_node(t_env *head, char *key, int mode)
 {
 	char	*ptr;
-	int		i;
+	int		len;
 
-	i = 0;
+	len = 0;
 	ptr = NULL;
-	while (key[i])
-		i++;
-	if (i != 0 && key[i - 1] == '=')
+	len = ft_strlen(key);
+	if (len != 0 && key[len - 1] == '=')
 	{
 		ptr = ft_strdup(key);
-		ptr[i - 1] = '\0';
+		ptr[len - 1] = '\0';
 	}
 	else
 		ptr = ft_strjoin(key, "=");

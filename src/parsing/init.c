@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:25:49 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/12 18:08:05 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:30:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	data->exit_status = 0;
 	get_env(data, envp, (EXPORT | ENV));
 	shell_lvl(data);
-	// data->envp = env_cpy(data, data->env);
 	return (0);
 }
