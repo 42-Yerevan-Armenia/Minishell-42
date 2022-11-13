@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:11:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:43:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	go_home(t_data *data)
 			return (1);
 		tmp = getcwd(NULL, 0);
 		set_env(data, new_env("PWD=", tmp, FORME));
-		if (get_node(data->env->head, "PWD", ENV) != NULL)
-			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		free_arr(&tmp);
 	}
 	return (0);
@@ -40,8 +39,7 @@ static void	deleted_dir_helper(t_data *data, char **args)
 	if (tmp)
 	{
 		set_env(data, new_env("PWD=", tmp, FORME));
-		if (get_val(data->env->head, "PWD", ENV) != NULL)
-			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		free_arr(&tmp);
 	}
 	else
@@ -49,8 +47,7 @@ static void	deleted_dir_helper(t_data *data, char **args)
 		tmp = ft_strjoin_1(ft_strjoin(get_val
 					(data->env->head, "PWD", FORME), "/"), args[1]);
 		set_env(data, new_env("PWD=", tmp, FORME));
-		if (get_val(data->env->head, "PWD", ENV) != NULL)
-			set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 		ft_putstr_fd(CD_ERROR, 2, FREE_OFF);
 	}
 	free_arr(&tmp);
@@ -79,8 +76,7 @@ int	normal_behave(t_data *data, char **args, char *tmp)
 		return (1);
 	tmp = getcwd(NULL, 0);
 	set_env(data, new_env("PWD=", tmp, FORME));
-	if (get_val(data->env->head, "PWD", ENV) != NULL)
-		set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
+	set_env(data, new_env("PWD=", tmp, (ENV | EXPORT)));
 	free_arr(&tmp);
 	return (0);
 }

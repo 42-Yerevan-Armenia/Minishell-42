@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 20:45:34 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:34:49 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,49 @@
 
 int	g_sig = 1;
 
-int	ft_cmp_lower(char *s2, char *s1)
-{
-	char	*res;
-	int		i;
+// int	ft_cmp_lower(char *s2, char *s1)
+// {
+// 	char	*res;
+// 	int		i;
 
-	i = 0;
-	while (s1 && s2 && s1[i])
-	{
-		if (s1[i] != ft_tolower(s2[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (s1 && s2 && s1[i])
+// 	{
+// 		if (s1[i] != ft_tolower(s2[i]))
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-int	put_underscore(t_data *data)
-{
-	t_spl_pipe	*tmp;
-	int			flag;
+// int	put_underscore(t_data *data)
+// {
+// 	t_spl_pipe	*tmp;
+// 	int			flag;
 
-	tmp = data->cmd_line->head;
-	flag = 0;
-	data->path = get_val(data->env->head, "PATH", ENV);
-	if (data->path)
-		data->cmd_paths = ft_split(data->path, ':');
-	while (tmp)
-	{
-		if (!ft_cmp_lower(*tmp->cmd, "env") && ++flag)
-			break ;
-		tmp = tmp->next;
-	}
-	if (tmp && flag != 0)
-	{
-		if (!ft_strcmp(*tmp->cmd, "env"))
-			set_env(data, new_env("_=", "env", (ENV)));
-		else if (data->path && data->cmd_paths)
-		{
-			if (get_cmd(data->cmd_paths, *tmp->cmd, data) != NULL)
-				set_env(data, new_env("_=", get_cmd(data->cmd_paths, *tmp->cmd, data), (ENV)));
-		}
-	}
-	return (0);
-}
+// 	tmp = data->cmd_line->head;
+// 	flag = 0;
+// 	data->path = get_val(data->env->head, "PATH", ENV);
+// 	if (data->path)
+// 		data->cmd_paths = ft_split(data->path, ':');
+// 	while (tmp)
+// 	{
+// 		if (!ft_cmp_lower(*tmp->cmd, "env") && ++flag)
+// 			break ;
+// 		tmp = tmp->next;
+// 	}
+// 	if (tmp && flag != 0)
+// 	{
+// 		if (!ft_strcmp(*tmp->cmd, "env"))
+// 			set_env(data, new_env("_=", "env", (ENV)));
+// 		else if (data->path && data->cmd_paths)
+// 		{
+// 			if (get_cmd(data->cmd_paths, *tmp->cmd, data) != NULL)
+// 				set_env(data, new_env("_=", get_cmd(data->cmd_paths, *tmp->cmd, data), (ENV)));
+// 		}
+// 	}
+// 	return (0);
+// }
 
 static int	ft_readline_main(t_parse *parser, t_data *data)
 {
@@ -89,9 +89,6 @@ static void	start(t_parse *parser, t_data *data)
 				continue ;
 			if (data->cmd_line->head && data->cmd_line->head->cmd)
 			{
-				put_underscore(data);
-				// set_env(data, new_env("_=", data->cmd_line->tail->cmd \
-				// [arr_double_len(data->cmd_line->tail->cmd) - 1], (ENV)));
 				execute(data);
 			}
 		}
@@ -113,4 +110,5 @@ int	main(int ac, char **av, char **envp)
 		start(&parser, &data);
 		free_envp(&data.env);
 	}
+	return (0);
 }

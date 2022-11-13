@@ -6,12 +6,12 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 09:43:27 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:33:26 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//  echo $"HOME"
+
 int	is_herdoc(char *ptr_sign, char	*start, int i, char *next_arr)
 {
 	if (&ptr_sign[i] != start)
@@ -37,6 +37,15 @@ int	is_herdoc(char *ptr_sign, char	*start, int i, char *next_arr)
 	return (0);
 }
 
+static void	find_var_helper_helper(char *src, int *j, int *len)
+{
+	if (src[*j] == '?' && ++(*j))
+		(*len)++;
+	else
+		while (src[*j] && (ft_isalnum(src[*j]) || src[*j] == '_') && ++(*j))
+			(*len)++;
+}
+
 static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 {
 	int		len;
@@ -50,11 +59,7 @@ static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 		if (src[j] == '$' && !is_herdoc(src + j, src, i, next))
 		{
 			*ptr = &src[j++];
-			if (src[j] == '?' && ++j)
-				len++;
-			else
-				while (src[j] && (ft_isalnum(src[j]) || src[j] == '_') && ++j)
-					len++;
+			find_var_helper_helper(src, &j, &len);
 			res = malloc(sizeof(char) * len + 1);
 			if (!res && !ft_perror("minishell: "))
 				exit(1);
@@ -71,11 +76,6 @@ static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 
 char	*find_var(char *src, char **ptr, int j, char *next)
 {
-	int		i;
-	int		len;
-
-	i = 0;
-	len = 0;
 	if (!src)
 		return (NULL);
 	return (find_var_helper(src, ptr, j, next));

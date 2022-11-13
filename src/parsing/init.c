@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:25:49 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/12 19:28:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 12:30:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,3 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	shell_lvl(data);
 	return (0);
 }
-
-

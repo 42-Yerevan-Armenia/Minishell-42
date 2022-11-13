@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:38:38 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:12:23 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:36:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static int	find_var_rap_helper(t_env *head, int flag, t_env *new_node)
 {
 	head = get_node(head, new_node->key, new_node->is_export);
-		// printf("new_node->key = %s\n", new_node->key);
-		// printf("new_node->val = %s\n", new_node->val);
 	if (head != NULL)
 	{
 		if (flag == 0 && new_node->val

@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:15:04 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/04 09:51:43 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 13:20:31 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ long long	ft_atoi(const char *nptr);
 void		*ft_calloc(size_t nmemb, size_t size);
 char		*ft_strdup(const char *src);
 char		*ft_substr(char const *src, unsigned int start, size_t len);
-char        *ft_strjoin(char *s1, char const *s2);
+char		*ft_strjoin(char *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 void		ft_putchar_fd(char c, int fd);
-int 		ft_putstr_fd(char *s, int fd, int flag);
-int 		ft_putendl_fd(char *s, int fd, int flag);
+int			ft_putstr_fd(char *s, int fd, int flag);
+int			ft_putendl_fd(char *s, int fd, int flag);
 void		ft_putnbr_fd(int n, int fd);
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_charjoin(char *s1, char const s2, int flag);
+int			init_zero(int *ptr1, int *ptr2, int *ptr3, int *ptr4);
 #endif

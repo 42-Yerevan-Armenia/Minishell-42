@@ -13,7 +13,7 @@ TMP = objs
 
 CC = cc
 
-CFLAGS =  -I./includes  -I./readline-vaghazar/include  -fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  
+CFLAGS =   -I./includes  -I./readline-vaghazar/include  #-fsanitize=address#-Wall -Wextra -Werror -g -ggdb3   #  
 
 ifeq ($(HOME), /Users/vaghazar)
 LINKER = -L ./readline-vaghazar/lib/ -lreadline
