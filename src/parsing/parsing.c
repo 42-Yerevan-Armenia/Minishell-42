@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 13:19:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:43:00 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	parsing(t_parse *parser)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
+	print_info(parser);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
 	free_parse(parser);

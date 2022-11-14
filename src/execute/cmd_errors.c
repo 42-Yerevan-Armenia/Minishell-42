@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:07:00 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/12 20:25:52 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:13:13 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ int	cmd_errors(t_data *data, t_spl_pipe *tmp)
 		cmd_errors_1(data, tmp);
 	else if (opendir(*tmp->cmd) && ft_strchr(*(tmp->cmd), '/'))
 		is_dir(tmp, data);
-	else if (tmp->cmd[0][0] == '/' || (tmp->cmd[0][1] == '.' \
-		&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
-		&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
-		&& tmp->cmd[0][1] == '.' && tmp->cmd[0][2] == '/')
-		|| (!data->path && !ft_strchr(*tmp->cmd, '/')))
-	{
-		cmd_errors_2(data, tmp);
-		data->path = ft_strdup(*tmp->cmd);
-		return (1);
-	}
+	// else if (tmp->cmd[0][0] == '/' || (tmp->cmd[0][1] == '.' \
+	// 	&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
+	// 	&& tmp->cmd[0][1] == '/') || (tmp->cmd[0][0] == '.' \
+	// 	&& tmp->cmd[0][1] == '.' && tmp->cmd[0][2] == '/')
+	// 	|| (!data->path && !ft_strchr(*tmp->cmd, '/')))
+	// {
+	// 	cmd_errors_2(data, tmp);
+	// 	data->path = ft_strdup(*tmp->cmd);
+	// 	return (1);
+	// }
 	else if (tmp->cmd[0][0] == '.')
 		not_found(tmp, data);
 	else
