@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:42:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:50:39 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:39:52 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_info(t_parse *parser)
 	t_spl_pipe *tmp = parser->data->cmd_line->head;
 
 	i = 0;
-
+	
 	while (tmp)
 	{
 		printf("\n----------------------------------\n");

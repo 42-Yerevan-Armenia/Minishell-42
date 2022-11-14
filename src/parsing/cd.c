@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 12:43:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/13 17:18:47 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	cd(t_data *data, char **args)
 	tmp = NULL;
 	old_pwd = get_val(data->env->head, "PWD", FORME);
 	if (old_pwd != NULL)
-		set_env(data, new_env("OLDPWD=", ft_strdup(old_pwd), (ENV | EXPORT)));
+		set_env(data, new_env("OLDPWD=", old_pwd, (ENV | EXPORT)));
 	if (arr_double_len(args) == 1)
 		go_home(data);
 	else
