@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 12:56:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:13:58 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,21 @@ char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 	*value = get_val(parser->data->env->head, parser->key, ENV);
 	if (*value == NULL)
 		*value = get_val(parser->data->env->head, parser->key, FORME);
-	// int i = -1;
-	// while ((*value)[++i])
-	// {
-	// 	printf("*value = %d\n", (*value)[i]);
-	// 	/* code */
-	// }
-	
+	if (*value)
+		*value = set_mode_quotes(*value);
 	res = malloc(sizeof(char) * (ft_strlen(src) - ft_strlen(parser->key)
 				+ ft_strlen(*value)) + 1);
 	if (!res && !ft_perror("minishell: "))
 		exit (1);
 	*j = 0;
 	return (res);
+}
+
+static void	free_arrs(char **value, char **src, char **key)
+{
+	free_arr(value);
+	free_arr(src);
+	free_arr(key);
 }
 
 char	*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr)
@@ -58,7 +60,6 @@ char	*ft_replace(t_parse *parser, char *src, int *j, char *k_ptr)
 	}
 	*j = place_to_cont;
 	res[i] = '\0';
-	free_arr(&src);
-	free_arr(&parser->key);
+	free_arrs(&value, &src, &parser->key);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/13 17:14:04 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:00:23 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	no_access(char *cmd, t_data *data)
 	}
 }
 
-char	*get_cmd(char **paths, char *cmd, t_data *data)
+char	*get_cmd(char **paths, char *cmd)
 {
 	char	*tmp;
 	char	*command;
@@ -42,8 +42,6 @@ char	*get_cmd(char **paths, char *cmd, t_data *data)
 			return (command);
 		paths++;
 	}
-	// if (!(access(command, X_OK) == 0))
-	// 	no_access(cmd, data);
 	return (NULL);
 }
 

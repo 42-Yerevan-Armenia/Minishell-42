@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 09:02:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:00:38 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				cmd_errors(t_data *data, t_spl_pipe *tmp);
 void			execute(t_data *data);
 int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
-char			*get_cmd(char **paths, char *cmd, t_data *data);
+char			*get_cmd(char **paths, char *cmd);
 void			pipex(int (*fds)[2], int psize);
 void			pid_check(int (*fds)[2], int psize, int i, \
 				t_spl_pipe *tmp, t_data *data);
@@ -132,7 +132,6 @@ t_list_env		*create_list_env(void);
 t_env			*new_env(char *key, char *val, int is_export);
 int				set_env(t_data *data, t_env *new_node);
 int				del_env_node(t_list_env *env, char *key, int mode);
-// char			*get_env_val(t_list_env *env, char *key);
 int				print_env_rev(t_env *tail);
 char			**split_for_env(char *str, char c);
 char			**env_cpy(t_data *data, t_list_env *env);
@@ -143,11 +142,11 @@ int				find_var_rap(t_list_env *env, t_env *new_node);
 int				hook_signals(void);
 
 // utils
-
 void			print_env_arr(char **env);
 void			pipes(t_data *data, int psize, t_spl_pipe *tmp);
 void			do_cmd(t_data *data, t_spl_pipe *tmp);
 int				put_exit_s(t_data *data, int status);
-void			print_info(t_parse *parser);
 void			print_forme(t_env *head);
+char			*clean_unprintable(char *arr);
+char			*set_mode_quotes(char *s);
 #endif

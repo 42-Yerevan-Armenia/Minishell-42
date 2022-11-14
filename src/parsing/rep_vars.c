@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rep_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:56:01 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 12:56:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:02:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	rep_vars(t_parse *parser, int flag)
 				if (!parser->key)
 					break ;
 				tmp[i] = ft_replace(parser, tmp[i], &j, ptr_var);
-				tmp[i] = set_mode(tmp[i]);
 			}
 		}
 		j = 0;
