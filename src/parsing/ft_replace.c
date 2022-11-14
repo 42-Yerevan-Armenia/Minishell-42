@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:05:37 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:56:04 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 	*value = get_val(parser->data->env->head, parser->key, ENV);
 	if (*value == NULL)
 		*value = get_val(parser->data->env->head, parser->key, FORME);
+	// int i = -1;
+	// while ((*value)[++i])
+	// {
+	// 	printf("*value = %d\n", (*value)[i]);
+	// 	/* code */
+	// }
+	
 	res = malloc(sizeof(char) * (ft_strlen(src) - ft_strlen(parser->key)
 				+ ft_strlen(*value)) + 1);
 	if (!res && !ft_perror("minishell: "))

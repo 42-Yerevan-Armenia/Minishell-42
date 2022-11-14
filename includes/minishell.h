@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 19:44:44 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/14 09:02:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int				unexpected_tokens(t_parse *parser);
 int				check_quote(t_parse *parser);
 int				ft_put_rdc_mode(char **s, int mode);
 int				ft_get_rdc_mode(char *s);
+char			*set_mode(char *s);
 
 // builtins
 int				echo(char **args);

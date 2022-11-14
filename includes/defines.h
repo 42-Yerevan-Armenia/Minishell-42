@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
 /*   Updated: 2022/11/13 19:04:05 by arakhurs         ###   ########.fr       */
@@ -36,6 +36,7 @@
 # define FREE_OFF 8
 # define FREE_1 1
 # define FREE_2 2
+# define UNPRINTABLE 1
 
 extern int	g_sig;
 
