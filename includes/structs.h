@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 19:42:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:57:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef struct s_spl_pipe
 	int					flag_new_pipe;
 	int					tmp;
 	pid_t				pid;
+	char				*f_name;
 	char				**cmd;
 	char				**heredoc;
 	char				**rdc;
-	char				*f_name;
 	t_data				*data;
 	struct s_spl_pipe	*next;
 	struct s_spl_pipe	*prev;

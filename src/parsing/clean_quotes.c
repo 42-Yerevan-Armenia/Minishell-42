@@ -6,11 +6,37 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 10:25:59 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:59:47 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// export a="bar'ev"
+// echo $a
+
+char	*clean_unprintable(char *arr)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	if (arr == NULL)
+		return (0);
+	res = malloc(sizeof(char) * (ft_strlen(arr) + 1));
+	i = 0;
+	j = 0;
+	while (arr[j])
+	{
+		if (arr[j] != UNPRINTABLE)
+			res[i++] = arr[j++];
+		else
+			j++;
+	}
+	res[i] = '\0';
+	free_arr(&arr);
+	return (res);
+}
 
 static int	count_quotes(char *arr)
 {
@@ -25,16 +51,37 @@ static int	count_quotes(char *arr)
 	while (arr[i])
 	{
 		if (ft_strchr(QUOTES, arr[i]))
-		{
 			count++;
-			c = arr[i++];
-			while (arr[i] && arr[i] != c)
-				i++;
-		}
-		if (arr[i])
-			i++;
+		i++;
 	}
 	return (count);
+}
+
+char	*set_mode(char *s)
+{
+	int		i;
+	char	*res;
+	int		j;
+
+	j = 0;
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	res = malloc(sizeof(char) * (ft_strlen(s) + count_quotes(s) + 1));
+	while (s[i])
+	{
+		if (ft_strchr(QUOTES, s[i]))
+		{
+			res[j++] = s[i++];
+			res[j++] = UNPRINTABLE;
+		}
+		res[j++] = s[i];
+		if (s[i])
+			i++;
+	}
+	res[j] = '\0';
+	free_arr(&s);
+	return (res);
 }
 
 static void	clean_quotes_helper(char **res, char *tmp, int *i, int *k)
@@ -45,7 +92,8 @@ static void	clean_quotes_helper(char **res, char *tmp, int *i, int *k)
 	j = 0;
 	while (res[*i][j])
 	{
-		while (res[*i][j] && !ft_strchr(QUOTES, res[*i][j]))
+		while (res[*i][j] && (!ft_strchr(QUOTES, res[*i][j])
+			|| res[*i][j + 1] == UNPRINTABLE))
 			tmp[(*k)++] = res[*i][j++];
 		if (res[*i][j] == '\0')
 			break ;
@@ -71,9 +119,10 @@ static int	clean_quotes(char ***arr)
 	while (res[i])
 	{
 		k = 0;
-		tmp = malloc(ft_strlen(res[i]) - count_quotes(res[i]) + 1);
+		tmp = malloc(ft_strlen(res[i]) + 1);
 		clean_quotes_helper(res, tmp, &i, &k);
 		tmp[k] = '\0';
+		tmp = clean_unprintable(tmp);
 		free_arr(&res[i]);
 		res[i] = tmp;
 		i++;
@@ -104,7 +153,7 @@ int	clean_quotes_single_arr(char **s)
 	res = malloc(ft_strlen(tmp) + 1);
 	while (*tmp)
 	{
-		while (*tmp && !ft_strchr(QUOTES, *tmp))
+		while (*tmp && (!ft_strchr(QUOTES, *tmp) || *(tmp + 1) == UNPRINTABLE))
 			res[i++] = *tmp++;
 		if (*tmp == '\0')
 			break ;
@@ -116,6 +165,6 @@ int	clean_quotes_single_arr(char **s)
 	}
 	res[i] = '\0';
 	free_arr(s);
-	*s = res;
+	*s = clean_unprintable(res);
 	return (0);
 }

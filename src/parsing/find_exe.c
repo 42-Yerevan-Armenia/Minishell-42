@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:12:48 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 11:27:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:40:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static int	get_files(char *tmp, t_spl_pipe *node, t_vars *v, int c)
 		{
 			if (tmp[v->i] == '\'' || tmp[v->i] == '"')
 				pass_qutoes(&v->i, tmp);
-			v->i += 1;
+			if (tmp[v->i])
+				v->i += 1;
 		}
 	}
 	fill_arrs(node, tmp, v);
