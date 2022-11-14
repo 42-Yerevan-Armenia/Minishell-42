@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:49:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 17:35:41 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:01:39 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static void	put_env(t_data *data, t_env *new_node)
 
 int	set_env(t_data *data, t_env *new_node)
 {
-	int		mode;
 	int		v_ret;
 	t_env	*env;
 

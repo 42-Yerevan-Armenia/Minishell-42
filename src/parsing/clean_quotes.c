@@ -6,83 +6,13 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 12:59:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 20:24:06 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// export a="bar'ev"
-// echo $a
 
-char	*clean_unprintable(char *arr)
-{
-	int		i;
-	int		j;
-	char	*res;
-
-	if (arr == NULL)
-		return (0);
-	res = malloc(sizeof(char) * (ft_strlen(arr) + 1));
-	i = 0;
-	j = 0;
-	while (arr[j])
-	{
-		if (arr[j] != UNPRINTABLE)
-			res[i++] = arr[j++];
-		else
-			j++;
-	}
-	res[i] = '\0';
-	free_arr(&arr);
-	return (res);
-}
-
-static int	count_quotes(char *arr)
-{
-	int		i;
-	int		count;
-	char	c;
-
-	if (arr == NULL)
-		return (0);
-	i = 0;
-	count = 0;
-	while (arr[i])
-	{
-		if (ft_strchr(QUOTES, arr[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-char	*set_mode(char *s)
-{
-	int		i;
-	char	*res;
-	int		j;
-
-	j = 0;
-	i = 0;
-	if (s == NULL)
-		return (NULL);
-	res = malloc(sizeof(char) * (ft_strlen(s) + count_quotes(s) + 1));
-	while (s[i])
-	{
-		if (ft_strchr(QUOTES, s[i]))
-		{
-			res[j++] = s[i++];
-			res[j++] = UNPRINTABLE;
-		}
-		res[j++] = s[i];
-		if (s[i])
-			i++;
-	}
-	res[j] = '\0';
-	free_arr(&s);
-	return (res);
-}
 
 static void	clean_quotes_helper(char **res, char *tmp, int *i, int *k)
 {

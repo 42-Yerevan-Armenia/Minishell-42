@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 17:18:47 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:58:54 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,25 @@ int	cd(t_data *data, char **args)
 	char	*tmp;
 
 	tmp = NULL;
-	old_pwd = get_val(data->env->head, "PWD", FORME);
-	if (old_pwd != NULL)
-		set_env(data, new_env("OLDPWD=", old_pwd, (ENV | EXPORT)));
+	old_pwd = ft_strdup(get_val(data->env->head, "PWD", FORME));
 	if (arr_double_len(args) == 1)
-		go_home(data);
+	{
+		if (go_home(data) != 0 && !free_arr(&old_pwd))
+			return (1);
+	}
 	else
 	{
 		tmp = getcwd(NULL, 0);
 		if (tmp == NULL && errno == ENOENT)
 		{
-			if (deleted_dir(data, args) == 1)
+			if (deleted_dir(data, args) == 1 && !free_arr(&old_pwd))
 				return (1);
 		}
-		else if (normal_behave(data, args, tmp) == 1 && !free_arr(&tmp))
+		else if (normal_behave(data, args, tmp) == 1 && !free_arr(&tmp)
+			&& !free_arr(&old_pwd))
 			return (1);
-		free_arr(&tmp);
 	}
-	return (0);
+	if (!free_arr(&tmp) && old_pwd != NULL)
+		set_env(data, new_env("OLDPWD=", old_pwd, (ENV | EXPORT)));
+	return (free_arr(&old_pwd));
 }

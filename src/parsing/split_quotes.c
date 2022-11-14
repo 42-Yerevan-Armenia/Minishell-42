@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:16:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 12:13:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:15:07 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	split_quotes_helper(t_parse *parser, t_vars *v, char *tmp)
 			v->i++;
 		resize_arr(&parser->spl_qutoes, &parser->l_arr, v->k);
 		parser->spl_qutoes[v->k++] = ft_substr(tmp, v->j, v->i - v->j + 1);
-	} 
+	}
 }
 
 int	split_quotes(t_parse *parser)
