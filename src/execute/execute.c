@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/13 17:16:52 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:04:54 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ int	run_builtins(t_data *data, t_spl_pipe *tmp)
 	if (!ft_strcmp(tmp->cmd[0], "cd"))
 		data->exit_status = cd(data, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "echo"))
-		data->exit_status = echo(tmp->cmd);
+		data->exit_status = echo(tmp, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
-		data->exit_status = env(data, tmp->cmd);
+		data->exit_status = env(tmp, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		data->exit_status = ft_exit(data, tmp->cmd);
+		data->exit_status = ft_exit(data, tmp->cmd, tmp);
 	else if (!ft_strcmp(tmp->cmd[0], "export"))
-		data->exit_status = export(data, tmp->cmd);
+		data->exit_status = export(data, tmp->cmd, tmp);
 	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
-		data->exit_status = pwd(data);
+		data->exit_status = pwd(data, tmp);
 	else if (!ft_strcmp(tmp->cmd[0], "unset"))
 		data->exit_status = unset(data, tmp->cmd);
 	return (0);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   defines.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:19:00 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/11 20:30:06 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:38:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	not_found(t_spl_pipe *tmp, t_data *data)
 {
