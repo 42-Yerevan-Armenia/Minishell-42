@@ -6,23 +6,31 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 16:20:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:17:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	print_exp(t_env *head)
+static int	print_exp(t_env *head, t_spl_pipe *node)
 {
 	while (head)
 	{
 		if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
 		{
-			printf("declare -x %s", head->key);
+			ft_putstr_fd("declare -x", node->fd_out, FREE_OFF);
+			ft_putstr_fd(head->key, node->fd_out, FREE_OFF);
 			if (head->val)
-				printf("\"%s\"", head->val);
-			printf("\n");
+				ft_putstr_fd(head->val, node->fd_out, FREE_OFF);
+			ft_putstr_fd("\n", node->fd_out, FREE_OFF);
 		}
+		// if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
+		// {
+		// 	printf("declare -x %s", head->key);
+		// 	if (head->val)
+		// 		printf("\"%s\"", head->val);
+		// 	printf("\n");
+		// }
 		head = head->next;
 	}
 	return (0);
@@ -70,7 +78,7 @@ static int	is_valid_args(char *args, t_data *data)
 	return (0);
 }
 
-int	export(t_data *data, char **args)
+int	export(t_data *data, char **args, t_spl_pipe *node)
 {
 	int			i;
 	int			flag;
@@ -80,7 +88,7 @@ int	export(t_data *data, char **args)
 		return (1);
 	i = 1;
 	flag = 0;
-	if (args[i] == NULL && !print_exp(data->env_exp->head))
+	if (args[i] == NULL && !print_exp(data->env_exp->head, node))
 		return (0);
 	while (args[i])
 	{

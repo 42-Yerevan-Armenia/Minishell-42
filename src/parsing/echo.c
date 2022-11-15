@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:21:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/11 10:26:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/15 19:25:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	valid_flag(char **s, int *i)
 	return (0);
 }
 
-int	echo(char **args)
+int	echo(t_spl_pipe *node, char **args)
 {
 	int	flag;
 	int	i;
@@ -55,13 +55,13 @@ int	echo(char **args)
 			flag = 1;
 		while (args[i])
 		{
-			ft_putstr_fd(args[i], 1, FREE_OFF);
+			ft_putstr_fd(args[i], node->fd_out, FREE_OFF);
 			if (args[i + 1])
-				write(1, " ", 1);
+				write(node->fd_out, " ", 1);
 			i++;
 		}
 	}
 	if (flag == 0)
-		write(1, "\n", 1);
+		write(node->fd_out, "\n", 1);
 	return (0);
 }
