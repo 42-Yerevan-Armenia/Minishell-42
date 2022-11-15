@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/15 21:04:54 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/15 20:52:00 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ int	run_builtins(t_data *data, t_spl_pipe *tmp)
 	return (0);
 }
 
-void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
+void	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 {
-	int	i;
+	int			i;
+	t_spl_pipe	*tmp;
 
+	tmp = head;
 	pipex(fds, psize);
 	i = -1;
 	while (++i < psize)
@@ -65,6 +67,8 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *tmp, t_data *data)
 		tmp->pid = fork();
 		if (tmp->pid == -1)
 		{
+			tmp = head;
+			kill (tmp->pid, SIGKILL);
 			ft_putstr_fd(FORK, 2, FREE_OFF);
 			break ;
 		}

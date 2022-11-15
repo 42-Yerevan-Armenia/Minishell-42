@@ -6,13 +6,11 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 20:24:06 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:11:01 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 static void	clean_quotes_helper(char **res, char *tmp, int *i, int *k)
 {
