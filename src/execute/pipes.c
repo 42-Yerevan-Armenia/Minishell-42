@@ -6,27 +6,11 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/14 19:00:23 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/15 20:59:03 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	no_access(char *cmd, t_data *data)
-{
-	if (ft_strchr(cmd, '.'))
-	{
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(cmd, NO_PERM)), 2, FREE_ON);
-		data->exit_status = 126;
-	}
-	else
-	{
-		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);
-		data->exit_status = 127;
-	}
-}
 
 char	*get_cmd(char **paths, char *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:07:00 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/14 19:00:52 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/15 21:04:17 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	no_access(char *cmd, t_data *data)
 	else
 	{
 		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);
+		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);//NO_DIR -> err/ro
 		data->exit_status = 127;
 	}
 }
