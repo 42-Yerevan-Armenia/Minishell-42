@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 17:14:46 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:03:16 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	start(t_parse *parser, t_data *data)
 			}
 		}
 		ft_get_status_in_env(data, parser);
-	}	
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -63,6 +63,11 @@ int	main(int ac, char **av, char **envp)
 		hook_signals();
 		start(&parser, &data);
 		free_envp(&data.env);
+		free_envp(&data.env_exp);
+		free_double(&data.builtins);
+		free_double(&data.envp);
+		free_double(&data.cmd_paths);
+		free_arr(&data.path);
 	}
 	return (0);
 }

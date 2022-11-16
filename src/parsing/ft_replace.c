@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 18:13:58 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:37:13 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 	*value = get_val(parser->data->env->head, parser->key, ENV);
 	if (*value == NULL)
 		*value = get_val(parser->data->env->head, parser->key, FORME);
+	printf("*value = %s\n", *value);
 	if (*value)
 		*value = set_mode_quotes(*value);
+	printf("*value = %s\n", *value);
 	res = malloc(sizeof(char) * (ft_strlen(src) - ft_strlen(parser->key)
 				+ ft_strlen(*value)) + 1);
 	if (!res && !ft_perror("minishell: "))

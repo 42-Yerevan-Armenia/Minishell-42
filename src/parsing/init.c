@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:25:49 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/13 12:30:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:02:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	init(t_parse *parser, t_data *data, char **envp)
 	parser->hered_res = NULL;
 	data->parser = parser;
 	data->envp = NULL;
+	data->cmd_paths = NULL;
+	data->path = NULL;
 	data->hdoc_mode = NULL;
 	data->cmd_line = create_list_pipe();
 	data->env = create_list_env();
