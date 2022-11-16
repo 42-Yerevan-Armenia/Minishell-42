@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 18:07:00 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/15 21:04:17 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:55:14 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ static void	no_access(char *cmd, t_data *data)
 		ft_strjoin(cmd, NO_PERM)), 2, FREE_ON);
 		data->exit_status = 126;
 	}
+	else if (ft_strchr(cmd, '/'))
+	{
+		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
+		ft_strjoin(cmd, NO_DIR)), 2, FREE_ON);
+		data->exit_status = 127;
+	}
 	else
 	{
 		ft_putstr_fd(ft_strjoin_2("🔻minishell> ", \
-		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);//NO_DIR -> err/ro
+		ft_strjoin(cmd, NOT_FOUND)), 2, FREE_ON);
 		data->exit_status = 127;
 	}
 }
