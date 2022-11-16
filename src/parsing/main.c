@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/16 21:03:16 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:12:54 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,22 @@ int	main(int ac, char **av, char **envp)
 		init(&parser, &data, envp);
 		hook_signals();
 		start(&parser, &data);
-		free_envp(&data.env);
-		free_envp(&data.env_exp);
-		free_double(&data.builtins);
-		free_double(&data.envp);
-		free_double(&data.cmd_paths);
-		free_arr(&data.path);
+		free_all(&data);
 	}
+	return (0);
+}
+
+
+int	free_all(t_data *data)
+{
+	free_envp(&data->env);
+	free_envp(&data->env_exp);
+	free_double(&data->builtins);
+	free_double(&data->envp);
+	free_double(&data->cmd_paths);
+	free_arr(&data->path);
+	free_spl_pipe(&data->cmd_line);
+	free_arr(&data->parser->rd_ln);
+	free_parse(data->parser);
 	return (0);
 }

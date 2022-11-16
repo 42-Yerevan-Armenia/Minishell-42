@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 21:04:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:14:03 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,5 @@ int				put_exit_s(t_data *data, int status);
 void			print_forme(t_env *head);
 char			*clean_unprintable(char *arr);
 char			*set_mode_quotes(char *s);
+int				free_all(t_data *data);
 #endif
