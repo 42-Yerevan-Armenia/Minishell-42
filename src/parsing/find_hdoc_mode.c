@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 11:32:10 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:03:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ int	get_all_hd_modes(t_parse *parser)
 	char	**tmp;
 	int		i;
 
-	if (heredoc_limit(parser->rd_ln) > 16)
+	if (heredoc_limit(parser->rd_ln) > 16 && free_all(parser->data))
 		exit(2);
 	i = 0;
 	tmp = parser->join_pipe;
-	parser->data->hdoc_mode = malloc(sizeof(int *) * (arr_double_len(tmp) + 1));
-	fill_null((void *)&parser->data->hdoc_mode, arr_double_len(tmp) + 1);
+	parser->hdoc_mode = malloc(sizeof(int *) * (arr_double_len(tmp) + 1));
+	fill_null((void *)&parser->hdoc_mode, arr_double_len(tmp) + 1);
 	while (tmp[i])
 	{
-		parser->data->hdoc_mode[i] = malloc(sizeof(int));
-		parser->data->hdoc_mode[i][0] = find_hdoc_mode(tmp[i]);
+		parser->hdoc_mode[i] = malloc(sizeof(int));
+		parser->hdoc_mode[i][0] = find_hdoc_mode(tmp[i]);
 		i++;
 	}
 	return (0);
@@ -89,12 +89,12 @@ int	get_hd_mode_in_pipe(t_parse *parser)
 	i = 0;
 	tmp = parser->data->cmd_line->head;
 	tmp->hdoc_mode = 0;
-	while (tmp && parser->data->hdoc_mode[i])
+	while (tmp && parser->hdoc_mode[i])
 	{
-		tmp->hdoc_mode = parser->data->hdoc_mode[i][0];
+		tmp->hdoc_mode = parser->hdoc_mode[i][0];
 		i++;
 		tmp = tmp->next;
 	}
-	free_double((void *)&parser->data->hdoc_mode);
+	free_double((void *)&parser->hdoc_mode);
 	return (0);
 }

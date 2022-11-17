@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 18:16:03 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:06:11 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+// DD$dsgdsg
 int	parsing(t_parse *parser)
 {
 	if (((check_quote(parser) == 1)
@@ -23,11 +23,13 @@ int	parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
+	// printf("%p\n", parser->hdoc_mode);
 	find_exe(parser);
 	if (parser->data->cmd_line->head == NULL)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
+	// printf("%p\n", parser->hdoc_mode);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
 	free_parse(parser);
