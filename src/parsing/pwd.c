@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:18:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 19:24:25 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:37:05 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ int	pwd(t_data *data, t_spl_pipe *cur)
 			ft_putendl_fd(my_pwd, cur->fd_out, FREE_OFF);
 		else
 			ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
-		// if (my_pwd)
-		// 	printf("%s\n", my_pwd);
-		// else
-		// 	ft_putstr_fd(SHELL_INIT, 2, FREE_OFF);
 	}
 	else
 		ft_putendl_fd(ptr, cur->fd_out, FREE_OFF);
-		// printf("%s\n", ptr);
 	free_arr(&ptr);
 	return (0);
 }

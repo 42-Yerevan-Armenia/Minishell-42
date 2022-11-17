@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_rd_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:45:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:34:36 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,8 @@ int	create_infiles(t_spl_pipe *head, int i, t_data *data)
 		if (close(head->fd_in) == -1 && !ft_perror("minishell: "))
 			return (START_RD_LN);
 	head->fd_in = open(head->rdc[i], O_RDONLY);
-	// if (head->fd_in == -1 && ft_putstr_fd(ft_strjoin_1(ft_strjoin
-	// 			("minishell: ", head->rdc[i]), NO_SUCH_F), 2, FREE_ON))
-	// {
-	// 	data->exit_status = 1;
-	// 	return (START_RD_LN);
-	// }
-	if (head->fd_in == -1 && !ft_perror(ft_strjoin("minishell: ", head->rdc[i])))
+	if (head->fd_in == -1 && \
+		!ft_perror(ft_strjoin("minishell: ", head->rdc[i])))
 	{
 		data->exit_status = 1;
 		return (START_RD_LN);

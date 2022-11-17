@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/15 20:52:00 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:27:01 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	run_builtins(t_data *data, t_spl_pipe *tmp)
 	else if (!ft_strcmp(tmp->cmd[0], "env"))
 		data->exit_status = env(tmp, tmp->cmd);
 	else if (!ft_strcmp(tmp->cmd[0], "exit"))
-		data->exit_status = ft_exit(data, tmp->cmd, tmp);
+		ft_exit(data, tmp->cmd, tmp);
 	else if (!ft_strcmp(tmp->cmd[0], "export"))
 		data->exit_status = export(data, tmp->cmd, tmp);
 	else if (!ft_strcmp(tmp->cmd[0], "pwd"))
