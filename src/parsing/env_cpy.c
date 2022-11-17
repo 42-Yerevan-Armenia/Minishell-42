@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:21:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 13:22:18 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:48:48 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**env_cpy(t_data *data, t_list_env *env)
 	int		i;
 
 	res = malloc(sizeof(char *) * (env->size + 1));
-	if (!res && ft_perror("minishell: "))
+	if (!res && !ft_perror("minishell: "))
 		exit(1);
 	fill_null((void *)&res, env->size + 1);
 	tmp = env->head;

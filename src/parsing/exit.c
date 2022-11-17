@@ -32,7 +32,7 @@ int	ex(t_data *data, char **args, t_spl_pipe *cur)
 {
 	if (data->cmd_line->tail && ft_strcmp(*args, "exit"))
 		return (1);
-	if (!args[1] && data->cmd_line->size > 1)
+	if (!args[1] && data->cmd_line->size > 1 && free_all(data))
 		exit(0);
 	else if (args[1] && !str_is_valid_num(args[1]))
 	{
@@ -69,6 +69,7 @@ int	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		data->exit_status = ft_atoi(args[1]);
 	}
+	free_all(data);	
 	exit(data->exit_status);
 	return (0);
 }

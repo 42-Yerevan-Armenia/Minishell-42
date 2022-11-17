@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 11:57:44 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:00:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_data
 	int					psize;
 	int					res;
 	int					exit_status;
-	int					**hdoc_mode;
 	char				*path;
 	char				**cmd_paths;
 	char				**envp;
@@ -79,6 +78,7 @@ typedef struct s_parse
 	int					l_arr;
 	char				*rd_ln;
 	char				*key;
+	int					**hdoc_mode;
 	char				**spl_qutoes;
 	char				**spl_pipe;
 	char				**join_pipe;
