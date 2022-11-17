@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 08:53:30 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:24:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ int	free_all(t_data *data)
 	free_spl_pipe(&data->cmd_line);
 	free_arr(&data->parser->rd_ln);
 	free_parse(data->parser);
+	free(data->cmd_line);
+	free(data->env);
+	free(data->env_exp);
 	// free_arr(&data->path);
 	return (0);
 }
