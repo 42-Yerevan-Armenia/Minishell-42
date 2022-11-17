@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/17 10:29:24 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/16 21:50:22 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	str_is_valid_num(char *str)
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (ft_isdigit(str[i]))
-		i++;
+		return (0);
 	if (str[i] || !ft_isdigit(str[i - 1]) || i > 19)
 		return (0);
 	return (1);
@@ -40,7 +40,7 @@ int	ex(t_data *data, char **args, t_spl_pipe *cur)
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
-		data->exit_status = 255;
+		exit (data->exit_status = 255);
 	}
 	return (0);
 }
