@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/16 21:14:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:29:19 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int				env(t_spl_pipe *cur, char **args);
 // int				pwd(t_data *data);
 int				pwd(t_data *data, t_spl_pipe *cur);
 int				cd(t_data *data, char **args);
-int				ft_exit(t_data *data, char **args, t_spl_pipe *cur);
+void			ft_exit(t_data *data, char **args, t_spl_pipe *cur);
 int				run_heredoc(t_data *data);
 int				search_builtin(char *s, char **builtins);
 char			**ft_bultins(void);

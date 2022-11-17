@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:21:55 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 08:47:50 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:33:35 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	pass_qutoes(int *i, char *str)
 int	ft_perror(char *str)
 {
 	perror(str);
-	// free_all()
 	return (0);
 }
 

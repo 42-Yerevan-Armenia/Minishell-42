@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 19:17:25 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:35:55 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ static int	print_exp(t_env *head, t_spl_pipe *node)
 				ft_putstr_fd(head->val, node->fd_out, FREE_OFF);
 			ft_putstr_fd("\n", node->fd_out, FREE_OFF);
 		}
-		// if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
-		// {
-		// 	printf("declare -x %s", head->key);
-		// 	if (head->val)
-		// 		printf("\"%s\"", head->val);
-		// 	printf("\n");
-		// }
 		head = head->next;
 	}
 	return (0);
