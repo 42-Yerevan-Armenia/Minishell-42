@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/17 10:23:03 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:29:24 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		data->exit_status = ft_atoi(args[1]);
 	}
-	free_all(data);
+	free_all(data);	
 	exit(data->exit_status);
 	return (0);
 }

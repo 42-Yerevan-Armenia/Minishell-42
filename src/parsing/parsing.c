@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:06:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:42:26 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ int	parsing(t_parse *parser)
 	split_pipe(parser);
 	pipe_join(parser);
 	get_all_hd_modes(parser);
-	// printf("%p\n", parser->hdoc_mode);
 	find_exe(parser);
 	if (parser->data->cmd_line->head == NULL)
 		return (START_RD_LN);
 	ft_clean_all_qutoes(parser->data->cmd_line->head);
 	get_hd_mode_in_pipe(parser);
-	// printf("%p\n", parser->hdoc_mode);
 	if ((run_heredoc(parser->data) == START_RD_LN))
 		return (START_RD_LN);
 	free_parse(parser);
