@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 20:35:55 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:38:07 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	print_exp(t_env *head, t_spl_pipe *node)
 	{
 		if (head->is_export == EXPORT || head->is_export == (ENV | EXPORT))
 		{
-			ft_putstr_fd("declare -x", node->fd_out, FREE_OFF);
+			ft_putstr_fd("declare -x ", node->fd_out, FREE_OFF);
 			ft_putstr_fd(head->key, node->fd_out, FREE_OFF);
 			if (head->val)
 				ft_putstr_fd(head->val, node->fd_out, FREE_OFF);
@@ -35,9 +35,9 @@ static int	is_valid_args_helper(char *args, t_data *data)
 
 	if (args && (args[0] == '=' || args[0] == '+'))
 	{
-		error = ft_strjoin_2("minishell: export: ",
+		error = ft_strjoin_2("🔻minishell: export: ",
 				ft_strjoin_1(ft_strjoin_2("`", ft_strjoin(args, "'")),
-					": not a valid identifier"));
+					": not a valid identifier ❌"));
 		ft_putendl_fd(error, 2, FREE_ON);
 		data->exit_status = 1;
 		return (1);
@@ -59,9 +59,9 @@ static int	is_valid_args(char *args, t_data *data)
 		if ((!ft_isalnum(args[i]) && args[i] != '_')
 			|| (ft_isdigit(args[i]) && i == 0))
 		{
-			error = ft_strjoin_2("minishell: export: ", ft_strjoin_1(
+			error = ft_strjoin_2("🔻minishell: export: ", ft_strjoin_1(
 						ft_strjoin_2("`", ft_strjoin(args, "'")),
-						": not a valid identifier"));
+						": not a valid identifier ❌"));
 			ft_putendl_fd(error, 2, FREE_ON);
 			data->exit_status = 1;
 			return (1);

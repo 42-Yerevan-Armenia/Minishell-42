@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 18:27:35 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/10 18:27:56 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:55:22 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin_1(char *s1, char *s2)
 
 	arr_to_free = s1;
 	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	ptr1 = ptr;
 	while (s1 && *s1 != '\0')
@@ -40,7 +40,7 @@ char	*ft_strjoin_2(char *s1, char *s2)
 
 	arr_to_free = s2;
 	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	ptr1 = ptr;
 	while (s1 && *s1 != '\0')
@@ -62,7 +62,7 @@ char	*ft_strjoin_mode(char *s1, char *s2, int mode)
 	arr_to_free_1 = s1;
 	arr_to_free_2 = s2;
 	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	ptr1 = ptr;
 	while (s1 && *s1 != '\0')

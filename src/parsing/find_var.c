@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 13:33:26 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:54:15 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 			*ptr = &src[j++];
 			find_var_helper_helper(src, &j, &len);
 			res = malloc(sizeof(char) * len + 1);
-			if (!res && !ft_perror("minishell: "))
+			if (!res && !ft_perror("🔻minishell: "))
 				exit(1);
 			while (len)
 				res[i++] = src[j - len--];

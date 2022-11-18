@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_elem.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:41:52 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 13:59:17 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:52:28 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_elem	*count_elem(char *str)
 
 	i = 0;
 	res = malloc(sizeof(t_elem));
-	if (!res && !ft_perror("minishell: "))
+	if (!res && !ft_perror("🔻minishell: "))
 		exit (1);
 	res->hdoc = 1;
 	res->out_a_f = 1;

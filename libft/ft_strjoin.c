@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:22:45 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/03 19:52:50 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:51:14 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 	char	*ptr1;
 
 	ptr = (char *) malloc(ft_strlen(s1) + ft_strlen((char *)s2) + 1);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	ptr1 = ptr;
 	while (s1 && *s1 != '\0')
@@ -37,7 +37,7 @@ char	*ft_charjoin(char *s1, char const s2, int flag)
 
 	arr_to_free = s1;
 	ptr = (char *) malloc(ft_strlen(s1) + 2);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	ptr1 = ptr;
 	while (s1 && *s1 != '\0')

@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:16:10 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 18:15:07 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:54:38 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	split_quotes(t_parse *parser)
 	parser->l_arr = 2;
 	init_vars(&v, 0, 0, 0);
 	parser->spl_qutoes = malloc(sizeof(char *) * (parser->l_arr + 1));
-	if (!parser->spl_qutoes && !ft_perror("minishell: "))
+	if (!parser->spl_qutoes && !ft_perror("🔻minishell: "))
 		exit(1);
 	fill_null((void *)&parser->spl_qutoes, parser->l_arr + 1);
 	while (tmp[v.i])

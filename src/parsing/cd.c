@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:28:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 19:08:28 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:00:51 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	go_home(t_data *data)
 	char	*tmp;
 
 	tmp = get_val(data->env->head, "HOME", ENV);
-	if (!tmp && ft_putstr_fd("minishell: cd: HOME not set\n", 2, FREE_OFF))
+	if (!tmp && ft_putstr_fd("🔻minishell: cd: HOME not set\n", 2, FREE_OFF))
 		return (1);
 	else
 	{
-		if (chdir(tmp) == -1 && !ft_perror("minishel: cd : "))
+		if (chdir(tmp) == -1 && !ft_perror("🔻minishel: cd : "))
 			return (1);
 		tmp = getcwd(NULL, 0);
 		set_env(data, new_env("PWD=", tmp, FORME));
@@ -61,7 +61,7 @@ int	deleted_dir(t_data *data, char **args)
 	if (tmp == NULL && errno == ENOENT)
 	{
 		if (chdir(args[1]) == -1 && ft_putstr_fd(ft_strjoin_1(ft_strjoin
-					("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
+					("🔻minishell: cd: ", args[1]), NO_DIR), 2, FREE_ON))
 			return (1);
 		free_arr(&tmp);
 		deleted_dir_helper(data, args);
@@ -72,7 +72,7 @@ int	deleted_dir(t_data *data, char **args)
 int	normal_behave(t_data *data, char **args, char *tmp)
 {
 	if (chdir(args[1]) == -1 && ft_putstr_fd(ft_strjoin_1(
-				ft_strjoin("minishell: cd: ", args[1]), NO_SUCH_F), 2, FREE_ON))
+				ft_strjoin("🔻minishell: cd: ", args[1]), NO_DIR), 2, FREE_ON))
 		return (1);
 	tmp = getcwd(NULL, 0);
 	set_env(data, new_env("PWD=", tmp, FORME));

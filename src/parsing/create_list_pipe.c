@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:19:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 19:03:02 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:52:45 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list_spl_pipe	*create_list_pipe(void)
 	t_list_spl_pipe	*list;
 
 	list = malloc(sizeof(t_list_spl_pipe));
-	if (list == NULL && !ft_perror("minishell: "))
+	if (list == NULL && !ft_perror("🔻minishell: "))
 		exit(1);
 	list->size = 0;
 	list->head = NULL;
@@ -30,7 +30,7 @@ t_spl_pipe	*new_spl_pipe(t_data *data)
 	t_spl_pipe	*new_pipe;
 
 	new_pipe = malloc(sizeof(t_spl_pipe));
-	if (new_pipe == NULL && !ft_perror("minishell: "))
+	if (new_pipe == NULL && !ft_perror("🔻minishell: "))
 		exit(1);
 	new_pipe->flag_new_pipe = 0;
 	new_pipe->fd_in = 0;

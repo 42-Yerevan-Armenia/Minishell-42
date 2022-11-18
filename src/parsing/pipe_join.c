@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_join.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:51:17 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/06 11:47:48 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:55:01 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	pipe_join(t_parse *parser)
 	init_zero(&i, &k, &j, NULL);
 	parser->l_arr = 2;
 	parser->join_pipe = malloc(sizeof(char *) * (parser->l_arr + 1));
-	if (parser->join_pipe == NULL && !ft_perror("minishell: "))
+	if (parser->join_pipe == NULL && !ft_perror("🔻minishell: "))
 		exit (1);
 	fill_null((void *)&parser->join_pipe, parser->l_arr + 1);
 	while (parser->spl_pipe && parser->spl_pipe[i] != NULL)
