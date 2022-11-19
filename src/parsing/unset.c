@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/18 16:35:01 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:02:32 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	is_valid_args(char *args, t_data *data)
 					&& args[i] != '_') || (ft_isdigit(args[i])
 					&& i == 0)))
 		{
-			error = ft_strjoin_2("🔻minishell: unset: ", 
+			error = ft_strjoin_2("🔻minishell: unset: ", \
 					ft_strjoin_1(ft_strjoin_2
 						("`", ft_strjoin(args, "'")),
 						": not a valid identifier ❌"));
