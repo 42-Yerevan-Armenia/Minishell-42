@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 19:36:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/10/31 10:15:08 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:51:23 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_substr(char const *src, unsigned int start, size_t len)
 	if (s_len < len)
 		len = s_len;
 	ptr = (char *) malloc(len + 1);
-	if (ptr == 0 && !ft_perror("minishell: "))
+	if (ptr == 0 && !ft_perror("🔻minishell: "))
 		return (0);
 	i = 0;
 	while (src[start] && len--)

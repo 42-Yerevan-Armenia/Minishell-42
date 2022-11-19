@@ -17,7 +17,7 @@ t_list_env	*create_list_env(void)
 	t_list_env	*list;
 
 	list = malloc(sizeof(t_list_env));
-	if (list == NULL && !ft_perror("minishell: "))
+	if (list == NULL && !ft_perror("🔻minishell: "))
 		exit(1);
 	list->head = NULL;
 	list->tail = NULL;

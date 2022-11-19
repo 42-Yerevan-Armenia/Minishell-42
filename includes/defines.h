@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/16 17:18:31 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:01:02 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ extern int	g_sig;
 
 //Builtins
 # define EXIT_ARG "🔻minishell> : exit: too many arguments ❌\n"
-# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
+# define UNEXPECTED_TOKEN "🔻minishell: syntax error near unexpected token "
 # define SHELL_INIT "shell-init: error retrieving current directory: getcwd:\
- cannot access parent directories: No such file or directory\n"
-# define BAD_RDR "minishell: ambigous redirect\n"
-# define NO_SUCH_F ": No such file or directory\n"
-# define CD_ERROR "minishell: cd: error retrieving current directory: getcwd: cannot access parent\
+ cannot access parent directories: No such file or directory ❌\n"
+# define BAD_RDR "🔻minishell: ambigous redirect\n"
+# define CD_ERROR "🔻minishell: cd: error retrieving current directory: getcwd: cannot access parent\
  directories: No such file or directory ❌\n"
 
 void	not_found(t_spl_pipe *tmp, t_data *data);

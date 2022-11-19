@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/12 18:13:04 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/19 20:02:32 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static int	is_valid_args(char *args, t_data *data)
 					&& args[i] != '_') || (ft_isdigit(args[i])
 					&& i == 0)))
 		{
-			error = ft_strjoin_2("minishell: unset: ", ft_strjoin_1(ft_strjoin_2
+			error = ft_strjoin_2("🔻minishell: unset: ", \
+					ft_strjoin_1(ft_strjoin_2
 						("`", ft_strjoin(args, "'")),
-						": not a valid identifier"));
+						": not a valid identifier ❌"));
 			ft_putendl_fd(error, 2, FREE_ON);
 			data->exit_status = 1;
 			return (1);

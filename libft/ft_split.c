@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:31:34 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/13 11:09:31 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:51:04 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (0);
 	splited = malloc(sizeof(char *) * (counting_word(s, c) + 1));
-	if (!splited && !ft_perror("minishell: "))
+	if (!splited && !ft_perror("🔻minishell: "))
 		return (0);
 	while (s[i[0]] != '\0')
 	{

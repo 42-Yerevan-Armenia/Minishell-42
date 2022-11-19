@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 20:29:19 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/19 19:59:53 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int				ft_get_rdc_mode(char *s);
 char			*set_mode(char *s);
 
 // builtins
+int				ft_free(char **str);
+char			*numstr(char *str);
 // int				echo(char **args);
 int				echo(t_spl_pipe *cur, char **args);
 // int				export(t_data *data, char **args);

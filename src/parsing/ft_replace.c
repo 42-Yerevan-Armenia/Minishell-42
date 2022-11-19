@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:45:18 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 20:36:29 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:55:28 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_replace_helper(t_parse *parser, char *src, char **value, int *j)
 		*value = set_mode_quotes(*value);
 	res = malloc(sizeof(char) * (ft_strlen(src) - ft_strlen(parser->key)
 				+ ft_strlen(*value)) + 1);
-	if (!res && !ft_perror("minishell: "))
+	if (!res && !ft_perror("🔻minishell: "))
 		exit (1);
 	*j = 0;
 	return (res);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_api.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:09:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:48:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:53:50 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*new_env(char *key, char *val, int is_export)
 	t_env	*new_node;
 
 	new_node = malloc(sizeof(t_env));
-	if (!new_node && !ft_perror("minishell: "))
+	if (!new_node && !ft_perror("🔻minishell: "))
 		exit (1);
 	new_node->is_export = is_export;
 	new_node->key = ft_strdup(key);
