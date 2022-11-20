@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:39:16 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/08 20:29:06 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/20 13:25:04 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 
 static void	sig_term(int signum)
 {
-	g_sig = 0;
 	(void)signum;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	// if (g_sig == 100)
+	// {
+	// printf("hajox");
+	// 	rl_on_new_line();
+	// 	rl_replace_line("", 0);
+	// 	// rl_redisplay();
+	// }
+	// else
+	// {
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	// }
+	g_sig = 0;
 }
 
 int	hook_signals(void)

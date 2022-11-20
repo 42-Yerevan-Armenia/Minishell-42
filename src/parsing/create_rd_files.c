@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_rd_files.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 17:32:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/18 16:53:41 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/20 16:48:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ int	create_outfiles(t_spl_pipe *head, int i, int mode)
 			return (START_RD_LN);
 	head->fd_out = open(head->rdc[i],
 			O_CREAT | mode | O_RDWR, 0644);
-	if (head->fd_out == -1 && ft_strjoin("🔻minishell: ", head->rdc[i]))
+	if (head->fd_out == -1 && !ft_perror(ft_strjoin("🔻minishell: ", head->rdc[i])))
+	{
+		head->data->exit_status = 1;
 		return (START_RD_LN);
+	}
 	return (0);
 }
 

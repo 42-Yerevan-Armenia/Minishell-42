@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/18 17:01:02 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/20 16:31:33 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,33 @@
 # define HANDLE	"<>"
 # define QUOTES	"\"'`"
 # define SPACES " \n\t\v\f\r"
+
 # define APPEND_FILES 1
 # define IN_FILES 2
 # define OUT_FILES 3
 # define HEREDOC 4
 # define COMAND 5
+
 # define EXPORT 2
 # define ENV 1
 # define FORME 4
+
 # define HDOC_SQ_MODE 1
 # define HDOC_DQ_MODE 0
-# define START_RD_LN -1
+
+
 # define TC_ON 50
 # define TC_OFF 51
+
 # define FREE_ON 7
 # define FREE_OFF 8
 # define FREE_1 1
 # define FREE_2 2
 # define UNPRINTABLE 1
+
+# define SIGNAL 1
+# define ENDF -1
+# define START_RD_LN 100
 
 extern int	g_sig;
 
@@ -58,6 +67,7 @@ extern int	g_sig;
 # define BAD_RDR "🔻minishell: ambigous redirect\n"
 # define CD_ERROR "🔻minishell: cd: error retrieving current directory: getcwd: cannot access parent\
  directories: No such file or directory ❌\n"
+# define MAX_HDOC "minishell: maximum here-document count exceeded❌\n"
 
 void	not_found(t_spl_pipe *tmp, t_data *data);
 void	is_dir(t_spl_pipe *tmp, t_data *data);

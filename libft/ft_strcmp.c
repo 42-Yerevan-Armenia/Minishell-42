@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 18:08:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/02/17 12:47:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/20 16:05:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 
 int	ft_strcmp(char *s1, char *s2)
 {
+	if (!s1 || !s2)
+		return (1);
 	while (*s1)
 	{
 		if (*s1 != *s2)
