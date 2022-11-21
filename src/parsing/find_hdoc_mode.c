@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:03:12 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/20 16:46:08 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ int	get_all_hd_modes(t_parse *parser)
 {
 	char	**tmp;
 	int		i;
-
-	if (heredoc_limit(parser->rd_ln) > 16 && free_all(parser->data))
+	if (heredoc_limit(parser->rd_ln) > 16
+		&& ft_putstr_fd(MAX_HDOC, 2, FREE_OFF)
+		&& !free_all(parser->data))
 		exit(2);
 	i = 0;
 	tmp = parser->join_pipe;
