@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 13:47:18 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:13:21 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			cmd_errors_1(t_data *data, t_spl_pipe *tmp);
 int				cmd_errors_2(t_data *data, t_spl_pipe *tmp);
 int				cmd_errors(t_data *data, t_spl_pipe *tmp);
 void			execute(t_data *data);
-int				run_binar(t_data *data);
+void			run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
 char			*get_cmd(char **paths, char *cmd);
 void			pipex(int (*fds)[2], int psize);
@@ -89,18 +89,16 @@ int				check_quote(t_parse *parser);
 int				ft_put_rdc_mode(char **s, int mode);
 int				ft_get_rdc_mode(char *s);
 char			*set_mode(char *s);
+int				create_hiden_file(t_data *data, t_spl_pipe *node,
+					char **f_name);
 
 // builtins
 int				ft_free(char **str);
 char			*numstr(char *str);
-// int				echo(char **args);
 int				echo(t_spl_pipe *cur, char **args);
-// int				export(t_data *data, char **args);
 int				export(t_data *data, char **args, t_spl_pipe *cur);
 int				unset(t_data *data, char **args);
 int				env(t_spl_pipe *cur, char **args);
-// int				env(t_data *data, char **args);
-// int				pwd(t_data *data);
 int				pwd(t_data *data, t_spl_pipe *cur);
 int				cd(t_data *data, char **args);
 void			ft_exit(t_data *data, char **args, t_spl_pipe *cur);

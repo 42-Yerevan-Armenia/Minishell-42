@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 15:24:55 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:42:50 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_data
 	int					psize;
 	int					res;
 	int					exit_status;
+	int					fork_res;
 	char				*path;
 	char				**cmd_paths;
 	char				**envp;

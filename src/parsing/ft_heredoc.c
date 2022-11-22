@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 08:32:20 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:52:07 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
-{
-	int		i;
-	char	*doc;
-	char	*path;
-
-	path = NULL;
-	doc = ".42doc";
-	i = 0;
-	while (++i)
-	{
-		path = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV),
-				ft_strjoin_2(doc, ft_itoa(i)));
-		if (access(path, F_OK) && !free_arr(&path))
-			break ;
-		free_arr(&path);
-	}
-	*f_name = ft_strjoin_2(get_val(data->env->head, "TMPDIR", ENV),
-			ft_strjoin_2(doc, ft_itoa(i)));
-	node->fd_hdc = open(*f_name, O_CREAT | O_RDWR | O_TRUNC, 0777);
-	if (node->fd_hdc == -1 && !ft_perror("🔻minishell: "))
-		return (START_RD_LN);
-	return (node->fd_hdc);
-}
 
 static int	ft_heredoc_rdln(char **rd_ln, char ***res)
 {
@@ -48,8 +23,6 @@ static int	ft_heredoc_rdln(char **rd_ln, char ***res)
 		exit (SIGNAL);
 	return (0);
 }
-
-// cat <<a <<b <<t<<y
 
 static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 {
@@ -64,7 +37,8 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 			ft_heredoc_rdln(&rd_ln, &res);
 			if ((res && *res))
 				*res = ft_strjoin_1(*res, "\n");
-			if (rd_ln == NULL || ((*node)->heredoc[i] && !ft_strcmp(rd_ln, (*node)->heredoc[i])))
+			if (rd_ln == NULL || ((*node)->heredoc[i]
+					&& !ft_strcmp(rd_ln, (*node)->heredoc[i])))
 				break ;
 			*res = ft_strjoin_1(*res, rd_ln);
 			free_arr(&rd_ln);
@@ -74,7 +48,7 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 	return (0);
 }
 
-void child(t_spl_pipe *node, t_parse *parser)
+void	child(t_spl_pipe *node, t_parse *parser)
 {
 	char	*rd_ln;
 	char	**res;
