@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/20 16:47:00 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:35:53 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,7 @@ int	g_sig = 1;
 static int	ft_readline_main(t_parse *parser, t_data *data)
 {
 	set_term_attr(TC_OFF);
-	// if (g_sig == 100)
-	// {
-	// 	rl_on_new_line();
-	// 	rl_replace_line("", 0);
-	// 	g_sig = 0;
-	// }
-	// printf("hajox1");
 	parser->rd_ln = readline("🔻minishell> ");
-	// printf("hajox");
 	if (g_sig == 0 && ++g_sig && !free_arr(&parser->rd_ln))
 	{
 		set_env(data, new_env("?=", "1", FORME));
@@ -52,6 +44,7 @@ static void	start(t_parse *parser, t_data *data)
 			if (data->cmd_line->head && data->cmd_line->head->cmd)
 			{
 				execute(data);
+				// printf("hajox\n");
 			}
 		}
 		ft_get_status_in_env(data, parser);

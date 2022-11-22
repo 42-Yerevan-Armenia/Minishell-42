@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 16:31:44 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:43:59 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	execute(t_data *data)
 		else if (data->cmd_line->head->cmd[0])
 		{
 			ps = 0;
-			run_binar(data);
+			if (run_binar(data) == -1 && printf("barev\n"))
+				return ;
 		}
 	}
 }
@@ -58,6 +59,7 @@ int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 {
 	int			i;
 	t_spl_pipe	*tmp;
+	int			fd;
 
 	tmp = head;
 	pipex(fds, psize);
@@ -65,8 +67,36 @@ int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 	while (++i < psize)
 	{
 		tmp->pid = fork();
+		// if (tmp->pid == -1)
+		// 	break ;
 		if (tmp->pid == -1)
 		{
+			tmp = head;
+			// kill (tmp->pid, SIGTERM);
+			// write(0, " \0", 2);
+			
+			close(0);
+			// while (tmp)
+			// {
+				// sleep();
+				// tmp = tmp->next;
+			// }
+			
+			// while (tmp->next)
+			// {
+			// 	// printf("hajox\n");
+			// 	// if (tmp->pid != -1)
+			// 	printf("%d\n", tmp->pid);
+			// 		if (kill (tmp->pid, SIGKILL) == 0)
+			// 			printf("succes\n");
+			// 	tmp = tmp->next;
+			// 	usleep(10000);
+			// }
+			ft_putstr_fd(FORK, 2, FREE_OFF);
+			data->exit_status = 1;
+			// break ;
+			return (-1);
+/*
 			close(fds[i][1]);
 			dup2(fds[i][1], 0);
 			ft_putstr_fd(FORK, 2, FREE_OFF);
@@ -74,6 +104,7 @@ int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 			// tmp = head;
 			// kill (tmp->pid, SIGKILL);
 			// break ;
+*/
 		}
 		else if (tmp->pid == 0)
 			pid_check(fds, psize, i, tmp, data);
@@ -104,6 +135,7 @@ void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 int	run_binar(t_data *data)
 {
 	t_spl_pipe	*tmp;
+	int			ret;
 	int			(*fds)[2];
 
 	tmp = data->cmd_line->head;
@@ -112,13 +144,17 @@ int	run_binar(t_data *data)
 	if (data->path)
 		data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
-	forking(fds, data->psize, tmp, data);
+	ret = forking(fds, data->psize, tmp, data);
+	// printf("ret = %d\n", ret);
+	// if (!close_fds(fds, data->psize) && ret == -1)
+	// 	return(1);
 	close_fds(fds, data->psize);
 	if (data->path)
 		free_double((void *)&data->cmd_paths);
+	if (ret == -1 && printf("\n\n\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\\n\n\n"))
+		return (-1);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
-	hook_signals();
-	return (0);
+	hook_signals();	return (0);
 }

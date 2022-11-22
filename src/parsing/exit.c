@@ -89,21 +89,11 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 		data->exit_status = 1;
 		return ;
 	}
-	else if (args && ft_atoi(args[1]) >= 255)
-	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
-		data->exit_status = ft_atoi(args[1]) % 256;
-	}
-	else if (args && ft_atoi(args[1]) < 0)
-	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
-		data->exit_status = ft_atoi(args[1]) - 256;
-	}
 	else
 	{
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		data->exit_status = ft_atoi(args[1]);
 	}
-	free_all (data);
+	free_all(data);
 	exit(data->exit_status);
 }

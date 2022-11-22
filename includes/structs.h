@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 12:51:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:00:15 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:24:55 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_spl_pipe
 	int					hdoc_mode;
 	int					flag_new_pipe;
 	int					tmp;
-	pid_t				pid;
+	long				pid;
 	char				*f_name;
 	char				**cmd;
 	char				**heredoc;
