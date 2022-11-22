@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
 /*   Updated: 2022/11/22 15:43:59 by vaghazar         ###   ########.fr       */
@@ -96,6 +96,15 @@ int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 			data->exit_status = 1;
 			// break ;
 			return (-1);
+/*
+			close(fds[i][1]);
+			dup2(fds[i][1], 0);
+			ft_putstr_fd(FORK, 2, FREE_OFF);
+			return (-1);
+			// tmp = head;
+			// kill (tmp->pid, SIGKILL);
+			// break ;
+*/
 		}
 		else if (tmp->pid == 0)
 			pid_check(fds, psize, i, tmp, data);
