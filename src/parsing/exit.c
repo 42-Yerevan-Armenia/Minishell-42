@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 17:58:57 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 20:25:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ int	str_is_valid_num(char *str)
 			return (1);
 		i++;
 	}
+	if ((i - j) > 19)
+		return (1);
+	if ((i - j) <= 19)
+		return (0);
 	if (flag == 1 || flag == 0)
 		if (ft_strcmp(tmp + j, L_MAX) > 0)
 			return (1);
@@ -44,7 +48,7 @@ int	str_is_valid_num(char *str)
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
 	if (!args[1])
-		exit (0);
+		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
 	else if (args[1] && str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
