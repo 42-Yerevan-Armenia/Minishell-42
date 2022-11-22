@@ -6,12 +6,12 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 10:42:26 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:11:34 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// DD$dsgdsg
+
 int	parsing(t_parse *parser)
 {
 	if (((check_quote(parser) == 1)

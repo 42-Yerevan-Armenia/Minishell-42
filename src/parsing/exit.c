@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/20 16:32:49 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:52:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,11 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 		data->exit_status = 1;
 		return ;
 	}
-	else if (args && ft_atoi(args[1]) >= 255)
-	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
-		data->exit_status = ft_atoi(args[1]) % 256;
-	}
-	else if (args && ft_atoi(args[1]) < 0)
-	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
-		data->exit_status = ft_atoi(args[1]) - 256;
-	}
 	else
 	{
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		data->exit_status = ft_atoi(args[1]);
 	}
-	free_all (data);
+	free_all(data);
 	exit(data->exit_status);
 }

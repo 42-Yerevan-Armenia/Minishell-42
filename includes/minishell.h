@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/19 19:59:53 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:47:18 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void			pipex(int (*fds)[2], int psize);
 void			pid_check(int (*fds)[2], int psize, int i, \
 				t_spl_pipe *tmp, t_data *data);
 void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
-void			close_fds(int (*fds)[2], int psize);
+int				close_fds(int (*fds)[2], int psize);
 int				ft_get_status_in_env(t_data *data, t_parse *parser);
 
 // parsing

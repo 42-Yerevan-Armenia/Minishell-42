@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/20 16:15:30 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 08:32:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,15 @@ static int	create_hiden_file(t_data *data, t_spl_pipe *node, char **f_name)
 	return (node->fd_hdc);
 }
 
-static int	ft_heredoc_rdln(t_spl_pipe **node, char **rd_ln, char ***res)
+static int	ft_heredoc_rdln(char **rd_ln, char ***res)
 {
 	set_term_attr(TC_OFF);
 	*rd_ln = readline("> ");
 	set_term_attr(TC_ON);
-	if (!*rd_ln/* && printf("barev\n")*/)
+	if (!*rd_ln)
 		return (ENDF);
 	if (g_sig == 0 && !free_double(res) && !free_arr(rd_ln) && ++g_sig)
-	{
-		printf("SIGNAL\n");
 		exit (SIGNAL);
-	}
 	return (0);
 }
 
@@ -64,7 +61,7 @@ static int	ft_heredoc_helper(t_spl_pipe **node, char **res, char	*rd_ln)
 		free_arr(res);
 		while (!free_arr(&rd_ln))
 		{
-			ft_heredoc_rdln(node, &rd_ln, &res);
+			ft_heredoc_rdln(&rd_ln, &res);
 			if ((res && *res))
 				*res = ft_strjoin_1(*res, "\n");
 			if (rd_ln == NULL || ((*node)->heredoc[i] && !ft_strcmp(rd_ln, (*node)->heredoc[i])))
@@ -100,7 +97,6 @@ void child(t_spl_pipe *node, t_parse *parser)
 int	parent(t_spl_pipe *node, int pid)
 {
 	int	res;
-	int status;
 
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &res, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/15 20:59:03 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:45:51 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	close_fds(int (*fds)[2], int psize)
+int	close_fds(int (*fds)[2], int psize)
 {
 	int	i;
 
@@ -42,6 +42,7 @@ void	close_fds(int (*fds)[2], int psize)
 			perror("CLOSE FAILED");
 	}
 	free(fds);
+	return (0);
 }
 
 void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)

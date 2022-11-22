@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:19:05 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/18 16:52:45 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:16:29 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_spl_pipe	*new_spl_pipe(t_data *data)
 	new_pipe->fd_hdc = 0;
 	new_pipe->input_mode = 0;
 	new_pipe->tmp = 2;
+	new_pipe->pid = -1;
 	new_pipe->data = data;
 	new_pipe->next = NULL;
 	new_pipe->prev = NULL;

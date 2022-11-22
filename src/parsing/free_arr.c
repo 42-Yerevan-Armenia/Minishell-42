@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_arr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:29:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 20:36:11 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:52:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	free_all(t_data *data)
 	free_double(&data->envp);
 	free_double(&data->cmd_paths);
 	free_spl_pipe(&data->cmd_line);
-	free_arr(&data->parser->rd_ln);
 	free_parse(data->parser);
 	free(data->cmd_line);
 	free(data->env);
