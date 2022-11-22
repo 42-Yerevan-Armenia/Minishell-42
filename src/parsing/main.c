@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 14:35:53 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:46:59 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	start(t_parse *parser, t_data *data)
 			if (data->cmd_line->head && data->cmd_line->head->cmd)
 			{
 				execute(data);
-				// printf("hajox\n");
 			}
 		}
 		ft_get_status_in_env(data, parser);

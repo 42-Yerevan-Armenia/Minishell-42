@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/20 16:31:33 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:42:10 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define HDOC_SQ_MODE 1
 # define HDOC_DQ_MODE 0
 
-
 # define TC_ON 50
 # define TC_OFF 51
 
@@ -46,6 +45,9 @@
 # define SIGNAL 1
 # define ENDF -1
 # define START_RD_LN 100
+
+# define L_MIN "9223372036854775808"
+# define L_MAX "9223372036854775807"
 
 extern int	g_sig;
 
