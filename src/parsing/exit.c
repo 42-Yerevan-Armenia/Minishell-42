@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 20:25:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:15:42 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	str_is_valid_num(char *str)
 	}
 	if ((i - j) > 19)
 		return (1);
-	if ((i - j) <= 19)
+	if ((i - j) < 19)
 		return (0);
 	if (flag == 1 || flag == 0)
 		if (ft_strcmp(tmp + j, L_MAX) > 0)
