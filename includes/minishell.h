@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/24 18:57:24 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/24 20:47:39 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 
-//# define malloc(...)NULL
+//# define malloc(...) NULL
 
 # define WHITE	"\033[0;29m"
 # define RED	"\033[1;31m"

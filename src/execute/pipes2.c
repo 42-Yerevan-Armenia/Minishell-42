@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 20:14:04 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/24 18:35:48 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/24 20:44:48 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int	pipe_redirections(t_spl_pipe *tmp)
 {
 	if (dup2(tmp->fd_out, 1) == -1 || dup2(tmp->fd_in, 0) == -1)
+	{
+		if (close(tmp->fd_out) == -1 || close(tmp->fd_in) == -1)
+			return (START_RD_LN);
 		return (START_RD_LN);
+	}
 	return (0);
 }
 
@@ -29,6 +33,7 @@ int	pipex(int (*fds)[2], int psize)
 		if (pipe(fds[i]) == -1)
 		{
 			ft_perror("🔻minishell: pipe");
+			close_fds(fds, i + 1);
 			return (START_RD_LN);
 		}
 	}

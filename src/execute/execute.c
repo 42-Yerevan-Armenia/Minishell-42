@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/24 18:47:49 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/24 19:09:27 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 
 	tmp = head;
 	if (pipex(fds, psize) == START_RD_LN)
-	{
-		if (close_fds(fds, data->psize) == START_RD_LN)
-			return (START_RD_LN);
 		return (START_RD_LN);
-	}
 	i = -1;
 	while (++i < psize)
 	{
