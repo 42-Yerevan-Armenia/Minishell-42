@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 13:45:51 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:36:45 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,43 @@ int	close_fds(int (*fds)[2], int psize)
 	i = -1;
 	while (++i < psize - 1)
 	{
-		if (close(fds[i][1]) == -1)
-			perror("CLOSE FAILED");
-		if (close(fds[i][0]) == -1)
-			perror("CLOSE FAILED");
+		if (close(fds[i][1]) == -1 || close(fds[i][0]) == -1)
+		{
+			ft_perror("🔻minishell: close");
+			return (START_RD_LN);
+		}
 	}
 	free(fds);
 	return (0);
 }
 
-void	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
+int	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 {
 	if (i == 0)
 	{
-		if (dup2(fds[0][1], tmp->fd_out) < 0)
-			exit(1);
+		if (dup2(fds[0][1], tmp->fd_out) == -1)
+		{
+			ft_perror("🔻minishell: dup2");
+			return (START_RD_LN);
+		}
 	}
 	else if (i == psize - 1)
 	{
-		if (dup2(fds[i - 1][0], tmp->fd_in) < 0)
-			exit(1);
+		if (dup2(fds[i - 1][0], tmp->fd_in) == -1)
+		{
+			ft_perror("🔻minishell: dup2");
+			return (START_RD_LN);
+		}
 	}
 	else
 	{
-		dup2(fds[i - 1][0], tmp->fd_in);
-		dup2(fds[i][1], tmp->fd_out);
+		if (dup2(fds[i - 1][0], tmp->fd_in) == -1 \
+		|| dup2(fds[i][1], tmp->fd_out) == -1)
+			return (START_RD_LN);
 	}
-	close_fds(fds, psize);
+	if (close_fds(fds, psize) == START_RD_LN)
+		return (START_RD_LN);
+	return (0);
 }
 
 void	do_cmd(t_data *data, t_spl_pipe *tmp)

@@ -6,13 +6,13 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 16:47:18 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/24 18:47:49 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	execute(t_data *data)
+int	execute(t_data *data)
 {
 	int		i;
 	int		ps;
@@ -26,13 +26,17 @@ void	execute(t_data *data)
 		{
 			ps = 0;
 			run_builtins(data, data->cmd_line->head);
+			return (START_RD_LN);
 		}
 		else if (data->cmd_line->head->cmd[0])
 		{
 			ps = 0;
-			run_binar(data);
+			if (run_binar(data) == START_RD_LN)
+				return (START_RD_LN);
+			return (START_RD_LN);
 		}
 	}
+	return (0);
 }
 
 int	run_builtins(t_data *data, t_spl_pipe *tmp)
@@ -54,13 +58,18 @@ int	run_builtins(t_data *data, t_spl_pipe *tmp)
 	return (0);
 }
 
-void	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
+int	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 {
 	int			i;
 	t_spl_pipe	*tmp;
 
 	tmp = head;
-	pipex(fds, psize);
+	if (pipex(fds, psize) == START_RD_LN)
+	{
+		if (close_fds(fds, data->psize) == START_RD_LN)
+			return (START_RD_LN);
+		return (START_RD_LN);
+	}
 	i = -1;
 	while (++i < psize)
 	{
@@ -68,15 +77,17 @@ void	forking(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 		if (tmp->pid == -1)
 		{
 			kill (head->pid, SIGKILL);
-			ft_putstr_fd(FORK, 2, FREE_OFF);
+			ft_perror("🔻minishell: fork");
 			data->exit_status = 1;
 			data->fork_res = -1;
 			break ;
 		}
 		else if (tmp->pid == 0)
-			pid_check(fds, psize, i, tmp, data);
+			if (pid_check(fds, psize, i, tmp, data) == START_RD_LN)
+				return (START_RD_LN);
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
 void	sig_wait(t_spl_pipe	*tmp, t_data *data)
@@ -100,7 +111,7 @@ void	sig_wait(t_spl_pipe	*tmp, t_data *data)
 	}
 }
 
-void	run_binar(t_data *data)
+int	run_binar(t_data *data)
 {
 	t_spl_pipe	*tmp;
 	int			(*fds)[2];
@@ -111,12 +122,17 @@ void	run_binar(t_data *data)
 	if (data->path)
 		data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
-	forking(fds, data->psize, tmp, data);
-	close_fds(fds, data->psize);
+	if (fds == NULL && !ft_perror("🔻minishell: "))
+		return (1);
+	if (forking(fds, data->psize, tmp, data) == START_RD_LN)
+		return (START_RD_LN);
+	if (close_fds(fds, data->psize) == START_RD_LN)
+		return (START_RD_LN);
 	if (data->path)
 		free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
 	hook_signals();
+	return (0);
 }

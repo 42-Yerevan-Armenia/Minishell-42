@@ -6,13 +6,13 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 17:58:57 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/22 20:11:39 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	str_is_valid_num(char *str)
+int	str_is_valid_num(char *str, int len)
 {
 	int		i;
 	int		j;
@@ -33,19 +33,30 @@ int	str_is_valid_num(char *str)
 		i++;
 	}
 	if (flag == 1 || flag == 0)
-		if (ft_strcmp(tmp + j, L_MAX) > 0)
+	{
+		if ((ft_strcmp(tmp + j, L_MAX) > 0))
 			return (1);
+		else if (len > 19)
+			return (1);
+	}
 	if (flag == -1)
-		if (ft_strcmp(tmp + j, L_MIN) > 0)
+	{
+		if ((ft_strcmp(tmp + j, L_MIN) > 0))
 			return (1);
+		else if (len > 20)
+			return (1);
+	}
 	return (0);
 }
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
+	int	len;
+
+	len = ft_strlen(args[1]);
 	if (!args[1])
 		exit (0);
-	else if (args[1] && str_is_valid_num(args[1]))
+	else if (args[1] && str_is_valid_num(args[1], len))
 	{
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
