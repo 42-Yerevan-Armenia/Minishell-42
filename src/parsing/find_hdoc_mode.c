@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_hdoc_mode.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 09:22:00 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 16:52:28 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:03:21 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,14 @@ int	get_all_hd_modes(t_parse *parser)
 	i = 0;
 	tmp = parser->join_pipe;
 	parser->hdoc_mode = malloc(sizeof(int *) * (arr_double_len(tmp) + 1));
+	if (parser->hdoc_mode == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	fill_null((void *)&parser->hdoc_mode, arr_double_len(tmp) + 1);
 	while (tmp[i])
 	{
 		parser->hdoc_mode[i] = malloc(sizeof(int));
+		if (parser->hdoc_mode[i] == NULL && !ft_perror("minishell: malloc: "))
+			exit (1);
 		parser->hdoc_mode[i][0] = find_hdoc_mode(tmp[i]);
 		i++;
 	}

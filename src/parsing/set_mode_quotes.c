@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_mode_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:13:28 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/14 20:24:40 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:08:15 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*clean_unprintable(char *arr)
 	if (arr == NULL)
 		return (0);
 	res = malloc(sizeof(char) * (ft_strlen(arr) + 1));
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	i = 0;
 	j = 0;
 	while (arr[j])
@@ -64,6 +66,8 @@ char	*set_mode_quotes(char *s)
 	if (s == NULL)
 		return (NULL);
 	res = malloc(sizeof(char) * (ft_strlen(s) + count_quotes(s) + 10));
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	while (s[i])
 	{
 		if (ft_strchr(QUOTES, s[i]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:32:24 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 15:11:01 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:00:01 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static int	clean_quotes(char ***arr)
 	{
 		k = 0;
 		tmp = malloc(ft_strlen(res[i]) + 1);
+		if (tmp == NULL && !ft_perror("minishell: malloc: "))
+			exit (1);
 		clean_quotes_helper(res, tmp, &i, &k);
 		tmp[k] = '\0';
 		tmp = clean_unprintable(tmp);
@@ -79,6 +81,8 @@ int	clean_quotes_single_arr(char **s)
 	i = 0;
 	tmp = *s;
 	res = malloc(ft_strlen(tmp) + 1);
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	while (*tmp)
 	{
 		while (*tmp && (!ft_strchr(QUOTES, *tmp) || *(tmp + 1) == UNPRINTABLE))
@@ -91,8 +95,7 @@ int	clean_quotes_single_arr(char **s)
 		if (*tmp)
 			tmp++;
 	}
-	res[i] = '\0';
-	free_arr(s);
+	res[i] = free_arr(s);
 	*s = clean_unprintable(res);
 	return (0);
 }

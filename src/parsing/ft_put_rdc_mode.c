@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 10:54:39 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/07 17:41:36 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:04:36 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_put_rdc_mode(char **s, int mode)
 	i = 0;
 	tmp = *s;
 	res = malloc(ft_strlen(*s) + 3);
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	while (*tmp)
 		res[i++] = *tmp++;
 	res[i++] = '\0';
