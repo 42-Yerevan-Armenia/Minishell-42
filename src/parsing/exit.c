@@ -3,16 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/22 20:11:39 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:46:58 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	str_is_valid_num(char *str, int len)
+int	str_is_valid_num_helper(int i, int j, char *tmp, int flag)
+{
+	if ((i - j) > 19)
+		return (1);
+	if ((i - j) < 19)
+		return (0);
+	if (flag == 1 || flag == 0)
+		if (ft_strcmp(tmp + j, L_MAX) > 0)
+			return (1);
+	if (flag == -1)
+		if (ft_strcmp(tmp + j, L_MIN) > 0)
+			return (1);
+	return (0);
+}
+
+int	str_is_valid_num(char *str)
 {
 	int		i;
 	int		j;
@@ -28,25 +43,13 @@ int	str_is_valid_num(char *str, int len)
 	j = i;
 	while (tmp[i])
 	{
-		if (!ft_isdigit(tmp[i]))
+		if (!ft_isdigit(tmp[i]) && !free_arr(&tmp))
 			return (1);
 		i++;
 	}
-	if (flag == 1 || flag == 0)
-	{
-		if ((ft_strcmp(tmp + j, L_MAX) > 0))
-			return (1);
-		else if (len > 19)
-			return (1);
-	}
-	if (flag == -1)
-	{
-		if ((ft_strcmp(tmp + j, L_MIN) > 0))
-			return (1);
-		else if (len > 20)
-			return (1);
-	}
-	return (0);
+	if (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp))
+		return (1);
+	return (free_arr(&tmp));
 }
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
@@ -55,8 +58,8 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 
 	len = ft_strlen(args[1]);
 	if (!args[1])
-		exit (0);
-	else if (args[1] && str_is_valid_num(args[1], len))
+		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
+	else if (args[1] && str_is_valid_num(args[1]))
 	{
 		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);

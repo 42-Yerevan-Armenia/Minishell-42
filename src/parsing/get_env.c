@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:27:59 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/14 18:42:52 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:06:53 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**split_for_env(char *str, char c)
 
 	i = 0;
 	res = malloc(sizeof(char *) * 3);
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	fill_null((void *)&res, 3);
 	while (str[i])
 	{

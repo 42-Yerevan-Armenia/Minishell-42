@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 09:21:55 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/17 20:33:35 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:57:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	**ft_bultins(void)
 	char	**res;
 
 	res = malloc(sizeof(char *) * 8);
+	if (res == NULL && !ft_perror("minishell:"))
+		exit (1);
 	fill_null((void *)&res, 8);
 	res[0] = ft_strdup("cd");
 	res[1] = ft_strdup("echo");

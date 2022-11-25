@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 16:52:07 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:04:01 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	child(t_spl_pipe *node, t_parse *parser)
 
 	rd_ln = NULL;
 	res = malloc(sizeof(char *) * 2);
+	if (res == NULL && !ft_perror("minishell: malloc: "))
+		exit (1);
 	fill_null((void *)&res, 2);
 	ft_heredoc_helper(&node, res, rd_ln);
 	parser->hered_res = res;
@@ -75,7 +77,7 @@ int	parent(t_spl_pipe *node, int pid)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &res, 0);
 	hook_signals();
-	if (WEXITSTATUS(res) == SIGNAL)
+	if (WEXITSTATUS(res) == SIGNAL || WEXITSTATUS(res) == -1)
 	{
 		node->data->exit_status = 1;
 		return (START_RD_LN);
@@ -84,6 +86,11 @@ int	parent(t_spl_pipe *node, int pid)
 	{
 		node->data->exit_status = 0;
 		node->fd_hdc = open(node->f_name, O_RDWR);
+		if (node->fd_hdc == -1 && !ft_perror("minishell: heredoc:"))
+		{
+			node->data->exit_status = 1;
+			return (START_RD_LN);
+		}
 	}
 	return (0);
 }
