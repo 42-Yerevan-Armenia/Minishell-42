@@ -54,6 +54,9 @@ int	str_is_valid_num(char *str)
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
+	int	len;
+
+	len = ft_strlen(args[1]);
 	if (!args[1])
 		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
 	else if (args[1] && str_is_valid_num(args[1]))

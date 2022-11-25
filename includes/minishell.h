@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 17:13:21 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/24 20:47:39 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 # include <sys/ioctl.h>
 # include <termios.h>
+
+//# define malloc(...) NULL
 
 # define WHITE	"\033[0;29m"
 # define RED	"\033[1;31m"
@@ -67,14 +69,14 @@ int				shell_lvl(t_data *data);
 void			cmd_errors_1(t_data *data, t_spl_pipe *tmp);
 int				cmd_errors_2(t_data *data, t_spl_pipe *tmp);
 int				cmd_errors(t_data *data, t_spl_pipe *tmp);
-void			execute(t_data *data);
-void			run_binar(t_data *data);
+int				execute(t_data *data);
+int				run_binar(t_data *data);
 int				run_builtins(t_data *data, t_spl_pipe *tmp);
 char			*get_cmd(char **paths, char *cmd);
-void			pipex(int (*fds)[2], int psize);
-void			pid_check(int (*fds)[2], int psize, int i, \
+int				pipex(int (*fds)[2], int psize);
+int				pid_check(int (*fds)[2], int psize, int i, \
 				t_spl_pipe *tmp, t_data *data);
-void			open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
+int				open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize);
 int				close_fds(int (*fds)[2], int psize);
 int				ft_get_status_in_env(t_data *data, t_parse *parser);
 
