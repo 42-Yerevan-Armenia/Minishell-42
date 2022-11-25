@@ -6,11 +6,26 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/23 19:15:42 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/25 10:30:20 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	str_is_valid_num_helper(int i, int j, char *tmp, int flag)
+{
+	if ((i - j) > 19)
+		return (1);
+	if ((i - j) < 19)
+		return (0);
+	if (flag == 1 || flag == 0)
+		if (ft_strcmp(tmp + j, L_MAX) > 0)
+			return (1);
+	if (flag == -1)
+		if (ft_strcmp(tmp + j, L_MIN) > 0)
+			return (1);
+	return (0);
+}
 
 int	str_is_valid_num(char *str)
 {
@@ -28,21 +43,13 @@ int	str_is_valid_num(char *str)
 	j = i;
 	while (tmp[i])
 	{
-		if (!ft_isdigit(tmp[i]))
+		if (!ft_isdigit(tmp[i]) && !free_arr(&tmp))
 			return (1);
 		i++;
 	}
-	if ((i - j) > 19)
+	if (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp))
 		return (1);
-	if ((i - j) < 19)
-		return (0);
-	if (flag == 1 || flag == 0)
-		if (ft_strcmp(tmp + j, L_MAX) > 0)
-			return (1);
-	if (flag == -1)
-		if (ft_strcmp(tmp + j, L_MIN) > 0)
-			return (1);
-	return (0);
+	return (free_arr(&tmp));
 }
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
