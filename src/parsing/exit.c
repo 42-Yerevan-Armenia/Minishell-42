@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/28 20:57:44 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/26 14:58:09 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,49 @@ int	str_is_valid_num(char *str)
 	i = 0;
 	flag = 0;
 	tmp = ft_strtrim(str, SPACES);
-	if (((tmp[i] == '+' && ++flag) || (tmp[i] == '-' && --flag)) && ++i)
+	if ((((tmp[i] == '+' && ++flag) || (tmp[i] == '-' && --flag))
+			&& ++i) || tmp[i])
 		while (tmp[i] && tmp[i + 1] && tmp[i] == '0')
 			i++;
 	j = i;
+	if (str && tmp[i] == '\0' && !free_arr(&tmp))
+		return (1);
 	while (tmp[i])
 	{
 		if (!ft_isdigit(tmp[i]) && !free_arr(&tmp))
 			return (1);
 		i++;
 	}
-	if ((str && tmp[0] == '\0')
-		|| (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp)))
+	if ((str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp)))
 		return (1);
 	return (free_arr(&tmp));
 }
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
-	if (!args[1])
+	if (!args[1] && data->cmd_line->size > 1)
 		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
-	else if (args[1] && str_is_valid_num(args[1]))
+	if (args[1] && str_is_valid_num(args[1]))
 	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
+		if (data->cmd_line->size == 1)
+			ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
 		exit (data->exit_status = 255);
 	}
-	if (args && args[2])
+	if (args && args[1] && args[2])
 	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
+		if (data->cmd_line->size == 1)
+			ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		ft_putstr_fd(EXIT_ARG, 2, FREE_OFF);
 		data->exit_status = 1;
 		return ;
 	}
 	else
-	{
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		data->exit_status = ft_atoi(args[1]);
-	}
+	if (data->cmd_line->size == 1)
+		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 	free_all(data);
 	exit(data->exit_status);
 }
