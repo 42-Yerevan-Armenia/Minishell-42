@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/26 14:58:09 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/26 15:45:38 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ int	str_is_valid_num(char *str)
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
 	if (!args[1] && data->cmd_line->size > 1)
-		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
-	if (args[1] && str_is_valid_num(args[1]))
+		exit (0);
+	else if (!args[1])
+		data->exit_status = ft_atoi(get_val(data->env->head, "?", FORME));
+	else if (args[1] && str_is_valid_num(args[1]))
 	{
-		if (data->cmd_line->size == 1)
-			ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
-		exit (data->exit_status = 255);
+		data->exit_status = 255;
 	}
-	if (args && args[1] && args[2])
+	else if (args && args[1] && args[2])
 	{
 		if (data->cmd_line->size == 1)
 			ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
