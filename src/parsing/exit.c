@@ -55,6 +55,13 @@ int	str_is_valid_num(char *str)
 	return (free_arr(&tmp));
 }
 
+int	ex(t_data *data, t_spl_pipe *cur)
+{
+	if (data->cmd_line->size == 1)
+		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
+	return (1);
+}
+
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
 	if (!args[1] && data->cmd_line->size > 1)
@@ -63,6 +70,7 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 		data->exit_status = ft_atoi(get_val(data->env->head, "?", FORME));
 	else if (args[1] && str_is_valid_num(args[1]))
 	{
+		ex(data, cur);
 		ft_putstr_fd("🔻minishell> : exit: ", 2, FREE_OFF);
 		ft_putstr_fd(args[1], 2, FREE_OFF);
 		ft_putstr_fd(": numeric argument required\n", 2, FREE_OFF);
@@ -70,16 +78,13 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 	}
 	else if (args && args[1] && args[2])
 	{
-		if (data->cmd_line->size == 1)
-			ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
+		ex(data, cur);
 		ft_putstr_fd(EXIT_ARG, 2, FREE_OFF);
 		data->exit_status = 1;
 		return ;
 	}
-	else
+	else if (ex(data, cur))
 		data->exit_status = ft_atoi(args[1]);
-	if (data->cmd_line->size == 1)
-		ft_putstr_fd("exit\n", cur->fd_out, FREE_OFF);
 	free_all(data);
 	exit(data->exit_status);
 }
