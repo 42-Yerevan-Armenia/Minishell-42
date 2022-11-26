@@ -114,7 +114,7 @@ int	run_binar(t_data *data)
 		data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	if (fds == NULL && !ft_perror("🔻minishell: "))
-		return (1);
+		exit (1);
 	if (forking(fds, data->psize, tmp, data) == START_RD_LN)
 		return (START_RD_LN);
 	if (close_fds(fds, data->psize) == START_RD_LN)

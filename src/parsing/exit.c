@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/25 20:57:44 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/28 20:57:44 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	str_is_valid_num(char *str)
 			return (1);
 		i++;
 	}
-	if (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp))
+	if ((str && tmp[0] == '\0')
+		|| (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp)))
 		return (1);
 	return (free_arr(&tmp));
 }
