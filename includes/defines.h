@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:05:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/24 16:32:35 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/26 12:13:19 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define L_MIN "9223372036854775808"
 # define L_MAX "9223372036854775807"
 
-# define malloc(...)NULL
+// # define malloc(...)NULL
 
 extern int	g_sig;
 

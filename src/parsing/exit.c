@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/25 10:46:58 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/26 12:15:45 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,14 @@ int	str_is_valid_num(char *str)
 			return (1);
 		i++;
 	}
-	if (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp))
+	if ((str && tmp[0] == '\0')
+		|| (str_is_valid_num_helper(i, j, tmp, flag) != 0 && !free_arr(&tmp)))
 		return (1);
 	return (free_arr(&tmp));
 }
 
 void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
-	int	len;
-
-	len = ft_strlen(args[1]);
 	if (!args[1])
 		exit (ft_atoi(get_val(data->env->head, "?", FORME)));
 	else if (args[1] && str_is_valid_num(args[1]))

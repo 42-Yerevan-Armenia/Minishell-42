@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/24 19:09:27 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/26 13:36:25 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,13 @@ int	run_binar(t_data *data)
 		data->cmd_paths = ft_split(data->path, ':');
 	fds = malloc(sizeof (*fds) * (data->psize - 1));
 	if (fds == NULL && !ft_perror("🔻minishell: "))
-		return (1);
+		exit (1);
 	if (forking(fds, data->psize, tmp, data) == START_RD_LN)
 		return (START_RD_LN);
+	// if (data->path)
+	// 	free_double((void *)&data->cmd_paths);
 	if (close_fds(fds, data->psize) == START_RD_LN)
 		return (START_RD_LN);
-	if (data->path)
-		free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
