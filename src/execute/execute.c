@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 21:09:43 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/24 19:09:27 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/26 13:34:46 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,22 @@
 
 int	execute(t_data *data)
 {
-	int		i;
 	int		ps;
 
 	ps = data->cmd_line->size;
-	i = -1;
-	while (i++ < ps)
+	if (data->cmd_line->head->cmd[0] && data->cmd_line->head->cmd[0][0] && \
+	ps == 1 && search_builtin(data->cmd_line->head->cmd[0], data->builtins))
 	{
-		if (data->cmd_line->head->cmd[0] && data->cmd_line->head->cmd[0][0] && \
-		ps == 1 && search_builtin(data->cmd_line->head->cmd[0], data->builtins))
-		{
-			ps = 0;
-			run_builtins(data, data->cmd_line->head);
+		ps = 0;
+		run_builtins(data, data->cmd_line->head);
+		return (START_RD_LN);
+	}
+	else if (data->cmd_line->head->cmd[0])
+	{
+		ps = 0;
+		if (run_binar(data) == START_RD_LN)
 			return (START_RD_LN);
-		}
-		else if (data->cmd_line->head->cmd[0])
-		{
-			ps = 0;
-			if (run_binar(data) == START_RD_LN)
-				return (START_RD_LN);
-			return (START_RD_LN);
-		}
+		return (START_RD_LN);
 	}
 	return (0);
 }
@@ -124,8 +119,6 @@ int	run_binar(t_data *data)
 		return (START_RD_LN);
 	if (close_fds(fds, data->psize) == START_RD_LN)
 		return (START_RD_LN);
-	if (data->path)
-		free_double((void *)&data->cmd_paths);
 	tmp = data->cmd_line->head;
 	signal(SIGINT, SIG_IGN);
 	sig_wait(tmp, data);
