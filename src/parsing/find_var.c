@@ -3,26 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   find_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/18 16:54:15 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:38:46 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_herdoc(char *ptr_sign, char	*start, int i, char *next_arr)
+int	is_valid(char *ptr_sign, char *next_arr)
 {
-	if (&ptr_sign[i] != start)
-	{
-		i--;
-		while (&ptr_sign[i] != start && ft_strchr(SPACES, ptr_sign[i]))
-			i--;
-		if (&ptr_sign[i] != start && ptr_sign[i] == '<'
-			&& ptr_sign[i - 1] == '<')
-			return (1);
-	}
+	int	i;
+
+	i = 0;
+	if (*(ptr_sign + 1) == UNPRINTABLE && printf("barev\n"))
+		return (1);
 	i = 1;
 	while (ptr_sign[i] && ft_strchr(SPACES, ptr_sign[i]))
 		i++;
@@ -56,7 +52,7 @@ static char	*find_var_helper(char *src, char **ptr, int j, char *next)
 	res = NULL;
 	while (src[j])
 	{
-		if (src[j] == '$' && !is_herdoc(src + j, src, i, next))
+		if (src[j] == '$' && !is_valid(src + j, next))
 		{
 			*ptr = &src[j++];
 			find_var_helper_helper(src, &j, &len);

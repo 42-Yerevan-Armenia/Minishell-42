@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 01:08:48 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/26 15:45:38 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/27 11:40:02 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_exit(t_data *data, char **args, t_spl_pipe *cur)
 {
 	if (!args[1] && data->cmd_line->size > 1)
 		exit (0);
-	else if (!args[1])
+	else if (!args[1] && ex(data, cur))
 		data->exit_status = ft_atoi(get_val(data->env->head, "?", FORME));
 	else if (args[1] && str_is_valid_num(args[1]))
 	{

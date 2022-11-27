@@ -6,11 +6,12 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 19:46:44 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 13:11:34 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:37:12 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 int	parsing(t_parse *parser)
 {
@@ -18,6 +19,7 @@ int	parsing(t_parse *parser)
 			|| (unexpected_tokens(parser) == START_RD_LN))
 		&& !put_exit_s(parser->data, 258))
 		return (START_RD_LN);
+	put_hdoc_qutoes_mode(&parser->rd_ln);
 	split_quotes(parser);
 	rep_vars(parser, 0);
 	split_pipe(parser);
