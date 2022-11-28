@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:29:53 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/26 12:14:47 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/28 19:42:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_readline_main(t_parse *parser, t_data *data)
 		return (1);
 	}
 	set_term_attr(TC_ON);
-	if (!parser->rd_ln)
+	if (!parser->rd_ln && ft_putstr_fd("exit\n", 1, FREE_OFF))
 		exit(1);
 	return (0);
 }

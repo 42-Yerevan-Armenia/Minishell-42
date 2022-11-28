@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 21:40:29 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/25 11:04:01 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/27 12:25:54 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,15 @@ int	parent(t_spl_pipe *node, int pid)
 	if (WEXITSTATUS(res) == SIGNAL || WEXITSTATUS(res) == -1)
 	{
 		node->data->exit_status = 1;
+		if (node->fd_hdc != 0 && close(node->fd_hdc) == -1)
+			ft_perror("minishell: close:");
 		return (START_RD_LN);
 	}
 	else
 	{
 		node->data->exit_status = 0;
+		if (node->fd_hdc != 0 && close(node->fd_hdc) == -1)
+			ft_perror("minishell: close:");
 		node->fd_hdc = open(node->f_name, O_RDWR);
 		if (node->fd_hdc == -1 && !ft_perror("minishell: heredoc:"))
 		{

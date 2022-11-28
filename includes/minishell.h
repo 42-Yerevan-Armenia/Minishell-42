@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 16:31:58 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/26 14:19:46 by arakhurs         ###   ########.fr       */
+/*   Updated: 2022/11/27 15:37:35 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int				ft_get_rdc_mode(char *s);
 char			*set_mode(char *s);
 int				create_hiden_file(t_data *data, t_spl_pipe *node,
 					char **f_name);
+char			*put_hdoc_qutoes_mode(char **str);
 
 // builtins
 int				ft_free(char **str);
