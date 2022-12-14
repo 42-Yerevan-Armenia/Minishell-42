@@ -375,7 +375,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 ## <a name="p6">References</a>
 
 - [42 Docs](https://harm-smits.github.io/42docs/projects/minishell)
-
+- [ulimit](https://phoenixnap.com/kb/ulimit-linux-command)
 
 
 
