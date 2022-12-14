@@ -225,6 +225,7 @@ Principle
 
 - Declaration: variable name=CONTENT
 - Useage
+
 | format | principe | exemple|
 | :-------------: | :---------------------------: | :---------------------------: |
 | variable or “$variable” or "${variable}" | replace the environment variable with its value | it can be everywhere in a redirect, in quotes: ls $HOME/Desktop , echo abc > $COLORTERM , echo coucou$COLORTERM |
