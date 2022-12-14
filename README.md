@@ -279,6 +279,7 @@ int execution(int (*fds)[2], int psize, t_spl_pipe *head, t_data *data)
 | ``env`` | Prints environment | :x: | :x: | [write](https://man7.org/linux/man-pages/man2/write.2.html) |
 | ``export`` | Adds/replaces variable in environment | :x: | :heavy_check_mark: | :x: |
 | ``unset`` | Removes variable from environment | :x: | :heavy_check_mark: | :x: |
+| ``exit`` | Process termination | :x: | :heavy_check_mark: | [exit](https://man7.org/linux/man-pages/man3/exit.3.html) |
 
 ### <a name="p5.1">Env, export, unsety</a>
 #### env et export
@@ -340,6 +341,7 @@ warning: exit does not run with these errors
 | 128+n | 128 + signal number |
 | 130 | finished with Ctrl-C (130 = 128 + 2) |
 | 255 | exit code out of bounds eg exit -1 |
+| 258 | syntax error near unexpected token `\' |
 Find out the error code of a call to a command / signal: waitpid(pid_t pid, int *status, int options);
 
 - WIFEXITED(status) = returns true if the child terminated normally, ie by a call to exit(3) or exit(2), or by a return from main(). And in this case we can call: WEXITSTATUS(status) = returns the exit code of the child. This code consists of the low 8 bits of the status argument that the child supplied to exit(3) or _exit(2) or the argument of a return command in main(). "This macro can only be evaluated if WIFEXITED returned true".
