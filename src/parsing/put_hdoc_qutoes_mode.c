@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 15:36:54 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/28 19:40:45 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:06:17 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	count_dollar(char *str)
 
 static int	is_herdoc(char *ptr_sign, char	*start)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (&ptr_sign[i] != start)
@@ -60,6 +60,8 @@ char	*put_hdoc_qutoes_mode(char **str)
 	j = 0;
 	tmp = *str;
 	res = malloc(ft_strlen(tmp) + count_dollar(tmp) + 1);
+	if (res == NULL)
+		exit (1);
 	while (tmp[i])
 	{
 		res[j++] = tmp[i];

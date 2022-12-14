@@ -6,7 +6,7 @@
 /*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 17:44:23 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/27 15:38:46 by vaghazar         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:04:44 by vaghazar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_valid(char *ptr_sign, char *next_arr)
 	int	i;
 
 	i = 0;
-	if (*(ptr_sign + 1) == UNPRINTABLE && printf("barev\n"))
+	if (*(ptr_sign + 1) == UNPRINTABLE)
 		return (1);
 	i = 1;
 	while (ptr_sign[i] && ft_strchr(SPACES, ptr_sign[i]))
