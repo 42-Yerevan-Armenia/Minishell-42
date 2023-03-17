@@ -401,90 +401,90 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | 3 | Test an empty command |  |
 | 4 | Test only spaces or tabs |  |
 
-| N | Arguments & history | Flags |
+| N | Arguments & history | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | echo | Flags |
+| N | echo | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | exit | Flags |
+| N | exit | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Return value of a process | Flags |
+| N | Return value of a process | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Signals | Flags |
+| N | Signals | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Double Quotes | Flags |
+| N | Double Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
 ## From here there is no need to fail using flags
 
-| N | Simple Quotes | Flags |
+| N | Simple Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | env | Flags |
+| N | env | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 | export |  |
 
-| N | unset | Flags |
+| N | unset | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | cd | Flags |
+| N | cd | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | pwd | Flags |
+| N | pwd | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Relative Path | Flags |
+| N | Relative Path | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Environment Path | Flags |
+| N | Environment Path | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Redirection | Flags |
+| N | Redirection | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Pipes | Flags |
-| :-----: | :-------------: | :-------------: |
-| 1 |  |  |
-
-❎
-
-| N | Go Crazy and history | Flags |
+| N | Pipes | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
 ❎
 
-| N | Environment Variables | Flags |
+| N | Go Crazy and history | Cases |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+❎
+
+| N | Environment Variables | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
 ##BONUS
 
-| N | And, Or | Flags |
+| N | And, Or | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | WildCard | Flags |
+| N | WildCard | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
 
-| N | Surprise (or not...) | Flags |
+| N | Surprise (or not...) | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
