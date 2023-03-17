@@ -429,82 +429,118 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 
 | N | Signals | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
-| 2 |  |  |
-| 3 |  |  |
-| 4 |  |  |
-| 5 |  |  |
-| 6 |  |  |
-| 7 |  |  |
-| 8 |  |  |
-| 9 |  |  |
-| 10 |  |  |
-| 11 |  |  |
+| 1 | ctrl-C | in an empty prompt should display a new line with a new prompt |
+| 2 | ctrl-C | in a prompt after you wrote some stuff should display a new line with a new prompt |
+| 3 | ctrl-C | after running a blocking command like cat without arguments or grep “something“ |
+| 4 | ctrl-D | in an empty prompt should quit minishell --> RELAUNCH! |
+| 5 | ctrl-D | in a prompt after you wrote some stuff should not do anything |
+| 6 | ctrl-D | after running a blocking command like cat without arguments or grep “something“ |
+| 7 | ctrl-\ | in an empty prompt should not do anything |
+| 8 | ctrl-\ | in a prompt after you wrote some stuff should not do anything |
+| 9 | ctrl-\ | after running a blocking command like cat without arguments or grep “something“ |
+| 10 | The buffer should be clean too | Press ``Enter`` to make sure nothing from the previous line is executed |
+| 11 | Repeat multiple times using different commands |  |
 
 | N | Double Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute a simple command with arguments and, this time, use also double quotes | you should try to include whitespaces too |
+| 2 | Try a command like : ``echo "cat lol.c | cat > lol.c"`` |
+| 3 | Try anything except ``$`` |
 
 ## From here there is no need to fail using flags
 
 | N | Simple Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute commands with single quotes as arguments |  |
+| 2 | Try empty arguments |
+| 3 | ``echo '$USER'`` must print ``$USER`` |  |
+| 4 | Nothing should be interpreted |  |
 
 | N | env | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 | export |  |
+| 1 | Check if env shows you the current environment variables | ``env`` |
+
+| N | export | Cases |
+| :-----: | :-------------: | :-------------: |
+| 1 | Export environment variables, create new ones and replace old ones | ``export a=`` after env ``unset a=`` |
+| 2 | Check the result with env | ``env`` |
 
 | N | unset | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Export environment variables, create new ones and replace old ones | ``export a=`` after check env ``unset a=`` |
+| 2 | Use ``unset`` to remove some of them | ``unset PWD`` after check env |
+| 3 | Check the result with env | ``env`` |
 
 | N | cd | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Use the command cd to move the working directory | check if you are in the right directory with ``/bin/ls`` |
+| 2 | Repeat multiple times with working and not working cd |  |
+| 3 | Also, try ``.`` and ``..`` as arguments | ``cd .`` or ``cd ..`` |
 
 | N | pwd | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Use the command | ``pwd`` |
+| 2 | Repeat multiple times in different directories |  |
 
 | N | Relative Path | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute commands but this time use a relative path | ``/.../cmd`` |
+| 2 | Repeat multiple times in different directories with a complex relative path (lots of ..) |  |
 
 | N | Environment Path | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute commands but this time without any path | ls, wc, awk and so forth |
+| 2 | Unset the $PATH and ensure commands are not working anymore |  |
+| 3 | Set the $PATH to a multiple directory value (directory1:directory2) and ensure that directories are checked in order from left to right ||
 
 | N | Redirection | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute commands with redirections ``<`` and/or ``>`` |  |
+| 2 | Repeat multiple times with different commands and arguments and sometimes change ``>`` with ``>>`` |  |
+| 3 | Check if multiple tries of the same redirections fail |  |
+| 4 | Test << redirection | it doesn't have to update the history |
 
 | N | Pipes | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute commands with pipes | cat file | grep bla | more |
+| 2 | Repeat multiple times with different commands and arguments |  |
+| 3 | Try some wrong commands | ``ls filethatdoesntexist | grep bla | more`` |
+| 4 | Try to mix pipes and redirections |  |
 
 ❎
 
 | N | Go Crazy and history | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Type a command line, then use ``ctrl-C`` and press "Enter" | The buffer should be clean and there should be nothing left to execute |
+| 2 | Can we navigate through history using Up and Down? Can we retry some command? | Answer |
+| 3 | Execute commands that should not work like 'dsbksdgbksdghsd'. Ensure minishell doesn't crash and print an error |  |
+| 4 | ``cat | cat | ls`` should behave in a "normal way" |  |
+| 5 | Try to execute a long command with a ton of arguments |  |
+| 6 | Have fun with that beautiful minishell and enjoy it! |  |
 
 ❎
 
 | N | Environment Variables | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute ``echo`` with some environment variables ($variable) as arguments |  |
+| 2 | Check that ``$`` is interpreted as an environment variable |  |
+| 3 | Check that double quotes interpolate ``$`` |  |
+| 4 | Check that USER exists. Otherwise, set it |  |
+| 5 | ``echo "$USER"`` should print the value of the USER variable |  |
 
-##BONUS
+## BONUS - if Mandatory perfect
 
 | N | And, Or | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Use ``&&``, ``||`` and parenthesis with commands and ensure minishell behaves the same way bash does |  |
 
 | N | WildCard | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Use wildcards in arguments in the current working directory |  |
 
 | N | Surprise (or not...) | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Set the USER environment variable |  |
+| 2 | ``echo "'$USER'"`` should print the value of the USER variable |  |
+| 3 | ``echo '"$USER"'`` should print ``"$USER"`` |  |
+
