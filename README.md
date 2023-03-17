@@ -28,7 +28,7 @@
 ### <a name="p1.1">The subject</a>
 
   <a>
-    <img src="https://www.fosslinux.com/wp-content/uploads/2022/05/Bash-vs-Zsh.png" width="240" height="136">
+    <img src="https://d33wubrfki0l68.cloudfront.net/45825999a370278a2d392daafce3e7a95de0fff2/3bada/img/logo/svg/full_colored_light.svg" width="300" height="180">
   </a>
 
 The goal of Minishell is to create a shell.
@@ -381,20 +381,110 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 - [ulimit](https://phoenixnap.com/kb/ulimit-linux-command)
 
 
-### <a name="cl">Checklist</a>
+## <a name="cl">Checklist</a>
 
-| **$?** | Compile | Flags |
+| N | Compile | Flags |
 | :-----: | :-------------: | :-------------: |
 | 1 | Check usage of -Wall -Wextra -Werror | 💀 invalid compilation |
 | 2 | minishell compile without errors | 💥  Crash |
 | 3 | Makefile must not re-link | no |
 
-| **$?** | Simple command & global | Flags |
+## Frome here
+- if something crashes use ``💥 Crash`` flag 
+- if something is not working use ``⚠️ incomplete work`` flag
+
+| N | Simple command & global | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 | Execute a simple command with absolute path | use commands in /bin directory |
 | 1.1 | /bin/ls | /bin/echo |
-| 2 | How many global variables? Why? Explain to evaluators. | no |
-| 3 | Test an empty command | no |
-| 4 | Test only spaces or tabs | no |
-| 5 | if something crashes | 💥  Crash |
-| 6 | if something is not working | ⚠️ incomplete work |
+| 2 | How many global variables? Why? | Explain to evaluators. |
+| 3 | Test an empty command |  |
+| 4 | Test only spaces or tabs |  |
+
+| N | Arguments & history | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | echo | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | exit | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Return value of a process | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Signals | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Double Quotes | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+## From here there is no need to fail using flags
+
+| N | Simple Quotes | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | env | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 | export |  |
+
+| N | unset | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | cd | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | pwd | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Relative Path | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Environment Path | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Redirection | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Pipes | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+❎
+
+| N | Go Crazy and history | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+❎
+
+| N | Environment Variables | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+##BONUS
+
+| N | And, Or | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | WildCard | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
+
+| N | Surprise (or not...) | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 |  |  |
