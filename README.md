@@ -387,7 +387,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | :-----: | :-------------: | :-------------: |
 | 1 | Check usage of -Wall -Wextra -Werror | 💀 invalid compilation |
 | 2 | minishell compile without errors | 💥  Crash |
-| 3 | Makefile must not re-link | no |
+| 3 | Makefile must not re-link | 💀 invalid compilation |
 
 ## Frome here
 - if something crashes use ``💥 Crash`` flag 
@@ -395,7 +395,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 
 | N | Simple command & global | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 | Execute a simple command with absolute path | use commands in /bin directory |
+| 1 | Execute a simple command with an absolute path | use commands in /bin directory |
 | 1.1 | /bin/ls | /bin/echo |
 | 2 | How many global variables? Why? | Explain to evaluators. |
 | 3 | Test an empty command |  |
@@ -403,23 +403,43 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 
 | N | Arguments & history | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute a simple command with an absolute path with/without any quotes or double quotes | use commands in /bin directory |
+| 1.1 | /bin/ls | /bin/echo |
+| 2 | Repeat 1.1 multiple times with different commands and arguments | |
 
 | N | echo | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute the ``echo`` command | with/without arguments or the -n option |
+| 1.1 | echo a | echo 'a' |
+| 2 | Repeat 1.1 multiple times with different arguments | |
 
 | N | exit | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute ``exit`` command | with/without arguments |
+| 1.1 | exit | exit 1 |
+| 2 | Repeat multiple times with different arguments | |
+| 3 | Don't forget to relaunch the minishell | |
 
 | N | Return value of a process | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 |  |  |
+| 1 | Execute a simple command with an absolute path with/without any quotes or double quotes | use commands in /bin directory, with/without arguments |
+| 2 | Then execute ``echo $?`` and check the printed value | do the same in bash in order to compare the results |
+| 3 | Repeat multiple times with different commands and arguments | Try some wrong commands |
+| 4 | Try anything like expr $? + $? | do the same in bash in order to compare the results |
 
 | N | Signals | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 |  |  |
+| 2 |  |  |
+| 3 |  |  |
+| 4 |  |  |
+| 5 |  |  |
+| 6 |  |  |
+| 7 |  |  |
+| 8 |  |  |
+| 9 |  |  |
+| 10 |  |  |
+| 11 |  |  |
 
 | N | Double Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
