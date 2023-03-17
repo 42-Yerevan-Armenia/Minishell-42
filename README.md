@@ -21,6 +21,7 @@
     - [Exit](#p5.2)
     - [Cd, pwd, echo](#p5.3)
 6. [References](#p6)
+7. [Checklist](#cl)
 
 ## <a name="p1">What is Minishell?</a>
 
@@ -380,5 +381,20 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 - [ulimit](https://phoenixnap.com/kb/ulimit-linux-command)
 
 
+### <a name="cl">Checklist</a>
 
+| **$?** | Compile | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 | Check usage of -Wall -Wextra -Werror | 💀 invalid compilation |
+| 2 | minishell compile without errors | 💥  Crash |
+| 3 | Makefile must not re-link | no |
 
+| **$?** | Simple command & global | Flags |
+| :-----: | :-------------: | :-------------: |
+| 1 | Execute a simple command with absolute path | use commands in /bin directory |
+| 1.1 | /bin/ls | /bin/echo |
+| 2 | How many global variables? Why? Explain to evaluators. | no |
+| 3 | Test an empty command | no |
+| 4 | Test only spaces or tabs | no |
+| 5 | if something crashes | 💥  Crash |
+| 6 | if something is not working | ⚠️ incomplete work |
