@@ -428,7 +428,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | 4 | Try anything like expr $? + $? | do the same in bash in order to compare the results |
 
 | N | Signals | Cases |
-| :-----: | :-------------: | :-------------: |
+| :-----: | :-----: | :--------------------------: |
 | 1 | ctrl-C | in an empty prompt should display a new line with a new prompt |
 | 2 | ctrl-C | in a prompt after you wrote some stuff should display a new line with a new prompt |
 | 3 | ctrl-C | after running a blocking command like cat without arguments or grep “something“ |
