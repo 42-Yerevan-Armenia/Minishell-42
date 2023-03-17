@@ -514,7 +514,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | 1 | Type a command line, then use ``ctrl-C`` and press "Enter" | The buffer should be clean and there should be nothing left to execute |
 | 2 | Can we navigate through history using Up and Down? Can we retry some command? | Answer |
 | 3 | Execute commands that should not work like 'dsbksdgbksdghsd'. Ensure minishell doesn't crash and print an error |  |
-| 4 | ``cat | cat | ls`` should behave in a "normal way" |  |
+| 4 | ``cat "pipe" cat "pipe" ls`` should behave in a "normal way" |  |
 | 5 | Try to execute a long command with a ton of arguments |  |
 | 6 | Have fun with that beautiful minishell and enjoy it! |  |
 
@@ -532,7 +532,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 
 | N | And, Or | Cases |
 | :-----: | :-------------: | :-------------: |
-| 1 | Use ``&&``, ``||`` and parenthesis with commands and ensure minishell behaves the same way bash does |  |
+| 1 | Use ``&&``, ``double pipe`` and parenthesis with commands and ensure minishell behaves the same way bash does |  |
 
 | N | WildCard | Cases |
 | :-----: | :-------------: | :-------------: |
