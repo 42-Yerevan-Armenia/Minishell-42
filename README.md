@@ -425,7 +425,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | 1 | Execute a simple command with an absolute path with/without any quotes or double quotes | use commands in /bin directory, with/without arguments |
 | 2 | Then execute ``echo $?`` and check the printed value | do the same in bash in order to compare the results |
 | 3 | Repeat multiple times with different commands and arguments | Try some wrong commands |
-| 4 | Try anything like expr $? + $? | do the same in bash in order to compare the results |
+| 4 | Try anything like ``expr $? + $?`` | do the same in bash in order to compare the results |
 
 | N | Signals | Cases |
 | :-----: | :-----: | :--------------------------: |
