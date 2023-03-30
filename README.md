@@ -504,7 +504,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | :-----: | :-------------: | :-------------: |
 | 1 | Execute commands with pipes | cat file | grep bla | more |
 | 2 | Repeat multiple times with different commands and arguments |  |
-| 3 | Try some wrong commands | ``ls filethatdoesntexist pipe grep bla | more`` |
+| 3 | Try some wrong commands | ``ls file_that_not_exist pipe grep bla pipe more`` |
 | 4 | Try to mix pipes and redirections |  |
 
 ❎
