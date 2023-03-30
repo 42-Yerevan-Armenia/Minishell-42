@@ -444,7 +444,7 @@ void  sig_wait(t_spl_pipe *tmp, t_data *data)
 | N | Double Quotes | Cases |
 | :-----: | :-------------: | :-------------: |
 | 1 | Execute a simple command with arguments and, this time, use also double quotes | you should try to include whitespaces too |
-| 2 | Try a command like : ``echo cat lol.c | cat > lol.c`` |
+| 2 | Try a command like : ``echo "cat lol.c 'pipe' cat > lol.c"`` |
 | 3 | Try anything except ``$`` |
 
 ## From here there is no need to fail using flags
