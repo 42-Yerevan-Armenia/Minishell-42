@@ -28,7 +28,7 @@
 ### <a name="p1.1">The subject</a>
 
   <a>
-    <img src="https://d33wubrfki0l68.cloudfront.net/45825999a370278a2d392daafce3e7a95de0fff2/3bada/img/logo/svg/full_colored_light.svg" width="300" height="180">
+    <img src="https://github.com/Aramxxx8691/Git_Images/blob/master/bash.svg" width="300" height="180">
   </a>
 
 The goal of Minishell is to create a shell.
