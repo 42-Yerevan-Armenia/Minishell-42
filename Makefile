@@ -9,6 +9,9 @@ NAME = minishell
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
+LIBREADLINE_PATH = $(HOME)/readline
+LIBREADLINE_LIB = $(LIBREADLINE_PATH)/lib/libreadline.a
+
 TMP = objs
 
 CC = cc
@@ -16,13 +19,7 @@ CC = cc
 CFLAGS = -I./includes -I$(HOME)/readline/include -Wall -Wextra -Werror
 
 # Adjust the LINKER to dynamically detect the right directory for readline
-#ifeq ($(HOME), /Users/vaghazar)
-#    LINKER = -L./readline-vaghazar/lib -lreadline
-#else ifeq ($(HOME), /Users/arakhurs)
-#    LINKER = -L./readline-arakhurs/lib -lreadline
-#else
-    LINKER = -L$(HOME)/readline/lib -lreadline -lncurses
-#endif
+LINKER = -L$(HOME)/readline/lib -lreadline -lncurses
 
 # Dynamically find source files
 SRCS = $(shell find ./src -name "*.c" | grep src | grep '\.c')
@@ -45,7 +42,14 @@ PRER = ./src/execute ./src/parsing
 	@echo "$(YELLOW)💡created ➡️  $(SKY)$(notdir $@)$(RESET)"
 
 # Default target
-all: $(NAME)
+all: check_readline $(NAME)
+
+check_readline:
+	@if [ ! -f "$(LIBREADLINE_LIB)" ]; then \
+		echo "$(RED)❗️Error: GNU readline is not installed in $(LIBREADLINE_PATH)!$(RESET)"; \
+		echo "➡️  Run $(YELLOW)make install_readline$(RESET) to install it."; \
+		exit 1; \
+	fi
 
 $(NAME): $(TMP) $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(LINKER) $(OBJS) $(LIBFT) -o $(NAME)

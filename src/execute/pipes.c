@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 21:12:42 by arakhurs          #+#    #+#             */
-/*   Updated: 2022/11/26 13:35:02 by arakhurs         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:02:16 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ int	open_pipes(t_spl_pipe *tmp, int i, int (*fds)[2], int psize)
 
 void	do_cmd(t_data *data, t_spl_pipe *tmp)
 {
-	int	i;
-
-	i = 0;
 	if (*tmp->cmd[0] != '\0' && search_builtin(tmp->cmd[0], data->builtins))
 		run_builtins(data, tmp);
 	else

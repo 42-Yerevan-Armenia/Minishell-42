@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 18:09:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/19 20:02:32 by arakhurs         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:00:33 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ static int	is_valid_args(char *args, t_data *data)
 int	unset(t_data *data, char **args)
 {
 	int	i;
-	int	flag;
 
 	if (args == NULL)
 		return (1);
 	i = 1;
-	flag = 0;
 	data->exit_status = 0;
 	while (args[i])
 	{

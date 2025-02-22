@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 16:31:56 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/20 16:51:43 by vaghazar         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:00:03 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,11 @@ static int	is_valid_args(char *args, t_data *data)
 int	export(t_data *data, char **args, t_spl_pipe *node)
 {
 	int			i;
-	int			flag;
 	char		**tmp;
 
 	if (args == NULL)
 		return (1);
 	i = 1;
-	flag = 0;
 	if (args[i] == NULL && !print_exp(data->env_exp->head, node))
 		return (0);
 	while (args[i])

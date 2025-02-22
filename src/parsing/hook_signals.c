@@ -6,7 +6,7 @@
 /*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 18:39:16 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/22 16:50:29 by arakhurs         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:01:35 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	hook_signals(void)
 
 	term.sa_handler = &sig_term;
 	term.sa_flags = SA_RESTART;
-	term.sa_mask = 0;
+	// term.sa_mask = 0;
 	sigaction(SIGINT, &term, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	return (0);

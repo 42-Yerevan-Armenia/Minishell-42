@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vaghazar <vaghazar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arakhurs <arakhurs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:21:20 by vaghazar          #+#    #+#             */
-/*   Updated: 2022/11/15 19:25:11 by vaghazar         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:59:26 by arakhurs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	echo(t_spl_pipe *node, char **args)
 {
 	int	flag;
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 1;
 	flag = 0;
 	if (arr_double_len(args) != 1)
